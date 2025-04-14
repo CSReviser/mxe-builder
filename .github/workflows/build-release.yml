@@ -3,6 +3,14 @@ name: Build MXE and Upload to Releases
 on:
   workflow_dispatch:
 
+name: Build MXE Qt5 32bit and Upload to Releases
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
