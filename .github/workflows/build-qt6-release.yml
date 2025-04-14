@@ -1,0 +1,61 @@
+name: Build MXE with Qt6 and Upload to Releases
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            autoconf automake libtool \
+            g++ gperf bison flex \
+            libgdk-pixbuf2.0-dev \
+            libgtk2.0-dev \
+            libgl1-mesa-dev \
+            libssl-dev \
+            libxml2-dev \
+            libxslt-dev \
+            libstdc++6 \
+            wine \
+            unzip \
+            make \
+            curl \
+            git \
+            cmake \
+            ninja-build \
+            pkg-config
+
+      - name: Clone MXE
+        run: |
+          git clone https://github.com/mxe/mxe.git
+          cd mxe
+          # 必要であれば特定のコミットやブランチに固定可能
+          # git checkout <commit-hash-or-branch>
+
+      - name: Enable Qt6 packages (experimental)
+        run: |
+          cd mxe
+          echo 'MXE_PLUGIN_DIRS += plugins/apps/qt6' >> settings.mk
+
+      - name: Build MXE with Qt6
+        run: |
+          cd mxe
+          make qt6base qt6tools cmake MXE_TARGETS='x86_64-w64-mingw32.static' -j$(nproc)
+
+      - name: Package MXE Qt6
+        run: |
+          tar -czf mxe-qt6-x86_64.tar.gz mxe
+
+      - name: Create GitHub Release and Upload
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: mxe-qt6-v1
+          name: MXE Qt6 v1
+          files: mxe-qt6-x86_64.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
