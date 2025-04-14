@@ -1,0 +1,58 @@
+name: Build MXE Qt5 32bit and Upload to Releases
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            autoconf automake libtool libtool-bin \
+            g++ gperf bison flex \
+            libgdk-pixbuf2.0-dev \
+            libgtk2.0-dev \
+            libgl1-mesa-dev \
+            libssl-dev \
+            libxml2-dev \
+            libxslt-dev \
+            libstdc++6 \
+            wine \
+            unzip \
+            make \
+            curl \
+            git \
+            cmake \
+            ninja-build \
+            pkg-config \
+            intltool \
+            lzip \
+            python3-mako
+
+      - name: Clone MXE
+        run: |
+          git clone https://github.com/mxe/mxe.git
+          cd mxe
+          # 任意でブランチ固定やpatch可能
+
+      - name: Build MXE with Qt5 (32bit)
+        run: |
+          cd mxe
+          make qtbase qttools cmake MXE_TARGETS='i686-w64-mingw32.static' -j$(nproc)
+
+      - name: Package MXE Qt5 32bit
+        run: |
+          tar -czf mxe-qt5-i686-static.tar.gz mxe
+
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: mxe-qt5-i686-v1
+          name: MXE Qt5 32bit Static v1
+          files: mxe-qt5-i686-static.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
