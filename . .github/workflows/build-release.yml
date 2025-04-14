@@ -1,0 +1,49 @@
+name: Build MXE and Upload to Releases
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            autoconf automake libtool \
+            g++ gperf bison flex \
+            libgdk-pixbuf2.0-dev \
+            libgtk2.0-dev \
+            libgl1-mesa-dev \
+            libssl-dev \
+            libxml2-dev \
+            libxslt-dev \
+            libstdc++6 \
+            wine \
+            unzip \
+            make \
+            curl \
+            git \
+            cmake \
+            ninja-build \
+            pkg-config
+
+      - name: Build MXE
+        run: |
+          git clone https://github.com/mxe/mxe.git
+          cd mxe
+          make qtbase qttools cmake MXE_TARGETS='x86_64-w64-mingw32.static' -j$(nproc)
+
+      - name: Package MXE
+        run: |
+          tar -czf mxe-x86_64-w64-mingw32.static.tar.gz mxe
+
+      - name: Create GitHub Release and Upload
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: mxe-qt5-v1
+          name: MXE Qt5 v1
+          files: mxe-x86_64-w64-mingw32.static.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
