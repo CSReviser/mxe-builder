@@ -12,26 +12,46 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-            autoconf automake libtool libtool-bin \
-            g++ gperf bison flex \
-            libgdk-pixbuf2.0-dev \
-            libgtk2.0-dev \
-            libgl1-mesa-dev \
-            libssl-dev \
-            libxml2-dev \
-            libxslt-dev \
-            libstdc++6 \
-            wine \
-            unzip \
-            make \
-            curl \
-            git \
-            cmake \
-            ninja-build \
-            pkg-config \
-            intltool \
-            lzip \
-            python3-mako
+              autoconf \
+              automake \
+              autopoint \
+              bash \
+              bison \
+              bzip2 \
+              flex \
+              g++ \
+              g++-multilib \
+              gettext \
+              git \
+              gperf \
+              intltool \
+              libc6-dev-i386 \
+              libclang-dev \
+              libgdk-pixbuf2.0-dev \
+              libltdl-dev \
+              libgl-dev \
+              libpcre2-dev \
+              libssl-dev \
+              libtool-bin \
+              libxml-parser-perl \
+              lzip \
+              make \
+              openssl \
+              p7zip-full \
+              patch \
+              perl \
+              python3 \
+              python3-mako \
+              python3-packaging \
+              python3-pkg-resources \
+              python3-setuptools \
+              python-is-python3 \
+              ruby \
+              sed \
+              sqlite3 \
+              unzip \
+              wget \
+              xz-utils
 
       - name: Clone MXE
         run: |
@@ -46,7 +66,7 @@ jobs:
       - name: Build MXE with Qt6 (32bit)
         run: |
           cd mxe
-          make qt6base qt6tools cmake MXE_TARGETS='i686-w64-mingw32.static' -j$(nproc)
+          make qt6 qt6-qtbase qt6-qttools cmake MXE_TARGETS='i686-w64-mingw32.static' -j$(nproc)
 
       - name: Package MXE Qt6 32bit
         run: |
