@@ -11,7 +11,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-          autoconf automake libtool libtool-bin \
+          autoconf automake libtool-bin \
           libtool-bing++ gperf bison flex \
           libgdk-pixbuf2.0-dev \
           libgtk2.0-dev \
