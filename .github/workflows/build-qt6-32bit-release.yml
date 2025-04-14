@@ -70,7 +70,6 @@ jobs:
         run: |
           cd mxe
           export qtbase_SKIP_MARIADB=1
-          export qt6-qtbase_SKIP_MARIADB=1
           make qt6-qtbase qt6-qttools cmake MXE_TARGETS='i686-w64-mingw32.static' -j$(nproc)
       - name: Package MXE Qt6 32bit
         run: |
