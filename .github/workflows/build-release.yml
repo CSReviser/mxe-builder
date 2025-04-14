@@ -11,23 +11,26 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-            autoconf automake libtool \
-            g++ gperf bison flex \
-            libgdk-pixbuf2.0-dev \
-            libgtk2.0-dev \
-            libgl1-mesa-dev \
-            libssl-dev \
-            libxml2-dev \
-            libxslt-dev \
-            libstdc++6 \
-            wine \
-            unzip \
-            make \
-            curl \
-            git \
-            cmake \
-            ninja-build \
-            pkg-config
+          autoconf automake libtool \
+          g++ gperf bison flex \
+          libgdk-pixbuf2.0-dev \
+          libgtk2.0-dev \
+          libgl1-mesa-dev \
+          libssl-dev \
+          libxml2-dev \
+          libxslt-dev \
+          libstdc++6 \
+          wine \
+          unzip \
+          make \
+          curl \
+          git \
+          cmake \
+          ninja-build \
+          pkg-config \
+          intltool \
+          lzip \
+          python3-mako
 
       - name: Build MXE
         run: |
