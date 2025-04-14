@@ -28,7 +28,10 @@ jobs:
             git \
             cmake \
             ninja-build \
-            pkg-config
+            pkg-config \
+            intltool \
+            lzip \
+            python3-mako
 
       - name: Clone MXE
         run: |
