@@ -65,7 +65,7 @@ jobs:
       - name: Build MXE with Qt5 (32bit)
         run: |
           cd mxe
-          make qtbase qttools cmake MXE_TARGETS='i686-w64-mingw32.static' -j$(nproc)
+          make qtbase qttools cmake MXE_TARGETS='i686-w64-mingw32.static' qtbase_SKIP_MARIADB=1 -j$(nproc)
 
       - name: Package MXE Qt5 32bit
         run: |
