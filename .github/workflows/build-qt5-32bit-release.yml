@@ -73,7 +73,7 @@ jobs:
           +              $(if $(filter $(MXE_WINDOWS_BUILD),y), \
           +                   openssl)
           +
-          EOF
+          'EOF'
 
               patch -p1 < disable-mariadb.patch
 
