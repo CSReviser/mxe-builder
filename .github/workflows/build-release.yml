@@ -59,7 +59,7 @@ jobs:
         run: |
           git clone https://github.com/mxe/mxe.git
           cd mxe
-          make qtbase qttools cmake MXE_TARGETS='x86_64-w64-mingw32.static' -j$(nproc)
+          make qtbase qttools qtscript cmake MXE_TARGETS='x86_64-w64-mingw32.static' -j$(nproc)
 
       - name: Package MXE
         run: |
