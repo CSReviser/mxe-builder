@@ -66,7 +66,10 @@ jobs:
         run: |
           cd mxe
           export qtbase_SKIP_MARIADB=1
-          make qtbase MXE_TARGETS='i686-w64-mingw32.static' -j$(nproc)
+          make qtbase \
+          MXE_TARGETS='i686-w64-mingw32.static' \
+          qtbase_CONFIGURE_OPTS='-no-sql-mysql -no-sql-odbc' \
+          -j$(nproc)
         continue-on-error: true
 
       - name: Show mariadb-connector-c build log
