@@ -67,9 +67,21 @@ jobs:
           cd mxe
           export qtbase_SKIP_MARIADB=1
           make qtbase MXE_TARGETS='i686-w64-mingw32.static' -j$(nproc)
+        continue-on-error: true
 
-      - name: Print mariadb build log
-        run: cat mxe/log/mariadb-connector-c_i686-w64-mingw32.static
+      - name: Show mariadb-connector-c build log
+        if: always()
+        run: |
+          cat mxe/log/mariadb-connector-c_i686-w64-mingw32.static || echo "Log not found"
+
+#      - name: Build MXE with Qt5 (32bit)
+#        run: |
+#          cd mxe
+#          export qtbase_SKIP_MARIADB=1
+#          make qtbase MXE_TARGETS='i686-w64-mingw32.static' -j$(nproc)
+
+#      - name: Print mariadb build log
+#        run: cat mxe/log/mariadb-connector-c_i686-w64-mingw32.static
       - name: Package MXE Qt5 32bit
         run: |
           tar -czf mxe-qt5-i686-static.tar.gz mxe
