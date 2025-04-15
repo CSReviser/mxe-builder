@@ -70,8 +70,8 @@ jobs:
           +              $(if $(filter $(MXE_WINDOWS_BUILD),y), \
           +                   openssl)
           EOF
-          cd mxe
-          patch -p1 < ../qtbase-no-mariadb.patch
+              cd mxe
+              patch -p1 < ../qtbase-no-mariadb.patch
 
       - name: Build MXE with Qt5 (32bit)
         run: |
