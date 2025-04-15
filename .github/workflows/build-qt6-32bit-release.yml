@@ -15,62 +15,40 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-              autoconf \
-              automake \
-              autopoint \
-              bash \
-              bison \
-              bzip2 \
-              flex \
-              g++ \
-              g++-multilib \
-              gettext \
-              git \
-              gperf \
-              intltool \
-              libc6-dev-i386 \
-              libclang-dev \
-              libgdk-pixbuf2.0-dev \
-              libltdl-dev \
-              libgl-dev \
-              libpcre2-dev \
-              libssl-dev \
-              libtool-bin \
-              libxml-parser-perl \
-              lzip \
-              make \
-              openssl \
-              p7zip-full \
-              patch \
-              perl \
-              python3 \
-              python3-mako \
-              python3-packaging \
-              python3-pkg-resources \
-              python3-setuptools \
-              python-is-python3 \
-              ruby \
-              sed \
-              sqlite3 \
-              unzip \
-              wget \
-              xz-utils
+            autoconf automake autopoint bash bison bzip2 flex g++ g++-multilib \
+            gettext git gperf intltool libc6-dev-i386 libclang-dev libgdk-pixbuf2.0-dev \
+            libltdl-dev libgl-dev libpcre2-dev libssl-dev libtool-bin libxml-parser-perl \
+            lzip make openssl p7zip-full patch perl python3 python3-mako python3-packaging \
+            python3-pkg-resources python3-setuptools python-is-python3 ruby sed sqlite3 \
+            unzip wget xz-utils
 
       - name: Clone MXE
         run: |
           git clone https://github.com/mxe/mxe.git
           cd mxe
+          git checkout master
 
-      - name: Enable Qt6 plugin
+      - name: Patch qtbase.mk to skip MariaDB
+        run: |
+          cat <<'EOF' > qt6-disable-mariadb.patch
+--- a/src/qtbase.mk
++++ b/src/qtbase.mk
+@@ -32,7 +32,10 @@
+ $(PKG)_DEPS := zlib libpng freetype fontconfig sqlite libjpeg \
+-              dbus libicu pcre2 harfbuzz xz libxml2 \
+-              $(if $(filter $(MXE_WINDOWS_BUILD),y), \
+-                   openssl libmysqlclient)
++              dbus libicu pcre2 harfbuzz xz libxml2 \
++              $(if $(filter $(MXE_WINDOWS_BUILD),y), \
++                   openssl)
+EOF
+          patch -p1 -d mxe < qt6-disable-mariadb.patch
+
+      - name: Build MXE with Qt6 (32bit static)
         run: |
           cd mxe
-          echo 'MXE_PLUGIN_DIRS += plugins/apps/qt6' >> settings.mk
+          make qtbase qttools cmake MXE_TARGETS='i686-w64-mingw32.static' qtbase_SKIP_MARIADB=1 -j$(nproc)
 
-      - name: Build MXE with Qt6 (32bit)
-        run: |
-          cd mxe
-          export qtbase_SKIP_MARIADB=1
-          make qt6-qtbase qt6-qttools cmake MXE_TARGETS='i686-w64-mingw32.static' -j$(nproc)
       - name: Package MXE Qt6 32bit
         run: |
           tar -czf mxe-qt6-i686-static.tar.gz mxe
