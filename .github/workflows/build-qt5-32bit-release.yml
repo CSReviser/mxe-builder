@@ -58,28 +58,23 @@ jobs:
 
       - name: Clone MXE
         run: git clone https://github.com/mxe/mxe.git
+          cd mxe
 
+              cat > disable-mariadb.patch <<'EOF'
+          --- a/src/qtbase.mk
+          +++ b/src/qtbase.mk
+          @@ -33,7 +33,10 @@ $(PKG)_DEPS := zlib libpng freetype fontconfig sqlite libjpeg \
+          -              dbus libicu pcre2 harfbuzz xz libxml2 \
+          -              $(if $(filter $(MXE_WINDOWS_BUILD),y), \
+          -                   openssl libmysqlclient)
+          +              dbus libicu pcre2 harfbuzz xz libxml2 \
+          +              $(if $(filter $(MXE_WINDOWS_BUILD),y), \
+          +                   openssl)
 
-- name: Clone MXE and apply qtbase patch
-  run: |
-    git clone https://github.com/mxe/mxe.git
-    cd mxe
+           $(PKG)_BUILD_DIR := $(BUILD_DIR)/$(PKG)-$(TARGET)
+          EOF
 
-    cat > disable-mariadb.patch <<'EOF'
---- a/src/qtbase.mk
-+++ b/src/qtbase.mk
-@@ -33,7 +33,10 @@ $(PKG)_DEPS := zlib libpng freetype fontconfig sqlite libjpeg \
--              dbus libicu pcre2 harfbuzz xz libxml2 \
--              $(if $(filter $(MXE_WINDOWS_BUILD),y), \
--                   openssl libmysqlclient)
-+              dbus libicu pcre2 harfbuzz xz libxml2 \
-+              $(if $(filter $(MXE_WINDOWS_BUILD),y), \
-+                   openssl)
-
- $(PKG)_BUILD_DIR := $(BUILD_DIR)/$(PKG)-$(TARGET)
-EOF
-
-    patch -p1 < disable-mariadb.patch
+              patch -p1 < disable-mariadb.patch
 
       - name: Apply patch to disable mariadb-connector-c
         working-directory: ./mxe
