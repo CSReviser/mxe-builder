@@ -54,7 +54,9 @@ jobs:
               sqlite3 \
               unzip \
               wget \
-              xz-utils
+              xz-utils \
+              g++-multilib \
+              libc6-dev-i386
 
       - name: Clone MXE and apply qtbase patch
         run: |
