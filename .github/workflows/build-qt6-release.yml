@@ -79,22 +79,31 @@ jobs:
         run: |
           tar -czf mxe-qt6-x86_64.tar.gz mxe
 
-      - name: Replace symlinks with actual files
-        working-directory: mxe
+      - name: Fix absolute symlinks in MXE before packaging
         run: |
-          for d in usr/bin usr/x86_64-w64-mingw32.static/bin usr/x86_64-w64-mingw32.static/qt6/bin; do
-            if [ -d "$d" ]; then
-              find "$d" -type l | while read link; do
-                target=$(readlink "$link")
-                full_target=$(realpath -m "$(dirname "$link")/$target")
-                if [ -e "$full_target" ]; then
-                  echo "Replacing $link with $full_target"
-                  rm "$link"
-                  cp "$full_target" "$link"
+          find mxe/usr/bin mxe/usr/x86_64-w64-mingw32.static -type l | while read link; do
+            target=$(readlink "$link")
+            if [[ "$target" = /* ]]; then
+              # 絶対パスになっていたら相対パスに置き換える（またはコピーする）
+              abs_target=$(basename "$target")
+              real_target=$(find mxe/usr -name "$abs_target" | head -n1)
+              if [[ -n "$real_target" ]]; then
+                rm "$link"
+                if [[ -d "$real_target" ]]; then
+                  cp -r "$real_target" "$link"
+                else
+                  cp "$real_target" "$link"
                 fi
-              done
+                echo "Replaced $link with $real_target"
+              fi
             fi
           done
+
+      - name: Create archive without builder path
+        run: |
+          tar --directory=mxe-builder/mxe \
+              --transform='s,^,mxe/,' \
+              -czf mxe-x86_64-w64-mingw32.static.tar.gz .
 
       - name: Create GitHub Release and Upload
         uses: softprops/action-gh-release@v1
