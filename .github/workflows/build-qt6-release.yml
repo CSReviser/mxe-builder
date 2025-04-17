@@ -109,3 +109,42 @@ jobs:
           files: mxe-qt6-x86_64.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
+
+
+
+
+name: Build MXE with Qt6
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-mxe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential curl git unzip bison flex cmake python3 g++ \
+            libtool libtool-bin automake autoconf gettext autopoint texinfo libglib2.0-dev
+
+      - name: Clone MXE
+        run: |
+          git clone https://github.com/mxe/mxe.git
+          cd mxe
+          make qt6 qt6base MXE_TARGETS='x86_64-w64-mingw32.static' -j$(nproc)
+
+      - name: Create archive without symlinks
+        run: |
+          tar -czf mxe-qt6-x86_64.tar.gz --dereference -C ./ mxe
+
+      - name: Upload artifact to Release (optional)
+        uses: actions/upload-artifact@v3
+        with:
+          name: mxe-qt6
+          path: mxe-qt6-x86_64.tar.gz
