@@ -1,1 +1,1 @@
-find mxe/ -type f \( -name "*.cmake" -o -name "*.pri" -o -name "*.la" -o -name "*.pc" \) -exec sed -i 's|/home/runner/work/mxe-builder/mxe-builder/mxe|/your/desired/path/mxe|g' {} +
+find mxe/ -type f \( -name "*.cmake" -o -name "*.pri" -o -name "*.la" -o -name "*.pc" \) -exec sed -i 's|/home/runner/work/mxe-builder/mxe-builder/mxe|/home/runner/work/CaptureStream2/CaptureStream2/mxe|g' {} +
