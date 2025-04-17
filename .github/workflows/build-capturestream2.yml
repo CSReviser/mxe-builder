@@ -1,0 +1,44 @@
+name: Build CaptureStream2 with MXE
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-app:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout mxe-builder repository
+        uses: actions/checkout@v4
+
+      - name: Clone CaptureStream2 repository
+        run: |
+          git clone --depth=1 https://github.com/CSReviser/CaptureStream2.git app
+
+      - name: Download MXE artifact
+        uses: actions/download-release-asset@v1
+        with:
+          repository: CSReviser/mxe-builder
+          tag: mxe-qt6-v1
+          file: mxe-qt6-x86_64.tar.gz
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract MXE environment
+        run: |
+          mkdir mxe
+          tar -xzf mxe-qt6-x86_64.tar.gz -C ./mxe --strip-components=1
+
+      - name: Build CaptureStream2 with MXE
+        run: |
+          export PATH=$(pwd)/mxe/usr/bin:$PATH
+          cd app
+          mkdir build
+          cd build
+          x86_64-w64-mingw32.static-cmake ..
+          make -j$(nproc)
+
+      - name: Upload built app
+        uses: actions/upload-artifact@v4
+        with:
+          name: capturestream2-windows
+          path: app/build/*.exe
