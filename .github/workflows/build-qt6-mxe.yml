@@ -1,0 +1,52 @@
+name: Cross Compile Qt6 App (CMake + MXE)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y curl tar cmake ninja-build pkg-config qt6-base-dev
+      - name: Download MXE Qt6 release
+        run: |
+          curl -L -o mxe.tar.gz https://github.com/CSReviser/mxe-builder/releases/download/mxe-qt6-v1/mxe-qt6-x86_64.tar.gz
+          tar -xzf mxe.tar.gz
+
+      - name: Download CaptureStream2 Qt6 release
+        run: |
+          wget --no-check-certificate https://github.com/CSReviser/CaptureStream2/archive/master.tar.gz
+          tar xpvf master.tar.gz
+          rm master.tar.gz
+          cd CaptureStream2-master
+          
+      - name: Debug MXE directory contents
+        run: |
+          ls -alh mxe/usr/bin/
+      - name: Configure and build
+        env:
+          MXE_PATH: ${{ github.workspace }}/mxe
+          HOST_QT_PATH: /usr/lib/qt6
+        run: |
+          export PATH=$MXE_PATH/usr/bin:$PATH
+          export TOOLCHAIN_FILE=$MXE_PATH/usr/x86_64-w64-mingw32.static/share/cmake/mxe-conf.cmake
+          mkdir build
+          cd build
+          cmake .. \
+            -DCMAKE_TOOLCHAIN_FILE=${TOOLCHAIN_FILE} \
+            -DQT_HOST_PATH=$HOST_QT_PATH \
+            -DCMAKE_PREFIX_PATH="$MXE_PATH/usr/x86_64-w64-mingw32.static/qt6" \
+            -DCMAKE_BUILD_TYPE=Release
+          cmake --build . --parallel $(nproc)
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Qt6App-windows
+          path: build/*.exe
