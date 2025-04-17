@@ -50,7 +50,7 @@ jobs:
       - name: Build MXE with Qt6 (32bit static)
         run: |
           cd mxe
-          make qtbase qttools cmake MXE_TARGETS='i686-w64-mingw32.static' qtbase_SKIP_MARIADB=1 -j$(nproc)
+          make qtbase qttools cmake
 
       - name: Package MXE Qt6 32bit
         run: |
