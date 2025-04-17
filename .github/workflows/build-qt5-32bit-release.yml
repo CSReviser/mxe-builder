@@ -66,15 +66,9 @@ jobs:
           cat > disable-mariadb.patch <<'EOF'
           --- a/src/qtbase.mk
           +++ b/src/qtbase.mk
-          @@ -33,7 +33,10 @@
-           $(PKG)_DEPS := zlib libpng freetype fontconfig sqlite libjpeg \
-          -              dbus libicu pcre2 harfbuzz xz libxml2 \
-          -              $(if $(filter $(MXE_WINDOWS_BUILD),y), \
-          -                   openssl libmysqlclient)
-          +              dbus libicu pcre2 harfbuzz xz libxml2 \
-          +              $(if $(filter $(MXE_WINDOWS_BUILD),y), \
-          +                   openssl)
-          +
+          @@ -12 +12 @@
+          -$(PKG)_DEPS     := cc dbus fontconfig freetds freetype harfbuzz jpeg mariadb-connector-c \
+          +$(PKG)_DEPS     := cc dbus fontconfig freetds freetype harfbuzz jpeg \
           'EOF'
 
               patch -p1 < disable-mariadb.patch
