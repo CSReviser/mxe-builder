@@ -39,7 +39,12 @@ jobs:
           export TOOLCHAIN_FILE=$MXE_PATH/usr/x86_64-w64-mingw32.static/share/cmake/mxe-conf.cmake
           mkdir build
           cd build
-          cmake . .
+          cmake .. \
+            -DCMAKE_TOOLCHAIN_FILE=${TOOLCHAIN_FILE} \
+            -DCMAKE_PREFIX_PATH="$MXE_PATH/usr/x86_64-w64-mingw32.static/qt6" \
+            -DQT_HOST_PATH="$QT_HOST_PATH" \
+            -DCMAKE_BUILD_TYPE=Release
+          cmake --build . --parallel $(nproc)
             -DCMAKE_TOOLCHAIN_FILE=${TOOLCHAIN_FILE} \
             -DQT_HOST_PATH=$HOST_QT_PATH \
             -DCMAKE_PREFIX_PATH="$MXE_PATH/usr/x86_64-w64-mingw32.static/qt6" \
