@@ -75,31 +75,9 @@ jobs:
           cd mxe
           make qt6-qtbase qt6-qttools gcc cmake MXE_TARGETS='x86_64-w64-mingw32.static' -j$(nproc)
 
-      - name: Fix absolute symlinks in MXE before packaging
+      - name: Create archive without symlinks
         run: |
-          find mxe/usr/bin mxe/usr/x86_64-w64-mingw32.static -type l | while read link; do
-            target=$(readlink "$link")
-            if [[ "$target" = /* ]]; then
-              # 絶対パスになっていたら相対パスに置き換える（またはコピーする）
-              abs_target=$(basename "$target")
-              real_target=$(find mxe/usr -name "$abs_target" | head -n1)
-              if [[ -n "$real_target" ]]; then
-                rm "$link"
-                if [[ -d "$real_target" ]]; then
-                  cp -r "$real_target" "$link"
-                else
-                  cp "$real_target" "$link"
-                fi
-                echo "Replaced $link with $real_target"
-              fi
-            fi
-          done
-
-      - name: Create archive without builder path
-        run: |
-          tar --directory=mxe-builder/mxe \
-              --transform='s,^,mxe/,' \
-              -czf mxe-qt6-x86_64.tar.gz .
+          tar -czf mxe-qt6-x86_64.tar.gz --dereference -C ./ mxe
 
       - name: Create GitHub Release and Upload
         uses: softprops/action-gh-release@v1
@@ -109,42 +87,4 @@ jobs:
           files: mxe-qt6-x86_64.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-
-
-
-
-
-name: Build MXE with Qt6
-
-on:
-  workflow_dispatch:
-
-jobs:
-  build-mxe:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y build-essential curl git unzip bison flex cmake python3 g++ \
-            libtool libtool-bin automake autoconf gettext autopoint texinfo libglib2.0-dev
-
-      - name: Clone MXE
-        run: |
-          git clone https://github.com/mxe/mxe.git
-          cd mxe
-          make qt6 qt6base MXE_TARGETS='x86_64-w64-mingw32.static' -j$(nproc)
-
-      - name: Create archive without symlinks
-        run: |
-          tar -czf mxe-qt6-x86_64.tar.gz --dereference -C ./ mxe
-
-      - name: Upload artifact to Release (optional)
-        uses: actions/upload-artifact@v3
-        with:
-          name: mxe-qt6
-          path: mxe-qt6-x86_64.tar.gz
+          
