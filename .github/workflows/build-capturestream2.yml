@@ -15,13 +15,16 @@ jobs:
         run: |
           git clone --depth=1 https://github.com/CSReviser/CaptureStream2.git app
 
-      - name: Download MXE artifact
-        uses: actions/download-release-asset@v1
-        with:
-          repository: CSReviser/mxe-builder
-          tag: mxe-qt6-v1
-          file: mxe-qt6-x86_64.tar.gz
-          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install GitHub CLI
+        run: sudo apt-get update && sudo apt-get install -y gh
+
+      - name: Download MXE artifact from Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release download latest \
+            --repo ${{ github.repository }} \
+            --pattern "mxe-qt6-x86_64.tar.gz"
 
       - name: Extract MXE environment
         run: |
