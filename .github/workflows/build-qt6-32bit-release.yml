@@ -49,6 +49,7 @@ jobs:
 
       - name: Package MXE Qt6 32bit
         run: |
+          find ./ -type f \( -name "*.cmake" -o -name "*.pri" -o -name "*.la" -o -name "*.pc" \) -exec sed -i 's|/home/runner/work/mxe-builder/mxe-builder/mxe|/mxe|g' {} +
           tar -czf mxe-qt6-i686-static.tar.gz mxe
 
       - name: Upload to GitHub Release
