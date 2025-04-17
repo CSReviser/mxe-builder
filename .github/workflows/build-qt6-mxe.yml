@@ -19,13 +19,6 @@ jobs:
         run: |
           curl -L -o mxe.tar.gz https://github.com/CSReviser/mxe-builder/releases/download/mxe-qt6-v1/mxe-qt6-x86_64.tar.gz
           tar -xzf mxe.tar.gz
-
-      - name: Download CaptureStream2 Qt6 release
-        run: |
-          wget --no-check-certificate https://github.com/CSReviser/CaptureStream2/archive/master.tar.gz
-          tar xpvf master.tar.gz
-          rm master.tar.gz
-          cd CaptureStream2-master
           
       - name: Debug MXE directory contents
         run: |
@@ -35,11 +28,13 @@ jobs:
           MXE_PATH: ${{ github.workspace }}/mxe
           HOST_QT_PATH: /usr/lib/qt6
         run: |
+          wget --no-check-certificate https://github.com/CSReviser/CaptureStream2/archive/master.tar.gz
+          tar xpvf master.tar.gz
+          rm master.tar.gz
+          cd CaptureStream2-master
           export PATH=$MXE_PATH/usr/bin:$PATH
           export TOOLCHAIN_FILE=$MXE_PATH/usr/x86_64-w64-mingw32.static/share/cmake/mxe-conf.cmake
-          mkdir build
-          cd build
-          cmake .. \
+          cmake . .
             -DCMAKE_TOOLCHAIN_FILE=${TOOLCHAIN_FILE} \
             -DCMAKE_PREFIX_PATH="$MXE_PATH/usr/x86_64-w64-mingw32.static/qt6" \
             -DQT_HOST_PATH="$QT_HOST_PATH" \
