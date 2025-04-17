@@ -36,13 +36,12 @@ jobs:
           --- a/src/qtbase.mk
           +++ b/src/qtbase.mk
           @@ -32,7 +32,10 @@
-           $(PKG)_DEPS := zlib libpng freetype fontconfig sqlite libjpeg \
-          -              dbus libicu pcre2 harfbuzz xz libxml2 \
-          -              $(if $(filter $(MXE_WINDOWS_BUILD),y), \
-          -                   openssl libmysqlclient)
-          +              dbus libicu pcre2 harfbuzz xz libxml2 \
-          +              $(if $(filter $(MXE_WINDOWS_BUILD),y), \
-          +                   openssl)
+           -　$(PKG)_DEPS     := cc dbus fontconfig freetds freetype harfbuzz jpeg mariadb-connector-c \
+           -        libpng mesa openssl pcre2 postgresql sqlite zlib zstd $(BUILD)~zstd \
+           -        $(if $(findstring shared,$(MXE_TARGETS)), icu4c)
+           +　$(PKG)_DEPS     := cc dbus fontconfig freetds freetype harfbuzz jpeg \
+           +        libpng mesa openssl pcre2 postgresql sqlite zlib zstd $(BUILD)~zstd \
+           +        $(if $(findstring shared,$(MXE_TARGETS)), icu4c)
           'EOF'
           
             patch -p1 -d mxe < qt6-disable-mariadb.patch
