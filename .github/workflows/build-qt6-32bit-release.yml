@@ -42,6 +42,10 @@ jobs:
           
             patch -p1 -d mxe < qt6-disable-mariadb.patch
 
+      - name: Remove mariadb-connector-c references from MXE
+        run: |
+          bash ./scripts/remove-mariadb.sh
+
       - name: Build MXE with Qt6 (32bit static)
         run: |
           cd mxe
