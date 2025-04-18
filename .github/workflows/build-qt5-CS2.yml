@@ -1,4 +1,4 @@
-name: Build CaptureStream2 with MXE
+name: Build QT5 CaptureStream2 with MXE
 
 on:
   workflow_dispatch:
