@@ -51,7 +51,7 @@ jobs:
       - name: Configure and build Qt statically (make version)
         run: |
           mkdir qt-build
-          cd qt-everywhere-src-6.5.0
+          cd qt-everywhere-opensource-src-6.5.5
           ./configure \
             -prefix ../qt-build/qt6-static-install \
             -static \
