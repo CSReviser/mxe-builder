@@ -31,7 +31,7 @@ jobs:
           mkdir mxe
           tar -xzf mxe-x86_64-w64-mingw32.static.tar.gz
 
-      - name: Build Qt app with qmake (MXE)
+      - name: Build CaptureStream2 with qmake (MXE)
         env:
           MXE_PATH: ${{ github.workspace }}/mxe
         run: |
@@ -41,16 +41,6 @@ jobs:
           mkdir build
           cd build
           $QT_QMAKE ../CaptureStream2.pro
-          make -j$(nproc)
-
-      - name: Build CaptureStream2 with MXE
-        run: |
-          export PATH=$(pwd)/mxe/usr/bin:$PATH
-          export QT_QMAKE=$MXE_PATH/usr/x86_64-w64-mingw32.static/qt5/bin/qmake
-          cd app
-          mkdir build
-          cd build
-          $QT_QMAKE
           make -j$(nproc)
 
       - name: Upload built app
