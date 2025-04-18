@@ -30,7 +30,7 @@ jobs:
 
       - name: Clone MXE
         run: |
-          git clone https://github.com/mxe/mxe.
+          git clone https://github.com/mxe/mxe.git
           chmod +x ./remove-mariadb.sh
           bash ./remove-mariadb.sh
           cd mxe
