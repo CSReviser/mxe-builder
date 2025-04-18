@@ -27,6 +27,7 @@ jobs:
       - name: Clone MXE
         run: |
           git clone https://github.com/mxe/mxe.git
+          bash ./remove-mariadb.sh
           cd mxe
           git checkout master
 
@@ -42,9 +43,6 @@ jobs:
           
             patch -p1 -d mxe < qt6-disable-mariadb.patch
 
-      - name: Remove mariadb-connector-c references from MXE
-        run: |
-          bash ./remove-mariadb.sh
 
       - name: Build MXE with Qt6 (32bit static)
         run: |
