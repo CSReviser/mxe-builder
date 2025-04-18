@@ -44,7 +44,7 @@ jobs:
 
       - name: Remove mariadb-connector-c references from MXE
         run: |
-          bash ./scripts/remove-mariadb.sh
+          bash ./remove-mariadb.sh
 
       - name: Build MXE with Qt6 (32bit static)
         run: |
