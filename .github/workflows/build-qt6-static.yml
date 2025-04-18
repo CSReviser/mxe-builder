@@ -45,8 +45,8 @@ jobs:
 
       - name: Download Qt 6.5 source
         run: |
-          curl -LO https://download.qt.io/official_releases/qt/6.5/6.5.0/single/qt-everywhere-src-6.5.0.tar.xz
-          tar xf qt-everywhere-src-6.5.0.tar.xz
+          curl -LO ttps://download.qt.io/archive/qt/6.5/6.5.5/src/single/qt-everywhere-opensource-src-6.5.5.tar.xz
+          tar xf qt-everywhere-opensource-src-6.5.5.tar.xz
 
       - name: Configure and build Qt statically (make version)
         run: |
