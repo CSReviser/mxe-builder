@@ -11,6 +11,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+      - name: Checkout source
+        uses: actions/checkout@v3
+
       - name: Install dependencies
         run: |
           sudo apt-get update
@@ -26,7 +30,8 @@ jobs:
 
       - name: Clone MXE
         run: |
-          git clone https://github.com/mxe/mxe.git
+          git clone https://github.com/mxe/mxe.
+          chmod +x ./remove-mariadb.sh
           bash ./remove-mariadb.sh
           cd mxe
           git checkout master
