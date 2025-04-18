@@ -33,11 +33,11 @@ jobs:
       - name: Patch qtbase.mk to skip MariaDB
         run: |
           cat <<'EOF' > qt6-disable-mariadb.patch
-          --- a/src/qtbase.mk
-          +++ b/src/qtbase.mk
-          @@ -12 +12 @@
-          -$(PKG)_DEPS     := cc dbus fontconfig freetds freetype harfbuzz jpeg mariadb-connector-c \
-          +$(PKG)_DEPS     := cc dbus fontconfig freetds freetype harfbuzz jpeg \
+          --- a/src/qt/qt6/qt6-qtbase.mk
+          +++ b/src/qt/qt6/qt6-qtbase.mk
+          @@ -14 +14 @@
+          -$(PKG)_DEPS     := cc freetype harfbuzz jpeg libpng mesa mariadb-connector-c openssl pcre2
+          +$(PKG)_DEPS     := cc freetype harfbuzz jpeg libpng mesa openssl pcre2
           'EOF'
           
             patch -p1 -d mxe < qt6-disable-mariadb.patch
