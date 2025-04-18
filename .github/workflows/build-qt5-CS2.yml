@@ -29,7 +29,7 @@ jobs:
       - name: Extract MXE environment
         run: |
           mkdir mxe
-          tar -xzf mxe-x86_64-w64-mingw32.static.tar.gz -C ./mxe --strip-components=1
+          tar -xzf mxe-x86_64-w64-mingw32.static.tar.gz
 
       - name: Build CaptureStream2 with MXE
         run: |
