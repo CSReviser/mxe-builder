@@ -40,7 +40,7 @@ jobs:
           cd app
           mkdir build
           cd build
-          $QT_QMAKE
+          $QT_QMAKE ../CaptureStream2.pro
           make -j$(nproc)
 
       - name: Build CaptureStream2 with MXE
