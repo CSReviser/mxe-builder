@@ -37,25 +37,10 @@ jobs:
             libgtk-3-dev \
             libx11-dev \
             libx11-xcb-dev \
-            libxcb-cursor-dev \
-            libxcb-glx0-dev \
-            libxcb-icccm4-dev \
-            libxcb-image0-dev \
-            libxcb-keysyms1-dev \
             libxcb-randr0-dev \
-            libxcb-render-util0-dev \
             libxcb-shape0-dev \
             libxcb-shm0-dev \
             libxcb-sync-dev \
-            libxcb-util-dev \
-            libxcb-xfixes0-dev \
-            libxcb-xkb-dev \
-            libxcb1-dev \
-            libxext-dev \
-            libxfixes-dev \
-            libxi-dev \
-            libxkbcommon-dev \
-            libxkbcommon-x11-dev \
             libxrender-dev
 
       - name: Download Qt 6.5 source
@@ -63,29 +48,28 @@ jobs:
           curl -LO https://download.qt.io/official_releases/qt/6.5/6.5.0/single/qt-everywhere-src-6.5.0.tar.xz
           tar xf qt-everywhere-src-6.5.0.tar.xz
 
-      - name: Configure and build Qt statically
+      - name: Configure and build Qt statically (make version)
         run: |
           mkdir qt-build
-          cd qt-build
-          ../qt-everywhere-src-6.5.0/configure \
-            -prefix $PWD/qt6-static-install \
+          cd qt-everywhere-src-6.5.0
+          ./configure \
+            -prefix ../qt-build/qt6-static-install \
             -static \
             -release \
             -nomake examples \
             -nomake tests \
-            -skip qtwebengine \
             -opensource -confirm-license \
             -platform linux-g++ \
-            -debug-and-release -force-debug-info -opensource -confirm-license \
-            -c++std c++20 -openssl-linked \
+            -c++std c++20 \
+            -skip qtwebengine \
             -skip qt3d -skip qt5compat -skip qtactiveqt -skip qtcharts -skip qtcoap -skip qtconnectivity \
             -skip qtdatavis3d -skip qtdoc -skip qtlottie -skip qtmqtt -skip qtnetworkauth -skip qtopcua \
             -skip qtserialport -skip qtpositioning -skip qtquicktimeline -skip qtquick3d -skip qtremoteobjects \
             -skip qtscxml -skip qtsensors -skip qtserialbus -skip qtvirtualkeyboard \
             -skip qtwebchannel -skip qtwebengine -skip qtwebview -skip qtquick3dphysics -skip qtspeech -skip qtlocation \
             -skip qthttpserver
-          cmake --build . --parallel $(nproc)
-          cmake --install .
+          make -j$(nproc)
+          make install
 
       - name: Package Qt
         run: |
