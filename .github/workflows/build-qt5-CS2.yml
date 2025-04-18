@@ -37,7 +37,7 @@ jobs:
           cd app
           mkdir build
           cd build
-          x86_64-w64-mingw32.static-cmake ..
+          qmake
           make -j$(nproc)
 
       - name: Upload built app
