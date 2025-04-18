@@ -3,12 +3,22 @@
 
 set -e
 
-echo "Removing references to mariadb-connector-c..."
+echo "Safely removing mariadb-connector-c from .mk files..."
 
-# テキストファイルのみ対象にして安全に置換
-find . -type f -exec grep -Il 'mariadb-connector-c' {} \; | while read -r file; do
-    echo "Cleaning $file"
-    sed -i '/mariadb-connector-c/d' "$file"
+find . -name '*.mk' -print0 | while IFS= read -r -d '' file; do
+    if grep -q 'mariadb-connector-c' "$file"; then
+        echo "Processing $file"
+
+        # sedで連結行のmariadb-connector-cを安全に除去
+        sed -i.bak -E '/\\$/ {
+            :a
+            N
+            /\\$/ba
+        } ; s/\\?[[:space:]]*mariadb-connector-c\\?[[:space:]]*\\?\\n//g' "$file"
+
+        # 念のため空行や多重バックスラッシュの整理も
+        sed -i -E '/^$/d' "$file"
+    fi
 done
 
 echo "Cleanup complete."
