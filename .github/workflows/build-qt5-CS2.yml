@@ -37,10 +37,10 @@ jobs:
         run: |
           export PATH=$MXE_PATH/usr/bin:$PATH
           export QT_QMAKE=$MXE_PATH/usr/x86_64-w64-mingw32.static/qt5/bin/qmake
-
+          cd app
           mkdir build
           cd build
-          $QT_QMAKE ../
+          $QT_QMAKE
           make -j$(nproc)
 
       - name: Build CaptureStream2 with MXE
