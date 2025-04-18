@@ -43,8 +43,11 @@ jobs:
           $QT_QMAKE ../CaptureStream2.pro
           make -j$(nproc)
 
+      - name: Tar files
+        run: tar cvf CaptureStream2.tar app/build/release/*.exe
+
       - name: Upload built app
         uses: actions/upload-artifact@v4
         with:
           name: capturestream2-windows-qt5
-          path: app/build/release/*.exe
+          path: app/build/CaptureStream2.tar
