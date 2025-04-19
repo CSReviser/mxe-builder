@@ -1,4 +1,4 @@
-name: Build Qt6.5.3 MXE with Qt6 and Upload to Releases
+name: Build Qt6.8.3 MXE with Qt6 and Upload to Releases
 
 on:
   workflow_dispatch:
@@ -63,7 +63,7 @@ jobs:
         run: |
           git clone https://github.com/mxe/mxe.git
           cd mxe
-          git checkout 59472e38
+          git checkout a135f8a5
           # 必要であれば特定のコミットやブランチに固定可能
           # git checkout 59472e38
 
