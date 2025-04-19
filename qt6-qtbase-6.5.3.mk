@@ -9,9 +9,9 @@ $(PKG)_VERSION  := 6.5.3
 $(PKG)_CHECKSUM := SKIP
 $(PKG)_SUBDIR   := $(PKG_BASENAME)-everywhere-src-$($(PKG)_VERSION)
 $(PKG)_FILE     := $(PKG_BASENAME)-everywhere-src-$($(PKG)_VERSION).tar.xz
-$(PKG)_URL      := https://download.qt.io/archive/qt/6.5/$($(PKG)_VERSION)/submodules/$($(PKG)_FILE)
+$(PKG)_URL      := https://download.qt.io/official_releases/qt/6.5/$($(PKG)_VERSION)/submodules/$($(PKG)_FILE)
 $(PKG)_TARGETS  := $(BUILD) $(MXE_TARGETS)
-$(PKG)_DEPS     := cc freetype harfbuzz jpeg libpng mesa openssl pcre2 sqlite zlib zstd $(BUILD)~$(PKG) \
+$(PKG)_DEPS     := cc freetype harfbuzz jpeg libpng mesa pcre2 sqlite zlib zstd $(BUILD)~$(PKG) \
                    $(if $(findstring shared,$(MXE_TARGETS)), icu4c)
 $(PKG)_DEPS_$(BUILD) :=
 $(PKG)_OO_DEPS_$(BUILD) := ninja
@@ -48,15 +48,10 @@ define $(PKG)_BUILD
         -DFEATURE_system_harfbuzz=ON \
         -DFEATURE_icu=$(CMAKE_SHARED_BOOL) \
         -DFEATURE_opengl_dynamic=ON \
-        -DFEATURE_openssl=ON \
-        -DFEATURE_openssl_linked=ON \
-        -DOPENSSL_USE_STATIC_LIBS=TRUE \
+        -DFEATURE_openssl=OFF \
         -DFEATURE_system_pcre2=ON \
         -DFEATURE_pkg_config=ON \
-        -DFEATURE_sql_mysql=ON \
-        -DMySQL_INCLUDE_DIR='$(PREFIX)/$(TARGET)/include/mariadb' \
-        -DMySQL_LIBRARY_DIR='$(PREFIX)/$(TARGET)/lib/mariadb' \
-        -DMySQL_LIBRARY=$(if $(BUILD_STATIC),"`$(TARGET)-pkg-config --libs libmariadb`",'$(PREFIX)/$(TARGET)/lib/mariadb/libmariadb.a') \
+        -DFEATURE_sql_mysql=OFF \
         -DFEATURE_sql_odbc=ON \
         -DFEATURE_sql_psql=OFF \
         -DFEATURE_system_sqlite=ON \
@@ -69,6 +64,12 @@ define $(PKG)_BUILD
     $(if $(BUILD_STATIC),$(SED) -i -e 's/^QMAKE_PRL_LIBS .*/& -lodbc32/;' \
 	      -e 's/^QMAKE_PRL_LIBS_FOR_CMAKE .*/&;-lodbc32/;' \
               '$(PREFIX)/$(TARGET)/$(MXE_QT6_ID)/plugins/sqldrivers/qsqlodbc.prl',)
+
+    # QTBUG-103019 MinGW Qt6Platform.pc has an extra '>' after '-D_UNICODE'
+    # https://bugreports.qt.io/browse/QTBUG-103019
+    # However, qt6 seems to install .pc files only for shared builds.
+    $(if $(BUILD_SHARED),$(SED) -i 's/-D_UNICODE>/-D_UNICODE/' \
+              '$(PREFIX)/$(TARGET)/$(MXE_QT6_ID)/lib/pkgconfig/Qt6Platform.pc',)
 
     mkdir -p '$(CMAKE_TOOLCHAIN_DIR)'
     echo 'set(QT_HOST_PATH "$(PREFIX)/$(BUILD)/$(MXE_QT6_ID)")' \
