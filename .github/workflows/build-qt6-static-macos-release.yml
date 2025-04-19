@@ -1,0 +1,91 @@
+name: Mac Build and Release Qt6 Static for macOS
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-qt6-static:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          brew install \
+            cmake \
+            ninja \
+            python3 \
+            perl \
+            bison \
+            flex \
+            gperf \
+            pkg-config \
+            coreutils
+
+      - name: Clone Qt6 source
+        run: |
+          git clone https://code.qt.io/qt/qt5.git qt6-src
+          cd qt6-src
+          git checkout v6.5.3
+          perl init-repository --module-subset=qtbase,qtsvg,qtshadertools,qtdeclarative
+
+      - name: Configure Qt6 for static build
+        run: |
+          mkdir -p $HOME/qt6-static-install
+          cd qt6-src
+          ./configure \
+            -prefix $HOME/qt6-static-install \
+            -static \
+            -release \
+            -opensource \
+            -confirm-license \
+            -nomake tests \
+            -nomake examples \
+            -skip qtwebengine \
+            -skip qtdoc \
+            -skip qttranslations \
+            -skip qttools \
+            -skip qt3d \
+            -skip qtlocation \
+            -skip qtserialport \
+            -skip qtmultimedia \
+            -skip qtconnectivity \
+            -skip qtquick3d \
+            -skip qtwebsockets \
+            -skip qtwebchannel \
+            -skip qtwayland \
+            -skip qtimageformats \
+            -skip qtquicktimeline \
+            -skip qtremoteobjects \
+            -skip qtvirtualkeyboard \
+            -skip qtcharts \
+            -skip qtdatavis3d \
+            -skip qtquick3dphysics \
+            -platform macx-clang
+
+      - name: Build Qt6
+        run: |
+          cd qt6-src
+          make -j$(sysctl -n hw.logicalcpu)
+
+      - name: Install Qt6
+        run: |
+          cd qt6-src
+          make install
+
+      - name: Archive Qt6 static build
+        run: |
+          cd $HOME
+          tar --dereference -czf qt6-static-macos.tar.gz qt6-static-install
+
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: qt6-static-macos-v6.5.3
+          name: Qt6 Static macOS v6.5.3
+          files: |
+            $HOME/qt6-static-macos.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
