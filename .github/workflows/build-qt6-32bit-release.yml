@@ -33,6 +33,7 @@ jobs:
           git clone https://github.com/mxe/mxe.git
           chmod +x ./remove-mariadb.sh
           bash ./remove-mariadb.sh
+          rm -rf mxe/usr/* mxe/log/* mxe/pkg/* mxe/tmp/*
           grep -rn 'mariadb-connector-c' mxe/
           cd mxe
           git checkout master
