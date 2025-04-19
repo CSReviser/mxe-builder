@@ -51,14 +51,14 @@ jobs:
 
       - name: Download Qt 6.5 source
         run: |
-          curl -LO https://download.qt.io/official_releases/qt/6.9/6.9.0/single/qt-everywhere-src-6.9.0.tar.xz
+          curl -LO https://download.qt.io/official_releases/qt/6.8/6.8.3/single/qt-everywhere-src-6.8.3.tar.xz
           tar xf qt-everywhere-src-6.9.0.tar.xz
 
       - name: Configure and build Qt statically (make version)
         run: |
           mkdir qt-build
           cd  qt-build
-          /home/runner/work/mxe-builder/mxe-builder/qt-everywhere-src-6.9.0/configure \
+          /home/runner/work/mxe-builder/mxe-builder/qt-everywhere-src-6.8.3/configure \
             -prefix ../qt-build/qt6-static-install \
             -static \
             -release \
@@ -85,13 +85,13 @@ jobs:
       - name: Package Qt
         run: |
           cd qt-build
-          tar -czf qt6.9.0-linux-static.tar.gz qt6-static-install
+          tar -czf qt6.8.3-linux-static.tar.gz qt6-static-install
 
       - name: Upload to GitHub Releases
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: qt6.9.0-static-linux
-          name: Qt 6.9.0 Static Linux
-          files: qt-build/qt6.5.0-linux-static.tar.gz
+          tag_name: qt6.8.3-static-linux
+          name: Qt 6.8.3 Static Linux
+          files: qt-build/qt6.8.3-linux-static.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
