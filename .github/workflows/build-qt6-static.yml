@@ -60,7 +60,11 @@ jobs:
             -nomake examples \
             -nomake tests \
             -opensource -confirm-license \
-            -skip qtwebengine
+            -skip qtwebengine \
+            -skip qttools \
+            -skip qttranslations \
+            -skip qtdoc \
+            -platform linux-clang
           make -j$(nproc)
           make install
 
