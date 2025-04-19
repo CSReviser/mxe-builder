@@ -33,6 +33,8 @@ jobs:
           git clone https://github.com/mxe/mxe.git
           chmod +x ./remove-mariadb.sh
           bash ./remove-mariadb.sh
+          cp qtbase.mk mxe/src/qtbase.mk
+          cp qt6-qtbase.mk mxe/src/qt/qt6/qt6-qtbase.mk
           rm -rf mxe/usr/* mxe/log/* mxe/pkg/* mxe/tmp/*
           grep -rn 'mariadb-connector-c' mxe/
           cd mxe
