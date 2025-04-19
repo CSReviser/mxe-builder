@@ -58,7 +58,10 @@ jobs:
             -release \
             -nomake examples \
             -nomake tests \
-            -opensource -confirm-license \
+            -opensource -confirm-license 
+          make -j$(nproc)
+          make install
+
 #            -platform linux-g++ \
 #            -c++std c++20 \
 #            -skip qtimageformats -skip qtwebengine \
@@ -67,9 +70,7 @@ jobs:
 #            -skip qtserialport -skip qtpositioning -skip qtquicktimeline -skip qtquick3d -skip qtremoteobjects \
 #            -skip qtscxml -skip qtsensors -skip qtserialbus -skip qtvirtualkeyboard \
 #            -skip qtwebchannel -skip qtwebengine -skip qtwebview -skip qtquick3dphysics -skip qtspeech -skip qtlocation \
-            -skip qthttpserver
-          make -j$(nproc)
-          make install
+#            -skip qthttpserver
 
       - name: Package Qt
         run: |
