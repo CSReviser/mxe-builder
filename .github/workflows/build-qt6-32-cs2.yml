@@ -37,7 +37,7 @@ jobs:
           cd app
           mkdir build
           cd build
-          /home/runner/work/mxe-builder/mxe-builder/mxe/usr/i686-w64-mingw32.static/share/cmake/mxe-conf.cmake -S .. -B .
+          /home/runner/work/mxe-builder/mxe-builder/mxe/usr/bin/i686-w64-mingw32.static-cmake -S .. -B .
           make -j$(nproc)
 
       - name: Upload built app
