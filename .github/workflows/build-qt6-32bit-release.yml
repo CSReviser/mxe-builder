@@ -31,14 +31,15 @@ jobs:
       - name: Clone MXE
         run: |
           git clone https://github.com/mxe/mxe.git
-          chmod +x ./remove-mariadb.sh
-          bash ./remove-mariadb.sh
-          cp qtbase.mk mxe/src/qtbase.mk
-          cp qt6-qtbase.mk mxe/src/qt/qt6/qt6-qtbase.mk
-          grep -rn 'mariadb-connector-c' mxe/
           cd mxe
           git checkout 01243f96
-
+          
+#          chmod +x ./remove-mariadb.sh
+#          bash ./remove-mariadb.sh
+#          cp qtbase.mk mxe/src/qtbase.mk
+#          cp qt6-qtbase.mk mxe/src/qt/qt6/qt6-qtbase.mk
+#          grep -rn 'mariadb-connector-c' mxe/
+          
       - name: Build MXE with Qt6 (32bit static)
         run: |
           cd mxe
