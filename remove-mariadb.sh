@@ -3,19 +3,20 @@ set -e
 
 echo "Safely removing mariadb-connector-c from .mk files..."
 
-FILES=$(grep -rl 'mariadb-connector-c' mxe/src/)
+FILES=$(find ./mxe/src -name "*.mk" -type f)
 
 for file in $FILES; do
-    echo "Processing $file"
-    
-    # mariadb-connector-c を安全に削除
-    sed -i.bak -E '/mariadb-connector-c/{
-        s/mariadb-connector-c[[:space:]]*\\[[:space:]]*//g;
-        s/mariadb-connector-c//g;
-    }' "$file"
-
-    # インデント修正は $(PKG)_DEPS 行だけに限定
-    sed -i -E '/^\s*\$\(PKG\)_DEPS/ s/^ {8}/\t/' "$file"
+    if grep -q 'mariadb-connector-c' "$file"; then
+        echo "Processing $file"
+        cp "$file" "$file.bak"
+        sed -i.bak '/mariadb-connector-c/d' "$file"
+    fi
 done
+
+# 不要ならファイル自体も削除
+if [ -f ./mxe/src/mariadb-connector-c.mk ]; then
+    echo "Removing mariadb-connector-c.mk"
+    rm ./mxe/src/mariadb-connector-c.mk
+fi
 
 echo "Cleanup complete."
