@@ -53,6 +53,7 @@ jobs:
           path: CaptureStream2.tar
 
       - name: Build CaptureStream2 with MXE
+        run: |
          export PATH=$(pwd)/mxe/usr/bin:$PATH
           cd app
           mkdir build
