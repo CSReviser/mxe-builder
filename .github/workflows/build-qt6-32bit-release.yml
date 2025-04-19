@@ -36,20 +36,7 @@ jobs:
           rm -rf mxe/usr/* mxe/log/* mxe/pkg/* mxe/tmp/*
           grep -rn 'mariadb-connector-c' mxe/
           cd mxe
-          git checkout master
-
-      - name: Patch qtbase.mk to skip MariaDB
-        run: |
-          cat <<'EOF' > qt6-disable-mariadb.patch
-          --- a/src/qt/qt6/qt6-qtbase.mk
-          +++ b/src/qt/qt6/qt6-qtbase.mk
-          @@ -14 +14 @@
-          -$(PKG)_DEPS     := cc freetype harfbuzz jpeg libpng mesa mariadb-connector-c openssl pcre2
-          +$(PKG)_DEPS     := cc freetype harfbuzz jpeg libpng mesa openssl pcre2
-          'EOF'
-          
-            patch -p1 -d mxe < qt6-disable-mariadb.patch
-
+#          git checkout master
 
       - name: Build MXE with Qt6 (32bit static)
         run: |
