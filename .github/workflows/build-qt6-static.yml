@@ -65,7 +65,7 @@ jobs:
             -skip qttranslations \
             -skip qtdoc \
             -platform linux-clang
-          make -j$(nproc)
+          cmake --build . --parallel
           make install
 
 #            -platform linux-g++ \
