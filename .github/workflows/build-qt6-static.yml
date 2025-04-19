@@ -66,7 +66,7 @@ jobs:
             -skip qtdoc \
             -platform linux-clang
           cmake --build . --parallel
-          make install
+          cmake --install .
 
 #            -platform linux-g++ \
 #            -c++std c++20 \
