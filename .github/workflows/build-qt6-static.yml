@@ -60,8 +60,7 @@ jobs:
             -nomake examples \
             -nomake tests \
             -opensource -confirm-license \
-            -skip qtwebengine \
-            -skip qttools \
+            -skip qtwebchannel -skip qtwebengine -skip qtwebview \
             -skip qttranslations \
             -skip qtdoc \
             -platform linux-clang
