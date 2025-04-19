@@ -60,15 +60,18 @@ jobs:
           export QT_QMAKE=$MXE_PATH/usr/i686-w64-mingw32.static/qt6/bin/qt-cmake
           $QT_QMAKE ..
           make -j$(nproc)
-                    #            export PATH=/home/runner/work/mxe-builder/mxe-builder/mxe/usr/bin:$PATH
- #                   cmake .. \
-#          -DCMAKE_TOOLCHAIN_FILE=/home/runner/work/mxe-builder/mxe-builder/mxe/usr/i686-w64-mingw32.static/share/cmake/mxe-conf.cmake \
-#          -DCMAKE_C_COMPILER=i686-w64-mingw32.static-gcc \
-#          -DCMAKE_CXX_COMPILER=i686-w64-mingw32.static-g++
-#          make -j$(nproc)
-
+          
       - name: Upload built app
         uses: actions/upload-artifact@v4
         with:
           name: capturestream2-windows
           path: app/build/*.exe
+          
+#            export PATH=/home/runner/work/mxe-builder/mxe-builder/mxe/usr/bin:$PATH
+#                   cmake .. \
+#          -DCMAKE_TOOLCHAIN_FILE=/home/runner/work/mxe-builder/mxe-builder/mxe/usr/i686-w64-mingw32.static/share/cmake/mxe-conf.cmake \
+#          -DCMAKE_C_COMPILER=i686-w64-mingw32.static-gcc \
+#          -DCMAKE_CXX_COMPILER=i686-w64-mingw32.static-g++
+#          make -j$(nproc)
+
+
