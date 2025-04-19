@@ -1,0 +1,89 @@
+name: Build MXE with Qt6 and Upload to Releases
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install dependencies
+        run: |
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+              autoconf \
+              automake \
+              autopoint \
+              bash \
+              bison \
+              bzip2 \
+              flex \
+              g++ \
+              g++-multilib \
+              gettext \
+              git \
+              gperf \
+              intltool \
+              libc6-dev-i386 \
+              libclang-dev \
+              libgdk-pixbuf2.0-dev \
+              libltdl-dev \
+              libgl-dev \
+              libpcre2-dev \
+              libssl-dev \
+              libtool-bin \
+              libxml-parser-perl \
+              lzip \
+              make \
+              openssl \
+              p7zip-full \
+              patch \
+              perl \
+              python3 \
+              python3-mako \
+              python3-packaging \
+              python3-pkg-resources \
+              python3-setuptools \
+              python-is-python3 \
+              ruby \
+              sed \
+              sqlite3 \
+              unzip \
+              wget \
+              xz-utils
+
+      - name: Clone MXE
+        run: |
+          git clone https://github.com/mxe/mxe.git
+          cp qt6-qtbase-6.5.3.mk mxe/src/qt/qt6/qt6-qtbase.mk
+          cd mxe
+          # 必要であれば特定のコミットやブランチに固定可能
+          # git checkout <commit-hash-or-branch>
+
+      - name: Build MXE with Qt6
+        run: |
+          cd mxe
+          make qt6-qtbase qt6-qttools gcc cmake MXE_TARGETS='x86_64-w64-mingw32.static' -j$(nproc)
+
+      - name: Create archive without symlinks
+        run: |
+          tar -czf mxe-qt6-x86_64.tar.gz --dereference -C ./ mxe
+      - name: Archive MXE
+        run: |
+          tar -czf mxe-qt6-x86_64.tar.gz --dereference -C mxe .
+
+      - name: Create GitHub Release and Upload
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: mxe-qt6-v1
+          name: MXE Qt6 v1
+          files: mxe-qt6-x86_64.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
