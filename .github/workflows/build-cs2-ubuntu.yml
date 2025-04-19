@@ -1,0 +1,64 @@
+name: Build CaptureStream2 with Qt 6.9.0 Static
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential \
+            cmake \
+            ninja-build \
+            libgl1-mesa-dev \
+            libxcb1-dev \
+            libx11-xcb-dev \
+            libxcb-icccm4-dev \
+            libxcb-image0-dev \
+            libxcb-keysyms1-dev \
+            libxcb-render-util0-dev \
+            libxcb-xfixes0-dev \
+            libxcb-shape0-dev \
+            libxcb-randr0-dev \
+            libxcb-sync-dev \
+            libxcb-xinerama0-dev \
+            libxkbcommon-x11-dev \
+            libfontconfig1-dev \
+            libfreetype-dev \
+            libxrender-dev \
+            libx11-dev \
+            qt6-base-dev
+
+      - name: Clone CaptureStream2
+        run: |
+          git clone https://github.com/CSReviser/CaptureStream2.git
+          cd CaptureStream2
+          git submodule update --init --recursive
+
+      - name: Download and extract Qt 6.9.0 static build
+        run: |
+          curl -LO https://github.com/CSReviser/mxe-builder/releases/download/qt6.9.0-static-linux/qt6.9.0-linux-static.tar.gz
+          tar -xf qt6.9.0-linux-static.tar.gz
+
+      - name: Build CaptureStream2 with static Qt using qt-cmake
+        run: |
+          cd CaptureStream2
+          mkdir build && cd build
+          ../../qt6-static-install/bin/qt-cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++
+          cmake --build . --parallel
+
+      - name: Archive result
+        run: |
+          cd CaptureStream2/build
+          tar -czf capturestream2-linux-static.tar.gz CaptureStream2
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: capturestream2-linux-static
+          path: CaptureStream2/build/capturestream2-linux-static.tar.gz
