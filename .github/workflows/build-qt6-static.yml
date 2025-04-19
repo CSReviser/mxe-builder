@@ -53,7 +53,7 @@ jobs:
         run: |
           mkdir qt-build
           cd  qt-build
-          ..//configure \
+          /home/runner/work/mxe-builder/mxe-builder/qt-everywhere-src-6.9.0/configure \
             -prefix ../qt-build/qt6-static-install \
             -static \
             -release \
