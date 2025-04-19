@@ -1,4 +1,4 @@
-name: Build Qt 6.5 Static and Upload to Release
+name: Build Qt 6.8 Static and Upload to Release
 
 on:
   workflow_dispatch:
@@ -52,7 +52,7 @@ jobs:
       - name: Download Qt 6.5 source
         run: |
           curl -LO https://download.qt.io/official_releases/qt/6.8/6.8.3/single/qt-everywhere-src-6.8.3.tar.xz
-          tar xf qt-everywhere-src-6.9.0.tar.xz
+          tar xf qt-everywhere-src-6.8.3.tar.xz
 
       - name: Configure and build Qt statically (make version)
         run: |
