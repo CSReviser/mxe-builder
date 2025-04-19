@@ -42,6 +42,7 @@ jobs:
             libxcb-shm0-dev \
             libxcb-sync-dev \
             libxrender-dev
+            sudo apt install clang llvm-dev libclang-dev
 
       - name: Download Qt 6.5 source
         run: |
@@ -58,7 +59,8 @@ jobs:
             -release \
             -nomake examples \
             -nomake tests \
-            -opensource -confirm-license 
+            -opensource -confirm-license \
+            -skip qtwebengine
           make -j$(nproc)
           make install
 
