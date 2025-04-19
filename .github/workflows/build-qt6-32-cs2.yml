@@ -42,6 +42,9 @@ jobs:
           cd build
           $QT_QMAKE ../CaptureStream2.pro
           make -j$(nproc)
+          export QT_QMAKE=$MXE_PATH/usr/i686-w64-mingw32.static/qt6/bin/qt-cmake
+          $QT_QMAKE ..
+          make -j$(nproc)
 
       - name: Tar files
         run: tar cvf CaptureStream2.tar app/build/release/*.exe
@@ -52,15 +55,15 @@ jobs:
           name: capturestream2-windows-qt6-32bit
           path: CaptureStream2.tar
 
-      - name: Build CaptureStream2 with MXE
-        run: |
-         export PATH=$(pwd)/mxe/usr/bin:$PATH
-          cd app
-          mkdir build
-          cd build
-          export QT_QMAKE=$MXE_PATH/usr/i686-w64-mingw32.static/qt6/bin/qt-cmake
-          $QT_QMAKE ..
-          make -j$(nproc)
+#      - name: Build CaptureStream2 with MXE
+#        run: |
+#         export PATH=$(pwd)/mxe/usr/bin:$PATH
+#          cd app
+#          mkdir build
+#          cd build
+#          export QT_QMAKE=$MXE_PATH/usr/i686-w64-mingw32.static/qt6/bin/qt-cmake
+#          $QT_QMAKE ..
+#          make -j$(nproc)
           
       - name: Upload built app
         uses: actions/upload-artifact@v4
