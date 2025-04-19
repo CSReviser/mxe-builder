@@ -33,13 +33,7 @@ jobs:
           git clone https://github.com/mxe/mxe.git
           cd mxe
           git checkout 01243f96
-          
-#          chmod +x ./remove-mariadb.sh
-#          bash ./remove-mariadb.sh
-#          cp qtbase.mk mxe/src/qtbase.mk
-#          cp qt6-qtbase.mk mxe/src/qt/qt6/qt6-qtbase.mk
-#          grep -rn 'mariadb-connector-c' mxe/
-          
+
       - name: Build MXE with Qt6 (32bit static)
         run: |
           cd mxe
@@ -47,8 +41,7 @@ jobs:
 
       - name: Package MXE Qt6 32bit
         run: |
-          find ./ -type f \( -name "*.cmake" -o -name "*.pri" -o -name "*.la" -o -name "*.pc" \) -exec sed -i 's|/home/runner/work/mxe-builder/mxe-builder/mxe|/mxe|g' {} +
-          tar -czf mxe-qt6-i686-static.tar.gz mxe
+          tar -czf mxe-qt6-i686-static.tar.gz --dereference -C ./ mxe
 
       - name: Upload to GitHub Release
         uses: softprops/action-gh-release@v1
