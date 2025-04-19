@@ -1,4 +1,4 @@
-name: Build MXE with Qt6 and Upload to Releases
+name: Build Qt6.5.3 MXE with Qt6 and Upload to Releases
 
 on:
   workflow_dispatch:
