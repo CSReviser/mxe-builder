@@ -62,10 +62,10 @@ jobs:
       - name: Clone MXE
         run: |
           git clone https://github.com/mxe/mxe.git
-          cp qt6-qtbase-6.5.3.mk mxe/src/qt/qt6/qt6-qtbase.mk
           cd mxe
+          git checkout 59472e38
           # 必要であれば特定のコミットやブランチに固定可能
-          # git checkout <commit-hash-or-branch>
+          # git checkout 59472e38
 
       - name: Build MXE with Qt6
         run: |
@@ -82,8 +82,8 @@ jobs:
       - name: Create GitHub Release and Upload
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: mxe-qt6-v1
-          name: MXE Qt6 v1
+          tag_name: mxe-qt6.8.3-v1
+          name: MXE Qt6.8.3 v1
           files: mxe-qt6-x86_64.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
