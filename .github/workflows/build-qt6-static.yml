@@ -132,7 +132,7 @@ jobs:
             -no-pch \
             -qt-harfbuzz \
             -qt-freetype \
-            -system-libpng \
+            -qt-libpng \
             -platform linux-g++ \
             -c++std c++20 
 
