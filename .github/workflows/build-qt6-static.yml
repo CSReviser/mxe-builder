@@ -130,14 +130,11 @@ jobs:
             -skip qtlocation -skip qtsensors -skip qtlottie \
             -skip qtconnectivity -skip qtdoc -skip qttranslations \
             -no-pch \
-            -system-harfbuzz -system-libpng -system-freetype \
+            -qt-harfbuzz \
+            -qt-freetype \
+            -system-libpng \
             -platform linux-g++ \
-            -c++std c++20 \
-            -DINPUT_harfbuzz=system \
-            -DINPUT_libpng=system \
-            -DINPUT_freetype=system \
-            -DQT_FEATURE_harfbuzz=on \
-            -DQT_FEATURE_system_freetype=on
+            -c++std c++20 
 
           cmake --build . --parallel
           cmake --install .
