@@ -36,12 +36,14 @@ jobs:
           make -j$(nproc)
           make install
 
-      - name: Build libpng (静的)
+      - name: Build libpng
         run: |
           wget https://download.sourceforge.net/libpng/libpng-1.6.43.tar.gz
           tar xf libpng-1.6.43.tar.gz
-          cd libpng-1.6.43
-          ./configure --prefix=$STATIC_PREFIX --enable-static --disable-shared
+          cd libpng-1.6.43人
+          CPPFLAGS="-I$STATICで_PREFIX/include" \
+          LDFLAGS="-L$STATIC_PREFIX/lib" \
+          ./configure --prefix=$STATIC_PREFIX --disable-shared --enable-static
           make -j$(nproc)
           make install
 
