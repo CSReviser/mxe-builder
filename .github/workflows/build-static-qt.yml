@@ -1,0 +1,93 @@
+name: Build Static Qt with Dependencies
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    env:
+      STATIC_PREFIX: /opt/static
+      PKG_CONFIG_PATH: /opt/static/lib/pkgconfig
+      CFLAGS: -I/opt/static/include
+      LDFLAGS: -L/opt/static/lib
+
+    steps:
+      - name: Install build dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y \
+            build-essential \
+            autoconf automake libtool \
+            pkg-config cmake \
+            git wget unzip \
+            libgl1-mesa-dev
+
+      - name: Create install directory
+        run: sudo mkdir -p $STATIC_PREFIX && sudo chown $USER:$USER $STATIC_PREFIX
+
+      - name: Build zlib
+        run: |
+          wget https://zlib.net/zlib-1.3.tar.gz
+          tar xf zlib-1.3.tar.gz
+          cd zlib-1.3
+          ./configure --static --prefix=$STATIC_PREFIX
+          make -j$(nproc)
+          make install
+
+      - name: Build libpng (静的)
+        run: |
+          wget https://download.sourceforge.net/libpng/libpng-1.6.43.tar.gz
+          tar xf libpng-1.6.43.tar.gz
+          cd libpng-1.6.43
+          ./configure --prefix=$STATIC_PREFIX --enable-static --disable-shared
+          make -j$(nproc)
+          make install
+
+      - name: Build freetype (静的)
+        run: |
+          wget https://download.savannah.gnu.org/releases/freetype/freetype-2.13.2.tar.gz
+          tar xf freetype-2.13.2.tar.gz
+          cd freetype-2.13.2
+          ./configure --prefix=$STATIC_PREFIX --enable-static --disable-shared \
+            --with-png=yes --with-harfbuzz=no
+          make -j$(nproc)
+          make install
+
+      - name: Build harfbuzz (静的)
+        run: |
+          git clone https://github.com/harfbuzz/harfbuzz.git --depth=1 --branch 8.4.0
+          cd harfbuzz
+          meson setup build --prefix=$STATIC_PREFIX --default-library=static -Dbuild_shared_libs=false -Dglib=disabled -Dicu=disabled -Dfreetype=enabled -Dgobject=disabled
+          ninja -C build
+          ninja -C build install
+
+      - name: Checkout Qt source
+        uses: actions/checkout@v3
+        with:
+          repository: qt/qt-everywhere-src
+          ref: v6.9.0
+          path: qt6
+
+      - name: Configure and build Qt static
+        run: |
+          cd qt6
+          ./configure \
+            -prefix ${{ github.workspace }}/qt6-static-install \
+            -static \
+            -release \
+            -opensource -confirm-license \
+            -nomake examples -nomake tests \
+            -skip qt3d -skip qtwebengine -skip qtwebchannel -skip qtwebview \
+            -skip qtcharts -skip qtvirtualkeyboard \
+            -skip qtlocation -skip qtsensors -skip qtlottie \
+            -skip qtconnectivity -skip qtdoc -skip qttranslations \
+            -no-pch \
+            -system-harfbuzz -system-libpng -system-freetype \
+            -platform linux-g++ \
+            -c++std c++20 \
+            -I${{ env.STATIC_PREFIX }}/include \
+            -L${{ env.STATIC_PREFIX }}/lib
+          make -j$(nproc)
+          make install
