@@ -102,6 +102,7 @@ jobs:
           meson .. \
             --prefix=/opt/static \
             --buildtype=release \
+            --with-pkgconfigdir=/opt/static/lib/pkgconfig \
             -Ddefault_library=static \
             -Dfreetype=enabled \
             -Dglib=disabled \
