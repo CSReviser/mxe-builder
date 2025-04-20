@@ -59,11 +59,13 @@ jobs:
             -prefix $PWD/qt6-static-install \
             -static \
             -release \
-            -nomake examples \
-            -nomake tests \
             -opensource -confirm-license \
-            -skip qtwebengine -skip qtwebchannel -skip qtwebview \
-            -skip qtdoc -skip qttranslations \
+            -nomake examples -nomake tests \
+            -skip qt3d -skip qtwebengine -skip qtwebchannel -skip qtwebview \
+            -skip qtcharts -skip qtvirtualkeyboard \
+            -skip qtlocation -skip qtsensors -skip qtlottie \
+            -skip qtconnectivity -skip qtdoc -skip qttranslations \
+            -no-pch \
             -system-harfbuzz -system-libpng -system-freetype \
             -platform linux-g++ \
             -c++std c++20
