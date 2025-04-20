@@ -114,25 +114,14 @@ jobs:
 
       - name: Configure and build Qt statically (make version)
         run: |
-export PKG_CONFIG_PATH=/opt/static/lib/pkgconfig
-export LDFLAGS="-L/opt/static/lib"
-export CPPFLAGS="-I/opt/static/include"
-
-./configure -prefix /opt/qt6-static \
-  -static -static-runtime \
-  -opensource -confirm-license \
-  -release -nomake examples -nomake tests \
-  -skip qtwebengine \
-  -DINPUT_harfbuzz=system \
-  -DINPUT_libpng=system \
-  -DINPUT_freetype=system \
-  -DQT_FEATURE_harfbuzz=on \
-  -DQT_FEATURE_system_freetype=on
+          export PKG_CONFIG_PATH=/opt/static/lib/pkgconfig
+          export LDFLAGS="-L/opt/static/lib"
+          export CPPFLAGS="-I/opt/static/include"
           mkdir qt-build
           cd  qt-build
           ../qt-everywhere-src-6.9.0/configure \
             -prefix ../qt-build/qt6-static-install \
-            -static \
+            -static -static-runtime \
             -release \
             -opensource -confirm-license \
             -nomake examples -nomake tests \
@@ -143,7 +132,13 @@ export CPPFLAGS="-I/opt/static/include"
             -no-pch \
             -system-harfbuzz -system-libpng -system-freetype \
             -platform linux-g++ \
-            -c++std c++20
+            -c++std c++20 \
+            -DINPUT_harfbuzz=system \
+            -DINPUT_libpng=system \
+            -DINPUT_freetype=system \
+            -DQT_FEATURE_harfbuzz=on \
+            -DQT_FEATURE_system_freetype=on
+
           cmake --build . --parallel
           cmake --install .
 
