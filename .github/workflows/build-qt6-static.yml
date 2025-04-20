@@ -114,9 +114,6 @@ jobs:
 
       - name: Configure and build Qt statically (make version)
         run: |
-          export PKG_CONFIG_PATH=/opt/static/lib/pkgconfig
-          export LDFLAGS="-L/opt/static/lib"
-          export CPPFLAGS="-I/opt/static/include"
           mkdir qt-build
           cd  qt-build
           ../qt-everywhere-src-6.9.0/configure \
@@ -133,6 +130,7 @@ jobs:
             -qt-harfbuzz \
             -qt-freetype \
             -qt-libpng \
+            -qt-zlib \
             -platform linux-g++ \
             -c++std c++20 
 
