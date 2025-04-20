@@ -114,6 +114,20 @@ jobs:
 
       - name: Configure and build Qt statically (make version)
         run: |
+export PKG_CONFIG_PATH=/opt/static/lib/pkgconfig
+export LDFLAGS="-L/opt/static/lib"
+export CPPFLAGS="-I/opt/static/include"
+
+./configure -prefix /opt/qt6-static \
+  -static -static-runtime \
+  -opensource -confirm-license \
+  -release -nomake examples -nomake tests \
+  -skip qtwebengine \
+  -DINPUT_harfbuzz=system \
+  -DINPUT_libpng=system \
+  -DINPUT_freetype=system \
+  -DQT_FEATURE_harfbuzz=on \
+  -DQT_FEATURE_system_freetype=on
           mkdir qt-build
           cd  qt-build
           ../qt-everywhere-src-6.9.0/configure \
