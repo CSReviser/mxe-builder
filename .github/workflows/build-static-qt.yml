@@ -113,18 +113,17 @@ jobs:
           ninja
           ninja install
 
-      - name: Checkout Qt source
-        uses: actions/checkout@v3
-        with:
-          repository: qt/qt-everywhere-src
-          ref: v6.9.0
-          path: qt6
+      - name: Download Qt 6.9 source
+        run: |
+          curl -LO https://download.qt.io/official_releases/qt/6.9/6.9.0/single/qt-everywhere-src-6.9.0.tar.xz
+          tar xf qt-everywhere-src-6.9.0.tar.xz
 
       - name: Configure and build Qt static
         run: |
-          cd qt6
-          ./configure \
-            -prefix ${{ github.workspace }}/qt6-static-install \
+          mkdir qt-build
+          cd  qt-build
+          ../qt-everywhere-src-6.9.0/configure \
+            -prefix ../qt-build/qt6-static-install \
             -static \
             -release \
             -opensource -confirm-license \
@@ -141,3 +140,17 @@ jobs:
             -L${{ env.STATIC_PREFIX }}/lib
           make -j$(nproc)
           make install
+          
+      - name: Package Qt
+        run: |
+          cd qt-build
+          tar -czf qt6.9.0-linux-static.tar.gz qt6-static-install
+          
+      - name: Upload to GitHub Releases
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: qt6.9.0-static-linux
+          name: Qt 6.9.0 Static Linux
+          files: qt-build/qt6.9.0-linux-static.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
