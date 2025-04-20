@@ -49,7 +49,7 @@ jobs:
         run: |
           cd CaptureStream2
           mkdir build && cd build
-          ../../qt6-static-install/bin/qt-cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++
+          ../../qt6-static-install/bin/qt-cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++　-DQT_DEBUG_FIND_PACKAGE=ON　--debug-find-pkg=WrapHarfbuzz
           cmake --build . --parallel
 
       - name: Archive result
