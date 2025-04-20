@@ -98,41 +98,20 @@ jobs:
           wget https://github.com/harfbuzz/harfbuzz/releases/download/8.3.0/harfbuzz-8.3.0.tar.xz
           tar xf harfbuzz-8.3.0.tar.xz
           cd harfbuzz-8.3.0
-
-mkdir build && cd build
-
-meson .. \
-  --prefix=/opt/static \
-  --buildtype=release \
-  -Ddefault_library=static \
-  -Dfreetype=enabled \
-  -Dglib=disabled \
-  -Dgobject=disabled \
-  -Dicu=disabled \
-  -Dtests=disabled \
-  -Ddocs=disabled
-
-ninja
-ninja install
-          meson setup build \
+          mkdir build && cd build
+          meson .. \
             --prefix=/opt/static \
-            --default-library=static \
-            -Dbuild_shared_libs=false \
+            --buildtype=release \
+            -Ddefault_library=static \
             -Dfreetype=enabled \
             -Dglib=disabled \
-            -Dicu=disabled \
             -Dgobject=disabled \
+            -Dicu=disabled \
             -Dtests=disabled \
-            -Dbenchmark=disabled \
-            -Ddocs=disabled \
-            -Dintrospection=disabled \
-            -Dpng=enabled \
-            --buildtype=release \
-            -Dc_args="-I/opt/static/include" \
-            -Dcpp_args="-I/opt/static/include" \
-            -Dlink_args="-L/opt/static/lib"
-          meson compile -C build
-          meson install -C build
+            -Ddocs=disabled
+
+          ninja
+          ninja install
 
       - name: Checkout Qt source
         uses: actions/checkout@v3
