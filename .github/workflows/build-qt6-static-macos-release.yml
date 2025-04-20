@@ -1,4 +1,4 @@
-name: Build Qt 6.9 Static and Upload to Release (macOS Universal, qt-cmake)
+name: macOS Build Qt 6.9 Static and Upload to Release (macOS Universal, qt-cmake)
 
 on:
   workflow_dispatch:
