@@ -98,6 +98,22 @@ jobs:
           wget https://github.com/harfbuzz/harfbuzz/releases/download/8.3.0/harfbuzz-8.3.0.tar.xz
           tar xf harfbuzz-8.3.0.tar.xz
           cd harfbuzz-8.3.0
+
+mkdir build && cd build
+
+meson .. \
+  --prefix=/opt/static \
+  --buildtype=release \
+  -Ddefault_library=static \
+  -Dfreetype=enabled \
+  -Dglib=disabled \
+  -Dgobject=disabled \
+  -Dicu=disabled \
+  -Dtests=disabled \
+  -Ddocs=disabled
+
+ninja
+ninja install
           meson setup build \
             --prefix=/opt/static \
             --default-library=static \
