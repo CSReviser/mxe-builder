@@ -23,7 +23,7 @@ jobs:
             pkg-config cmake \
             git wget unzip \
             libgl1-mesa-dev
-
+            
       - name: Create static install dir
         run: sudo mkdir -p /opt/static && sudo chown $USER:$USER /opt/static
 
