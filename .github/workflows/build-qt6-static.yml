@@ -41,12 +41,9 @@ jobs:
             libxcb-shape0-dev \
             libxcb-shm0-dev \
             libxcb-sync-dev \
-            libxrender-dev
-            sudo apt install clang llvm-dev libclang-dev
-            sudo apt-get install protobuf-compiler libprotobuf-dev
-            sudo apt install -y libxcb1-dev libxcb-glx0-dev libxcb-keysyms1-dev libxcb-image0-dev libxcb-shm0-dev libxcb-icccm4-dev \
-            libxcb-sync-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-randr0-dev libxcb-render-util0-dev libxcb-xinerama0-dev \
-            libx11-xcb-dev libxkbcommon-x11-dev
+            libxrender-dev \
+            libharfbuzz-dev \
+            libpng-dev
 
 
       - name: Download Qt 6.9 source
@@ -60,15 +57,20 @@ jobs:
           cd  qt-build
           ../qt-everywhere-src-6.9.0/configure \
             -prefix ../qt-build/qt6-static-install \
+          ../qt-everywhere-src-6.9.0/configure \
+            -prefix $PWD/qt6-static-install \
             -static \
             -release \
-            -nomake examples \
-            -nomake tests \
             -opensource -confirm-license \
-            -skip qtwebchannel -skip qtwebengine -skip qtwebview \
-            -skip qttranslations \
-            -skip qtdoc \
-            -platform linux-clang
+            -nomake examples -nomake tests \
+            -skip qt3d -skip qtwebengine -skip qtwebchannel -skip qtwebview \
+            -skip qtcharts -skip qtvirtualkeyboard \
+            -skip qtlocation -skip qtsensors -skip qtlottie \
+            -skip qtconnectivity -skip qtdoc -skip qttranslations \
+            -no-pch \
+            -system-harfbuzz -system-libpng -system-freetype \
+            -platform linux-g++ \
+            -c++std c++20
           cmake --build . --parallel
           cmake --install .
 
