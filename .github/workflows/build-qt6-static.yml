@@ -85,7 +85,33 @@ jobs:
             -DBUILD_qttranslations=OFF \
             -DBUILD_qtquicktimeline=OFF \
             -DBUILD_qtsvg=OFF \
-            -DBUILD_SHARED_LIBS=OFF
+            -DBUILD_SHARED_LIBS=OFF \
+            -DFEATURE_zlib=ON \
+            -DFEATURE_png=ON \
+            -DFEATURE_jpeg=ON \
+            -DFEATURE_freetype=ON \
+            -DFEATURE_harfbuzz=ON \
+            -DQT_FEATURE_opengl=ON \
+            -DQT_FEATURE_xcb=ON \
+            -DFEATURE_dbus=ON \
+            -DFEATURE_icu=ON \
+            -DQT_FEATURE_system_zlib=OFF \
+            -DQT_FEATURE_system_png=OFF \
+            -DQT_FEATURE_system_jpeg=OFF \
+            -DQT_FEATURE_system_freetype=OFF \
+            -DQT_FEATURE_system_harfbuzz=OFF \
+            -DBUILD_qtwebengine=OFF \
+            -DBUILD_qttools=OFF \
+            -DBUILD_qtdeclarative=OFF \
+            -DBUILD_qtimageformats=OFF \
+            -DBUILD_qtshadertools=OFF \
+            -DBUILD_qtmultimedia=OFF \
+            -DBUILD_qttranslations=OFF \
+            -DBUILD_qtquicktimeline=OFF \
+            -DBUILD_qtsvg=OFF \
+            -DBUILD_qtlocation=OFF \
+            -DBUILD_qtconnectivity=OFF \
+            -DBUILD_qtdoc=OFF
 
           cmake --build . --parallel
           cmake --install .
