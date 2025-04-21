@@ -85,6 +85,7 @@ jobs:
             -DBUILD_qttranslations=OFF \
             -DBUILD_qtquicktimeline=OFF \
             -DBUILD_qtquick3d=OFF \
+            -DBUILD_qtgraphs=OFF \
             -DBUILD_qtsvg=OFF \
             -DBUILD_SHARED_LIBS=OFF \
             -DFEATURE_zlib=ON \
