@@ -100,7 +100,7 @@ jobs:
             -feature-xcb \
             -c++std c++20 
 
-          cmake --build . --parallel　-- -k 0 -v
+          cmake --build . --parallel
           cmake --install .
 
       - name: Package Qt
