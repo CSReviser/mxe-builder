@@ -84,6 +84,16 @@ jobs:
             -DFEATURE_icu=ON \
             -DQT_FEATURE_system_xcb=ON
 
+-DQT_FEATURE_static_runtime=ON \
+-DFEATURE_xcb=ON \
+-DFEATURE_system_zlib=OFF \
+-DFEATURE_icu=ON \
+-DINPUT_freetype=qt \
+-DINPUT_harfbuzz=qt \
+-DINPUT_libpng=qt \
+-DINPUT_libjpeg=qt \
+-DINPUT_doubleconversion=qt \
+
           cmake --build . --parallel
           cmake --install .
 
