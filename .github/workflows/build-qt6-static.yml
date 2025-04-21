@@ -92,6 +92,7 @@ jobs:
             -skip qtgraphs \
             -skip qtquick3d \
             -skip qtquick3dphysics \
+            -skip qttools \
             -no-pch \
             -qt-harfbuzz \
             -qt-freetype \
