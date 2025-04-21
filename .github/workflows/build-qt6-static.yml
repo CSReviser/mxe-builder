@@ -71,10 +71,9 @@ jobs:
             -DFEATURE_xcb=ON \
             -DQT_FEATURE_opengl=ON \
             -DFEATURE_static=ON \
-            -DFEATURE_static_runtime=ON \
+            -DQT_FEATURE_static_runtime=ON \
             -DFEATURE_dbus=ON \
-            -DQT_FEATURE_zlib=ON \
-            -DINPUT_zlib=qt \
+            -DFEATURE_system_zlib=OFF \
             -DINPUT_freetype=qt \
             -DINPUT_harfbuzz=qt \
             -DINPUT_libpng=qt \
@@ -83,16 +82,6 @@ jobs:
             -DINPUT_doubleconversion=qt \
             -DFEATURE_icu=ON \
             -DQT_FEATURE_system_xcb=ON
-
--DQT_FEATURE_static_runtime=ON \
--DFEATURE_xcb=ON \
--DFEATURE_system_zlib=OFF \
--DFEATURE_icu=ON \
--DINPUT_freetype=qt \
--DINPUT_harfbuzz=qt \
--DINPUT_libpng=qt \
--DINPUT_libjpeg=qt \
--DINPUT_doubleconversion=qt \
 
           cmake --build . --parallel
           cmake --install .
