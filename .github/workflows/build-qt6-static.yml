@@ -61,43 +61,20 @@ jobs:
         run: |
           mkdir qt-build
           cd  qt-build
-          cmake ../qt-everywhere-src-6.9.0 \
-            -GNinja \
-            -DCMAKE_INSTALL_PREFIX=../qt6-install \
+          cmake -GNinja ../qt-everywhere-src-6.9.0 \
+            -DCMAKE_INSTALL_PREFIX=../qt-build/qt6-static-install \
             -DCMAKE_BUILD_TYPE=Release \
-            -DBUILD_SHARED_LIBS=OFF \
-            -DQT_BUILD_EXAMPLES=OFF \
-            -DQT_BUILD_TESTS=OFF \
-            -DFEATURE_xcb=ON \
             -DQT_FEATURE_xcb=ON \
             -DQT_FEATURE_opengl=ON \
-            -DFEATURE_static=ON \
-            -DQT_FEATURE_static_runtime=ON \
             -DFEATURE_dbus=ON \
-            -DFEATURE_system_zlib=OFF \
-            -DINPUT_freetype=qt \
-            -DINPUT_harfbuzz=qt \
-            -DINPUT_libpng=qt \
-            -DINPUT_libjpeg=qt \
-            -DINPUT_pcre2=qt \
-            -DINPUT_doubleconversion=qt \
             -DFEATURE_icu=ON \
-            -DQT_FEATURE_system_xcb=ON
-
-cmake -GNinja ../qt-everywhere-src-6.9.0 \
-  -DCMAKE_INSTALL_PREFIX=../qt-build/qt6-static-install \
-  -DCMAKE_BUILD_TYPE=Release \
-  -DQT_FEATURE_xcb=ON \
-  -DQT_FEATURE_opengl=ON \
-  -DFEATURE_dbus=ON \
-  -DFEATURE_icu=ON \
-  -DFEATURE_cxx20=ON \
-  -DQT_BUILD_EXAMPLES=OFF \
-  -DQT_BUILD_TESTS=OFF \
-  -DBUILD_SHARED_LIBS=OFF \
-  -DBUILD_WITH_PCH=OFF \
-  -DQT_QMAKE_TARGET_MKSPEC=linux-g++ \
-  -DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/cmake
+            -DFEATURE_cxx20=ON \
+            -DQT_BUILD_EXAMPLES=OFF \
+            -DQT_BUILD_TESTS=OFF \
+            -DBUILD_SHARED_LIBS=OFF \
+            -DBUILD_WITH_PCH=OFF \
+            -DQT_QMAKE_TARGET_MKSPEC=linux-g++ \
+            -DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/cmake
 
           cmake --build . --parallel
           cmake --install .
