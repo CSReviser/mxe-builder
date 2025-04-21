@@ -61,67 +61,67 @@ jobs:
         run: |
           mkdir qt-build
           cd  qt-build
-
-cmake ../qt-everywhere-src-6.9.0 \
-  -GNinja \
-  -DCMAKE_INSTALL_PREFIX=../qt6-install \
-  -DCMAKE_BUILD_TYPE=Release \
-  -DBUILD_SHARED_LIBS=OFF \
-  -DQT_BUILD_EXAMPLES=OFF \
-  -DQT_BUILD_TESTS=OFF \
-  -DFEATURE_xcb=ON \
-  -DFEATURE_opengl=desktop \
-  -DFEATURE_static=ON \
-  -DFEATURE_static_runtime=ON \
-  -DFEATURE_dbus=ON \
-  -DQT_FEATURE_zlib=qt \
-  -DINPUT_freetype=qt \
-  -DINPUT_harfbuzz=qt \
-  -DINPUT_libpng=qt \
-  -DINPUT_libjpeg=qt \
-  -DINPUT_pcre2=qt \
-  -DINPUT_doubleconversion=qt \
-  -DFEATURE_icu=ON \
-  -DQT_FEATURE_system_xcb=ON
-          ../qt-everywhere-src-6.9.0/configure \
-            -top-level \
-            -prefix ../qt-build/qt6-static-install \
-            -static -static-runtime -release \
-            -opensource -confirm-license \
-            -nomake examples -nomake tests \
-            -skip qt3d -skip qtactiveqt -skip qtcharts -skip qtconnectivity \
-            -skip qtdatavis3d -skip qtdoc -skip qtgamepad -skip qtgraphicaleffects \
-            -skip qtimageformats -skip qtlocation -skip qtmacextras -skip qtnetworkauth \
-            -skip qtquickcontrols2 -skip qtremoteobjects -skip qtscxml \
-            -skip qtsensors -skip qtserialbus -skip qtserialport -skip qtspeech \
-            -skip qtsvg -skip qttools -skip qttranslations -skip qtvirtualkeyboard \
-            -skip qtwayland -skip qtwebchannel -skip qtwebengine -skip qtwebsockets \
-            -skip qtwebview -skip qtwinextras -skip qtlottie -skip qtmultimedia \
-            -skip qtshadertools -skip qtpositioning -skip qtquicktimeline \
-            -skip qtgraphs \
-            -skip qtquick3d \
-            -skip qtquick3dphysics \
-            -skip qttools \
-            -skip qtquickeffectmaker \
-            -no-pch \
-            -qt-harfbuzz \
-            -qt-freetype \
-            -qt-libpng \
-            -qt-zlib \
-            -qt-libjpeg \
-            -qt-pcre \
-            -icu \
-            -qt-doubleconversion \
-            -dbus \
-            -platform linux-g++ \
-            -feature-xcb \
-            -c++std c++20 
-
-          grep -i xcb configure.log
+          cmake ../qt-everywhere-src-6.9.0 \
+            -GNinja \
+            -DCMAKE_INSTALL_PREFIX=../qt6-install \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DBUILD_SHARED_LIBS=OFF \
+            -DQT_BUILD_EXAMPLES=OFF \
+            -DQT_BUILD_TESTS=OFF \
+            -DFEATURE_xcb=ON \
+            -DFEATURE_opengl=desktop \
+            -DFEATURE_static=ON \
+            -DFEATURE_static_runtime=ON \
+            -DFEATURE_dbus=ON \
+            -DQT_FEATURE_zlib=qt \
+            -DINPUT_freetype=qt \
+            -DINPUT_harfbuzz=qt \
+            -DINPUT_libpng=qt \
+            -DINPUT_libjpeg=qt \
+            -DINPUT_pcre2=qt \
+            -DINPUT_doubleconversion=qt \
+            -DFEATURE_icu=ON \
+            -DQT_FEATURE_system_xcb=ON
 
           cmake --build . --parallel
           cmake --install .
+
+#          ../qt-everywhere-src-6.9.0/configure \
+#            -top-level \
+#            -prefix ../qt-build/qt6-static-install \
+#            -static -static-runtime -release \
+#            -opensource -confirm-license \
+#           -nomake examples -nomake tests \
+#            -skip qt3d -skip qtactiveqt -skip qtcharts -skip qtconnectivity \
+#            -skip qtdatavis3d -skip qtdoc -skip qtgamepad -skip qtgraphicaleffects \
+#            -skip qtimageformats -skip qtlocation -skip qtmacextras -skip qtnetworkauth \
+#            -skip qtquickcontrols2 -skip qtremoteobjects -skip qtscxml \
+#            -skip qtsensors -skip qtserialbus -skip qtserialport -skip qtspeech \
+#            -skip qtsvg -skip qttools -skip qttranslations -skip qtvirtualkeyboard \
+#            -skip qtwayland -skip qtwebchannel -skip qtwebengine -skip qtwebsockets \
+#            -skip qtwebview -skip qtwinextras -skip qtlottie -skip qtmultimedia \
+#            -skip qtshadertools -skip qtpositioning -skip qtquicktimeline \
+#            -skip qtgraphs \
+#            -skip qtquick3d \
+#            -skip qtquick3dphysics \
+#            -skip qttools \
+#            -skip qtquickeffectmaker \
+#            -no-pch \
+#            -qt-harfbuzz \
+#            -qt-freetype \
+#            -qt-libpng \
+#            -qt-zlib \
+#            -qt-libjpeg \
+#            -qt-pcre \
+#            -icu \
+#            -qt-doubleconversion \
+#            -dbus \
+#            -platform linux-g++ \
 #            -feature-xcb \
+#            -c++std c++20 
+
+
+
       - name: Package Qt
         run: |
           cd qt-build
