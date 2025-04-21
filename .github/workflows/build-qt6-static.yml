@@ -86,7 +86,7 @@ jobs:
             -qt-zlib \
             -qt-libjpeg \
             -qt-pcre \
-            -qt-icu \
+            -icu \
             -qt-libtiff \
             -qt-doubleconversion \
             -dbus \
