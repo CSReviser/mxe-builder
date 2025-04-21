@@ -33,6 +33,7 @@ jobs:
             libxrender-dev \
             libx11-dev \
             qt6-base-dev \
+            libglib2.0-dev \
             meson \
             ninja-build \
             python3-pip
