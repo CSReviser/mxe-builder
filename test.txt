@@ -162,3 +162,6 @@ sudo apt install -y \
 libxcb-render
 libSM
 libpthread
+
+
+sudo apt install -y libxcb-render0-dev libsm-dev
