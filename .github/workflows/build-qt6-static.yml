@@ -85,7 +85,7 @@ jobs:
             -skip qtlocation -skip qtsensors -skip qtlottie \
             -skip qtconnectivity -skip qtdoc -skip qttranslations \
             -skip qtimageformats \
-            -skip qtquick3d \
+            -skip qtgraphs \
             -no-pch \
             -qt-harfbuzz \
             -qt-freetype \
