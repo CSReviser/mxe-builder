@@ -82,3 +82,7 @@ __pthread_kill_implementation (no_tid=0, signo=6, threadid=140737299061120) at .
 #12 0x0000555555983cf5 in QGuiApplicationPrivate::init() ()
 #13 0x0000555555dca16d in QApplicationPrivate::init() ()
 #14 0x00005555556af60f in main ()
+
+
+
+QT_QPA_PLATFORM=xcb
