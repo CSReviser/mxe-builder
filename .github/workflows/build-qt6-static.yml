@@ -83,6 +83,7 @@ jobs:
             -DBUILD_qtshadertools=OFF \
             -DBUILD_qtmultimedia=OFF \
             -DBUILD_qttranslations=OFF \
+            -DBUILD_qtquicktimeline=OFF \
             -DBUILD_qtsvg=OFF \
             -DBUILD_SHARED_LIBS=OFF
 
