@@ -69,6 +69,7 @@ jobs:
             -DQT_BUILD_EXAMPLES=OFF \
             -DQT_BUILD_TESTS=OFF \
             -DFEATURE_xcb=ON \
+            -DQT_FEATURE_xcb=ON \
             -DQT_FEATURE_opengl=ON \
             -DFEATURE_static=ON \
             -DQT_FEATURE_static_runtime=ON \
