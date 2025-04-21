@@ -94,6 +94,8 @@ jobs:
             -platform linux-g++ \
             -c++std c++20 
 
+          grep -i xcb configure.log
+
           cmake --build . --parallel
           cmake --install .
 #            -feature-xcb \
