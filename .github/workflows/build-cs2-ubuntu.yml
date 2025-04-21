@@ -34,6 +34,7 @@ jobs:
             libx11-dev \
             qt6-base-dev \
             libglib2.0-dev \
+            libdbus-1-dev \
             meson \
             ninja-build \
             python3-pip
