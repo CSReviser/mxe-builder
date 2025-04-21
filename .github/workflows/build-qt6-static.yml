@@ -44,7 +44,21 @@ jobs:
             libxcb-shape0-dev \
             libxcb-shm0-dev \
             libxcb-sync-dev \
-            libxrender-dev
+            libxrender-dev \
+            libxcb-cursor-dev \
+            libxcb-icccm4-dev \
+            libxcb-image0-dev \
+            libxcb-render-util0-dev \
+            libxcb-xinput-dev \
+            libxcb-xfixes0-dev \
+            libxcb-randr0-dev \
+            libxcb-shape0-dev \
+            libxcb-shm0-dev \
+            libxcb-sync-dev \
+            libxrender-dev \
+            libssl-dev \
+            libwayland-dev \
+            libwayland-egl-backend-dev
           
       - name: Download Qt 6.9 source
         run: |
