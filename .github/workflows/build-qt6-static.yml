@@ -86,6 +86,8 @@ jobs:
             -qt-zlib \
             -qt-libjpeg \
             -qt-pcre \
+            -qt-icu \
+            -qt-libtiff \
             -qt-doubleconversion \
             -dbus \
             -platform linux-g++ \
@@ -93,16 +95,6 @@ jobs:
 
           cmake --build . --parallel
           cmake --install .
-
-#            -platform linux-g++ \
-#            -c++std c++20 \
-#            -skip qtimageformats -skip qtwebengine \
-#            -skip qt3d -skip qt5compat -skip qtactiveqt -skip qtcharts -skip qtcoap -skip qtconnectivity \
-#            -skip qtdatavis3d -skip qtdoc -skip qtlottie -skip qtmqtt -skip qtnetworkauth -skip qtopcua \
-#            -skip qtserialport -skip qtpositioning -skip qtquicktimeline -skip qtquick3d -skip qtremoteobjects \
-#            -skip qtscxml -skip qtsensors -skip qtserialbus -skip qtvirtualkeyboard \
-#            -skip qtwebchannel -skip qtwebengine -skip qtwebview -skip qtquick3dphysics -skip qtspeech -skip qtlocation \
-#            -skip qthttpserver
 
       - name: Package Qt
         run: |
