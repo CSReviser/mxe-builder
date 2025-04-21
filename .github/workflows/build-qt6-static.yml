@@ -73,7 +73,8 @@ jobs:
             -DFEATURE_static=ON \
             -DFEATURE_static_runtime=ON \
             -DFEATURE_dbus=ON \
-            -DQT_FEATURE_zlib=qt \
+            -DQT_FEATURE_zlib=ON \
+            -DINPUT_zlib=qt \
             -DINPUT_freetype=qt \
             -DINPUT_harfbuzz=qt \
             -DINPUT_libpng=qt \
