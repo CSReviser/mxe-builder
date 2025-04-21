@@ -39,6 +39,26 @@ jobs:
         run: |
           mkdir qt-build
           cd qt-build
+../qt-everywhere-src-6.9.0/configure \
+    -prefix ../qt-build/qt6-static-install \
+    -static \
+    -release \
+    -opensource -confirm-license \
+    -nomake examples -nomake tests \
+    -skip qt3d -skip qtwebengine -skip qtwebchannel -skip qtwebview \
+    -skip qtcharts -skip qtvirtualkeyboard \
+    -skip qtlocation -skip qtsensors -skip qtlottie \
+    -skip qtconnectivity -skip qtdoc -skip qttranslations \
+    -no-pch \
+    -qt-harfbuzz \
+    -qt-freetype \
+    -qt-libpng \
+    -qt-zlib \
+    -qt-libjpeg \
+    -qt-pcre \
+    -qt-doubleconversion \
+    -platform macx-clang \
+    -c++std c++20
           ../qt-everywhere-src-6.9.0/configure \
             -prefix ../qt-build/qt6-static-install \
             -static -static-runtime \
