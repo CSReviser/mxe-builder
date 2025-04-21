@@ -74,7 +74,10 @@ jobs:
             -DBUILD_SHARED_LIBS=OFF \
             -DBUILD_WITH_PCH=OFF \
             -DQT_QMAKE_TARGET_MKSPEC=linux-g++ \
-            -DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/cmake
+            -DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/cmake \
+            -DQT_BUILD_SUBMODULES_BY_DEFAULT=OFF \
+            -DBUILD_qtbase=ON \
+            -DFEATURE_webengine=OFF
 
           cmake --build . --parallel
           cmake --install .
