@@ -2,6 +2,16 @@ tar -czf mxe-fixed.tar.gz --owner=0 --group=0 -C ./ mxe
 
 
 
+./configure -top-level \
+    -prefix <インストール先の絶対パス> \
+    -static -static-runtime -release \
+    -opensource -confirm-license \
+    -nomake tests -nomake examples \
+    -no-pch \
+    -qt-harfbuzz -qt-pcre -qt-zlib \
+    -platform linux-g++ \
+    -c++std c++20
+
 
 Type "apropos word" to search for commands related to "word"...
 Reading symbols from /home/kazuo/ビデオ/CaptureStream2...
