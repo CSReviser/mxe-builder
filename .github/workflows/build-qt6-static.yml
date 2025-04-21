@@ -61,6 +61,28 @@ jobs:
         run: |
           mkdir qt-build
           cd  qt-build
+
+cmake ../qt-everywhere-src-6.9.0 \
+  -GNinja \
+  -DCMAKE_INSTALL_PREFIX=../qt6-install \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DBUILD_SHARED_LIBS=OFF \
+  -DQT_BUILD_EXAMPLES=OFF \
+  -DQT_BUILD_TESTS=OFF \
+  -DFEATURE_xcb=ON \
+  -DFEATURE_opengl=desktop \
+  -DFEATURE_static=ON \
+  -DFEATURE_static_runtime=ON \
+  -DFEATURE_dbus=ON \
+  -DQT_FEATURE_zlib=qt \
+  -DINPUT_freetype=qt \
+  -DINPUT_harfbuzz=qt \
+  -DINPUT_libpng=qt \
+  -DINPUT_libjpeg=qt \
+  -DINPUT_pcre2=qt \
+  -DINPUT_doubleconversion=qt \
+  -DFEATURE_icu=ON \
+  -DQT_FEATURE_system_xcb=ON
           ../qt-everywhere-src-6.9.0/configure \
             -top-level \
             -prefix ../qt-build/qt6-static-install \
