@@ -1,4 +1,5 @@
 name: macOS Build Qt 6.9 Static and Upload to Release (macOS Universal, qt-cmake)
+
 on:
   workflow_dispatch:
 
@@ -10,7 +11,7 @@ jobs:
     runs-on: macos-14
 
     steps:
-      - name: Install dependencies
+      - name: Install dependencies (via Homebrew)
         run: |
           brew update
           brew install \
@@ -26,47 +27,42 @@ jobs:
             zlib \
             pcre2 \
             harfbuzz \
-            git \
-            wget
+            wget \
+            git
 
-      - name: Download Qt 6.9.0 source
+      - name: Download Qt 6.9 source
         run: |
           curl -LO https://download.qt.io/official_releases/qt/6.9/6.9.0/single/qt-everywhere-src-6.9.0.tar.xz
           tar xf qt-everywhere-src-6.9.0.tar.xz
 
-      - name: Configure Qt with qt-cmake (static, universal)
+      - name: Configure and build Qt statically (universal)
         run: |
           mkdir qt-build
           cd qt-build
+          ../qt-everywhere-src-6.9.0/configure \
+            -prefix ../qt-build/qt6-static-install \
+            -static -static-runtime \
+            -release \
+            -opensource -confirm-license \
+            -nomake examples -nomake tests \
+            -skip qt3d -skip qtwebengine -skip qtwebchannel -skip qtwebview \
+            -skip qtcharts -skip qtvirtualkeyboard \
+            -skip qtlocation -skip qtsensors -skip qtlottie \
+            -skip qtconnectivity -skip qtdoc -skip qttranslations \
+            -no-pch \
+            -qt-harfbuzz \
+            -qt-freetype \
+            -qt-libpng \
+            -qt-zlib \
+            -qt-libjpeg \
+            -qt-pcre \
+            -qt-doubleconversion \
+            -platform macx-clang \
+            -c++std c++20 \
+            -device-option QMAKE_APPLE_DEVICE_ARCHS=arm64,x86_64
 
-          export CMAKE_OSX_ARCHITECTURES="arm64;x86_64"
-          cmake ../qt-everywhere-src-6.9.0 \
-            -G Ninja \
-            -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_INSTALL_PREFIX=$(pwd)/qt6-static-install \
-            -DCMAKE_OSX_ARCHITECTURES="${CMAKE_OSX_ARCHITECTURES}" \
-            -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 \
-            -DQT_FEATURE_static=ON \
-            -DQT_FEATURE_shared=OFF \
-            -DQT_BUILD_EXAMPLES=OFF \
-            -DQT_BUILD_TESTS=OFF \
-            -DFEATURE_optimize_size=ON \
-            -DFEATURE_system_zlib=OFF \
-            -DFEATURE_system_png=OFF \
-            -DFEATURE_system_jpeg=OFF \
-            -DFEATURE_system_pcre2=OFF \
-            -DFEATURE_system_doubleconversion=OFF \
-            -DFEATURE_system_freetype=OFF \
-            -DFEATURE_system_harfbuzz=OFF \
-            -DFEATURE_pkg_config=ON \
-            -DQT_BUILD_QDOC=OFF \
-            -DFEATURE_pch=OFF
-  
-      - name: Build and install Qt
-        run: |
-          cd qt-build
           cmake --build . --parallel
-          cmake --install . --prefix qt6-static-install
+          cmake --install .
 
       - name: Package Qt
         run: |
