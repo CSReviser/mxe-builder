@@ -106,3 +106,21 @@ cmake --install "$BUILD_DIR"
 -- Could NOT find XCB_XTEST (missing: XCB_XTEST_LIBRARY XCB_XTEST_INCLUDE_DIR) (found version "")
 -- Could NOT find XCB_XV (missing: XCB_XV_LIBRARY XCB_XV_INCLUDE_DIR) (found version "")
 -- Could NOT find XCB_XVMC (missing: XCB_XVMC_LIBRARY XCB_XVMC_INCLUDE_DIR XCB_XV_FOUND) (found version "")
+
+
+sudo apt install -y \
+  libxcb-xkb-dev \
+  libxcb-cursor-dev \
+  libxcb-util-dev \
+  libxcb-render-util0-dev \
+  libxcb-ewmh-dev \
+  libxcb-icccm4-dev \
+  libxcb-image0-dev \
+  libxcb-keysyms1-dev \
+  libxcb-randr0-dev \
+  libxcb-xinerama0-dev \
+  libxcb-shape0-dev \
+  libxcb-xfixes0-dev \
+  libxcb-sync-dev \
+  libxkbcommon-x11-dev
+
