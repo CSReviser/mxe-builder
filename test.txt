@@ -124,3 +124,37 @@ sudo apt install -y \
   libxcb-sync-dev \
   libxkbcommon-x11-dev
 
+
+sudo apt install -y \
+  libx11-dev \
+  libx11-xcb-dev \
+  libxext-dev \
+  libxrender-dev \
+  libxfixes-dev \
+  libxrandr-dev \
+  libxi-dev \
+  libxcomposite-dev \
+  libxcursor-dev \
+  libxdamage-dev \
+  libxtst-dev \
+  libxss-dev \
+  libxv-dev
+
+
+
+sudo apt install -y \
+  libgl1-mesa-dev \
+  libglu1-mesa-dev \
+  libegl1-mesa-dev \
+  libgbm-dev
+
+sudo apt install -y \
+  libwayland-dev \
+  libxkbcommon-dev \
+  libxkbcommon-x11-dev
+
+sudo apt install -y \
+  libxcb-util0-dev \
+  libxcb-dri3-dev \
+  libxcb-present-dev \
+  libxcb-glx0-dev
