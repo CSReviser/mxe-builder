@@ -87,7 +87,7 @@ jobs:
             -qt-libjpeg \
             -qt-pcre \
             -icu \
-            -qt-libtiff \
+            -libtiff \
             -qt-doubleconversion \
             -dbus \
             -platform linux-g++ \
