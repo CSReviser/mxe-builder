@@ -51,8 +51,6 @@ jobs:
             -DQT_BUILD_EXAMPLES=OFF \
             -DQT_BUILD_TESTS=OFF \
             -DFEATURE_optimize_size=ON \
-            -DFEATURE_harfbuzz=qt \
-            -DFEATURE_freetype=qt \
             -DFEATURE_system_zlib=OFF \
             -DFEATURE_system_png=OFF \
             -DFEATURE_system_jpeg=OFF \
@@ -63,7 +61,7 @@ jobs:
             -DFEATURE_pkg_config=ON \
             -DQT_BUILD_QDOC=OFF \
             -DFEATURE_pch=OFF
-
+  
       - name: Build and install Qt
         run: |
           cd qt-build
