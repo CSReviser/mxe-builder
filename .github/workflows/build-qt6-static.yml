@@ -95,6 +95,7 @@ jobs:
             -qt-doubleconversion \
             -dbus \
             -platform linux-g++ \
+            -feature-xcb \
             -c++std c++20 
 
           cmake --build . --parallel
