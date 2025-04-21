@@ -69,88 +69,40 @@ cd "$SRC_DIR"
 cmake --build "$BUILD_DIR" --parallel
 cmake --install "$BUILD_DIR"
 
-Type "apropos word" to search for commands related to "word"...
-Reading symbols from /home/kazuo/ビデオ/CaptureStream2...
-(No debugging symbols found in /home/kazuo/ビデオ/CaptureStream2)
-(gdb) run
-Starting program: /home/kazuo/ビデオ/CaptureStream2 
-[Thread debugging using libthread_db enabled]
-Using host libthread_db library "/lib/x86_64-linux-gnu/libthread_db.so.1".
-
-Program received signal SIGABRT, Aborted.
-__pthread_kill_implementation (no_tid=0, signo=6, threadid=140737299061120) at ./nptl/pthread_kill.c:44
-44	./nptl/pthread_kill.c: そのようなファイルやディレクトリはありません.
-(gdb) bt
-#0  __pthread_kill_implementation (no_tid=0, signo=6, threadid=140737299061120)
-    at ./nptl/pthread_kill.c:44
-#1  __pthread_kill_internal (signo=6, threadid=140737299061120) at ./nptl/pthread_kill.c:78
-#2  __GI___pthread_kill (threadid=140737299061120, signo=signo@entry=6)
-    at ./nptl/pthread_kill.c:89
-#3  0x00007ffff6c42476 in __GI_raise (sig=sig@entry=6) at ../sysdeps/posix/raise.c:26
-#4  0x00007ffff6c287f3 in __GI_abort () at ./stdlib/abort.c:79
-#5  0x000055555564df1b in qBadAlloc() ()
-#6  0x00005555556e11ad in qt_message(QtMsgType, QMessageLogContext const&, char const*, __va_list_tag*) ()
-#7  0x000055555564ea07 in QMessageLogger::fatal(char const*, ...) const ()
-#8  0x0000555555666356 in QGuiApplication::setOverrideCursor(QCursor const&) [clone .cold] ()
-#9  0x000055555597bd07 in QGuiApplicationPrivate::createPlatformIntegration() ()
-
-
-
-
-	linux-vdso.so.1 (0x00007fff82df3000)
-	libX11-xcb.so.1 => /lib/x86_64-linux-gnu/libX11-xcb.so.1 (0x00007f5036f23000)
-	libxcb.so.1 => /lib/x86_64-linux-gnu/libxcb.so.1 (0x00007f5036ef9000)
-	libtiff.so.5 => /lib/x86_64-linux-gnu/libtiff.so.5 (0x00007f5035978000)
-	libOpenGL.so.0 => /lib/x86_64-linux-gnu/libOpenGL.so.0 (0x00007f5036ecd000)
-	libEGL.so.1 => /lib/x86_64-linux-gnu/libEGL.so.1 (0x00007f5036eba000)
-	libX11.so.6 => /lib/x86_64-linux-gnu/libX11.so.6 (0x00007f5035838000)
-	libgobject-2.0.so.0 => /lib/x86_64-linux-gnu/libgobject-2.0.so.0 (0x00007f50357d8000)
-	libgio-2.0.so.0 => /lib/x86_64-linux-gnu/libgio-2.0.so.0 (0x00007f50355fe000)
-	libdbus-1.so.3 => /lib/x86_64-linux-gnu/libdbus-1.so.3 (0x00007f50355b0000)
-	libbrotlidec.so.1 => /lib/x86_64-linux-gnu/libbrotlidec.so.1 (0x00007f5036eaa000)
-	libicui18n.so.70 => /lib/x86_64-linux-gnu/libicui18n.so.70 (0x00007f5035200000)
-	libicuuc.so.70 => /lib/x86_64-linux-gnu/libicuuc.so.70 (0x00007f5035005000)
-	libzstd.so.1 => /lib/x86_64-linux-gnu/libzstd.so.1 (0x00007f5034f36000)
-	libglib-2.0.so.0 => /lib/x86_64-linux-gnu/libglib-2.0.so.0 (0x00007f5034dfc000)
-	libstdc++.so.6 => /lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007f5034a00000)
-	libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007f5034d15000)
-	libgcc_s.so.1 => /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007f5035590000)
-	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f5034600000)
-	/lib64/ld-linux-x86-64.so.2 (0x00007f5036f45000)
-	libXau.so.6 => /lib/x86_64-linux-gnu/libXau.so.6 (0x00007f5036ea0000)
-	libXdmcp.so.6 => /lib/x86_64-linux-gnu/libXdmcp.so.6 (0x00007f5036e98000)
-	libwebp.so.7 => /lib/x86_64-linux-gnu/libwebp.so.7 (0x00007f5034ca8000)
-	liblzma.so.5 => /lib/x86_64-linux-gnu/liblzma.so.5 (0x00007f5035565000)
-	libjbig.so.0 => /lib/x86_64-linux-gnu/libjbig.so.0 (0x00007f5035554000)
-	libjpeg.so.8 => /lib/x86_64-linux-gnu/libjpeg.so.8 (0x00007f503497f000)
-	libdeflate.so.0 => /lib/x86_64-linux-gnu/libdeflate.so.0 (0x00007f5034c84000)
-	libz.so.1 => /lib/x86_64-linux-gnu/libz.so.1 (0x00007f5035536000)
-	libGLdispatch.so.0 => /lib/x86_64-linux-gnu/libGLdispatch.so.0 (0x00007f50348c7000)
-	libffi.so.8 => /lib/x86_64-linux-gnu/libffi.so.8 (0x00007f5034c77000)
-	libgmodule-2.0.so.0 => /lib/x86_64-linux-gnu/libgmodule-2.0.so.0 (0x00007f503552f000)
-	libmount.so.1 => /lib/x86_64-linux-gnu/libmount.so.1 (0x00007f5034c31000)
-	libselinux.so.1 => /lib/x86_64-linux-gnu/libselinux.so.1 (0x00007f503489b000)
-	libsystemd.so.0 => /lib/x86_64-linux-gnu/libsystemd.so.0 (0x00007f5034539000)
-	libbrotlicommon.so.1 => /lib/x86_64-linux-gnu/libbrotlicommon.so.1 (0x00007f5034878000)
-	libicudata.so.70 => /lib/x86_64-linux-gnu/libicudata.so.70 (0x00007f5032800000)
-	libpcre.so.3 => /lib/x86_64-linux-gnu/libpcre.so.3 (0x00007f50344c3000)
-	libbsd.so.0 => /lib/x86_64-linux-gnu/libbsd.so.0 (0x00007f5034860000)
-	libblkid.so.1 => /lib/x86_64-linux-gnu/libblkid.so.1 (0x00007f5034829000)
-	libpcre2-8.so.0 => /lib/x86_64-linux-gnu/libpcre2-8.so.0 (0x00007f503442c000)
-	liblz4.so.1 => /lib/x86_64-linux-gnu/liblz4.so.1 (0x00007f50327e0000)
-	libcap.so.2 => /lib/x86_64-linux-gnu/libcap.so.2 (0x00007f5034421000)
-	libgcrypt.so.20 => /lib/x86_64-linux-gnu/libgcrypt.so.20 (0x00007f50326a2000)
-	libmd.so.0 => /lib/x86_64-linux-gnu/libmd.so.0 (0x00007f5032695000)
-	libgpg-error.so.0 => /lib/x86_64-linux-gnu/libgpg-error.so.0 (0x00007f503266f000)
-
-#10 0x000055555597c708 in QGuiApplicationPrivate::createEventDispatcher() ()
-#11 0x000055555572c1aa in QCoreApplicationPrivate::init() ()
-#12 0x0000555555983cf5 in QGuiApplicationPrivate::init() ()
-#13 0x0000555555dca16d in QApplicationPrivate::init() ()
-#14 0x00005555556af60f in main ()
-
-
-
-QT_QPA_PLATFORM=xcb
-
-QT_DEBUG_PLUGINS=1 QT_QPA_PLATFORM=xcb ./CaptureStream2
+-- Found X11_XCB: /usr/lib/x86_64-linux-gnu/libX11-xcb.so (found version "1.8.7")
+-- Found XCB_XCB: /usr/lib/x86_64-linux-gnu/libxcb.so (found version "1.15")
+-- Found XCB_RENDER: /usr/lib/x86_64-linux-gnu/libxcb-render.so (found version "1.15")
+-- Found XCB_SHAPE: /usr/lib/x86_64-linux-gnu/libxcb-shape.so (found version "1.15")
+-- Found XCB_XFIXES: /usr/lib/x86_64-linux-gnu/libxcb-xfixes.so (found version "1.15")
+-- Found XCB_SHM: /usr/lib/x86_64-linux-gnu/libxcb-shm.so (found version "1.15")
+-- Could NOT find XCB_ATOM (missing: XCB_ATOM_LIBRARY XCB_ATOM_INCLUDE_DIR) (found version "")
+-- Could NOT find XCB_AUX (missing: XCB_AUX_LIBRARY XCB_AUX_INCLUDE_DIR) (found version "")
+-- Could NOT find XCB_COMPOSITE (missing: XCB_COMPOSITE_LIBRARY XCB_COMPOSITE_INCLUDE_DIR) (found version "")
+-- Could NOT find XCB_CURSOR (missing: XCB_CURSOR_LIBRARY XCB_CURSOR_INCLUDE_DIR) (found version "")
+-- Could NOT find XCB_DAMAGE (missing: XCB_DAMAGE_LIBRARY XCB_DAMAGE_INCLUDE_DIR) (found version "")
+-- Could NOT find XCB_DPMS (missing: XCB_DPMS_LIBRARY XCB_DPMS_INCLUDE_DIR) (found version "")
+-- Could NOT find XCB_DRI2 (missing: XCB_DRI2_LIBRARY XCB_DRI2_INCLUDE_DIR) (found version "")
+-- Could NOT find XCB_DRI3 (missing: XCB_DRI3_LIBRARY XCB_DRI3_INCLUDE_DIR) (found version "")
+-- Could NOT find XCB_EVENT (missing: XCB_EVENT_LIBRARY XCB_EVENT_INCLUDE_DIR) (found version "")
+-- Could NOT find XCB_EWMH (missing: XCB_EWMH_LIBRARY XCB_EWMH_INCLUDE_DIR) (found version "")
+-- Could NOT find XCB_GLX (missing: XCB_GLX_LIBRARY XCB_GLX_INCLUDE_DIR) (found version "")
+-- Found XCB_ICCCM: /usr/lib/x86_64-linux-gnu/libxcb-icccm.so (found version "0.4.1")
+-- Found XCB_IMAGE: /usr/lib/x86_64-linux-gnu/libxcb-image.so (found version "0.4.0")
+-- Found XCB_KEYSYMS: /usr/lib/x86_64-linux-gnu/libxcb-keysyms.so (found version "0.4.0")
+-- Could NOT find XCB_PRESENT (missing: XCB_PRESENT_LIBRARY XCB_PRESENT_INCLUDE_DIR) (found version "")
+-- Found XCB_RANDR: /usr/lib/x86_64-linux-gnu/libxcb-randr.so (found version "1.15")
+-- Could NOT find XCB_RECORD (missing: XCB_RECORD_LIBRARY XCB_RECORD_INCLUDE_DIR) (found version "")
+-- Found XCB_RENDERUTIL: /usr/lib/x86_64-linux-gnu/libxcb-render-util.so (found version "0.3.9")
+-- Could NOT find XCB_RES (missing: XCB_RES_LIBRARY XCB_RES_INCLUDE_DIR) (found version "")
+-- Could NOT find XCB_SCREENSAVER (missing: XCB_SCREENSAVER_LIBRARY XCB_SCREENSAVER_INCLUDE_DIR) (found version "")
+-- Found XCB_SYNC: /usr/lib/x86_64-linux-gnu/libxcb-sync.so (found version "1.15")
+-- Could NOT find XCB_UTIL (missing: XCB_UTIL_LIBRARY XCB_UTIL_INCLUDE_DIR) (found version "")
+-- Could NOT find XCB_XEVIE (missing: XCB_XEVIE_LIBRARY XCB_XEVIE_INCLUDE_DIR) (found version "")
+-- Could NOT find XCB_XF86DRI (missing: XCB_XF86DRI_LIBRARY XCB_XF86DRI_INCLUDE_DIR) (found version "")
+-- Found XCB_XINERAMA: /usr/lib/x86_64-linux-gnu/libxcb-xinerama.so (found version "1.15")
+-- Could NOT find XCB_XINPUT (missing: XCB_XINPUT_LIBRARY XCB_XINPUT_INCLUDE_DIR) (found version "")
+-- Found XCB_XKB: /usr/lib/x86_64-linux-gnu/libxcb-xkb.so (found version "1.15")
+-- Could NOT find XCB_XPRINT (missing: XCB_XPRINT_LIBRARY XCB_XPRINT_INCLUDE_DIR) (found version "")
+-- Could NOT find XCB_XTEST (missing: XCB_XTEST_LIBRARY XCB_XTEST_INCLUDE_DIR) (found version "")
+-- Could NOT find XCB_XV (missing: XCB_XV_LIBRARY XCB_XV_INCLUDE_DIR) (found version "")
+-- Could NOT find XCB_XVMC (missing: XCB_XVMC_LIBRARY XCB_XVMC_INCLUDE_DIR XCB_XV_FOUND) (found version "")
