@@ -1,5 +1,4 @@
 name: macOS Build Qt 6.9 Static and Upload to Release (macOS Universal, qt-cmake)
-
 on:
   workflow_dispatch:
 
@@ -47,8 +46,8 @@ jobs:
             -DCMAKE_INSTALL_PREFIX=$(pwd)/qt6-static-install \
             -DCMAKE_OSX_ARCHITECTURES="${CMAKE_OSX_ARCHITECTURES}" \
             -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0 \
-            -DQT_FEATURE_static=yes \
-            -DQT_FEATURE_shared=no \
+            -DQT_FEATURE_static=ON \
+            -DQT_FEATURE_shared=OFF \
             -DQT_BUILD_EXAMPLES=OFF \
             -DQT_BUILD_TESTS=OFF \
             -DFEATURE_optimize_size=ON \
@@ -59,14 +58,11 @@ jobs:
             -DFEATURE_system_jpeg=OFF \
             -DFEATURE_system_pcre2=OFF \
             -DFEATURE_system_doubleconversion=OFF \
-            -DQT_FEATURE_system_freetype=OFF \
-            -DQT_FEATURE_system_harfbuzz=OFF \
+            -DFEATURE_system_freetype=OFF \
+            -DFEATURE_system_harfbuzz=OFF \
             -DFEATURE_pkg_config=ON \
             -DQT_BUILD_QDOC=OFF \
-            -DFEATURE_pch=OFF \
-            -DQT_NO_PACKAGE_QTWEBENGINE=ON \
-            -DQT_NO_PACKAGE_QT3D=ON \
-            -DQT_NO_PACKAGE_QTLOCATION=ON
+            -DFEATURE_pch=OFF
 
       - name: Build and install Qt
         run: |
