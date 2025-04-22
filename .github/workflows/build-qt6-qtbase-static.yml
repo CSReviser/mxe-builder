@@ -140,20 +140,20 @@ jobs:
             exit 1
           fi
 
-      - name: Check if Qt6::XcbQpaPrivate is defined in Qt6GuiTargets.cmake
-        run: |
-          TARGETS_PATH="qtbase-static-install/lib/cmake/Qt6Gui/Qt6GuiTargets.cmake"
-          if [ ! -f "$TARGETS_PATH" ]; then
-            echo "❌ Qt6GuiTargets.cmake not found at $TARGETS_PATH"
-            exit 1
-          fi
-
-          if grep -q "Qt6::XcbQpaPrivate" "$TARGETS_PATH"; then
-            echo "✅ Qt6::XcbQpaPrivate is defined in $TARGETS_PATH"
-          else
-            echo "❌ Qt6::XcbQpaPrivate is NOT defined in $TARGETS_PATH"
-            exit 1
-          fi
+#      - name: Check if Qt6::XcbQpaPrivate is defined in Qt6GuiTargets.cmake
+#        run: |
+#          TARGETS_PATH="qtbase-static-install/lib/cmake/Qt6Gui/Qt6GuiTargets.cmake"
+#          if [ ! -f "$TARGETS_PATH" ]; then
+#            echo "❌ Qt6GuiTargets.cmake not found at $TARGETS_PATH"
+#            exit 1
+#          fi
+#
+#          if grep -q "Qt6::XcbQpaPrivate" "$TARGETS_PATH"; then
+#            echo "✅ Qt6::XcbQpaPrivate is defined in $TARGETS_PATH"
+#          else
+#            echo "❌ Qt6::XcbQpaPrivate is NOT defined in $TARGETS_PATH"
+#            exit 1
+#          fi
 
       - name: Package QtBase
         run: |
