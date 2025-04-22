@@ -108,11 +108,11 @@ jobs:
             -DFEATURE_harfbuzz=ON \
             -DQT_FEATURE_gui=ON \
             -DQT_FEATURE_widgets=ON \
-            -DINPUT_xcb=ON \
-            -DQT_FEATURE_xlib=ON \
-            -DQT_FEATURE_xcb=ON \
-            -DQT_FEATURE_xcb_xlib=ON \
-            -DQT_FEATURE_qpa_xcb=ON \
+            -DINPUT_xcb=OFF \
+            -DQT_FEATURE_xlib=OFF \
+            -DQT_FEATURE_xcb=OFF \
+            -DQT_FEATURE_xcb_xlib=OFF \
+            -DQT_FEATURE_qpa_xcb=OFF \
             -DFEATURE_system_zlib=OFF \
             -DFEATURE_system_png=OFF \
             -DFEATURE_system_jpeg=OFF \
