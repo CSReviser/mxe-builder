@@ -78,6 +78,9 @@ jobs:
             -DFEATURE_jpeg=ON \
             -DFEATURE_freetype=ON \
             -DFEATURE_harfbuzz=ON \
+            -DQT_FEATURE_gui=ON \
+            -DQT_FEATURE_widgets=ON \
+            -DINPUT_xcb=ON \
             -DQT_FEATURE_xlib=ON \
             -DQT_FEATURE_xcb=ON \
             -DQT_FEATURE_xcb_xlib=ON \
@@ -89,6 +92,17 @@ jobs:
 
           cmake --build . --parallel
           cmake --install .
+
+      - name: Check for libqxcb.a presence
+        run: |
+          if [ ! -f qtbase-static-install/plugins/platforms/libqxcb.a ]; then
+            echo "Error: libqxcb.a not found in plugins/platforms"
+            find qtbase-static-install -name "libqxcb.a"
+            exit 1
+          fi
+          echo "Success: libqxcb.a found."
+          echo "Located libqxcb.a:"
+          find qtbase-static-install -name "libqxcb.a"
 
       - name: Package QtBase
         run: |
