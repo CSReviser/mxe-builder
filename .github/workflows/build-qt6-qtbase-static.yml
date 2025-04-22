@@ -95,6 +95,23 @@ jobs:
 
       # …（Qt のビルド・インストールステップの直後に）…
 
+      # …（前のステップの直後に追加）…
+
+      - name: Patch Qt6GuiTargets.cmake to pull in XcbQpaPrivateTargets
+        run: |
+          TGT_FILE="qtbase-static-install/lib/cmake/Qt6Gui/Qt6GuiTargets.cmake"
+          echo "🔧 Patching $TGT_FILE to include XcbQpaPrivateTargets…"
+          # Qt6GuiTargets.cmake の先頭（または適切な場所）にインクルードを挿入
+          sed -i '1i\
+          include("${CMAKE_CURRENT_LIST_DIR}/../Qt6XcbQpaPrivate/Qt6XcbQpaPrivateTargets.cmake")' "$TGT_FILE"
+
+      - name: Verify Qt6::XcbQpaPrivate is now export‑ed
+        run: |
+          grep -R "Qt6::XcbQpaPrivate" qtbase-static-install/lib/cmake/Qt6Gui/Qt6GuiTargets.cmake \
+            && echo "✅ Qt6::XcbQpaPrivate が Qt6GuiTargets.cmake に登録されました。" \
+            || (echo "❌ まだ定義が見つかりません…"; exit 1)
+
+
       - name: Patch Qt6GuiConfig.cmake to register XcbQpaPrivate
         run: |
           GUI_CFG=qtbase-static-install/lib/cmake/Qt6Gui/Qt6GuiConfig.cmake
@@ -105,7 +122,7 @@ jobs:
 
       - name: Verify patch applied
         run: |
-          grep -C2 XcbQpaPrivate qtbase-static-install/lib/cmake/Qt6Gui/Qt6GuiConfig.cmake
+          grep -C2 XcbQpaPrivate qtbase-static-install/lib/cmake/Qt6Gui/Qt6GuiConfig.
 
       - name: Verify XcbQpaPrivate CMake module exists
         run: |
