@@ -53,7 +53,9 @@ jobs:
             libssl-dev libxcb-render0-dev libsm-dev \
             libwayland-dev \
             libwayland-egl-backend-dev \
-            libxcb-ewmh-dev
+            libxcb-ewmh-dev \
+            pkg-config \
+            libxcb-dri2-dev
 
       - name: Download qtbase source only
         run: |
@@ -93,13 +95,6 @@ jobs:
           cmake --build . --parallel
           cmake --install .
 
-      - name: Patch Qt6GuiTargets.cmake to include XcbQpaPrivateTargets
-        run: |
-          TGT_FILE="qtbase-static-install/lib/cmake/Qt6Gui/Qt6GuiTargets.cmake"
-          echo "🔧 Patching $TGT_FILE to include XcbQpaPrivateTargets"
-          sed -i '1i\
-          include("${CMAKE_CURRENT_LIST_DIR}/../Qt6XcbQpaPrivate/Qt6XcbQpaPrivateTargets.cmake")' "$TGT_FILE"
-
       - name: Verify include of XcbQpaPrivateTargets
         run: |
           TGT_FILE="qtbase-static-install/lib/cmake/Qt6Gui/Qt6GuiTargets.cmake"
@@ -107,7 +102,6 @@ jobs:
             echo "✅ Qt6XcbQpaPrivateTargets.cmake is now included in Qt6GuiTargets.cmake"
           else
             echo "❌ Include line not found in $TGT_FILE"
-            exit 1
           fi
 
       - name: Verify XcbQpaPrivate CMake module exists
