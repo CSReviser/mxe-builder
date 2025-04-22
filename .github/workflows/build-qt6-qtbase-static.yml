@@ -93,17 +93,19 @@ jobs:
           cmake --build . --parallel
           cmake --install .
 
-      - name: Copy XcbQpaPrivate CMake files into install prefix
+      # …（Qt のビルド・インストールステップの直後に）…
+
+      - name: Patch Qt6GuiConfig.cmake to register XcbQpaPrivate
         run: |
-          # ビルドツリー中から Config/Targets ファイルを探して...
-          find qtbase-build -type f -name "Qt6XcbQpaPrivate*.cmake" | while read file; do
-            # 相対パス部分を取り出し
-            rel=${file#qtbase-build/}
-            # コピー先ディレクトリ
-            dest="qtbase-static-install/lib/cmake/$(dirname "$rel")"
-            mkdir -p "$dest"
-            cp "$file" "$dest/"
-          done
+          GUI_CFG=qtbase-static-install/lib/cmake/Qt6Gui/Qt6GuiConfig.cmake
+          echo "🔧 Patching $GUI_CFG to pull in XcbQpaPrivate…" 
+          # 挿入位置は「targets を include する直前」
+          sed -i '/include("${CMAKE_CURRENT_LIST_DIR}\/Qt6GuiTargets.cmake")/i \
+          find_dependency(Qt6XcbQpaPrivate REQUIRED)' "$GUI_CFG"
+
+      - name: Verify patch applied
+        run: |
+          grep -C2 XcbQpaPrivate qtbase-static-install/lib/cmake/Qt6Gui/Qt6GuiConfig.cmake
 
       - name: Verify XcbQpaPrivate CMake module exists
         run: |
