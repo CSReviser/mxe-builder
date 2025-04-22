@@ -64,7 +64,7 @@ jobs:
         run: |
           mkdir qtbase-build
           cd qtbase-build
-          cmake -GNinja ../qtbase-everywhere-src-6.9.0 \
+          cmake -GNinja ../qtbase-everywhere-src-6.9.0/qtbase \
             -DCMAKE_INSTALL_PREFIX=../qtbase-static-install \
             -DCMAKE_BUILD_TYPE=Release \
             -DBUILD_SHARED_LIBS=OFF \
