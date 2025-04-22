@@ -97,6 +97,7 @@ jobs:
             -DBUILD_qtscxml=OFF \
             -DBUILD_qtcharts=OFF \
             -DBUILD_qt3d=OFF \
+            -DBUILD_qtquickeffectmaker=OFF \
             -DBUILD_qtremoteobjects=OFF \
             -DBUILD_qtscxml=OFF \
             -DBUILD_qtsensors=OFF \
