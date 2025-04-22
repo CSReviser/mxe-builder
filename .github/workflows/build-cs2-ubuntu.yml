@@ -43,7 +43,9 @@ jobs:
             libwayland-egl-backend-dev \
             meson \
             ninja-build \
-            python3-pip
+            python3-pip \
+            pkg-config \
+            libxcb-dri2-0-dev
 
       - name: Clone CaptureStream2
         run: |
