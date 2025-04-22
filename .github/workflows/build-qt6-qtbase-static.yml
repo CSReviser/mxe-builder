@@ -76,9 +76,7 @@ jobs:
             libxcb-res0-dev \
             libxcb-screensaver0-dev \
             libxcb-xkb-dev \
-            libxcb-xprint0-dev \
             libxcb-xtest0-dev \
-            libxcb-xv-dev \
             libxcb-xvmc0-dev \
             libwayland-egl-backend-dev \
             libxcb-ewmh-dev \
