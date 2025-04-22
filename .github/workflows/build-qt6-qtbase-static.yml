@@ -64,7 +64,6 @@ jobs:
         run: |
           mkdir qtbase-build
           cd qtbase-build
-
           cmake -GNinja ../qtbase-everywhere-src-6.9.0 \
             -DCMAKE_INSTALL_PREFIX=../qtbase-static-install \
             -DCMAKE_BUILD_TYPE=Release \
@@ -89,33 +88,6 @@ jobs:
             -DFEATURE_system_jpeg=OFF \
             -DFEATURE_system_freetype=OFF \
             -DFEATURE_system_harfbuzz=OFF
-
-cmake -GNinja ../qtbase-everywhere-src-6.9.0 \
-  -DCMAKE_INSTALL_PREFIX=../qtbase-static-install \
-  -DCMAKE_BUILD_TYPE=Release \
-  -DBUILD_SHARED_LIBS=OFF \
-  -DQT_BUILD_EXAMPLES=OFF \
-  -DQT_BUILD_TESTS=OFF \
-  -DFEATURE_dbus=ON \
-  -DFEATURE_icu=ON \
-  -DFEATURE_opengl=ON \
-  -DFEATURE_png=ON \
-  -DFEATURE_jpeg=ON \
-  -DFEATURE_freetype=ON \
-  -DFEATURE_harfbuzz=ON \
-  -DQT_FEATURE_gui=ON \
-  -DQT_FEATURE_widgets=ON \
-  -DINPUT_xcb=ON \
-  -DQT_FEATURE_xlib=ON \
-  -DQT_FEATURE_xcb=ON \
-  -DQT_FEATURE_xcb_xlib=ON \
-  -DFEATURE_system_zlib=OFF \
-  -DFEATURE_system_png=OFF \
-  -DFEATURE_system_jpeg=OFF \
-  -DFEATURE_system_freetype=OFF \
-  -DFEATURE_system_harfbuzz=OFF
-
-
 
           cmake --build . --parallel
           cmake --install .
