@@ -88,6 +88,7 @@ jobs:
             -DBUILD_qtgraphs=OFF \
             -DBUILD_qtlottie=OFF \
             -DBUILD_qtmqtt=OFF \
+            -DBUILD_qtopcua=OFF \
             -DBUILD_qtsvg=OFF \
             -DBUILD_SHARED_LIBS=OFF \
             -DFEATURE_zlib=ON \
