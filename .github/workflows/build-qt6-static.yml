@@ -200,7 +200,65 @@ jobs:
 #            -feature-xcb \
 #            -c++std c++20 
 
+      - name: Copy XcbQpaPrivate CMake files into install prefix
+        run: |
+          # ビルドツリー中から Config/Targets ファイルを探して...
+          find qtbase-build -type f -name "Qt6XcbQpaPrivate*.cmake" | while read file; do
+            # 相対パス部分を取り出し
+            rel=${file#qtbase-build/}
+            # コピー先ディレクトリ
+            dest="qtbase-static-install/lib/cmake/$(dirname "$rel")"
+            mkdir -p "$dest"
+            cp "$file" "$dest/"
+          done
 
+      - name: Verify XcbQpaPrivate CMake module exists
+        run: |
+          if [ ! -f qtbase-static-install/lib/cmake/Qt6XcbQpaPrivate/Qt6XcbQpaPrivateConfig.cmake ]; then
+            echo "❌ Qt6XcbQpaPrivateConfig.cmake not copied!"
+            exit 1
+          fi
+          if [ ! -f qtbase-static-install/lib/cmake/Qt6XcbQpaPrivate/Qt6XcbQpaPrivateTargets.cmake ]; then
+            echo "❌ Qt6XcbQpaPrivateTargets.cmake not copied!"
+            exit 1
+          fi
+          echo "✅ Qt6XcbQpaPrivate CMake modules in place"
+
+      - name: Check for libqxcb.a presence
+        run: |
+          if [ ! -f qtbase-static-install/plugins/platforms/libqxcb.a ]; then
+            echo "Error: libqxcb.a not found in plugins/platforms"
+            find qtbase-static-install -name "libqxcb.a"
+            exit 1
+          fi
+          echo "Success: libqxcb.a found."
+          echo "Located libqxcb.a:"
+          find qtbase-static-install -name "libqxcb.a"
+
+      - name: Check Qt6GuiConfig.cmake exists
+        run: |
+          CONFIG_PATH="qtbase-static-install/lib/cmake/Qt6Gui/Qt6GuiConfig.cmake"
+          if [ -f "$CONFIG_PATH" ]; then
+            echo "✅ Found: $CONFIG_PATH"
+          else
+            echo "❌ Not found: $CONFIG_PATH"
+            exit 1
+          fi
+
+      - name: Check if Qt6::XcbQpaPrivate is defined in Qt6GuiTargets.cmake
+        run: |
+          TARGETS_PATH="qtbase-static-install/lib/cmake/Qt6Gui/Qt6GuiTargets.cmake"
+          if [ ! -f "$TARGETS_PATH" ]; then
+            echo "❌ Qt6GuiTargets.cmake not found at $TARGETS_PATH"
+            exit 1
+          fi
+
+          if grep -q "Qt6::XcbQpaPrivate" "$TARGETS_PATH"; then
+            echo "✅ Qt6::XcbQpaPrivate is defined in $TARGETS_PATH"
+          else
+            echo "❌ Qt6::XcbQpaPrivate is NOT defined in $TARGETS_PATH"
+            exit 1
+          fi
 
       - name: Package Qt
         run: |
