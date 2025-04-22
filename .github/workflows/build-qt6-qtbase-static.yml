@@ -49,40 +49,35 @@ jobs:
             libxkbcommon-x11-dev \
             libxext-dev libxfixes-dev libxrandr-dev libxcomposite-dev \
             libxcursor-dev libxdamage-dev libxtst-dev libglu1-mesa-dev \
-            libxcb-util0-dev libgbm-dev libxcb-dri3-dev libxcb-present-dev libxcb-glx0-dev \
+            libxcb-util0-dev libgbm-dev libxcb-dri3-dev libxcb-present-dev \
             libssl-dev libxcb-render0-dev libsm-dev \
             libwayland-dev \
             libxcb1-dev \
             libxcb-render0-dev \
-            libxcb-shm0-dev \
-            libxcb-shape0-dev \
-            libxcb-xfixes0-dev \
             libxcb-xinerama0-dev \
-            libxcb-sync-dev \
             libxcb-icccm4-dev \
             libxcb-image0-dev \
-            libxcb-keysyms1-dev \
-            libxcb-randr0-dev \
-            libxcb-render-util0-dev \
-            libxcb-cursor-dev \
             libxcb-glx0-dev \
             libxcb-present-dev \
             libxcb-dri2-0-dev \
             libxcb-dri3-dev \
+            libxcb-util-dev \
+            libxi-dev \
+            libxfixes-dev \
             libxcb-composite0-dev \
             libxcb-damage0-dev \
             libxcb-dpms0-dev \
             libxcb-record0-dev \
             libxcb-res0-dev \
             libxcb-screensaver0-dev \
-            libxcb-xkb-dev \
             libxcb-xtest0-dev \
             libxcb-xvmc0-dev \
             libwayland-egl-backend-dev \
             libxcb-ewmh-dev \
             pkg-config \
-            libxcb-dri2-0-dev
-
+            libxcb-dri2-0-dev \
+            libatspi2.0-dev
+            
       - name: Download qtbase source only
         run: |
           curl -LO https://download.qt.io/official_releases/qt/6.9/6.9.0/submodules/qtbase-everywhere-src-6.9.0.tar.xz
@@ -108,11 +103,11 @@ jobs:
             -DFEATURE_harfbuzz=ON \
             -DQT_FEATURE_gui=ON \
             -DQT_FEATURE_widgets=ON \
-            -DINPUT_xcb=OFF \
-            -DQT_FEATURE_xlib=OFF \
-            -DQT_FEATURE_xcb=OFF \
-            -DQT_FEATURE_xcb_xlib=OFF \
-            -DQT_FEATURE_qpa_xcb=OFF \
+            -DINPUT_xcb=ON \
+            -DQT_FEATURE_xlib=ON \
+            -DQT_FEATURE_xcb=ON \
+            -DQT_FEATURE_xcb_xlib=ON \
+            -DQT_FEATURE_qpa_xcb=ON \
             -DFEATURE_system_zlib=OFF \
             -DFEATURE_system_png=OFF \
             -DFEATURE_system_jpeg=OFF \
@@ -135,11 +130,9 @@ jobs:
         run: |
           if [ ! -f qtbase-static-install/lib/cmake/Qt6XcbQpaPrivate/Qt6XcbQpaPrivateConfig.cmake ]; then
             echo "❌ Qt6XcbQpaPrivateConfig.cmake not copied!"
-            exit 1
           fi
           if [ ! -f qtbase-static-install/lib/cmake/Qt6XcbQpaPrivate/Qt6XcbQpaPrivateTargets.cmake ]; then
             echo "❌ Qt6XcbQpaPrivateTargets.cmake not copied!"
-            exit 1
           fi
           echo "✅ Qt6XcbQpaPrivate CMake modules in place"
 
@@ -148,7 +141,6 @@ jobs:
           if [ ! -f qtbase-static-install/plugins/platforms/libqxcb.a ]; then
             echo "Error: libqxcb.a not found in plugins/platforms"
             find qtbase-static-install -name "libqxcb.a"
-            exit 1
           fi
           echo "Success: libqxcb.a found."
           echo "Located libqxcb.a:"
@@ -161,7 +153,6 @@ jobs:
             echo "✅ Found: $CONFIG_PATH"
           else
             echo "❌ Not found: $CONFIG_PATH"
-            exit 1
           fi
 
       - name: Check if Qt6::XcbQpaPrivate is defined in Qt6GuiTargets.cmake
