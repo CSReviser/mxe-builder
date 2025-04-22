@@ -165,3 +165,17 @@ libpthread
 xcb-present, xcb-glx, xcb-dri3, xcb-cursor, xkbcommon-x11
 
 sudo apt install -y libxcb-render0-dev libsm-dev
+
+qt-everywhere-src-6.5.3
+-prefix
+/opt/qt6
+-static
+-static-runtime
+-developer-build
+-skip
+qtwebengine
+-nomake
+examples
+-nomake
+tests
+
