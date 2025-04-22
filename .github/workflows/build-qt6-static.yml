@@ -75,6 +75,7 @@ jobs:
             -DBUILD_WITH_PCH=OFF \
             -DQT_QMAKE_TARGET_MKSPEC=linux-g++ \
             -DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/cmake \
+            -DBUILD_ALL=OFF \
             -DBUILD_qtbase=ON \
             -DBUILD_qtwebengine=OFF \
             -DBUILD_qtdeclarative=OFF \
@@ -103,6 +104,7 @@ jobs:
             -DBUILD_qtsensors=OFF \
             -DBUILD_qtserialbus=OFF \
             -DBUILD_qtwayland=OFF \
+            -DBUILD_qtvirtualkeyboard=OFF \
             -DBUILD_qt3d=OFF \
             -DBUILD_qtsvg=OFF \
             -DBUILD_qtspeech=OFF \
