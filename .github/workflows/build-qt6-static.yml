@@ -104,7 +104,6 @@ jobs:
             -DBUILD_qtserialbus=OFF \
             -DBUILD_qtwayland=OFF \
             -DBUILD_qtvirtualkeyboard=OFF \
-            -DBUILD_qt3d=OFF \
             -DBUILD_qtsvg=OFF \
             -DBUILD_qtspeech=OFF \
             -DBUILD_SHARED_LIBS=OFF \
@@ -113,7 +112,11 @@ jobs:
             -DFEATURE_freetype=ON \
             -DFEATURE_harfbuzz=ON \
             -DQT_FEATURE_opengl=ON \
+            -DQT_FEATURE_gui=ON \
+            -DQT_FEATURE_xlib=ON \
             -DQT_FEATURE_xcb=ON \
+            -DQT_FEATURE_xcb_xlib=ON \
+            -DQT_BUILD_QPA_PLUGINS=ON \
             -DFEATURE_dbus=ON \
             -DFEATURE_icu=ON \
             -DQT_FEATURE_system_zlib=OFF \
