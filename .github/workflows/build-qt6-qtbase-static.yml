@@ -93,6 +93,35 @@ jobs:
           cmake --build . --parallel
           cmake --install .
 
+      - name: Install QtBase
+        run: |
+          cmake --build . --parallel
+          cmake --install .
+
+      - name: Copy XcbQpaPrivate CMake files into install prefix
+        run: |
+          # ビルドツリー中から Config/Targets ファイルを探して...
+          find qtbase-build -type f -name "Qt6XcbQpaPrivate*.cmake" | while read file; do
+            # 相対パス部分を取り出し
+            rel=${file#qtbase-build/}
+            # コピー先ディレクトリ
+            dest="qtbase-static-install/lib/cmake/$(dirname "$rel")"
+            mkdir -p "$dest"
+            cp "$file" "$dest/"
+          done
+
+      - name: Verify XcbQpaPrivate CMake module exists
+        run: |
+          if [ ! -f qtbase-static-install/lib/cmake/Qt6XcbQpaPrivate/Qt6XcbQpaPrivateConfig.cmake ]; then
+            echo "❌ Qt6XcbQpaPrivateConfig.cmake not copied!"
+            exit 1
+          fi
+          if [ ! -f qtbase-static-install/lib/cmake/Qt6XcbQpaPrivate/Qt6XcbQpaPrivateTargets.cmake ]; then
+            echo "❌ Qt6XcbQpaPrivateTargets.cmake not copied!"
+            exit 1
+          fi
+          echo "✅ Qt6XcbQpaPrivate CMake modules in place"
+
       - name: Check for libqxcb.a presence
         run: |
           if [ ! -f qtbase-static-install/plugins/platforms/libqxcb.a ]; then
