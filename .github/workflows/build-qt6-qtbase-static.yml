@@ -55,7 +55,7 @@ jobs:
             libwayland-egl-backend-dev \
             libxcb-ewmh-dev \
             pkg-config \
-            libxcb-dri2-dev
+            libxcb-dri2-0-dev
 
       - name: Download qtbase source only
         run: |
