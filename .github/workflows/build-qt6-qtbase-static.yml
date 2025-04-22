@@ -93,11 +93,6 @@ jobs:
           cmake --build . --parallel
           cmake --install .
 
-      - name: Install QtBase
-        run: |
-          cmake --build . --parallel
-          cmake --install .
-
       - name: Copy XcbQpaPrivate CMake files into install prefix
         run: |
           # ビルドツリー中から Config/Targets ファイルを探して...
