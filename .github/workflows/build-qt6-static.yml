@@ -75,7 +75,6 @@ jobs:
             -DBUILD_WITH_PCH=OFF \
             -DQT_QMAKE_TARGET_MKSPEC=linux-g++ \
             -DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/cmake \
-            -DBUILD_ALL=OFF \
             -DBUILD_qtbase=ON \
             -DBUILD_qtwebengine=OFF \
             -DBUILD_qtdeclarative=OFF \
@@ -109,7 +108,6 @@ jobs:
             -DBUILD_qtsvg=OFF \
             -DBUILD_qtspeech=OFF \
             -DBUILD_SHARED_LIBS=OFF \
-            -DFEATURE_zlib=ON \
             -DFEATURE_png=ON \
             -DFEATURE_jpeg=ON \
             -DFEATURE_freetype=ON \
@@ -145,7 +143,6 @@ jobs:
             -DBUILD_qtpositioning=OFF \
             -DBUILD_qtquick3d=OFF \
             -DBUILD_qtquicktimeline=OFF \
-            -DBUILD_qremoteobjects=OFF \
             -DBUILD_qtscxml=OFF \
             -DBUILD_qtsensors=OFF \
             -DBUILD_qtserialbus=OFF \
