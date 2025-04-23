@@ -18,6 +18,7 @@ jobs:
             build-essential \
             cmake \
             ninja-build \
+            libgl1-mesa-dev libx11-dev libxext-dev libxrandr-dev libxi-dev libx11-xcb-dev \
             # （中略：依存パッケージのリストはそのままでOK）
 
       - name: Clone CaptureStream2
