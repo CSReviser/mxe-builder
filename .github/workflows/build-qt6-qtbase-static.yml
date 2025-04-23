@@ -80,14 +80,14 @@ jobs:
             
       - name: Download qtbase source only
         run: |
-          curl -LO https://download.qt.io/official_releases/qt/6.9/6.9.0/submodules/qtbase-everywhere-src-6.9.0.tar.xz
-          tar xf qtbase-everywhere-src-6.9.0.tar.xz
+          curl -LO https://download.qt.io/official_releases/qt/6.8/6.8.3/submodules/qtbase-everywhere-src-6.8.3.tar.xz
+          tar xf qtbase-everywhere-src-6.8.3.tar.xz
 
       - name: Configure and build qtbase statically
         run: |
           mkdir qt-build
           cd qt-build
-          cmake -GNinja ../qtbase-everywhere-src-6.9.0 \
+          cmake -GNinja ../qtbase-everywhere-src-6.8.3 \
             -DCMAKE_INSTALL_PREFIX=../qt6-static-install \
             -DCMAKE_BUILD_TYPE=Release \
             -DBUILD_SHARED_LIBS=OFF \
@@ -174,13 +174,13 @@ jobs:
       - name: Package QtBase
         run: |
           cd qt-build
-          tar -czf qtbase-6.9.0-linux-static.tar.gz ../qt6-static-install
+          tar -czf qtbase-6.8.3-linux-static.tar.gz ../qt6-static-install
 
       - name: Upload to GitHub Releases
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: qtbase-6.9.0-static-linux
-          name: QtBase 6.9.0 Static Linux
-          files: qt-build/qtbase-6.9.0-linux-static.tar.gz
+          tag_name: qtbase-6.8.3-static-linux
+          name: QtBase 6.8.3 Static Linux
+          files: qt-build/qtbase-6.8.3-linux-static.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
