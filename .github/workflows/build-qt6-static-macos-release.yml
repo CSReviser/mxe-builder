@@ -11,89 +11,51 @@ jobs:
     runs-on: macos-14
 
     steps:
-      - name: Install dependencies (via Homebrew)
+      - name: Install dependencies (Xcode + brew packages)
         run: |
-          brew update
-          brew install \
-            cmake \
-            ninja \
-            perl \
-            python3 \
-            pkg-config \
-            freetype \
-            fontconfig \
-            libpng \
-            jpeg \
-            zlib \
-            pcre2 \
-            harfbuzz \
-            wget \
-            git
+          brew install cmake ninja perl python3 pkg-config
 
-      - name: Download Qt 6.9 source
+      - name: Download qtbase source only
         run: |
-          curl -LO https://download.qt.io/official_releases/qt/6.9/6.9.0/single/qt-everywhere-src-6.9.0.tar.xz
-          tar xf qt-everywhere-src-6.9.0.tar.xz
+          curl -LO https://download.qt.io/official_releases/qt/6.9/6.9.0/submodules/qtbase-everywhere-src-6.9.0.tar.xz
+          tar xf qtbase-everywhere-src-6.9.0.tar.xz
 
-      - name: Configure and build Qt statically (universal)
+      - name: Configure and build qtbase statically (Universal)
         run: |
           mkdir qt-build
           cd qt-build
-../qt-everywhere-src-6.9.0/configure \
-    -prefix ../qt-build/qt6-static-install \
-    -static \
-    -release \
-    -opensource -confirm-license \
-    -nomake examples -nomake tests \
-    -skip qt3d -skip qtwebengine -skip qtwebchannel -skip qtwebview \
-    -skip qtcharts -skip qtvirtualkeyboard \
-    -skip qtlocation -skip qtsensors -skip qtlottie \
-    -skip qtconnectivity -skip qtdoc -skip qttranslations \
-    -no-pch \
-    -qt-harfbuzz \
-    -qt-freetype \
-    -qt-libpng \
-    -qt-zlib \
-    -qt-libjpeg \
-    -qt-pcre \
-    -qt-doubleconversion \
-    -platform macx-clang \
-    -c++std c++20
-          ../qt-everywhere-src-6.9.0/configure \
-            -prefix ../qt-build/qt6-static-install \
-            -static -static-runtime \
-            -release \
-            -opensource -confirm-license \
-            -nomake examples -nomake tests \
-            -skip qt3d -skip qtwebengine -skip qtwebchannel -skip qtwebview \
-            -skip qtcharts -skip qtvirtualkeyboard \
-            -skip qtlocation -skip qtsensors -skip qtlottie \
-            -skip qtconnectivity -skip qtdoc -skip qttranslations \
-            -no-pch \
-            -qt-harfbuzz \
-            -qt-freetype \
-            -qt-libpng \
-            -qt-zlib \
-            -qt-libjpeg \
-            -qt-pcre \
-            -qt-doubleconversion \
-            -platform macx-clang \
-            -c++std c++20 \
-            -device-option QMAKE_APPLE_DEVICE_ARCHS=arm64,x86_64
+          cmake -GNinja ../qtbase-everywhere-src-6.9.0 \
+            -DCMAKE_INSTALL_PREFIX=../qt6-static-install \
+            -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64" \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DBUILD_SHARED_LIBS=OFF \
+            -DQT_BUILD_EXAMPLES=OFF \
+            -DQT_BUILD_TESTS=OFF \
+            -DQT_FEATURE_dbus=OFF \
+            -DQT_FEATURE_icu=OFF \
+            -DQT_FEATURE_opengl=ON \
+            -DQT_FEATURE_gui=ON \
+            -DQT_FEATURE_widgets=ON \
+            -DQT_FEATURE_fontconfig=OFF \
+            -DFEATURE_system_zlib=OFF \
+            -DFEATURE_system_png=OFF \
+            -DFEATURE_system_jpeg=OFF \
+            -DFEATURE_system_freetype=OFF \
+            -DFEATURE_system_harfbuzz=OFF
 
           cmake --build . --parallel
           cmake --install .
 
-      - name: Package Qt
+      - name: Package QtBase (universal)
         run: |
           cd qt-build
-          tar -czf qt6.9.0-macos-universal-static.tar.gz qt6-static-install
+          tar -czf qtbase-6.9.0-macos-universal-static.tar.gz ../qt6-static-install
 
       - name: Upload to GitHub Releases
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: qt6.9.0-static-macos-universal
-          name: Qt 6.9.0 Static macOS Universal
-          files: qt-build/qt6.9.0-macos-universal-static.tar.gz
+          tag_name: qtbase-6.9.0-static-macos-14-universal
+          name: QtBase 6.9.0 Static macOS Universal
+          files: qt-build/qtbase-6.9.0-macos-universal-static.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
