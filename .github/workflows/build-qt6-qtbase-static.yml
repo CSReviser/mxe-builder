@@ -93,7 +93,6 @@ jobs:
             -DBUILD_SHARED_LIBS=OFF \
             -DQT_BUILD_EXAMPLES=OFF \
             -DQT_BUILD_TESTS=OFF \
-            -DQT_BUILD_INTERNALS=ON \
             -DFEATURE_dbus=ON \
             -DFEATURE_icu=ON \
             -DFEATURE_opengl=ON \
@@ -107,7 +106,6 @@ jobs:
             -DQT_FEATURE_xlib=ON \
             -DQT_FEATURE_xcb=ON \
             -DQT_FEATURE_xcb_xlib=ON \
-            -DQT_FEATURE_qpa_xcb=ON \
             -DQT_FEATURE_xkbcommon=ON \
             -DQT_FEATURE_fontconfig=ON \
             -DQT_FEATURE_sessionmanager=ON \
