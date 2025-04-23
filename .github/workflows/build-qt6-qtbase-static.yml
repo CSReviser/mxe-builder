@@ -80,7 +80,7 @@ jobs:
             
       - name: Download qtbase source only
         run: |
-          curl -LO https://download.qt.io/official_releases/qt/6.8/6.8.3/submodules/qtbase-everywhere-src-6.9.3.tar.xz
+          curl -LO https://download.qt.io/official_releases/qt/6.8/6.8.3/submodules/qtbase-everywhere-src-6.8.3.tar.xz
           tar xf qtbase-everywhere-src-6.8.3.tar.xz
 
       - name: Configure and build qtbase statically
