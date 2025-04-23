@@ -121,7 +121,7 @@ jobs:
         run: |
           cd CaptureStream2
           mkdir build && cd build
-          ../../qtbase-static-install/bin/qt-cmake .. -DQT_DEBUG_FIND_PACKAGE=ON
+          ../../qt6-static-install/bin/qt-cmake .. -DQT_DEBUG_FIND_PACKAGE=ON
           cmake --build . --parallel
 
       - name: Archive result
