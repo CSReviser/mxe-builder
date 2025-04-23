@@ -8,7 +8,9 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
+    container:
+        image: ubuntu:22.04
 
     steps:
       - name: Install dependencies
@@ -109,7 +111,7 @@ jobs:
             -DQT_FEATURE_xkbcommon=ON \
             -DQT_FEATURE_fontconfig=ON \
             -DQT_FEATURE_sessionmanager=ON \
-            -DQT_FEATURE_glib=ON \
+            -DQT_FEATURE_glib=OFF \
             -DQT_FEATURE_xrender=ON \
             -DFEATURE_system_zlib=OFF \
             -DFEATURE_system_png=OFF \
