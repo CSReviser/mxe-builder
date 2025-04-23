@@ -212,3 +212,4 @@ examples
 -nomake
 tests
 
+ldd ./CaptureStream2 | grep -E 'glib|gio|gobject'
