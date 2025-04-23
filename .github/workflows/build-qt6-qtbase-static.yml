@@ -174,7 +174,7 @@ jobs:
       - name: Package QtBase
         run: |
           cd qt-build
-          tar -czf qtbase-6.9.0-linux-static.tar.gz ../qt-static-install
+          tar -czf qtbase-6.9.0-linux-static.tar.gz ../qt6-static-install
 
       - name: Upload to GitHub Releases
         uses: softprops/action-gh-release@v1
