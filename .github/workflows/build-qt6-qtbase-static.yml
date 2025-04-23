@@ -9,10 +9,14 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-22.04
-#    container:
-#        image: ubuntu:22.04
+    container:
+        image: ubuntu:22.04
 
     steps:
+      - name: Install dependencies
+        run: |
+          apt-get update
+          apt-get install -y sudo \
       - name: Install dependencies
         run: |
           sudo apt-get update
