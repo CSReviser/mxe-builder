@@ -212,4 +212,9 @@ examples
 -nomake
 tests
 
+
+runs-on: ubuntu-latest
+container:
+  image: ubuntu:22.04
+
 ldd ./CaptureStream2 | grep -E 'glib|gio|gobject'
