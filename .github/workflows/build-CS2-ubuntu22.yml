@@ -8,7 +8,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Install dependencies
@@ -114,7 +114,7 @@ jobs:
 
       - name: Download and extract Qt ${{ env.QT_VERSION }} static build
         run: |
-          curl -LO https://github.com/CSReviser/mxe-builder/releases/download/qtbase-${{ env.QT_VERSION }}-ubuntu-22.04/qtbase-${{ env.QT_VERSION }}-linux-static.tar.gz
+          curl -LO https://github.com/CSReviser/mxe-builder/releases/download/qtbase-${{ env.QT_VERSION }}-static-ubuntu-22.04/qtbase-${{ env.QT_VERSION }}-linux-static.tar.gz
           tar -xf  qtbase-${{ env.QT_VERSION }}-linux-static.tar.gz
 
       - name: Build CaptureStream2 with static Qt using qt-cmake
