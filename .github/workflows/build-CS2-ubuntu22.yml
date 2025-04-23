@@ -1,4 +1,4 @@
-name: Build CaptureStream2 with Qt Static
+name: Build CS2 ubuntu22 with Qt Static
 
 on:
   workflow_dispatch:
