@@ -21,17 +21,26 @@ jobs:
           cd CaptureStream2
           git submodule update --init --recursive
 
+      - name: Get UID and GID
+        id: userinfo
+        run: |
+          echo "uid=$(id -u)" >> "$GITHUB_OUTPUT"
+          echo "gid=$(id -g)" >> "$GITHUB_OUTPUT"
+
       - name: Build using Docker container with Qt static
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/work \
             -w /work/CaptureStream2 \
+            --env HOST_UID=${{ steps.userinfo.outputs.uid }} \
+            --env HOST_GID=${{ steps.userinfo.outputs.gid }} \
             --env PATH="/opt/qt6-static/bin:/usr/bin:/bin:/usr/local/bin" \
             ${{ env.IMAGE_NAME }} \
             bash -c "
               mkdir -p build && cd build && \
               qt-cmake .. -DQT_DEBUG_FIND_PACKAGE=ON && \
-              cmake --build . --parallel
+              cmake --build . --parallel && \
+              chown -R \$HOST_UID:\$HOST_GID /work
             "
 
       - name: Archive result
