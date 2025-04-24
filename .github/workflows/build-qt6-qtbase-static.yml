@@ -10,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-        image: ubuntu:24.04
+        image: ubuntu:22.04
 
     steps:
       - name: Install dependencies
@@ -187,8 +187,8 @@ jobs:
       - name: Upload to GitHub Releases
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: qtbase-6.9.0-static-ubuntu-24.04
-          name: QtBase 6.9.0 Static Linux ubuntu-24.04
+          tag_name: qtbase-6.9.0-static-ubuntu-22.04
+          name: QtBase 6.9.0 Static Linux ubuntu-22.04
           files: qt-build/qtbase-6.9.0-linux-static.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
