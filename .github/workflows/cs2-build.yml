@@ -26,12 +26,12 @@ jobs:
           docker run --rm \
             -v ${{ github.workspace }}:/work \
             -w /work/CaptureStream2 \
+            --env PATH="/opt/qt6-static/bin:/usr/bin:/bin:/usr/local/bin" \
             ${{ env.IMAGE_NAME }} \
-            bash -lc "
-              export PATH=/usr/bin:/bin:/usr/local/bin:$PATH \
+            bash -c "
               mkdir -p build && cd build && \
-              /opt/qt6-static/bin/qt-cmake .. -DQT_DEBUG_FIND_PACKAGE=ON && \
-              cmake --build . --parallel
+              qt-cmake .. -DQT_DEBUG_FIND_PACKAGE=ON && \
+              cmake --build . --parallelで
             "
 
       - name: Archive result
