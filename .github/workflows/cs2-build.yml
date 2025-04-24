@@ -28,6 +28,7 @@ jobs:
             -w /work/CaptureStream2 \
             ${{ env.IMAGE_NAME }} \
             bash -lc "
+              export PATH=/usr/bin:/bin:/usr/local/bin:$PATH \
               mkdir -p build && cd build && \
               /opt/qt6-static/bin/qt-cmake .. -DQT_DEBUG_FIND_PACKAGE=ON && \
               cmake --build . --parallel
