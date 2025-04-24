@@ -1,0 +1,45 @@
+name: Build CS2 ubuntu22 with Qt Static (Docker)
+
+on:
+  workflow_dispatch:
+
+env:
+  QT_VERSION: 6.9.0
+  IMAGE_NAME: ghcr.io/csreviser/qt6.9.0-static-ubuntu22.04:latest
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Clone CaptureStream2
+        run: |
+          git clone https://github.com/CSReviser/CaptureStream2.git
+          cd CaptureStream2
+          git submodule update --init --recursive
+
+      - name: Build using Docker container with Qt static
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/work \
+            -w /work/CaptureStream2 \
+            ${{ env.IMAGE_NAME }} \
+            bash -c "
+              mkdir -p build && cd build && \
+              /opt/qt6-static/bin/qt-cmake .. -DQT_DEBUG_FIND_PACKAGE=ON && \
+              cmake --build . --parallel
+            "
+
+      - name: Archive result
+        run: |
+          cd CaptureStream2/build
+          tar -czf capturestream2-linux-static.tar.gz CaptureStream2
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: capturestream2-linux-static
+          path: CaptureStream2/build/capturestream2-linux-static.tar.gz
