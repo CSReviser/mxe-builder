@@ -81,6 +81,8 @@ jobs:
             libwayland-egl-backend-dev \
             libxcb-ewmh-dev \
             pkg-config \
+            libgl1-mesa-dev \
+            libglu1-mesa-dev \
             libxcb-dri2-0-dev \
             libatspi2.0-dev
             
@@ -101,7 +103,7 @@ jobs:
             -DQT_BUILD_TESTS=OFF \
             -DFEATURE_dbus=ON \
             -DFEATURE_icu=OFF \
-            -DFEATURE_opengl=ON \
+            -DQT_FEATURE_opengl_desktop=ON \
             -DFEATURE_png=ON \
             -DFEATURE_jpeg=ON \
             -DFEATURE_freetype=ON \
