@@ -1,4 +1,4 @@
-name: CS2 ubuntu22 with Qt Static (Docker)
+name: Build CS2 ubuntu22 with Qt Static (Docker)
 
 on:
   workflow_dispatch:
@@ -21,13 +21,16 @@ jobs:
           cd CaptureStream2
           git submodule update --init --recursive
 
+      - name: Log in to GHCR
+        run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
       - name: Build using Docker container with Qt static
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/work \
             -w /work/CaptureStream2 \
             ${{ env.IMAGE_NAME }} \
-            bash -c "
+            bash -lc "
               mkdir -p build && cd build && \
               /opt/qt6-static/bin/qt-cmake .. -DQT_DEBUG_FIND_PACKAGE=ON && \
               cmake --build . --parallel
