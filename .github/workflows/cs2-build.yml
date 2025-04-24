@@ -1,4 +1,4 @@
-name: Build CS2 ubuntu22 with Qt Static (Docker)
+name: CS2 ubuntu22 with Qt Static (Docker)
 
 on:
   workflow_dispatch:
