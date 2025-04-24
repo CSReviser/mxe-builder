@@ -31,7 +31,7 @@ jobs:
             bash -c "
               mkdir -p build && cd build && \
               qt-cmake .. -DQT_DEBUG_FIND_PACKAGE=ON && \
-              cmake --build . --parallelで
+              cmake --build . --parallel
             "
 
       - name: Archive result
