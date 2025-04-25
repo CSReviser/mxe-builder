@@ -1,0 +1,41 @@
+name: Windows Static Build (MXE)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/csrevier/qt6-mxe-static
+      options: --user root
+
+    steps:
+      - name: Checkout CaptureStream2
+        uses: actions/checkout@v4
+        with:
+          repository: CSReviser/CaptureStream2
+          path: CaptureStream2
+
+      - name: Configure and Build (Windows static)
+        working-directory: CaptureStream2
+        run: |
+          export PATH=/mxe/usr/bin:$PATH
+
+          mkdir build
+          cd build
+
+          x86_64-w64-mingw32.static-cmake .. \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_FIND_ROOT_PATH=/mxe/usr/x86_64-w64-mingw32.static
+
+          make -j$(nproc)
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: CaptureStream2-windows-static
+          path: |
+            CaptureStream2/build/*.exe
