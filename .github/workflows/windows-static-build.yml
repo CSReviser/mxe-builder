@@ -28,7 +28,7 @@ jobs:
           -S CaptureStream2
           -B build
           -DCMAKE_BUILD_TYPE=Release
-          -DCMAKE_PREFIX_PATH=/opt/qt6-static
+          -DCMAKE_PREFIX_PATH="/opt/qt6-static;/opt/qt6-static/lib/cmake"
           -DCMAKE_FIND_ROOT_PATH=/usr/x86_64-w64-mingw32.static
           -DCMAKE_SYSTEM_NAME=Windows
           -DCMAKE_INSTALL_PREFIX=install
