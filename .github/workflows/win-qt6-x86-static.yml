@@ -2,9 +2,6 @@ name: Win Qt6 32bit Static Build (MXE)
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
 
 jobs:
   build:
