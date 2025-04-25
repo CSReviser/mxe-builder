@@ -31,4 +31,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: capturestream2-windows-qt5-static
-          path: build/*.exe
+          path: CaptureStream2/release/*.exe
