@@ -35,7 +35,7 @@ jobs:
           -DQT_HOST_PATH="/opt/mxe/usr/x86_64-w64-mingw32.static/qt6"
 
       - name: Build
-        run: cmake . .
+        run: cmake -S . -B .
 
       - name: Install
         run: make 
