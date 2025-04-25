@@ -1,0 +1,34 @@
+name: Win Qt5 32bit Static Build (MXE)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/csreviser/qt5-mxe-x86-static:5.15.0
+
+    steps:
+      - name: Checkout this repo
+        uses: actions/checkout@v4
+
+      - name: Clone CaptureStream2
+        run: git clone https://github.com/CSReviser/CaptureStream2.git
+
+      - name: Create build directory
+        run: mkdir -p build
+
+      - name: Configure with CMake
+        run: >
+          /opt/mxe/usr/i686-w64-mingw32.static/qt5/bin/qmake
+          CaptureStream2/CaptureStream2.pro
+          
+      - name: Build
+        run: make 
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: capturestream2-windows-qt5-x86-static
+          path: ./release/*.exe
