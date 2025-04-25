@@ -32,7 +32,7 @@ jobs:
           -DQT_HOST_PATH="/opt/mxe/usr/x86_64-w64-mingw32.static/qt6"
 
       - name: Build
-        run: qmake 
+        run: qmake CaptureStream2.pro
 
       - name: Install
         run: make 
