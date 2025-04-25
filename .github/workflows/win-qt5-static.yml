@@ -23,12 +23,10 @@ jobs:
         run: >
           /opt/mxe/usr/x86_64-w64-mingw32.static/qt5/bin/qmake
           CaptureStream2/CaptureStream2.pro
+          
       - name: Build
-        run: qmake 
-
-      - name: Install
         run: make 
-        
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
