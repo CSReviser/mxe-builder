@@ -1,3 +1,13 @@
+
+echo $CR_PAT | docker login ghcr.io -u csreviser --password-stdin
+
+docker pull alpine:3.18
+docker tag alpine:3.18 ghcr.io/csreviser/qt6-static-builder:init
+docker push ghcr.io/csreviser/qt6-static-builder:init
+
+
+
+
 tar -czf mxe-fixed.tar.gz --owner=0 --group=0 -C ./
 
 
