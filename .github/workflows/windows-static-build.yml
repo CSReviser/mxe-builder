@@ -35,13 +35,13 @@ jobs:
           -DQT_HOST_PATH="/opt/mxe/usr/x86_64-w64-mingw32.static/qt6"
 
       - name: Build
-        run: cmake --build build --parallel
+        run: cmake . .
 
       - name: Install
-        run: cmake --install build
+        run: make 
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: capturestream2-windows-static
-          path: install/
+          path: ./*.exe
