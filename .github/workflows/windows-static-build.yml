@@ -3,39 +3,42 @@ name: Windows Static Build (MXE)
 on:
   workflow_dispatch:
   push:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/csrevier/qt6-mxe-static:6.9.0
-      options: --user root
+      image: ghcr.io/csreviser/qt6-mxe-static:6.9.0
 
     steps:
-      - name: Checkout CaptureStream2
+      - name: Checkout source
         uses: actions/checkout@v4
-        with:
-          repository: CSReviser/CaptureStream2
-          path: CaptureStream2
 
-      - name: Configure and Build (Windows static)
-        working-directory: CaptureStream2
-        run: |
-          export PATH=/mxe/usr/bin:$PATH
+      - name: Create build directory
+        run: mkdir build
 
-          mkdir build
-          cd build
+      - name: Configure with CMake
+        run: >
+          x86_64-w64-mingw32.static-cmake
+          -S .
+          -B build
+          -DCMAKE_BUILD_TYPE=Release
+          -DCMAKE_PREFIX_PATH=/opt/qt6-static
+          -DCMAKE_FIND_ROOT_PATH=/usr/x86_64-w64-mingw32.static
+          -DCMAKE_SYSTEM_NAME=Windows
+          -DCMAKE_INSTALL_PREFIX=install
+          -DQT_HOST_PATH=/opt/qt6-static
 
-          x86_64-w64-mingw32.static-cmake .. \
-            -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_FIND_ROOT_PATH=/mxe/usr/x86_64-w64-mingw32.static
+      - name: Build
+        run: cmake --build build --parallel
 
-          make -j$(nproc)
+      - name: Install
+        run: cmake --install build
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: CaptureStream2-windows-static
-          path: |
-            CaptureStream2/build/*.exe
+          name: capturestream2-windows-static
+          path: install/
