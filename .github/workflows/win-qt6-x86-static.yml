@@ -21,9 +21,7 @@ jobs:
 
       - name: Configure with CMake
         run: >
-          /opt/mxe/usr/i686-w64-mingw32.static/qt6/bin/qt-cmake
-          -S CaptureStream2
-          -B build
+          /opt/mxe/usr/i686-w64-mingw32.static/qt6/bin/qmake
           -DCMAKE_BUILD_TYPE=Release
           -DCMAKE_PREFIX_PATH="/opt/mxe/usr/i686-w64-mingw32.static/qt6/bin"
           -DCMAKE_FIND_ROOT_PATH="/opt/mxe/usr/i686-w64-mingw32.static"
@@ -31,10 +29,10 @@ jobs:
           -DCMAKE_INSTALL_PREFIX=install
           -DQT_HOST_PATH="/opt/mxe/usr/i686-w64-mingw32.static/qt6"
       - name: Build
-        run: cmake --build build --parallel
+        run: qmake CaptureStream2.pro
 
       - name: Install
-        run: cmake --install build
+        run: make
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
