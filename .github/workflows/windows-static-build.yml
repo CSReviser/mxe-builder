@@ -24,11 +24,11 @@ jobs:
 
       - name: Configure with CMake
         run: >
-          x86_64-w64-mingw32.static-cmake
+          qt-cmake
           -S CaptureStream2
           -B build
           -DCMAKE_BUILD_TYPE=Release
-          -DCMAKE_PREFIX_PATH="/opt/mxe/usr/x86_64-w64-mingw32.static/qt6/lib/cmake"
+          -DCMAKE_PREFIX_PATH="/opt/mxe/usr/x86_64-w64-mingw32.static/qt6/bin"
           -DCMAKE_FIND_ROOT_PATH="/opt/mxe/usr/x86_64-w64-mingw32.static"
           -DCMAKE_SYSTEM_NAME=Windows
           -DCMAKE_INSTALL_PREFIX=install
