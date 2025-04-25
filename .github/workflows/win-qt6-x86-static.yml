@@ -21,7 +21,7 @@ jobs:
 
       - name: Configure with CMake
         run: >
-          i686-w64-mingw32.static-cmake
+          /opt/mxe/usr/i686-w64-mingw32.static/qt6/bin/qt-cmake
           -S .
           -B build
           -DCMAKE_BUILD_TYPE=Release
