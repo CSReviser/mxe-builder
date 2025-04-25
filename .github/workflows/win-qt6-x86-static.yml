@@ -21,15 +21,15 @@ jobs:
 
       - name: Configure with CMake
         run: >
-          /opt/mxe/usr/i686-w64-mingw32.static/qt6/bin/qt-cmake
-          -S CaptureStream2
+          x86_64-w64-mingw32.static-cmake
+          -S .
           -B build
           -DCMAKE_BUILD_TYPE=Release
-          -DCMAKE_PREFIX_PATH="/opt/mxe/usr/i686-w64-mingw32.static/qt6/bin"
-          -DCMAKE_FIND_ROOT_PATH="/opt/mxe/usr/i686-w64-mingw32.static"
+          -DCMAKE_PREFIX_PATH=/opt/qt6-static
+          -DCMAKE_FIND_ROOT_PATH=/usr/i686-w64-mingw32.static
           -DCMAKE_SYSTEM_NAME=Windows
           -DCMAKE_INSTALL_PREFIX=install
-          -DQT_HOST_PATH="/opt/mxe/usr/i686-w64-mingw32.static/qt6"
+          -DQT_HOST_PATH=/opt/qt6-static
 
       - name: Build
         run: cmake --build build --parallel
