@@ -22,8 +22,6 @@ jobs:
       - name: Configure with CMake
         run: >
           /opt/mxe/usr/x86_64-w64-mingw32.static/qt5/bin/qmake
-          -S CaptureStream2
-          -B build
           -DCMAKE_BUILD_TYPE=Release
           -DCMAKE_PREFIX_PATH="/opt/mxe/usr/x86_64-w64-mingw32.static/qt6/bin"
           -DCMAKE_FIND_ROOT_PATH="/opt/mxe/usr/x86_64-w64-mingw32.static"
@@ -32,7 +30,7 @@ jobs:
           -DQT_HOST_PATH="/opt/mxe/usr/x86_64-w64-mingw32.static/qt6"
 
       - name: Build
-        run: qmake -project CaptureStream2.pro
+        run: qmake 
 
       - name: Install
         run: make 
