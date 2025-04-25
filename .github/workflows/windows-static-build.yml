@@ -44,4 +44,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: capturestream2-windows-static
-          path: ./*.exe
+          path: build/*.exe
