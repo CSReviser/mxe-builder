@@ -24,7 +24,7 @@ jobs:
 
       - name: Configure with CMake
         run: >
-          qt-cmake
+          x86_64-w64-mingw32.static-cmake
           -S CaptureStream2
           -B build
           -DCMAKE_BUILD_TYPE=Release
@@ -35,7 +35,7 @@ jobs:
           -DQT_HOST_PATH="/opt/mxe/usr/x86_64-w64-mingw32.static/qt6"
 
       - name: Build
-        run: qt-cmake --build build --parallel
+        run: cmake --build build --parallel
 
       - name: Install
         run: cmake --install build
