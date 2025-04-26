@@ -7,7 +7,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/csreviser/qt5-mxe-x86-static:6.9.0
+      image: ghcr.io/csreviser/qt5-mxe-x86-static:5.15.0
 
     steps:
       - name: Checkout this repo
