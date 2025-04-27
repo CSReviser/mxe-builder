@@ -1,3 +1,50 @@
+作成済み
+# libpthread-stubs
+# xtrans
+# libXext
+# libICE
+# libSM
+# zlib (静的ビルド強制)
+# libpng
+# freetype
+# fontconfig
+# libxkbfile (optional)
+# libXfixes
+# libXrandr
+# libXi
+# libXinerama
+# xcb-util
+# xcb-util-image
+# xcb-util-keysyms
+# xcb-util-renderutil
+# xcb-util-wm
+# xcb-util-cursor
+# libXrender
+# xorgproto (プロトコル定義)
+# xcb-proto 
+# libXau
+# libXdmcp
+# libxcb
+# libX11
+# libxml-2.0
+# Build libxkbcommon
+
+不足分
+xcb-shape	libxcb-shape
+xcb-xkb	libxcb-xkb
+xcb-shm	libxcb-shm
+xcb-shm	libxcb-shm
+xcb-icccm	libxcb-icccm
+xkbcommon-x11	libxkbcommon-x11
+X11	libX11
+glib	libglib-2.0
+pthread	libpthread
+
+
+
+
+
+
 
 echo $CR_PAT | docker login ghcr.io -u csreviser --password-stdin
 
