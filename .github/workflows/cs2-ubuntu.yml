@@ -38,7 +38,9 @@ jobs:
             ${{ env.IMAGE_NAME }} \
             bash -c "
               mkdir -p build && cd build && \
-              qt-cmake .. && \
+              qt-cmake .. \
+              cmake -B build -S . \
+              -DCMAKE_EXE_LINKER_FLAGS="-lxcb -lXau -lXdmcp" && \
               cmake --build . --parallel && \
               chown -R \$HOST_UID:\$HOST_GID /work
             "
