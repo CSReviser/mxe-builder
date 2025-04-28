@@ -38,7 +38,7 @@ jobs:
             ${{ env.IMAGE_NAME }} \
             bash -c "
               mkdir -p build && cd build && \
-              qt-cmake -B build -S .. -DQT_DEBUG_FIND_PACKAGE=ON \
+              qt-cmake -B . -S .. -DQT_DEBUG_FIND_PACKAGE=ON \
               -DCMAKE_EXE_LINKER_FLAGS="-Wl,--start-group /usr/lib/libfontconfig.a /usr/lib/libxml2.a /usr/lib/libfreetype.a /usr/lib/libxcb-util.a -Wl,--end-group" \
               -DCMAKE_EXE_LINKER_FLAGS="-lxml2 -lfreetype -lxcb-util" && \
               cmake --build . --parallel && \
