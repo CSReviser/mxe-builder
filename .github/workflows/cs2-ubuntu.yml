@@ -47,11 +47,11 @@ jobs:
 
       - name: Archive result
         run: |
-          cd CaptureStream2
-          tar -czf capturestream2-linux-static.tar.gz ./*
+          cd CaptureStream2/build
+          tar -czf capturestream2-linux-static.tar.gz CaptureStream2
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: capturestream2-linux-static
-          path: CaptureStream2/
+          path: CaptureStream2/build/capturestream2-linux-static.tar.gz
