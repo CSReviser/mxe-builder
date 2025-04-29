@@ -39,7 +39,7 @@ jobs:
             bash -c "
               mkdir -p build && cd build && \
               qt-cmake .. \
-              -DCMAKE_EXE_LINKER_FLAGS="-lxcb -lXau -lXdmcp" && \
+              -DCMAKE_EXE_LINKER_FLAGS="-lxcb-image -lxcb-shm -lxcb-util -lxcb -lXau -lXdmcp" && \
               -DQT_EXTRA_DEFINES="QT_NO_PRIVATE_MODULE_WARNING" &&\
               cmake --build . --parallel && \
               chown -R \$HOST_UID:\$HOST_GID /work
