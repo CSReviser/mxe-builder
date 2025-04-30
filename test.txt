@@ -1,3 +1,39 @@
+#26 0.122 === Check symbols in libfreetype.a ===
+#26 0.123 + nm /usr/local/lib/libfreetype.a
+#26 0.123 + grep hb_
+#26 0.137                  U hb_blob_create
+#26 0.137                  U hb_blob_destroy
+#26 0.137                  U hb_buffer_add_utf8
+#26 0.137                  U hb_buffer_clear_contents
+#26 0.137                  U hb_buffer_create
+#26 0.137                  U hb_buffer_destroy
+#26 0.137                  U hb_buffer_get_glyph_infos
+#26 0.137                  U hb_buffer_get_glyph_positions
+#26 0.137                  U hb_buffer_get_length
+#26 0.137                  U hb_buffer_guess_segment_properties
+#26 0.137                  U hb_face_create
+#26 0.137                  U hb_face_create_for_tables
+#26 0.137                  U hb_face_destroy
+#26 0.137                  U hb_face_set_index
+#26 0.137                  U hb_face_set_upem
+#26 0.137                  U hb_font_create
+#26 0.137                  U hb_font_destroy
+#26 0.137                  U hb_font_get_face
+#26 0.137                  U hb_font_set_scale
+#26 0.137 00000000000022e0 t hb_ft_reference_table_
+#26 0.137                  U hb_ot_layout_collect_lookups
+#26 0.137                  U hb_ot_layout_lookup_collect_glyphs
+#26 0.137                  U hb_ot_layout_lookup_would_substitute
+#26 0.137                  U hb_ot_tags_from_script_and_language
+#26 0.137                  U hb_set_create
+#26 0.137                  U hb_set_destroy
+#26 0.137                  U hb_set_is_empty
+#26 0.137                  U hb_set_next
+#26 0.137                  U hb_set_subtract
+#26 0.137                  U hb_shape
+#26 DONE 0.1s
+
+
 #25 12.43 + echo ===== Begin make install =====
 #25 12.43 + make install
 #25 12.46 rm -rf /usr/local/include/freetype2
