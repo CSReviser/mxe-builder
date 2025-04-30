@@ -31,7 +31,30 @@
 #25 12.57 See any operating system documentation about shared libraries for
 #25 12.57 more information, such as the ld(1) and ld.so(8) manual pages.
 #25 12.57 ----------------------------------------------------------------------
-
+#25 11.20 ----------------------------------------------------------------------
+#25 11.20 for P in /freetype-2.13.2/include/freetype/freetype.h /freetype-2.13.2/include/freetype/ftadvanc.h /freetype-2.13.2/include/freetype/ftbbox.h /freetype-2.13.2/include/freetype/ftbdf.h /freetype-2.13.2/include/freetype/ftbitmap.h /freetype-2.13.2/include/freetype/ftbzip2.h /freetype-2.13.2/include/freetype/ftcache.h /freetype-2.13.2/include/freetype/ftchapters.h /freetype-2.13.2/include/freetype/ftcid.h /freetype-2.13.2/include/freetype/ftcolor.h /freetype-2.13.2/include/freetype/ftdriver.h /freetype-2.13.2/include/freetype/fterrdef.h /freetype-2.13.2/include/freetype/fterrors.h /freetype-2.13.2/include/freetype/ftfntfmt.h /freetype-2.13.2/include/freetype/ftgasp.h /freetype-2.13.2/include/freetype/ftglyph.h /freetype-2.13.2/include/freetype/ftgxval.h /freetype-2.13.2/include/freetype/ftgzip.h /freetype-2.13.2/include/freetype/ftimage.h /freetype-2.13.2/include/freetype/ftincrem.h /freetype-2.13.2/include/freetype/ftlcdfil.h /freetype-2.13.2/include/freetype/ftlist.h /freetype-2.13.2/include/freetype
+#25 11.20           /usr/bin/install -c -m 644                                    \
+#25 11.20             $P /usr/local/include/freetype2/freetype ; \
+#25 11.20         done
+#25 11.26 for P in /freetype-2.13.2/include/freetype/config/ftconfig.h /freetype-2.13.2/include/freetype/config/ftheader.h /freetype-2.13.2/include/freetype/config/ftmodule.h /freetype-2.13.2/include/freetype/config/ftoption.h /freetype-2.13.2/include/freetype/config/ftstdlib.h /freetype-2.13.2/include/freetype/config/integer-types.h /freetype-2.13.2/include/freetype/config/mac-support.h /freetype-2.13.2/include/freetype/config/public-macros.h  /freetype-2.13.2/objs/ftmodule.h ./builds/unix/ftoption.h ; do                                  \
+#25 11.26           /usr/bin/install -c -m 644                                           \
+#25 11.26             $P /usr/local/include/freetype2/freetype/config ; \
+#25 11.26         done
+#25 11.27 /usr/bin/install -c -m 644 /freetype-2.13.2/include/ft2build.h                  \
+#25 11.27           /usr/local/include/freetype2/ft2build.h
+#25 11.27 /usr/bin/install -c -m 644 ./builds/unix/ftconfig.h                        \
+#25 11.27           /usr/local/include/freetype2/freetype/config/ftconfig.h
+#25 11.27 /usr/bin/install -c -m 644 /freetype-2.13.2/objs/ftmodule.h                          \
+#25 11.27           /usr/local/include/freetype2/freetype/config/ftmodule.h
+#25 11.27 /usr/bin/install -c -m 644 ./builds/unix/ftoption.h                        \
+#25 11.27           /usr/local/include/freetype2/freetype/config/ftoption.h
+#25 11.28 /usr/bin/install -c -m 644 ./builds/unix/freetype2.m4          \
+#25 11.28           /usr/local/share/aclocal/freetype2.m4
+#25 11.28 /usr/bin/install -c -m 644 ./builds/unix/freetype2.pc             \
+#25 11.28           /usr/local/lib/pkgconfig/freetype2.pc
+#25 11.28 + echo ===== Freetype build with harfbuzz completed =====
+#25 11.28 ===== Freetype build with harfbuzz completed =====
+#25 DONE 11.3s
 
 作成済み
 # libpthread-stubs
