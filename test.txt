@@ -55,7 +55,14 @@
 #25 11.28 + echo ===== Freetype build with harfbuzz completed =====
 #25 11.28 ===== Freetype build with harfbuzz completed =====
 #25 DONE 11.3s
-
+#26 [22/45] RUN set -ex &&     echo "=== freetype-config ===" && freetype-config --libs &&     echo "=== Check symbols in libfreetype.a ===" &&     nm /usr/local/lib/libfreetype.a | grep hb_ || echo "No harfbuzz symbols found"
+#26 0.122 + echo === freetype-config ===
+#26 0.122 + freetype-config --libs
+#26 0.122 === freetype-config ===
+#26 0.122 /bin/sh: 1: freetype-config: not found
+#26 0.122 + echo No harfbuzz symbols found
+#26 0.122 No harfbuzz symbols found
+#26 DONE 0.1s
 作成済み
 # libpthread-stubs
 # xtrans
