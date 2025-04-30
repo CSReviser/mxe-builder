@@ -1,3 +1,38 @@
+#25 12.43 + echo ===== Begin make install =====
+#25 12.43 + make install
+#25 12.46 rm -rf /usr/local/include/freetype2
+#25 12.46 rm -f /usr/local/include/ft2build.h
+#25 12.46 /usr/bin/mkdir -p /usr/local/lib                               \
+#25 12.46                          /usr/local/lib/pkgconfig                     \
+#25 12.46                          /usr/local/include/freetype2/freetype/config \
+#25 12.46                          /usr/local/share/aclocal
+#25 12.47 ./builds/unix/libtool --mode=install /usr/bin/install -c                             \
+#25 12.47                                   /freetype-2.13.2/objs/libfreetype.la /usr/local/lib
+#25 12.49 libtool: install: /usr/bin/install -c /freetype-2.13.2/objs/.libs/libfreetype.lai /usr/local/lib/libfreetype.la
+#25 12.50 libtool: install: /usr/bin/install -c /freetype-2.13.2/objs/.libs/libfreetype.a /usr/local/lib/libfreetype.a
+#25 12.50 libtool: install: chmod 644 /usr/local/lib/libfreetype.a
+#25 12.51 libtool: install: ranlib /usr/local/lib/libfreetype.a
+#25 12.57 libtool: finish: PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/sbin" ldconfig -n /usr/local/lib
+#25 12.57 ----------------------------------------------------------------------
+#25 12.57 Libraries have been installed in:
+#25 12.57    /usr/local/lib
+#25 12.57 
+#25 12.57 If you ever happen to want to link against installed libraries
+#25 12.57 in a given directory, LIBDIR, you must either use libtool, and
+#25 12.57 specify the full pathname of the library, or use the '-LLIBDIR'
+#25 12.57 flag during linking and do at least one of the following:
+#25 12.57    - add LIBDIR to the 'LD_LIBRARY_PATH' environment variable
+#25 12.57      during execution
+#25 12.57    - add LIBDIR to the 'LD_RUN_PATH' environment variable
+#25 12.57      during linking
+#25 12.57    - use the '-Wl,-rpath -Wl,LIBDIR' linker flag
+#25 12.57    - have your system administrator add LIBDIR to '/etc/ld.so.conf'
+#25 12.57 
+#25 12.57 See any operating system documentation about shared libraries for
+#25 12.57 more information, such as the ld(1) and ld.so(8) manual pages.
+#25 12.57 ----------------------------------------------------------------------
+
+
 作成済み
 # libpthread-stubs
 # xtrans
