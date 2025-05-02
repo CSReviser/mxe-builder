@@ -1,3 +1,30 @@
+ac_config_files="$ac_config_files Makefile aux/Makefile aux/xcb-aux.pc reply/Makefile reply/xcb-reply.pc image/Makefile image/xcb-image.pc atom/Makefile atom/xcb-atom.pc event/Makefile event/xcb-event.pc keysyms/Makefile keysyms/xcb-keysyms.pc property/Makefile property/xcb-property.pc icccm/Makefile icccm/xcb-icccm.pc renderutil/Makefile renderutil/xcb-renderutil.pc xcb_util_intro"
+
+  case $ac_config_target in
+    "depfiles") CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
+    "libtool") CONFIG_COMMANDS="$CONFIG_COMMANDS libtool" ;;
+    "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
+    "aux/Makefile") CONFIG_FILES="$CONFIG_FILES aux/Makefile" ;;
+    "aux/xcb-aux.pc") CONFIG_FILES="$CONFIG_FILES aux/xcb-aux.pc" ;;
+    "reply/Makefile") CONFIG_FILES="$CONFIG_FILES reply/Makefile" ;;
+    "reply/xcb-reply.pc") CONFIG_FILES="$CONFIG_FILES reply/xcb-reply.pc" ;;
+    "image/Makefile") CONFIG_FILES="$CONFIG_FILES image/Makefile" ;;
+    "image/xcb-image.pc") CONFIG_FILES="$CONFIG_FILES image/xcb-image.pc" ;;
+    "atom/Makefile") CONFIG_FILES="$CONFIG_FILES atom/Makefile" ;;
+    "atom/xcb-atom.pc") CONFIG_FILES="$CONFIG_FILES atom/xcb-atom.pc" ;;
+    "event/Makefile") CONFIG_FILES="$CONFIG_FILES event/Makefile" ;;
+    "event/xcb-event.pc") CONFIG_FILES="$CONFIG_FILES event/xcb-event.pc" ;;
+    "keysyms/Makefile") CONFIG_FILES="$CONFIG_FILES keysyms/Makefile" ;;
+    "keysyms/xcb-keysyms.pc") CONFIG_FILES="$CONFIG_FILES keysyms/xcb-keysyms.pc" ;;
+    "property/Makefile") CONFIG_FILES="$CONFIG_FILES property/Makefile" ;;
+    "property/xcb-property.pc") CONFIG_FILES="$CONFIG_FILES property/xcb-property.pc" ;;
+    "icccm/Makefile") CONFIG_FILES="$CONFIG_FILES icccm/Makefile" ;;
+    "icccm/xcb-icccm.pc") CONFIG_FILES="$CONFIG_FILES icccm/xcb-icccm.pc" ;;
+    "renderutil/Makefile") CONFIG_FILES="$CONFIG_FILES renderutil/Makefile" ;;
+    "renderutil/xcb-renderutil.pc") CONFIG_FILES="$CONFIG_FILES renderutil/xcb-renderutil.pc" ;;
+    "xcb_util_intro") CONFIG_FILES="$CONFIG_FILES xcb_util_intro" ;;
+
+
 #19 [15/48] RUN pkg-config --static --libs xcb &&     ldd /usr/local/lib/libxcb.so || true &&     nm -g /usr/local/lib/libxcb.a | grep Xau || true
 #19 0.125 -L/usr/local/lib -lxcb -lXau -lXdmcp -lXau -lXdmcp
 #19 0.126 ldd: /usr/local/lib/libxcb.so: No such file or directory
