@@ -1,3 +1,81 @@
+#37 [33/50] RUN echo "---- Installed .pc files ----" &&     ls -1 /usr/local/lib/pkgconfig/*.pc &&     echo "---- xcb-icccm.pc content ----" &&     cat /usr/local/lib/pkgconfig/xcb-icccm.pc || echo "xcb-icccm.pc not found"
+#37 0.140 ---- Installed .pc files ----
+#37 0.144 /usr/local/lib/pkgconfig/ice.pc
+#37 0.144 /usr/local/lib/pkgconfig/kbproto.pc
+#37 0.144 /usr/local/lib/pkgconfig/libbrotlicommon.pc
+#37 0.144 /usr/local/lib/pkgconfig/libbrotlidec.pc
+#37 0.144 /usr/local/lib/pkgconfig/libbrotlienc.pc
+#37 0.144 /usr/local/lib/pkgconfig/libxml-2.0.pc
+#37 0.144 /usr/local/lib/pkgconfig/pthread-stubs.pc
+#37 0.144 /usr/local/lib/pkgconfig/sm.pc
+#37 0.144 /usr/local/lib/pkgconfig/x11-xcb.pc
+#37 0.144 /usr/local/lib/pkgconfig/x11.pc
+#37 0.144 /usr/local/lib/pkgconfig/xau.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-atom.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-aux.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-composite.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-cursor.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-damage.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-dpms.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-dri2.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-dri3.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-event.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-ewmh.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-glx.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-icccm.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-image.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-keysyms.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-present.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-property.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-proto.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-randr.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-record.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-render.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-renderutil.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-reply.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-res.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-screensaver.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-shape.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-shm.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-sync.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-xf86dri.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-xfixes.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-xinerama.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-xinput.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-xkb.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-xtest.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-xv.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb-xvmc.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcb.pc
+#37 0.144 /usr/local/lib/pkgconfig/xcursor.pc
+#37 0.144 /usr/local/lib/pkgconfig/xdmcp.pc
+#37 0.144 /usr/local/lib/pkgconfig/xext.pc
+#37 0.144 /usr/local/lib/pkgconfig/xextproto.pc
+#37 0.144 /usr/local/lib/pkgconfig/xfixes.pc
+#37 0.144 /usr/local/lib/pkgconfig/xi.pc
+#37 0.144 /usr/local/lib/pkgconfig/xinerama.pc
+#37 0.144 /usr/local/lib/pkgconfig/xkbfile.pc
+#37 0.144 /usr/local/lib/pkgconfig/xmu.pc
+#37 0.144 /usr/local/lib/pkgconfig/xmuu.pc
+#37 0.144 /usr/local/lib/pkgconfig/xrender.pc
+#37 0.144 /usr/local/lib/pkgconfig/xt.pc
+#37 0.144 /usr/local/lib/pkgconfig/xxf86vm.pc
+#37 0.144 /usr/local/lib/pkgconfig/zlib.pc
+#37 0.144 ---- xcb-icccm.pc content ----
+#37 0.145 prefix=/usr/local
+#37 0.145 exec_prefix=${prefix}
+#37 0.145 libdir=${exec_prefix}/lib
+#37 0.145 includedir=${prefix}/include
+#37 0.145 
+#37 0.145 Name: XCB ICCCM library
+#37 0.145 Description: XCB ICCCM binding
+#37 0.145 Version: 0.3.9
+#37 0.145 Requires: xcb
+#37 0.145 Libs: -L${libdir} -lxcb-icccm 
+#37 0.145 Cflags: -I${includedir}
+#37 DONE 0.2s
+
+
 #40 [36/49] RUN find /usr/local/lib -name "*.a" -exec echo "Checking {}" ; -exec nm {} ; | grep xcb_icccm_ || echo "OK: xcb_icccm_ not found"
 #40 0.123 libxcb_icccm_la-icccm.o:
 #40 0.123 0000000000000000 T xcb_icccm_get_text_property
