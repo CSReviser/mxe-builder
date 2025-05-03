@@ -1,79 +1,35 @@
-#37 [33/50] RUN echo "---- Installed .pc files ----" &&     ls -1 /usr/local/lib/pkgconfig/*.pc &&     echo "---- xcb-icccm.pc content ----" &&     cat /usr/local/lib/pkgconfig/xcb-icccm.pc || echo "xcb-icccm.pc not found"
-#37 0.140 ---- Installed .pc files ----
-#37 0.144 /usr/local/lib/pkgconfig/ice.pc
-#37 0.144 /usr/local/lib/pkgconfig/kbproto.pc
-#37 0.144 /usr/local/lib/pkgconfig/libbrotlicommon.pc
-#37 0.144 /usr/local/lib/pkgconfig/libbrotlidec.pc
-#37 0.144 /usr/local/lib/pkgconfig/libbrotlienc.pc
-#37 0.144 /usr/local/lib/pkgconfig/libxml-2.0.pc
-#37 0.144 /usr/local/lib/pkgconfig/pthread-stubs.pc
-#37 0.144 /usr/local/lib/pkgconfig/sm.pc
-#37 0.144 /usr/local/lib/pkgconfig/x11-xcb.pc
-#37 0.144 /usr/local/lib/pkgconfig/x11.pc
-#37 0.144 /usr/local/lib/pkgconfig/xau.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-atom.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-aux.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-composite.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-cursor.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-damage.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-dpms.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-dri2.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-dri3.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-event.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-ewmh.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-glx.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-icccm.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-image.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-keysyms.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-present.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-property.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-proto.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-randr.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-record.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-render.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-renderutil.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-reply.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-res.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-screensaver.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-shape.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-shm.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-sync.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-xf86dri.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-xfixes.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-xinerama.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-xinput.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-xkb.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-xtest.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-xv.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb-xvmc.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcb.pc
-#37 0.144 /usr/local/lib/pkgconfig/xcursor.pc
-#37 0.144 /usr/local/lib/pkgconfig/xdmcp.pc
-#37 0.144 /usr/local/lib/pkgconfig/xext.pc
-#37 0.144 /usr/local/lib/pkgconfig/xextproto.pc
-#37 0.144 /usr/local/lib/pkgconfig/xfixes.pc
-#37 0.144 /usr/local/lib/pkgconfig/xi.pc
-#37 0.144 /usr/local/lib/pkgconfig/xinerama.pc
-#37 0.144 /usr/local/lib/pkgconfig/xkbfile.pc
-#37 0.144 /usr/local/lib/pkgconfig/xmu.pc
-#37 0.144 /usr/local/lib/pkgconfig/xmuu.pc
-#37 0.144 /usr/local/lib/pkgconfig/xrender.pc
-#37 0.144 /usr/local/lib/pkgconfig/xt.pc
-#37 0.144 /usr/local/lib/pkgconfig/xxf86vm.pc
-#37 0.144 /usr/local/lib/pkgconfig/zlib.pc
-#37 0.144 ---- xcb-icccm.pc content ----
-#37 0.145 prefix=/usr/local
-#37 0.145 exec_prefix=${prefix}
-#37 0.145 libdir=${exec_prefix}/lib
-#37 0.145 includedir=${prefix}/include
-#37 0.145 
-#37 0.145 Name: XCB ICCCM library
-#37 0.145 Description: XCB ICCCM binding
-#37 0.145 Version: 0.3.9
-#37 0.145 Requires: xcb
-#37 0.145 Libs: -L${libdir} -lxcb-icccm 
-#37 0.145 Cflags: -I${includedir}
-#37 DONE 0.2s
+54 785.0 FAILED: lib/libQt6XcbQpa.so.6.9.0 
+#54 785.0 : && /usr/bin/c++ -fPIC -fPIC -DNDEBUG -O2  -L/usr/local/lib   -Wl,-Bsymbolic-functions -Wl,--no-undefined -Wl,-z,relro,-z,now -Wl,--enable-new-dtags -shared -Wl,-soname,libQt6XcbQpa.so.6 -o lib/libQt6XcbQpa.so.6.9.0 src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/XcbQpaPrivate_autogen/mocs_compilation.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/gl_integrations/qxcbglintegration.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/gl_integrations/qxcbglintegrationfactory.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/gl_integrations/qxcbnativeinterfacehandler.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbatom.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbbackingstore.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbclipboard.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbconnection.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbconnection_basic.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbconnection_screens.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbconnection_xi2.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbcursor.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbeventdispatcher.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbeventqueue.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbimage.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbintegration.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbkeyboard.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbscrollingdevice.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbmime.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbnativeinterface.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbscreen.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbsystemtraytracker.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbwindow.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbwmsupport.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbxsettings.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbdrag.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qt_xlib_wrapper.c.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbsessionmanager.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/__/__/__/3rdparty/xcb/libxcb/xinput.c.o  -Wl,-rpath,/build/qt-build/lib:  /usr/local/lib/libxcb-cursor.a  /usr/local/lib/libxcb-icccm.so  /usr/local/lib/libxcb-image.so  /usr/local/lib/libxcb-keysyms.so  /usr/local/lib/libxcb-randr.a  /usr/local/lib/libxcb-render.a  /usr/local/lib/libxcb-render-util.so  /usr/local/lib/libxcb-shape.a  /usr/local/lib/libxcb-shm.a  /usr/local/lib/libxcb-sync.a  /usr/local/lib/libxcb.a  /usr/local/lib/libxcb-xfixes.a  /usr/local/lib/libxcb-xkb.a  /usr/local/lib/x86_64-linux-gnu/libxkbcommon.a  /usr/local/lib/libX11-xcb.a  /usr/local/lib/libX11.a  /usr/local/lib/libSM.a  /usr/local/lib/libICE.a  -ldl  /usr/local/lib/x86_64-linux-gnu/libxkbcommon-x11.a  /usr/local/lib/x86_64-linux-gnu/libxkbcommon.a  /usr/local/lib/libxcb-xkb.a  /usr/local/lib/libxcb.a  /usr/local/lib/libXau.a  /usr/local/lib/libXdmcp.a  /usr/local/lib/libXau.a  /usr/local/lib/libXdmcp.a  lib/libQt6Gui.so.6.9.0  /usr/lib/x86_64-linux-gnu/libGLESv2.so  /usr/lib/x86_64-linux-gnu/libEGL.so  lib/libQt6Core.so.6.9.0  /usr/local/lib/libxcb-render.a  /usr/local/lib/libxcb-shape.a  /usr/local/lib/libxcb.a  -Wl,-rpath-link,/build/qt-build/lib && :
+#54 785.0 /usr/bin/ld: src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbwindow.cpp.o: in function `QXcbWindow::propagateSizeHints()':
+#54 785.0 qxcbwindow.cpp:(.text+0x9e2): undefined reference to `xcb_icccm_size_hints_set_win_gravity'
+#54 785.0 /usr/bin/ld: qxcbwindow.cpp:(.text+0xa72): undefined reference to `xcb_icccm_size_hints_set_min_size'
+#54 785.0 /usr/bin/ld: qxcbwindow.cpp:(.text+0xab0): undefined reference to `xcb_icccm_size_hints_set_max_size'
+#54 785.0 /usr/bin/ld: qxcbwindow.cpp:(.text+0xaf1): undefined reference to `xcb_icccm_size_hints_set_base_size'
+#54 785.0 /usr/bin/ld: qxcbwindow.cpp:(.text+0xb01): undefined reference to `xcb_icccm_size_hints_set_resize_inc'
+#54 785.0 /usr/bin/ld: qxcbwindow.cpp:(.text+0xb14): undefined reference to `xcb_icccm_set_wm_normal_hints'
+#54 785.0 /usr/bin/ld: qxcbwindow.cpp:(.text+0xb72): undefined reference to `xcb_icccm_size_hints_set_size'
+#54 785.0 /usr/bin/ld: qxcbwindow.cpp:(.text+0xb92): undefined reference to `xcb_icccm_size_hints_set_resize_inc'
+#54 785.0 /usr/bin/ld: qxcbwindow.cpp:(.text+0xbb1): undefined reference to `xcb_icccm_size_hints_set_position'
+#54 785.0 /usr/bin/ld: src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbwindow.cpp.o: in function `QXcbWindow::updateDoesNotAcceptFocus(bool)':
+#54 785.0 qxcbwindow.cpp:(.text+0x2320): undefined reference to `xcb_icccm_get_wm_hints_unchecked'
+#54 785.0 /usr/bin/ld: qxcbwindow.cpp:(.text+0x2334): undefined reference to `xcb_icccm_get_wm_hints_reply'
+#54 785.0 /usr/bin/ld: qxcbwindow.cpp:(.text+0x2347): undefined reference to `xcb_icccm_wm_hints_set_input'
+#54 785.0 /usr/bin/ld: qxcbwindow.cpp:(.text+0x235a): undefined reference to `xcb_icccm_set_wm_hints'
+#54 785.0 /usr/bin/ld: src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbwindow.cpp.o: in function `QXcbWindow::setWindowState(QFlags<Qt::WindowState>)':
+#54 785.0 qxcbwindow.cpp:(.text+0x3819): undefined reference to `xcb_icccm_get_wm_hints_unchecked'
+#54 785.0 /usr/bin/ld: qxcbwindow.cpp:(.text+0x382d): undefined reference to `xcb_icccm_get_wm_hints_reply'
+#54 785.0 /usr/bin/ld: qxcbwindow.cpp:(.text+0x386e): undefined reference to `xcb_icccm_wm_hints_set_normal'
+#54 785.0 /usr/bin/ld: qxcbwindow.cpp:(.text+0x3881): undefined reference to `xcb_icccm_set_wm_hints'
+#54 785.0 /usr/bin/ld: qxcbwindow.cpp:(.text+0x3959): undefined reference to `xcb_icccm_wm_hints_set_iconic'
+#54 785.0 /usr/bin/ld: src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbwindow.cpp.o: in function `QXcbWindow::create()':
+#54 785.0 qxcbwindow.cpp:(.text+0x8549): undefined reference to `xcb_icccm_set_wm_hints'
+#54 785.0 collect2: error: ld returned 1 exit status
+#54 785.1 [1626/1826] Building CXX object src/plugins/platforms/eglfs/CMakeFiles/EglFSDeviceIntegrationPrivate.dir/api/qeglfsoffscreenwindow.cpp.o
+#54 786.7 [1627/1826] Building CXX object src/plugins/platforms/eglfs/CMakeFiles/EglFSDeviceIntegrationPrivate.dir/api/qeglfsintegration.cpp.o
+#54 787.2 [1628/1826] Building CXX object src/plugins/platforms/eglfs/CMakeFiles/EglFSDeviceIntegrationPrivate.dir/api/qeglfsscreen.cpp.o
+#54 788.7 [1629/1826] Building CXX object src/openglwidgets/CMakeFiles/OpenGLWidgets.dir/cmake_pch.hxx.gch
+#54 789.8 [1630/1826] Building CXX object src/printsupport/CMakeFiles/PrintSupport.dir/cmake_pch.hxx.gch
+#54 789.8 ninja: build stopped: subcommand failed.
 
 
 #40 [36/49] RUN find /usr/local/lib -name "*.a" -exec echo "Checking {}" ; -exec nm {} ; | grep xcb_icccm_ || echo "OK: xcb_icccm_ not found"
