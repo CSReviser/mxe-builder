@@ -27,8 +27,15 @@ jobs:
       - name: Build
         run: make 
 
+      - name: cp ffmpeg stylesheet
+        run: |
+          mkdir -p tmp/WinCaptureStream2
+          cp -r /opt/mxe/usr/x86_64-w64-mingw32.static/bin/ffmpeg.exe tmp/WinCaptureStream2
+          cp -r CaptureStream2/qss_files/stylesheet-win.qss tmp/WinCaptureStream2
+          mv ./release/*.exe tmp/WinCaptureStream2
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: capturestream2-windows-qt5-static
-          path: ./release/*.exe
+          path: tmp/
