@@ -30,13 +30,13 @@ jobs:
 
       - name: cp ffmpeg stylesheet
         run: |
-          mkdir -p build/WinCaptureStream2
-          cp -r /opt/mxe/usr/i686-w64-mingw32.static/bin/ffmpeg.exe build/WinCaptureStream2
-          cp -r CaptureStream2/qss_files/stylesheet-win.qss build/WinCaptureStream2
-          mv build/*.exe build/WinCaptureStream2
+          mkdir -p tmp/WinCaptureStream2
+          cp -r /opt/mxe/usr/i686-w64-mingw32.static/bin/ffmpeg.exe tmp/WinCaptureStream2
+          cp -r CaptureStream2/qss_files/stylesheet-win.qss tmp/WinCaptureStream2
+          mv build/*.exe tmp/WinCaptureStream2
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: capturestream2-windows-qt6-x86-static
-          path: build/
+          path: tmp/
