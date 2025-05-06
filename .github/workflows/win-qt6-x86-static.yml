@@ -29,7 +29,7 @@ jobs:
         run: cmake --build build --parallel
 
       - name: cp ffmpeg
-        run: ls -r /opt/mxe/usr/i686-w64-mingw32.static/qt6/bin/*.exe
+        run: ls -r /opt/mxe/usr/i686-w64-mingw32.static/bin/*.exe
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
