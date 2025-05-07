@@ -9,8 +9,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
-
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -19,14 +18,13 @@ jobs:
         run: |
           git clone https://github.com/CSReviser/CaptureStream2.git
           cd CaptureStream2
+          git checkout feature
           git submodule update --init --recursive
-
       - name: Get UID and GID
         id: userinfo
         run: |
           echo "uid=$(id -u)" >> "$GITHUB_OUTPUT"
           echo "gid=$(id -g)" >> "$GITHUB_OUTPUT"
-
       - name: Build using Docker container with Qt static
         run: |
           docker run --rm \
@@ -40,9 +38,12 @@ jobs:
               mkdir -p build && cd build && \
               qt-cmake .. -DQT_DEBUG_FIND_PACKAGE=ON && \
               cmake --build . --parallel && \
+              mkdir -p build/LinCaptureStream2 && \
+              mv CaptureStream2 build/LinCaptureStream2/ && \
+              cp ../qss_files/stylesheet-ubu.qss build/LinCaptureStream2 && \
               chown -R \$HOST_UID:\$HOST_GID /work
             "
-
+            
       - name: Archive result
         run: |
           cd CaptureStream2/build
