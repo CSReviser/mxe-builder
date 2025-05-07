@@ -36,8 +36,8 @@ jobs:
             ${{ env.IMAGE_NAME }} \
             bash -c "
               mkdir -p build && cd build && \
-              sudo apt-get update && \
-              sudo apt-get install -y cmake && \
+              apt-get update && \
+              apt-get install -y cmake && \
               qt-cmake .. -DQT_DEBUG_FIND_PACKAGE=ON && \
               cmake --build . --parallel && \
               mkdir -p build/LinCaptureStream2 && \
