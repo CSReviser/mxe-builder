@@ -46,6 +46,8 @@ jobs:
             
       - name: Archive result
         run: |
+          cd CaptureStream2
+          ls -r
           cd build
           ls -r
           tar -czf capturestream2-linux-static.tar.gz CaptureStream2
