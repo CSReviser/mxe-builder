@@ -35,6 +35,7 @@ jobs:
             --env PATH="/opt/qt6-static/bin:/usr/bin:/bin:/usr/local/bin" \
             ${{ env.IMAGE_NAME }} \
             bash -c "
+              cd CaptureStream2 && \
               mkdir -p build && cd build && \
               qt-cmake .. -DQT_DEBUG_FIND_PACKAGE=ON && \
               cmake --build . --parallel && \
@@ -46,7 +47,9 @@ jobs:
             
       - name: Archive result
         run: |
-          cd CaptureStream2
+          ls -r
+          cd CaptureStream2/build
+          ls -r
           tar -czf capturestream2-linux-static.tar.gz CaptureStream2
 
       - name: Upload artifact
