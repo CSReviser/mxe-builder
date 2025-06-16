@@ -1,3 +1,109 @@
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp: In constructor ‘SettingsManager::SettingsManager()’:
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:27:60: error: ‘QCoreApplication’ has not been declared
+   27 |     : settings(QSettings::IniFormat, QSettings::UserScope, QCoreApplication::organizationName(), QCoreApplication::applicationName())
+      |                                                            ^~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:27:98: error: ‘QCoreApplication’ has not been declared
+   27 | Settings::IniFormat, QSettings::UserScope, QCoreApplication::organizationName(), QCoreApplication::applicationName())
+      |                                                                                  ^~~~~~~~~~~~~~~~
+
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:29:23: error: ‘applicationBundlePath’ was not declared in this scope
+   29 |     QString iniPath = applicationBundlePath();
+      |                       ^~~~~~~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:30:16: error: ‘QDir’ has not been declared
+   30 |     iniPath += QDir::separator() + QStringLiteral("CaptureStream2.ini");
+      |                ^~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:31:55: error: use of deleted function ‘QSettings& QSettings::operator=(const QSettings&)’
+   31 |     settings = QSettings(iniPath, QSettings::IniFormat);
+      |                                                       ^
+In file included from /opt/qt6/include/QtCore/qglobal.h:38,
+                 from /opt/qt6/include/QtCore/qchar.h:7,
+                 from /opt/qt6/include/QtCore/qstring.h:14,
+                 from /opt/qt6/include/QtCore/QString:1,
+                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.h:26,
+                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:24:
+/opt/qt6/include/QtCore/qsettings.h:184:5: note: declared here
+  184 |     Q_DISABLE_COPY(QSettings)
+      |     ^~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp: In member function ‘void SettingsManager::load()’:
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:72:25: error: ‘kCheckBoxKeys’ was not declared in this scope; did you mean ‘AppSettings::kCheckBoxKeys’?
+   72 |     for (int i = 0; i < kCheckBoxKeys.size(); ++i) {
+      |                         ^~~~~~~~~~~~~
+      |                         AppSettings::kCheckBoxKeys
+In file included from /home/kazuo/cs/CaptureStream2/core/settingsmanager.h:32,
+                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:24:
+/home/kazuo/cs/CaptureStream2/core/appsettings.h:115:29: note: ‘AppSettings::kCheckBoxKeys’ declared here
+  115 | inline const QList<QString> kCheckBoxKeys = {
+      |                             ^~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:74:20: error: ‘kCheckBoxDefaults’ was not declared in this scope; did you mean ‘AppSettings::kCheckBoxDefaults’?
+   74 |         bool def = kCheckBoxDefaults[i];
+      |                    ^~~~~~~~~~~~~~~~~
+      |                    AppSettings::kCheckBoxDefaults
+In file included from /home/kazuo/cs/CaptureStream2/core/settingsmanager.h:32,
+                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:24:
+/home/kazuo/cs/CaptureStream2/core/appsettings.h:125:26: note: ‘AppSettings::kCheckBoxDefaults’ declared here
+  125 | inline const QList<bool> kCheckBoxDefaults = {
+      |                          ^~~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:80:25: error: ‘kCheckBoxKeys’ was not declared in this scope; did you mean ‘AppSettings::kCheckBoxKeys’?
+   80 |     for (int i = 0; i < kCheckBoxKeys.size(); ++i) {
+      |                         ^~~~~~~~~~~~~
+      |                         AppSettings::kCheckBoxKeys
+In file included from /home/kazuo/cs/CaptureStream2/core/settingsmanager.h:32,
+                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:24:
+/home/kazuo/cs/CaptureStream2/core/appsettings.h:115:29: note: ‘AppSettings::kCheckBoxKeys’ declared here
+  115 | inline const QList<QString> kCheckBoxKeys = {
+      |                             ^~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:82:23: error: ‘kCheckBoxDefaults’ was not declared in this scope; did you mean ‘AppSettings::kCheckBoxDefaults’?
+   82 |         bool defVal = kCheckBoxDefaults[i];
+      |                       ^~~~~~~~~~~~~~~~~
+      |                       AppSettings::kCheckBoxDefaults
+In file included from /home/kazuo/cs/CaptureStream2/core/settingsmanager.h:32,
+                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:24:
+/home/kazuo/cs/CaptureStream2/core/appsettings.h:125:26: note: ‘AppSettings::kCheckBoxDefaults’ declared here
+  125 | inline const QList<bool> kCheckBoxDefaults = {
+      |                          ^~~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:87:25: error: ‘kTextComboBoxKeys’ was not declared in this scope; did you mean ‘AppSettings::kTextComboBoxKeys’?
+   87 |     for (int i = 0; i < kTextComboBoxKeys.size(); ++i) {
+      |                         ^~~~~~~~~~~~~~~~~
+      |                         AppSettings::kTextComboBoxKeys
+In file included from /home/kazuo/cs/CaptureStream2/core/settingsmanager.h:32,
+                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:24:
+/home/kazuo/cs/CaptureStream2/core/appsettings.h:135:29: note: ‘AppSettings::kTextComboBoxKeys’ declared here
+  135 | inline const QList<QString> kTextComboBoxKeys = {
+      |                             ^~~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:89:26: error: ‘kTextComboBoxDefaults’ was not declared in this scope; did you mean ‘AppSettings::kTextComboBoxDefaults’?
+   89 |         QString defVal = kTextComboBoxDefaults[i];
+      |                          ^~~~~~~~~~~~~~~~~~~~~
+      |                          AppSettings::kTextComboBoxDefaults
+In file included from /home/kazuo/cs/CaptureStream2/core/settingsmanager.h:32,
+                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:24:
+/home/kazuo/cs/CaptureStream2/core/appsettings.h:139:29: note: ‘AppSettings::kTextComboBoxDefaults’ declared here
+  139 | inline const QList<QString> kTextComboBoxDefaults = {
+      |                             ^~~~~~~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp: At global scope:
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:160:9: error: no declaration matches ‘QString SettingsManager::appConfigLocationPath()’
+  160 | QString SettingsManager::appConfigLocationPath() {
+      |         ^~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:160:9: note: no functions named ‘QString SettingsManager::appConfigLocationPath()’
+In file included from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:24:
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.h:40:7: note: ‘class SettingsManager’ defined here
+   40 | class SettingsManager {
+      |       ^~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:166:9: error: no declaration matches ‘QString SettingsManager::applicationBundlePath()’
+  166 | QString SettingsManager::applicationBundlePath() {
+      |         ^~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:166:9: note: no functions named ‘QString SettingsManager::applicationBundlePath()’
+In file included from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:24:
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.h:40:7: note: ‘class SettingsManager’ defined here
+   40 | class SettingsManager {
+      |       ^~~~~~~~~~~~~~~
+make[2]: *** [core/CMakeFiles/appcore.dir/build.make:90: core/CMakeFiles/appcore.dir/settingsmanager.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:154: core/CMakeFiles/appcore.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
+
+
+
+
+
 54 785.0 FAILED: lib/libQt6XcbQpa.so.6.9.0 
 #54 785.0 : && /usr/bin/c++ -fPIC -fPIC -DNDEBUG -O2  -L/usr/local/lib   -Wl,-Bsymbolic-functions -Wl,--no-undefined -Wl,-z,relro,-z,now -Wl,--enable-new-dtags -shared -Wl,-soname,libQt6XcbQpa.so.6 -o lib/libQt6XcbQpa.so.6.9.0 src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/XcbQpaPrivate_autogen/mocs_compilation.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/gl_integrations/qxcbglintegration.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/gl_integrations/qxcbglintegrationfactory.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/gl_integrations/qxcbnativeinterfacehandler.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbatom.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbbackingstore.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbclipboard.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbconnection.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbconnection_basic.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbconnection_screens.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbconnection_xi2.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbcursor.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbeventdispatcher.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbeventqueue.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbimage.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbintegration.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbkeyboard.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbscrollingdevice.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbmime.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbnativeinterface.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbscreen.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbsystemtraytracker.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbwindow.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbwmsupport.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbxsettings.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbdrag.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qt_xlib_wrapper.c.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbsessionmanager.cpp.o src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/__/__/__/3rdparty/xcb/libxcb/xinput.c.o  -Wl,-rpath,/build/qt-build/lib:  /usr/local/lib/libxcb-cursor.a  /usr/local/lib/libxcb-icccm.so  /usr/local/lib/libxcb-image.so  /usr/local/lib/libxcb-keysyms.so  /usr/local/lib/libxcb-randr.a  /usr/local/lib/libxcb-render.a  /usr/local/lib/libxcb-render-util.so  /usr/local/lib/libxcb-shape.a  /usr/local/lib/libxcb-shm.a  /usr/local/lib/libxcb-sync.a  /usr/local/lib/libxcb.a  /usr/local/lib/libxcb-xfixes.a  /usr/local/lib/libxcb-xkb.a  /usr/local/lib/x86_64-linux-gnu/libxkbcommon.a  /usr/local/lib/libX11-xcb.a  /usr/local/lib/libX11.a  /usr/local/lib/libSM.a  /usr/local/lib/libICE.a  -ldl  /usr/local/lib/x86_64-linux-gnu/libxkbcommon-x11.a  /usr/local/lib/x86_64-linux-gnu/libxkbcommon.a  /usr/local/lib/libxcb-xkb.a  /usr/local/lib/libxcb.a  /usr/local/lib/libXau.a  /usr/local/lib/libXdmcp.a  /usr/local/lib/libXau.a  /usr/local/lib/libXdmcp.a  lib/libQt6Gui.so.6.9.0  /usr/lib/x86_64-linux-gnu/libGLESv2.so  /usr/lib/x86_64-linux-gnu/libEGL.so  lib/libQt6Core.so.6.9.0  /usr/local/lib/libxcb-render.a  /usr/local/lib/libxcb-shape.a  /usr/local/lib/libxcb.a  -Wl,-rpath-link,/build/qt-build/lib && :
 #54 785.0 /usr/bin/ld: src/plugins/platforms/xcb/CMakeFiles/XcbQpaPrivate.dir/qxcbwindow.cpp.o: in function `QXcbWindow::propagateSizeHints()':
