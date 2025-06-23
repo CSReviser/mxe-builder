@@ -1,28 +1,67 @@
-[ 94%] Building CXX object core/CMakeFiles/appcore.dir/settingsmanager.cpp.o
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp: In member function ‘void SettingsManager::fetchKozaSeries(const QStringList&)’:
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:249:32: warning: parentheses were disambiguated as a function declaration [-Wvexing-parse]
-  249 |         QNetworkRequest request(QUrl(fullUrl));
-      |                                ^~~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:249:32: note: replace parentheses with braces to declare a variable
-  249 |         QNetworkRequest request(QUrl(fullUrl));
-      |                                ^~~~~~~~~~~~~~~
-      |                                -
-      |                                {             -
-      |                                              }
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:250:54: error: cannot convert ‘QNetworkRequest(QUrl)’ to ‘const QNetworkRequest&’
-  250 |         QNetworkReply* reply = m_networkManager->get(request);
-      |                                                      ^~~~~~~
-      |                                                      |
-      |                                                      QNetworkRequest(QUrl)
-In file included from /opt/qt6/include/QtNetwork/QNetworkAccessManager:1,
-                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.h:37,
-                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:26:
-/opt/qt6/include/QtNetwork/qnetworkaccessmanager.h:82:47: note:   initializing argument 1 of ‘QNetworkReply* QNetworkAccessManager::get(const QNetworkRequest&)’
-   82 |     QNetworkReply *get(const QNetworkRequest &request);
-      |                        ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~
-make[2]: *** [core/CMakeFiles/appcore.dir/build.make:90: core/CMakeFiles/appcore.dir/settingsmanager.cpp.o] エラー 1
-make[1]: *** [CMakeFiles/Makefile2:154: core/CMakeFiles/appcore.dir/all] エラー 2
-make: *** [Makefile:91: all] エラー 2
+[MainWindow]
+audio_extension=@ByteArray(m4a)
+basic0=false
+basic1=false
+basic2=false
+business1=false
+detailed_message=false
+enjoy=false
+ffmpeg_folder=Z:\\home\\kazuo\\cs\\CaptureStream2\\debug\\[前週]\\ステップアップハングル講座\\
+gendai=false
+geometry=@ByteArray(\x1\xd9\xd0\xcb\0\x3\0\0\0\0\x2\xa4\0\0\x1[\0\0\x4\xbf\0\0\x3}\0\0\x2\xa4\0\0\x1\x80\0\0\x4\xbf\0\0\x3}\0\0\0\0\0\0\0\0\a\x80\0\0\x2\xa4\0\0\x1\x80\0\0\x4\xbf\0\0\x3})
+kaiwa=true
+koza_separation=true
+multi_gui=true
+name_space=true
+opt_title1=@ByteArray(\xe3\x81\xbe\xe3\x81\x84\xe3\x81\xab\xe3\x81\xa1\xe3\x83\x95\xe3\x83\xa9\xe3\x83\xb3\xe3\x82\xb9\xe8\xaa\x9e)
+opt_title2=@ByteArray(\xe3\x81\xbe\xe3\x81\x84\xe3\x81\xab\xe3\x81\xa1\xe3\x83\x89\xe3\x82\xa4\xe3\x83\x84\xe8\xaa\x9e)
+opt_title3=@ByteArray(\xe3\x81\xbe\xe3\x81\x84\xe3\x81\xab\xe3\x81\xa1\xe3\x82\xa4\xe3\x82\xbf\xe3\x83\xaa\xe3\x82\xa2\xe8\xaa\x9e)
+opt_title4=@ByteArray(\xe3\x81\xbe\xe3\x81\x84\xe3\x81\xab\xe3\x81\xa1\xe3\x82\xb9\xe3\x83\x9a\xe3\x82\xa4\xe3\x83\xb3\xe8\xaa\x9e)
+opt_title5=@ByteArray(\xe3\x81\xbe\xe3\x81\x84\xe3\x81\xab\xe3\x81\xa1\xe3\x83\xad\xe3\x82\xb7\xe3\x82\xa2\xe8\xaa\x9e)
+opt_title6=@ByteArray(\xe3\x83\x9d\xe3\x83\xab\xe3\x83\x88\xe3\x82\xac\xe3\x83\xab\xe8\xaa\x9e)
+opt_title7=@ByteArray(\xe3\x81\xbe\xe3\x81\x84\xe3\x81\xab\xe3\x81\xa1\xe4\xb8\xad\xe5\x9b\xbd\xe8\xaa\x9e)
+opt_title8=@ByteArray(\xe3\x81\xbe\xe3\x81\x84\xe3\x81\xab\xe3\x81\xa1\xe3\x83\x8f\xe3\x83\xb3\xe3\x82\xb0\xe3\x83\xab\xe8\xac\x9b\xe5\xba\xa7)
+optional1=XQ487ZM61K_01
+optional2=N8PZRZ9WQY_01
+optional3=LJWZP7XVMX_01
+optional4=NRZWXVGQ19_01
+optional5=YRLK72JZ7Q_01
+optional6=N13V9K157Y_01
+optional7=983PKQPYN7_01
+optional8=LR47WW9K14_01
+optional_1=false
+optional_2=false
+optional_3=false
+optional_4=false
+optional_5=false
+optional_6=false
+optional_7=false
+optional_8=false
+save_folder=Z:/home/kazuo/cs/CaptureStream2/debug/[前週]/まいにちイタリア語【応用編】\\
+skip=true
+spec_title1=@ByteArray(\xe3\x82\x84\xe3\x81\x95\xe3\x81\x97\xe3\x81\x84\xe6\x97\xa5\xe6\x9c\xac\xe8\xaa\x9e)
+spec_title2=@ByteArray(\xe3\x82\xa2\xe3\x83\xa9\xe3\x83\x93\xe3\x82\xa2\xe8\xaa\x9e\xe8\xac\x9b\xe5\xba\xa7)
+spec_title3=@ByteArray(Asian View)
+spec_title4=@ByteArray(Living in Japan)
+special1=6LPPKP6W8Q_01
+special2=WKMNWGMN6R_01
+special3=GLZQ4M519X_01
+special4=4MY6Q8XP88_01
+special_1=false
+special_2=false
+special_3=false
+special_4=false
+tag_space=false
+this_week=true
+thumbnail=true
+timetrial=false
+
+[MessageWindow]
+geometry=@ByteArray(\x1\xd9\xd0\xcb\0\x3\0\0\0\0\x2\xa4\0\0\x3\xba\0\0\x4\xbf\0\0\x4\xe5\0\0\x2\xa4\0\0\x3\xba\0\0\x4\xbf\0\0\x4\xe5\0\0\0\0\0\0\0\0\a\x80\0\0\x2\xa4\0\0\x3\xba\0\0\x4\xbf\0\0\x4\xe5)
+
+
+
+
 
 
 
