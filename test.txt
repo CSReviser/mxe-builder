@@ -64,6 +64,7 @@ make: *** [Makefile:91: all] エラー 2
 
 
 
+
 [MainWindow]
 audio_extension=@ByteArray(m4a)
 basic0=false
