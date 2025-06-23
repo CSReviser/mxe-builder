@@ -1,48 +1,35 @@
 [ 94%] Building CXX object core/CMakeFiles/appcore.dir/settingsmanager.cpp.o
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:320:1: error: no declaration matches ‘SettingsManager::SettingsManager(const QString&)’
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp: In constructor ‘SettingsManager::SettingsManager(const QString&)’:
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:321:7: error: class ‘SettingsManager’ does not have any field named ‘m_settings’
+  321 |     : m_settings(iniPath, QSettings::IniFormat) {}
+      |       ^~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp: In member function ‘void SettingsManager::loadSettings()’:
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:324:5: error: ‘m_settings’ was not declared in this scope; did you mean ‘settings’?
+  324 |     m_settings.beginGroup("MainWindow");
+      |     ^~~~~~~~~~
+      |     settings
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:325:5: error: ‘s’ was not declared in this scope
+  325 |     s.basic0 = m_settings.value("basic0", false).toBool();
+      |     ^
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp: In member function ‘void SettingsManager::saveSettings()’:
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:363:5: error: ‘m_settings’ was not declared in this scope; did you mean ‘settings’?
+  363 |     m_settings.beginGroup("MainWindow");
+      |     ^~~~~~~~~~
+      |     settings
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:364:35: error: ‘s’ was not declared in this scope
+  364 |     m_settings.setValue("basic0", s.basic0);
+      |                                   ^
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp: At global scope:
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:401:1: error: redefinition of ‘SettingsManager::SettingsManager(const QString&)’
+  401 | SettingsManager::SettingsManager(const QString& iniPath) {
+      | ^~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:320:1: note: ‘SettingsManager::SettingsManager(const QString&)’ previously defined here
   320 | SettingsManager::SettingsManager(const QString& iniPath)
       | ^~~~~~~~~~~~~~~
-In file included from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:26:
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.h:44:7: note: candidates are: ‘SettingsManager::SettingsManager(SettingsManager&&)’
-   44 | class SettingsManager : public QObject {
-      |       ^~~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.h:44:7: note:                 ‘SettingsManager::SettingsManager(const SettingsManager&)’
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:200:1: note:                 ‘SettingsManager::SettingsManager(QObject*)’
-  200 | SettingsManager::SettingsManager(QObject* parent)
-      | ^~~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:34:1: note:                 ‘SettingsManager::SettingsManager()’
-   34 | SettingsManager::SettingsManager()
-      | ^~~~~~~~~~~~~~~
-In file included from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:26:
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.h:44:7: note: ‘class SettingsManager’ defined here
-   44 | class SettingsManager : public QObject {
-      |       ^~~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:323:6: error: variable or field ‘loadSettings’ declared void
-  323 | void SettingsManager::loadSettings(AppSettings& s) {
-      |      ^~~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:323:47: error: expected primary-expression before ‘&’ token
-  323 | void SettingsManager::loadSettings(AppSettings& s) {
-      |                                               ^
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:323:49: error: ‘s’ was not declared in this scope
-  323 | void SettingsManager::loadSettings(AppSettings& s) {
-      |                                                 ^
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:362:42: error: ‘AppSettings’ does not name a type; did you mean ‘QSettings’?
-  362 | void SettingsManager::saveSettings(const AppSettings& s) {
-      |                                          ^~~~~~~~~~~
-      |                                          QSettings
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:362:6: error: no declaration matches ‘void SettingsManager::saveSettings(const int&)’
-  362 | void SettingsManager::saveSettings(const AppSettings& s) {
-      |      ^~~~~~~~~~~~~~~
-In file included from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:26:
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.h:123:10: note: candidate is: ‘void SettingsManager::saveSettings()’
-  123 |     void saveSettings();
-      |          ^~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.h:44:7: note: ‘class SettingsManager’ defined here
-   44 | class SettingsManager : public QObject {
-      |       ^~~~~~~~~~~~~~~
 make[2]: *** [core/CMakeFiles/appcore.dir/build.make:90: core/CMakeFiles/appcore.dir/settingsmanager.cpp.o] エラー 1
 make[1]: *** [CMakeFiles/Makefile2:154: core/CMakeFiles/appcore.dir/all] エラー 2
 make: *** [Makefile:91: all] エラー 2
+
 
 
 
