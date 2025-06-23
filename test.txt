@@ -1,104 +1,29 @@
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp: In constructor ‘SettingsManager::SettingsManager()’:
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:27:60: error: ‘QCoreApplication’ has not been declared
-   27 |     : settings(QSettings::IniFormat, QSettings::UserScope, QCoreApplication::organizationName(), QCoreApplication::applicationName())
-      |                                                            ^~~~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:27:98: error: ‘QCoreApplication’ has not been declared
-   27 | Settings::IniFormat, QSettings::UserScope, QCoreApplication::organizationName(), QCoreApplication::applicationName())
-      |                                                                                  ^~~~~~~~~~~~~~~~
-
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:29:23: error: ‘applicationBundlePath’ was not declared in this scope
-   29 |     QString iniPath = applicationBundlePath();
-      |                       ^~~~~~~~~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:30:16: error: ‘QDir’ has not been declared
-   30 |     iniPath += QDir::separator() + QStringLiteral("CaptureStream2.ini");
-      |                ^~~~
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:31:55: error: use of deleted function ‘QSettings& QSettings::operator=(const QSettings&)’
-   31 |     settings = QSettings(iniPath, QSettings::IniFormat);
-      |                                                       ^
-In file included from /opt/qt6/include/QtCore/qglobal.h:38,
-                 from /opt/qt6/include/QtCore/qchar.h:7,
-                 from /opt/qt6/include/QtCore/qstring.h:14,
-                 from /opt/qt6/include/QtCore/QString:1,
-                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.h:26,
-                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:24:
-/opt/qt6/include/QtCore/qsettings.h:184:5: note: declared here
-  184 |     Q_DISABLE_COPY(QSettings)
-      |     ^~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp: In member function ‘void SettingsManager::load()’:
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:72:25: error: ‘kCheckBoxKeys’ was not declared in this scope; did you mean ‘AppSettings::kCheckBoxKeys’?
-   72 |     for (int i = 0; i < kCheckBoxKeys.size(); ++i) {
-      |                         ^~~~~~~~~~~~~
-      |                         AppSettings::kCheckBoxKeys
-In file included from /home/kazuo/cs/CaptureStream2/core/settingsmanager.h:32,
-                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:24:
-/home/kazuo/cs/CaptureStream2/core/appsettings.h:115:29: note: ‘AppSettings::kCheckBoxKeys’ declared here
-  115 | inline const QList<QString> kCheckBoxKeys = {
-      |                             ^~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:74:20: error: ‘kCheckBoxDefaults’ was not declared in this scope; did you mean ‘AppSettings::kCheckBoxDefaults’?
-   74 |         bool def = kCheckBoxDefaults[i];
-      |                    ^~~~~~~~~~~~~~~~~
-      |                    AppSettings::kCheckBoxDefaults
-In file included from /home/kazuo/cs/CaptureStream2/core/settingsmanager.h:32,
-                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:24:
-/home/kazuo/cs/CaptureStream2/core/appsettings.h:125:26: note: ‘AppSettings::kCheckBoxDefaults’ declared here
-  125 | inline const QList<bool> kCheckBoxDefaults = {
-      |                          ^~~~~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:80:25: error: ‘kCheckBoxKeys’ was not declared in this scope; did you mean ‘AppSettings::kCheckBoxKeys’?
-   80 |     for (int i = 0; i < kCheckBoxKeys.size(); ++i) {
-      |                         ^~~~~~~~~~~~~
-      |                         AppSettings::kCheckBoxKeys
-In file included from /home/kazuo/cs/CaptureStream2/core/settingsmanager.h:32,
-                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:24:
-/home/kazuo/cs/CaptureStream2/core/appsettings.h:115:29: note: ‘AppSettings::kCheckBoxKeys’ declared here
-  115 | inline const QList<QString> kCheckBoxKeys = {
-      |                             ^~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:82:23: error: ‘kCheckBoxDefaults’ was not declared in this scope; did you mean ‘AppSettings::kCheckBoxDefaults’?
-   82 |         bool defVal = kCheckBoxDefaults[i];
-      |                       ^~~~~~~~~~~~~~~~~
-      |                       AppSettings::kCheckBoxDefaults
-In file included from /home/kazuo/cs/CaptureStream2/core/settingsmanager.h:32,
-                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:24:
-/home/kazuo/cs/CaptureStream2/core/appsettings.h:125:26: note: ‘AppSettings::kCheckBoxDefaults’ declared here
-  125 | inline const QList<bool> kCheckBoxDefaults = {
-      |                          ^~~~~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:87:25: error: ‘kTextComboBoxKeys’ was not declared in this scope; did you mean ‘AppSettings::kTextComboBoxKeys’?
-   87 |     for (int i = 0; i < kTextComboBoxKeys.size(); ++i) {
-      |                         ^~~~~~~~~~~~~~~~~
-      |                         AppSettings::kTextComboBoxKeys
-In file included from /home/kazuo/cs/CaptureStream2/core/settingsmanager.h:32,
-                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:24:
-/home/kazuo/cs/CaptureStream2/core/appsettings.h:135:29: note: ‘AppSettings::kTextComboBoxKeys’ declared here
-  135 | inline const QList<QString> kTextComboBoxKeys = {
-      |                             ^~~~~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:89:26: error: ‘kTextComboBoxDefaults’ was not declared in this scope; did you mean ‘AppSettings::kTextComboBoxDefaults’?
-   89 |         QString defVal = kTextComboBoxDefaults[i];
-      |                          ^~~~~~~~~~~~~~~~~~~~~
-      |                          AppSettings::kTextComboBoxDefaults
-In file included from /home/kazuo/cs/CaptureStream2/core/settingsmanager.h:32,
-                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:24:
-/home/kazuo/cs/CaptureStream2/core/appsettings.h:139:29: note: ‘AppSettings::kTextComboBoxDefaults’ declared here
-  139 | inline const QList<QString> kTextComboBoxDefaults = {
-      |                             ^~~~~~~~~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp: At global scope:
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:160:9: error: no declaration matches ‘QString SettingsManager::appConfigLocationPath()’
-  160 | QString SettingsManager::appConfigLocationPath() {
-      |         ^~~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:160:9: note: no functions named ‘QString SettingsManager::appConfigLocationPath()’
-In file included from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:24:
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.h:40:7: note: ‘class SettingsManager’ defined here
-   40 | class SettingsManager {
-      |       ^~~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:166:9: error: no declaration matches ‘QString SettingsManager::applicationBundlePath()’
-  166 | QString SettingsManager::applicationBundlePath() {
-      |         ^~~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:166:9: note: no functions named ‘QString SettingsManager::applicationBundlePath()’
-In file included from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:24:
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.h:40:7: note: ‘class SettingsManager’ defined here
-   40 | class SettingsManager {
-      |       ^~~~~~~~~~~~~~~
+[ 94%] Building CXX object core/CMakeFiles/appcore.dir/settingsmanager.cpp.o
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp: In member function ‘void SettingsManager::fetchKozaSeries(const QStringList&)’:
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:249:32: warning: parentheses were disambiguated as a function declaration [-Wvexing-parse]
+  249 |         QNetworkRequest request(QUrl(fullUrl));
+      |                                ^~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:249:32: note: replace parentheses with braces to declare a variable
+  249 |         QNetworkRequest request(QUrl(fullUrl));
+      |                                ^~~~~~~~~~~~~~~
+      |                                -
+      |                                {             -
+      |                                              }
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:250:54: error: cannot convert ‘QNetworkRequest(QUrl)’ to ‘const QNetworkRequest&’
+  250 |         QNetworkReply* reply = m_networkManager->get(request);
+      |                                                      ^~~~~~~
+      |                                                      |
+      |                                                      QNetworkRequest(QUrl)
+In file included from /opt/qt6/include/QtNetwork/QNetworkAccessManager:1,
+                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.h:37,
+                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:26:
+/opt/qt6/include/QtNetwork/qnetworkaccessmanager.h:82:47: note:   initializing argument 1 of ‘QNetworkReply* QNetworkAccessManager::get(const QNetworkRequest&)’
+   82 |     QNetworkReply *get(const QNetworkRequest &request);
+      |                        ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~
 make[2]: *** [core/CMakeFiles/appcore.dir/build.make:90: core/CMakeFiles/appcore.dir/settingsmanager.cpp.o] エラー 1
 make[1]: *** [CMakeFiles/Makefile2:154: core/CMakeFiles/appcore.dir/all] エラー 2
 make: *** [Makefile:91: all] エラー 2
+
 
 
 
