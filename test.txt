@@ -1,63 +1,100 @@
 [ 89%] Building CXX object core/CMakeFiles/appcore.dir/appcore_autogen/mocs_compilation.cpp.o
 In file included from /home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/moc_settingsmanager.cpp:9,
                  from /home/kazuo/cs/CaptureStream2/core/appcore_autogen/mocs_compilation.cpp:2:
-/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:73:17: error: ‘SettingEntry’ was not declared in this scope
-   73 |     const QList<SettingEntry>& checkBoxSettings() const;
+/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:77:17: error: ‘SettingEntry’ was not declared in this scope
+   77 |     const QList<SettingEntry>& checkBoxSettings() const;
       |                 ^~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:73:29: error: template argument 1 is invalid
-   73 |     const QList<SettingEntry>& checkBoxSettings() const;
+/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:77:29: error: template argument 1 is invalid
+   77 |     const QList<SettingEntry>& checkBoxSettings() const;
       |                             ^
-/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:84:17: error: ‘SettingEntry’ was not declared in this scope
-   84 |     const QList<SettingEntry>& checkBoxSettings() const;
-      |                 ^~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:84:29: error: template argument 1 is invalid
-   84 |     const QList<SettingEntry>& checkBoxSettings() const;
-      |                             ^
-/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:84:32: error: ‘const int& SettingsManager::checkBoxSettings() const’ cannot be overloaded with ‘const int& SettingsManager::checkBoxSettings() const’
-   84 |     const QList<SettingEntry>& checkBoxSettings() const;
-      |                                ^~~~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:73:32: note: previous declaration ‘const int& SettingsManager::checkBoxSettings() const’
-   73 |     const QList<SettingEntry>& checkBoxSettings() const;
-      |                                ^~~~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:85:10: error: ‘void SettingsManager::updateCheckBoxValue(const QString&, bool)’ cannot be overloaded with ‘void SettingsManager::updateCheckBoxValue(const QString&, bool)’
-   85 |     void updateCheckBoxValue(const QString& key, bool value);
+/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:86:10: error: ‘void SettingsManager::updateCheckBoxValue(const QString&, bool)’ cannot be overloaded with ‘void SettingsManager::updateCheckBoxValue(const QString&, bool)’
+   86 |     void updateCheckBoxValue(const QString& key, bool value);
       |          ^~~~~~~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:74:10: note: previous declaration ‘void SettingsManager::updateCheckBoxValue(const QString&, bool)’
-   74 |     void updateCheckBoxValue(const QString& key, bool value);
+/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:78:10: note: previous declaration ‘void SettingsManager::updateCheckBoxValue(const QString&, bool)’
+   78 |     void updateCheckBoxValue(const QString& key, bool value);
       |          ^~~~~~~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:86:20: error: ‘static QString SettingsManager::applicationBundlePath()’ cannot be overloaded with ‘static QString SettingsManager::applicationBundlePath()’
-   86 |     static QString applicationBundlePath();
+/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:87:20: error: ‘static QString SettingsManager::applicationBundlePath()’ cannot be overloaded with ‘static QString SettingsManager::applicationBundlePath()’
+   87 |     static QString applicationBundlePath();
       |                    ^~~~~~~~~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:80:20: note: previous declaration ‘static QString SettingsManager::applicationBundlePath()’
-   80 |     static QString applicationBundlePath();
+/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:84:20: note: previous declaration ‘static QString SettingsManager::applicationBundlePath()’
+   84 |     static QString applicationBundlePath();
       |                    ^~~~~~~~~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:89:25: error: redeclaration of ‘QMap<QString, bool> SettingsManager::checkBoxStates’
-   89 |     QMap<QString, bool> checkBoxStates;
+/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:96:20: error: ‘static QString SettingsManager::applicationBundlePath()’ cannot be overloaded with ‘static QString SettingsManager::applicationBundlePath()’
+   96 |     static QString applicationBundlePath();
+      |                    ^~~~~~~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:84:20: note: previous declaration ‘static QString SettingsManager::applicationBundlePath()’
+   84 |     static QString applicationBundlePath();
+      |                    ^~~~~~~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:100:25: error: redeclaration of ‘QMap<QString, bool> SettingsManager::checkBoxStates’
+  100 |     QMap<QString, bool> checkBoxStates;
       |                         ^~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:71:25: note: previous declaration ‘QMap<QString, bool> SettingsManager::checkBoxStates’
-   71 |     QMap<QString, bool> checkBoxStates;
+/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:75:25: note: previous declaration ‘QMap<QString, bool> SettingsManager::checkBoxStates’
+   75 |     QMap<QString, bool> checkBoxStates;
       |                         ^~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:90:28: error: redeclaration of ‘QMap<QString, QString> SettingsManager::textComboBoxValues’
-   90 |     QMap<QString, QString> textComboBoxValues;
+/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:101:28: error: redeclaration of ‘QMap<QString, QString> SettingsManager::textComboBoxValues’
+  101 |     QMap<QString, QString> textComboBoxValues;
       |                            ^~~~~~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:72:28: note: previous declaration ‘QMap<QString, QString> SettingsManager::textComboBoxValues’
-   72 |     QMap<QString, QString> textComboBoxValues;
+/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:76:28: note: previous declaration ‘QMap<QString, QString> SettingsManager::textComboBoxValues’
+   76 |     QMap<QString, QString> textComboBoxValues;
       |                            ^~~~~~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:125:10: error: ‘void SettingsManager::resetToDefaults()’ cannot be overloaded with ‘void SettingsManager::resetToDefaults()’
-  125 |     void resetToDefaults();
+/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:134:10: error: ‘void SettingsManager::loadSettings()’ cannot be overloaded with ‘void SettingsManager::loadSettings()’
+  134 |     void loadSettings();
+      |          ^~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:48:10: note: previous declaration ‘void SettingsManager::loadSettings()’
+   48 |     void loadSettings();
+      |          ^~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:135:10: error: ‘void SettingsManager::saveSettings()’ cannot be overloaded with ‘void SettingsManager::saveSettings()’
+  135 |     void saveSettings();
+      |          ^~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:49:10: note: previous declaration ‘void SettingsManager::saveSettings()’
+   49 |     void saveSettings();
+      |          ^~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:136:10: error: ‘void SettingsManager::resetToDefaults()’ cannot be overloaded with ‘void SettingsManager::resetToDefaults()’
+  136 |     void resetToDefaults();
       |          ^~~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:46:10: note: previous declaration ‘void SettingsManager::resetToDefaults()’
-   46 |     void resetToDefaults();
+/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:50:10: note: previous declaration ‘void SettingsManager::resetToDefaults()’
+   50 |     void resetToDefaults();
       |          ^~~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:132:11: error: ‘SettingEntry’ was not declared in this scope
-  132 |     QList<SettingEntry> m_checkBoxSettings;
-      |           ^~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:132:23: error: template argument 1 is invalid
-  132 |     QList<SettingEntry> m_checkBoxSettings;
-      |                       ^
+/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:142:25: error: redeclaration of ‘QMap<QString, bool> SettingsManager::checkBoxStates’
+  142 |     QMap<QString, bool> checkBoxStates;
+      |                         ^~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:75:25: note: previous declaration ‘QMap<QString, bool> SettingsManager::checkBoxStates’
+   75 |     QMap<QString, bool> checkBoxStates;
+      |                         ^~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:143:28: error: redeclaration of ‘QMap<QString, QString> SettingsManager::textComboBoxValues’
+  143 |     QMap<QString, QString> textComboBoxValues;
+      |                            ^~~~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:76:28: note: previous declaration ‘QMap<QString, QString> SettingsManager::textComboBoxValues’
+   76 |     QMap<QString, QString> textComboBoxValues;
+      |                            ^~~~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:144:28: error: redeclaration of ‘QMap<QString, QString> SettingsManager::optionalIdMap’
+  144 |     QMap<QString, QString> optionalIdMap;
+      |                            ^~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:67:28: note: previous declaration ‘QMap<QString, QString> SettingsManager::optionalIdMap’
+   67 |     QMap<QString, QString> optionalIdMap;  // optional1〜optionala のキーとID
+      |                            ^~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:145:28: error: redeclaration of ‘QMap<QString, QString> SettingsManager::optionalTitleMap’
+  145 |     QMap<QString, QString> optionalTitleMap;
+      |                            ^~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:68:28: note: previous declaration ‘QMap<QString, QString> SettingsManager::optionalTitleMap’
+   68 |     QMap<QString, QString> optionalTitleMap;
+      |                            ^~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:146:28: error: redeclaration of ‘QMap<QString, QString> SettingsManager::specialIdMap’
+  146 |     QMap<QString, QString> specialIdMap;
+      |                            ^~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:69:28: note: previous declaration ‘QMap<QString, QString> SettingsManager::specialIdMap’
+   69 |     QMap<QString, QString> specialIdMap;   // special1〜special4
+      |                            ^~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:147:28: error: redeclaration of ‘QMap<QString, QString> SettingsManager::specialTitleMap’
+  147 |     QMap<QString, QString> specialTitleMap;
+      |                            ^~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/appcore_autogen/EWIEGA46WW/../../settingsmanager.h:70:28: note: previous declaration ‘QMap<QString, QString> SettingsManager::specialTitleMap’
+   70 |     QMap<QString, QString> specialTitleMap;
+      |                            ^~~~~~~~~~~~~~~
 make[2]: *** [core/CMakeFiles/appcore.dir/build.make:76: core/CMakeFiles/appcore.dir/appcore_autogen/mocs_compilation.cpp.o] エラー 1
 make[1]: *** [CMakeFiles/Makefile2:154: core/CMakeFiles/appcore.dir/all] エラー 2
 make: *** [Makefile:91: all] エラー 2
+
 
 
 
