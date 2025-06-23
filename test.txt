@@ -1,34 +1,162 @@
 [ 94%] Building CXX object core/CMakeFiles/appcore.dir/settingsmanager.cpp.o
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp: In constructor ‘SettingsManager::SettingsManager(const QString&)’:
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:321:7: error: class ‘SettingsManager’ does not have any field named ‘m_settings’
-  321 |     : m_settings(iniPath, QSettings::IniFormat) {}
-      |       ^~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:200:1: error: no declaration matches ‘SettingsManager::SettingsManager(QObject*)’
+  200 | SettingsManager::SettingsManager(QObject* parent)
+      | ^~~~~~~~~~~~~~~
+In file included from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:26:
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.h:44:7: note: candidates are: ‘SettingsManager::SettingsManager(SettingsManager&&)’
+   44 | class SettingsManager : public QObject {
+      |       ^~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.h:44:7: note:                 ‘SettingsManager::SettingsManager(const SettingsManager&)’
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.h:52:14: note:                 ‘SettingsManager::SettingsManager(const QString&)’
+   52 |     explicit SettingsManager(const QString& iniPath);
+      |              ^~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:34:1: note:                 ‘SettingsManager::SettingsManager()’
+   34 | SettingsManager::SettingsManager()
+      | ^~~~~~~~~~~~~~~
+In file included from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:26:
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.h:44:7: note: ‘class SettingsManager’ defined here
+   44 | class SettingsManager : public QObject {
+      |       ^~~~~~~~~~~~~~~
 /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp: In member function ‘void SettingsManager::loadSettings()’:
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:324:5: error: ‘m_settings’ was not declared in this scope; did you mean ‘settings’?
-  324 |     m_settings.beginGroup("MainWindow");
-      |     ^~~~~~~~~~
-      |     settings
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:325:5: error: ‘s’ was not declared in this scope
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:325:7: error: ‘struct AppSettings::Data’ has no member named ‘basic0’
   325 |     s.basic0 = m_settings.value("basic0", false).toBool();
-      |     ^
+      |       ^~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:326:7: error: ‘struct AppSettings::Data’ has no member named ‘basic1’
+  326 |     s.basic1 = m_settings.value("basic1", false).toBool();
+      |       ^~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:327:7: error: ‘struct AppSettings::Data’ has no member named ‘basic2’
+  327 |     s.basic2 = m_settings.value("basic2", false).toBool();
+      |       ^~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:328:7: error: ‘struct AppSettings::Data’ has no member named ‘business1’
+  328 |     s.business1 = m_settings.value("business1", false).toBool();
+      |       ^~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:329:7: error: ‘struct AppSettings::Data’ has no member named ‘detailed_message’
+  329 |     s.detailed_message = m_settings.value("detailed_message", false).toBool();
+      |       ^~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:330:7: error: ‘struct AppSettings::Data’ has no member named ‘enjoy’
+  330 |     s.enjoy = m_settings.value("enjoy", false).toBool();
+      |       ^~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:331:7: error: ‘struct AppSettings::Data’ has no member named ‘gendai’
+  331 |     s.gendai = m_settings.value("gendai", false).toBool();
+      |       ^~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:332:7: error: ‘struct AppSettings::Data’ has no member named ‘kaiwa’
+  332 |     s.kaiwa = m_settings.value("kaiwa", true).toBool();
+      |       ^~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:333:7: error: ‘struct AppSettings::Data’ has no member named ‘timetrial’
+  333 |     s.timetrial = m_settings.value("timetrial", false).toBool();
+      |       ^~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:334:7: error: ‘struct AppSettings::Data’ has no member named ‘skip’
+  334 |     s.skip = m_settings.value("skip", true).toBool();
+      |       ^~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:335:7: error: ‘struct AppSettings::Data’ has no member named ‘this_week’
+  335 |     s.this_week = m_settings.value("this_week", true).toBool();
+      |       ^~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:336:7: error: ‘struct AppSettings::Data’ has no member named ‘thumbnail’; did you mean ‘thumbnailMap’?
+  336 |     s.thumbnail = m_settings.value("thumbnail", false).toBool();
+      |       ^~~~~~~~~
+      |       thumbnailMap
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:337:7: error: ‘struct AppSettings::Data’ has no member named ‘tag_space’
+  337 |     s.tag_space = m_settings.value("tag_space", false).toBool();
+      |       ^~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:340:11: error: ‘struct AppSettings::Data’ has no member named ‘optional_flags’
+  340 |         s.optional_flags[i] = m_settings.value(QString("optional_%1").arg(i+1), false).toBool();
+      |           ^~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:343:11: error: ‘struct AppSettings::Data’ has no member named ‘special_flags’
+  343 |         s.special_flags[i] = m_settings.value(QString("special_%1").arg(i+1), false).toBool();
+      |           ^~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:345:7: error: ‘struct AppSettings::Data’ has no member named ‘audio_extension’
+  345 |     s.audio_extension = m_settings.value("audio_extension", "m4a").toString();
+      |       ^~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:346:7: error: ‘struct AppSettings::Data’ has no member named ‘ffmpeg_folder’
+  346 |     s.ffmpeg_folder = m_settings.value("ffmpeg_folder", "").toString();
+      |       ^~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:347:7: error: ‘struct AppSettings::Data’ has no member named ‘save_folder’
+  347 |     s.save_folder = m_settings.value("save_folder", "").toString();
+      |       ^~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:350:11: error: ‘struct AppSettings::Data’ has no member named ‘opt_titles’
+  350 |         s.opt_titles[i] = QString::fromUtf8(m_settings.value(QString("opt_title%1").arg(i+1)).toByteArray());
+      |           ^~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:351:11: error: ‘struct AppSettings::Data’ has no member named ‘opt_ids’
+  351 |         s.opt_ids[i] = m_settings.value(QString("optional%1").arg(i+1)).toString();
+      |           ^~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:355:11: error: ‘struct AppSettings::Data’ has no member named ‘spec_titles’
+  355 |         s.spec_titles[i] = QString::fromUtf8(m_settings.value(QString("spec_title%1").arg(i+1)).toByteArray());
+      |           ^~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:356:11: error: ‘struct AppSettings::Data’ has no member named ‘spec_ids’
+  356 |         s.spec_ids[i] = m_settings.value(QString("special%1").arg(i+1)).toString();
+      |           ^~~~~~~~
 /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp: In member function ‘void SettingsManager::saveSettings()’:
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:363:5: error: ‘m_settings’ was not declared in this scope; did you mean ‘settings’?
-  363 |     m_settings.beginGroup("MainWindow");
-      |     ^~~~~~~~~~
-      |     settings
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:364:35: error: ‘s’ was not declared in this scope
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:364:37: error: ‘struct AppSettings::Data’ has no member named ‘basic0’
   364 |     m_settings.setValue("basic0", s.basic0);
-      |                                   ^
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp: At global scope:
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:401:1: error: redefinition of ‘SettingsManager::SettingsManager(const QString&)’
-  401 | SettingsManager::SettingsManager(const QString& iniPath) {
-      | ^~~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:320:1: note: ‘SettingsManager::SettingsManager(const QString&)’ previously defined here
-  320 | SettingsManager::SettingsManager(const QString& iniPath)
-      | ^~~~~~~~~~~~~~~
+      |                                     ^~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:365:37: error: ‘struct AppSettings::Data’ has no member named ‘basic1’
+  365 |     m_settings.setValue("basic1", s.basic1);
+      |                                     ^~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:366:37: error: ‘struct AppSettings::Data’ has no member named ‘basic2’
+  366 |     m_settings.setValue("basic2", s.basic2);
+      |                                     ^~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:367:40: error: ‘struct AppSettings::Data’ has no member named ‘business1’
+  367 |     m_settings.setValue("business1", s.business1);
+      |                                        ^~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:368:47: error: ‘struct AppSettings::Data’ has no member named ‘detailed_message’
+  368 |     m_settings.setValue("detailed_message", s.detailed_message);
+      |                                               ^~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:369:36: error: ‘struct AppSettings::Data’ has no member named ‘enjoy’
+  369 |     m_settings.setValue("enjoy", s.enjoy);
+      |                                    ^~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:370:37: error: ‘struct AppSettings::Data’ has no member named ‘gendai’
+  370 |     m_settings.setValue("gendai", s.gendai);
+      |                                     ^~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:371:36: error: ‘struct AppSettings::Data’ has no member named ‘kaiwa’
+  371 |     m_settings.setValue("kaiwa", s.kaiwa);
+      |                                    ^~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:372:40: error: ‘struct AppSettings::Data’ has no member named ‘timetrial’
+  372 |     m_settings.setValue("timetrial", s.timetrial);
+      |                                        ^~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:373:35: error: ‘struct AppSettings::Data’ has no member named ‘skip’
+  373 |     m_settings.setValue("skip", s.skip);
+      |                                   ^~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:374:40: error: ‘struct AppSettings::Data’ has no member named ‘this_week’
+  374 |     m_settings.setValue("this_week", s.this_week);
+      |                                        ^~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:375:40: error: ‘struct AppSettings::Data’ has no member named ‘thumbnail’; did you mean ‘thumbnailMap’?
+  375 |     m_settings.setValue("thumbnail", s.thumbnail);
+      |                                        ^~~~~~~~~
+      |                                        thumbnailMap
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:376:40: error: ‘struct AppSettings::Data’ has no member named ‘tag_space’
+  376 |     m_settings.setValue("tag_space", s.tag_space);
+      |                                        ^~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:379:64: error: ‘struct AppSettings::Data’ has no member named ‘optional_flags’
+  379 |         m_settings.setValue(QString("optional_%1").arg(i+1), s.optional_flags[i]);
+      |                                                                ^~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:382:63: error: ‘struct AppSettings::Data’ has no member named ‘special_flags’
+  382 |         m_settings.setValue(QString("special_%1").arg(i+1), s.special_flags[i]);
+      |                                                               ^~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:384:46: error: ‘struct AppSettings::Data’ has no member named ‘audio_extension’
+  384 |     m_settings.setValue("audio_extension", s.audio_extension);
+      |                                              ^~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:385:44: error: ‘struct AppSettings::Data’ has no member named ‘ffmpeg_folder’
+  385 |     m_settings.setValue("ffmpeg_folder", s.ffmpeg_folder);
+      |                                            ^~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:386:42: error: ‘struct AppSettings::Data’ has no member named ‘save_folder’
+  386 |     m_settings.setValue("save_folder", s.save_folder);
+      |                                          ^~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:389:64: error: ‘struct AppSettings::Data’ has no member named ‘opt_titles’
+  389 |         m_settings.setValue(QString("opt_title%1").arg(i+1), s.opt_titles[i].toUtf8());
+      |                                                                ^~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:390:63: error: ‘struct AppSettings::Data’ has no member named ‘opt_ids’
+  390 |         m_settings.setValue(QString("optional%1").arg(i+1), s.opt_ids[i]);
+      |                                                               ^~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:394:65: error: ‘struct AppSettings::Data’ has no member named ‘spec_titles’
+  394 |         m_settings.setValue(QString("spec_title%1").arg(i+1), s.spec_titles[i].toUtf8());
+      |                                                                 ^~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:395:62: error: ‘struct AppSettings::Data’ has no member named ‘spec_ids’
+  395 |         m_settings.setValue(QString("special%1").arg(i+1), s.spec_ids[i]);
+      |                                                              ^~~~~~~~
 make[2]: *** [core/CMakeFiles/appcore.dir/build.make:90: core/CMakeFiles/appcore.dir/settingsmanager.cpp.o] エラー 1
 make[1]: *** [CMakeFiles/Makefile2:154: core/CMakeFiles/appcore.dir/all] エラー 2
 make: *** [Makefile:91: all] エラー 2
+
 
 
 
