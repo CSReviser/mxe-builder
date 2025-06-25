@@ -1,98 +1,18 @@
 [ 94%] Building CXX object core/CMakeFiles/appcore.dir/settingsmanager.cpp.o
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp: In member function ‘void SettingsManager::saveSettings() const’:
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:106:25: error: passing ‘const QSettings’ as ‘this’ argument discards qualifiers [-fpermissive]
-  106 |     settings_.beginGroup(AppSettings::SETTING_GROUP);
-      |     ~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~
-In file included from /opt/qt6/include/QtCore/QSettings:1,
-                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.h:28,
-                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:24:
-/opt/qt6/include/QtCore/qsettings.h:124:10: note:   in call to ‘void QSettings::beginGroup(QAnyStringView)’
-  124 |     void beginGroup(QAnyStringView prefix);
-      |          ^~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:109:27: error: passing ‘const QSettings’ as ‘this’ argument discards qualifiers [-fpermissive]
-  109 |         settings_.setValue(it.key(), it.value());
-      |         ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
-In file included from /opt/qt6/include/QtCore/QSettings:1,
-                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.h:28,
-                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:24:
-/opt/qt6/include/QtCore/qsettings.h:147:10: note:   in call to ‘void QSettings::setValue(QAnyStringView, const QVariant&)’
-  147 |     void setValue(QAnyStringView key, const QVariant &value);
-      |          ^~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:113:27: error: passing ‘const QSettings’ as ‘this’ argument discards qualifiers [-fpermissive]
-  113 |         settings_.setValue(it.key(), it.value());
-      |         ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
-In file included from /opt/qt6/include/QtCore/QSettings:1,
-                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.h:28,
-                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:24:
-/opt/qt6/include/QtCore/qsettings.h:147:10: note:   in call to ‘void QSettings::setValue(QAnyStringView, const QVariant&)’
-  147 |     void setValue(QAnyStringView key, const QVariant &value);
-      |          ^~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:117:27: error: passing ‘const QSettings’ as ‘this’ argument discards qualifiers [-fpermissive]
-  117 |         settings_.setValue(it.key(), it.value());
-      |         ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
-In file included from /opt/qt6/include/QtCore/QSettings:1,
-                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.h:28,
-                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:24:
-/opt/qt6/include/QtCore/qsettings.h:147:10: note:   in call to ‘void QSettings::setValue(QAnyStringView, const QVariant&)’
-  147 |     void setValue(QAnyStringView key, const QVariant &value);
-      |          ^~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:121:27: error: passing ‘const QSettings’ as ‘this’ argument discards qualifiers [-fpermissive]
-  121 |         settings_.setValue(it.key(), it.value());
-      |         ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
-In file included from /opt/qt6/include/QtCore/QSettings:1,
-                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.h:28,
-                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:24:
-/opt/qt6/include/QtCore/qsettings.h:147:10: note:   in call to ‘void QSettings::setValue(QAnyStringView, const QVariant&)’
-  147 |     void setValue(QAnyStringView key, const QVariant &value);
-      |          ^~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:125:27: error: passing ‘const QSettings’ as ‘this’ argument discards qualifiers [-fpermissive]
-  125 |         settings_.setValue(it.key(), it.value());
-      |         ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
-In file included from /opt/qt6/include/QtCore/QSettings:1,
-                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.h:28,
-                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:24:
-/opt/qt6/include/QtCore/qsettings.h:147:10: note:   in call to ‘void QSettings::setValue(QAnyStringView, const QVariant&)’
-  147 |     void setValue(QAnyStringView key, const QVariant &value);
-      |          ^~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:129:27: error: passing ‘const QSettings’ as ‘this’ argument discards qualifiers [-fpermissive]
-  129 |         settings_.setValue(it.key(), it.value());
-      |         ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
-In file included from /opt/qt6/include/QtCore/QSettings:1,
-                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.h:28,
-                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:24:
-/opt/qt6/include/QtCore/qsettings.h:147:10: note:   in call to ‘void QSettings::setValue(QAnyStringView, const QVariant&)’
-  147 |     void setValue(QAnyStringView key, const QVariant &value);
-      |          ^~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:133:27: error: passing ‘const QSettings’ as ‘this’ argument discards qualifiers [-fpermissive]
-  133 |         settings_.setValue(it.key(), it.value());
-      |         ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
-In file included from /opt/qt6/include/QtCore/QSettings:1,
-                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.h:28,
-                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:24:
-/opt/qt6/include/QtCore/qsettings.h:147:10: note:   in call to ‘void QSettings::setValue(QAnyStringView, const QVariant&)’
-  147 |     void setValue(QAnyStringView key, const QVariant &value);
-      |          ^~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:137:27: error: passing ‘const QSettings’ as ‘this’ argument discards qualifiers [-fpermissive]
-  137 |         settings_.setValue(it.key(), it.value());
-      |         ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~
-In file included from /opt/qt6/include/QtCore/QSettings:1,
-                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.h:28,
-                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:24:
-/opt/qt6/include/QtCore/qsettings.h:147:10: note:   in call to ‘void QSettings::setValue(QAnyStringView, const QVariant&)’
-  147 |     void setValue(QAnyStringView key, const QVariant &value);
-      |          ^~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:140:23: error: passing ‘const QSettings’ as ‘this’ argument discards qualifiers [-fpermissive]
-  140 |     settings_.endGroup();
-      |     ~~~~~~~~~~~~~~~~~~^~
-In file included from /opt/qt6/include/QtCore/QSettings:1,
-                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.h:28,
-                 from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:24:
-/opt/qt6/include/QtCore/qsettings.h:125:10: note:   in call to ‘void QSettings::endGroup()’
-  125 |     void endGroup();
-      |          ^~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:105:6: error: no declaration matches ‘void SettingsManager::saveSettings()’
+  105 | void SettingsManager::saveSettings()
+      |      ^~~~~~~~~~~~~~~
+In file included from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:24:
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.h:38:10: note: candidate is: ‘void SettingsManager::saveSettings() const’
+   38 |     void saveSettings() const;
+      |          ^~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/core/settingsmanager.h:31:7: note: ‘class SettingsManager’ defined here
+   31 | class SettingsManager
+      |       ^~~~~~~~~~~~~~~
 make[2]: *** [core/CMakeFiles/appcore.dir/build.make:90: core/CMakeFiles/appcore.dir/settingsmanager.cpp.o] エラー 1
 make[1]: *** [CMakeFiles/Makefile2:154: core/CMakeFiles/appcore.dir/all] エラー 2
 make: *** [Makefile:91: all] エラー 2
+
 
 
 
