@@ -1,17 +1,10 @@
-[ 94%] Building CXX object core/CMakeFiles/appcore.dir/settingsmanager.cpp.o
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:105:6: error: no declaration matches ‘void SettingsManager::saveSettings()’
-  105 | void SettingsManager::saveSettings()
-      |      ^~~~~~~~~~~~~~~
-In file included from /home/kazuo/cs/CaptureStream2/core/settingsmanager.cpp:24:
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.h:38:10: note: candidate is: ‘void SettingsManager::saveSettings() const’
-   38 |     void saveSettings() const;
-      |          ^~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/core/settingsmanager.h:31:7: note: ‘class SettingsManager’ defined here
-   31 | class SettingsManager
-      |       ^~~~~~~~~~~~~~~
-make[2]: *** [core/CMakeFiles/appcore.dir/build.make:90: core/CMakeFiles/appcore.dir/settingsmanager.cpp.o] エラー 1
-make[1]: *** [CMakeFiles/Makefile2:154: core/CMakeFiles/appcore.dir/all] エラー 2
+[ 94%] Linking CXX executable CaptureStream2.exe
+/opt/mxe/usr/bin/x86_64-w64-mingw32.static-ld: CMakeFiles/CaptureStream2.dir/objects.a(mocs_compilation.cpp.obj):mocs_compilation.cpp:(.rdata$_ZTV14Settingsdialog[_ZTV14Settingsdialog]+0x198): undefined reference to `Settingsdialog::inputMethodEvent(QInputMethodEvent*)'
+collect2: error: ld returned 1 exit status
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:454: CaptureStream2.exe] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:86: CMakeFiles/CaptureStream2.dir/all] エラー 2
 make: *** [Makefile:91: all] エラー 2
+
 
 
 
