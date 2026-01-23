@@ -1,4 +1,4 @@
-[ 47%] Building CXX object CMakeFiles/CaptureStream2.dir/settingsdialog.cpp.obj
+[ 10%] Building CXX object CMakeFiles/CaptureStream2.dir/settingsdialog.cpp.obj
 In file included from /home/kazuo/cs/CaptureStream2/settingsdialog.cpp:24:
 /home/kazuo/cs/CaptureStream2/settingsdialog.h:44:38: error: expected ')' before '&' token
    44 |     explicit Settingsdialog( Settings& settings, QWidget *parent = nullptr);
@@ -19,6 +19,7 @@ In file included from /home/kazuo/cs/CaptureStream2/settingsdialog.cpp:24:
 make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:218: CMakeFiles/CaptureStream2.dir/settingsdialog.cpp.obj] エラー 1
 make[1]: *** [CMakeFiles/Makefile2:86: CMakeFiles/CaptureStream2.dir/all] エラー 2
 make: *** [Makefile:91: all] エラー 2
+
 
 
 
