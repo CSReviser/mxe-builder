@@ -1,9 +1,25 @@
-[ 94%] Linking CXX executable CaptureStream2.exe
-/opt/mxe/usr/bin/x86_64-w64-mingw32.static-ld: CMakeFiles/CaptureStream2.dir/objects.a(mocs_compilation.cpp.obj):mocs_compilation.cpp:(.rdata$_ZTV14Settingsdialog[_ZTV14Settingsdialog]+0x198): undefined reference to `Settingsdialog::inputMethodEvent(QInputMethodEvent*)'
-collect2: error: ld returned 1 exit status
-make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:454: CaptureStream2.exe] エラー 1
+[ 10%] Building CXX object CMakeFiles/CaptureStream2.dir/mainwindow.cpp.obj
+/home/kazuo/cs/CaptureStream2/mainwindow.cpp: In member function 'void MainWindow::customizeSettings()':
+/home/kazuo/cs/CaptureStream2/mainwindow.cpp:1127:71: error: no matching function for call to 'Settingsdialog::Settingsdialog(QString&, QString&, QString&, QString&)'
+ 1127 |         Settingsdialog dialog( special1, special2, special3, special4 );
+      |                                                                       ^
+In file included from /home/kazuo/cs/CaptureStream2/mainwindow.cpp:32:
+/home/kazuo/cs/CaptureStream2/settingsdialog.h:44:14: note: candidate: 'Settingsdialog::Settingsdialog(Settings&, QString, QString, QString, QString, QWidget*)'
+   44 |     explicit Settingsdialog( Settings& settings, QString opt1, QString opt2, QString opt3, QString opt4, QWidget *parent = nullptr);
+      |              ^~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/settingsdialog.h:44:14: note:   candidate expects 6 arguments, 4 provided
+/home/kazuo/cs/CaptureStream2/mainwindow.cpp:1157:71: error: no matching function for call to 'Settingsdialog::Settingsdialog(QString&, QString&, QString&, QString&)'
+ 1157 |         Settingsdialog dialog( special1, special2, special3, special4 );
+      |                                                                       ^
+In file included from /home/kazuo/cs/CaptureStream2/mainwindow.cpp:32:
+/home/kazuo/cs/CaptureStream2/settingsdialog.h:44:14: note: candidate: 'Settingsdialog::Settingsdialog(Settings&, QString, QString, QString, QString, QWidget*)'
+   44 |     explicit Settingsdialog( Settings& settings, QString opt1, QString opt2, QString opt3, QString opt4, QWidget *parent = nullptr);
+      |              ^~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/settingsdialog.h:44:14: note:   candidate expects 6 arguments, 4 provided
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:173: CMakeFiles/CaptureStream2.dir/mainwindow.cpp.obj] エラー 1
 make[1]: *** [CMakeFiles/Makefile2:86: CMakeFiles/CaptureStream2.dir/all] エラー 2
 make: *** [Makefile:91: all] エラー 2
+
 
 
 
