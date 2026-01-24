@@ -1,22 +1,176 @@
-[ 63%] Building CXX object CMakeFiles/CaptureStream2.dir/settingsdialog.cpp.obj
-/home/kazuo/cs/CaptureStream2/settingsdialog.cpp:31:1: error: no declaration matches 'Settingsdialog::Settingsdialog(Settings&, QString, QWidget*)'
-   31 | Settingsdialog::Settingsdialog( Settings& s, QString o4, QWidget *parent)
-      | ^~~~~~~~~~~~~~
-In file included from /home/kazuo/cs/CaptureStream2/settingsdialog.cpp:24:
-/home/kazuo/cs/CaptureStream2/settingsdialog.h:34:7: note: candidates are: 'Settingsdialog::Settingsdialog(const Settingsdialog&)'
-   34 | class Settingsdialog : public QDialog {
-      |       ^~~~~~~~~~~~~~
-In file included from /home/kazuo/cs/CaptureStream2/settingsdialog.cpp:24:
-/home/kazuo/cs/CaptureStream2/settingsdialog.h:44:14: note:                 'Settingsdialog::Settingsdialog(Settings&, QWidget*)'
-   44 |     explicit Settingsdialog( Settings& settings, QWidget *parent = nullptr);
-      |              ^~~~~~~~~~~~~~
-In file included from /home/kazuo/cs/CaptureStream2/settingsdialog.cpp:24:
-/home/kazuo/cs/CaptureStream2/settingsdialog.h:34:7: note: 'class Settingsdialog' defined here
-   34 | class Settingsdialog : public QDialog {
-      |       ^~~~~~~~~~~~~~
-make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:218: CMakeFiles/CaptureStream2.dir/settingsdialog.cpp.obj] エラー 1
-make[1]: *** [CMakeFiles/Makefile2:86: CMakeFiles/CaptureStream2.dir/all] エラー 2
-make: *** [Makefile:91: all] エラー 2
+
+#include "settingsdialog.h"
+#include "ui_settingsdialog.h"
+#include "mainwindow.h"
+#include "settings.h"
+#include "utility.h"
+#include <QSettings>
+#include <QMessageBox>
+
+Settingsdialog::Settingsdialog( Settings& ini, QString o1, QString o2, QString o3, QString o4, QWidget *parent)
+    : QDialog(parent), ui(new Ui::Settingsdialog),settings(ini)
+{
+    ui->setupUi(this);
+
+    std::array<QLineEdit*, 4> edits = { ui->edit1, ui->edit2, ui->edit3, ui->edit4 };
+    QStringList opts = { o1, o2, o3, o4 };
+    for (int i = 0; i < Constants::SpecialCount; i++) {
+	const auto &p = Constants::SpecPrograms[i];
+
+		    opts[i] = settings.specId[p.keyId];
+
+    }
+
+    for (int i = 0; i < Constants::PRESET_SIZE; ++i)
+        edits[i]->setText(opts[i]);
+
+    ui->radioButton_9->setChecked(true);
+    if(settings.checkBoxEnabled["multi_gui"])
+   	ui->checkBox->setChecked(true);
+   bool	koza_separation_flag = settings.checkBoxEnabled["koza_separation"];
+    if(koza_separation_flag)
+   	ui->checkBox_1->setChecked(true);
+    applyFlags();
+}
+
+Settingsdialog::~Settingsdialog()
+{
+    delete ui;
+}
+
+void Settingsdialog::applyFlags()
+{
+    settings.checkBoxEnabled[Constants::KEY_KOZA_SEPARATION] =  ui->checkBox_1->isChecked();
+    settings.checkBoxEnabled[Constants::KEY_MULTI_GUI] = ui->checkBox->isChecked();
+
+    MainWindow::koza_separation_flag = ui->checkBox_1->isChecked();
+    MainWindow::multi_gui_flag = ui->checkBox->isChecked();
+}
+
+QString Settingsdialog::scramble_set(QString opt, int index)
+{
+    using namespace Constants;
+
+    // ラジオボタン群
+    std::array<QAbstractButton*, 7> radios = {
+        ui->radioButton, ui->radioButton_1, ui->radioButton_2,
+        ui->radioButton_3, ui->radioButton_4, ui->radioButton_5,
+        ui->radioButton_6
+    };
+
+    // チェックされているプリセットを適用
+    for (int j = 0; j < PRESETS.size() && j < radios.size(); ++j) {
+        if (radios[j]->isChecked()) {
+            opt = PRESETS[j][index];
+        }
+    }
+
+    QLineEdit* edit = nullptr;
+    switch (index) {
+    case 0: edit = ui->edit1; break;
+    case 1: edit = ui->edit2; break;
+    case 2: edit = ui->edit3; break;
+    case 3: edit = ui->edit4; break;
+    }
+
+    if (!ui->radioButton_9->isChecked())
+        edit->setText(opt);
+    else {
+        // name_map → id_map の変換
+        if (MainWindow::name_map.contains(edit->text()))
+            opt = MainWindow::name_map[edit->text()];
+
+        if (Utility::getProgram_name(edit->text()).isEmpty())
+            edit->setText(opt);
+    }
+
+    applyFlags();
+    return opt;
+}
+
+QString Settingsdialog::scramble1() { return scramble_set(ui->edit1->text(), 0); }
+QString Settingsdialog::scramble2() { return scramble_set(ui->edit2->text(), 1); }
+QString Settingsdialog::scramble3() { return scramble_set(ui->edit3->text(), 2); }
+QString Settingsdialog::scramble4() { return scramble_set(ui->edit4->text(), 3); }
+
+void Settingsdialog::updateLabels()
+{
+    std::array<QLineEdit*, Constants::PRESET_SIZE > edits = { ui->edit1, ui->edit2, ui->edit3, ui->edit4 };
+    std::array<QLabel*, Constants::PRESET_SIZE > labels = { ui->label_2, ui->label_3, ui->label_4, ui->label_5 };
+
+    for (int i = 0; i < 4; ++i)
+        labels[i]->setText(Utility::getProgram_name(edits[i]->text()));
+}
+
+void Settingsdialog::pushbutton()
+{
+    std::array<QLineEdit*, Constants::PRESET_SIZE > edits = { ui->edit1, ui->edit2, ui->edit3, ui->edit4 };
+
+    for (int i = 0; i < Constants::PRESET_SIZE; ++i) {
+        QString opt = edits[i]->text();
+
+	QStringList title = MainWindow::name_map.keys();
+	QStringList id = MainWindow::name_map.values();	
+
+        // name_map → id_map の変換
+//        if (MainWindow::name_map.contains(opt))
+//            opt = MainWindow::name_map[opt];
+//        else if (MainWindow::id_map.contains(opt))
+//            opt = MainWindow::id_map[opt];
+
+		if( !(MainWindow::id_map.contains(opt))){
+			for (int j = 0; j < title.count(); ++j){
+				if( title[j].contains(opt, Qt::CaseInsensitive)) {
+					opt = id[j];
+					break;
+				}
+			}
+		}
+		if( !(MainWindow::id_map.contains(opt))){
+			for (int j = 0; j < id.count(); ++j){
+				if( id[j].contains(opt, Qt::CaseInsensitive )) {
+					opt = id[j];
+					break;
+				}
+			}
+		}
+
+        opt = scramble_set(opt, i);
+        edits[i]->setText(opt);
+    }
+
+    ui->radioButton_9->setChecked(true);
+    updateLabels();
+}
+
+
+void Settingsdialog::pushbutton_2()
+{
+    std::array<QLineEdit*, Constants::PRESET_SIZE > edits = { ui->edit1, ui->edit2, ui->edit3, ui->edit4 };
+    QStringList titles;
+
+    for (int i = 0; i < Constants::PRESET_SIZE; ++i)
+        titles << MainWindow::id_map.value(edits[i]->text());
+
+    QString msg =
+        QString::fromUtf8("下記内容で上書きします。保存しますか？\n")
+        + "１：" + titles[0] + "\n"
+        + "２：" + titles[1] + "\n"
+        + "３：" + titles[2] + "\n"
+        + "４：" + titles[3];
+
+    if (QMessageBox::question(this, tr("特別番組設定保存"), msg) == QMessageBox::Yes) {
+        QSettings settings(MainWindow::ini_file_path + INI_FILE, QSettings::IniFormat);
+        settings.beginGroup("Settingsdialog");
+
+        for (int i = 0; i < Constants::PRESET_SIZE; ++i)
+            settings.setValue(QString("special%1").arg(i + 1), edits[i]->text());
+
+        settings.endGroup();
+    }
+}
+
+
 
 
 
