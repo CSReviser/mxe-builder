@@ -1,61 +1,62 @@
-[ 10%] Building CXX object CMakeFiles/CaptureStream2.dir/main.cpp.obj
-/home/kazuo/cs/CaptureStream2/main.cpp: In function 'int qMain(int, char**)':
-/home/kazuo/cs/CaptureStream2/main.cpp:53:39: error: expected primary-expression before ')' token
-   53 |         runtime.applySettings(Settings);
-      |                                       ^
-/home/kazuo/cs/CaptureStream2/main.cpp:55:32: error: 'runtime' is not a type
-   55 |         MainWindow w(Settings, runtime);
-      |                                ^~~~~~~
-/home/kazuo/cs/CaptureStream2/main.cpp:58:30: error: request for member 'download' in 'w', which is of non-class type 'MainWindow(Settings, int)'
-   58 |         Utility::nogui() ? w.download() : w.show();
-      |                              ^~~~~~~~
-/home/kazuo/cs/CaptureStream2/main.cpp:58:45: error: request for member 'show' in 'w', which is of non-class type 'MainWindow(Settings, int)'
-   58 |         Utility::nogui() ? w.download() : w.show();
-      |                                             ^~~~
-make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:158: CMakeFiles/CaptureStream2.dir/main.cpp.obj] エラー 1
-make[1]: *** [CMakeFiles/Makefile2:86: CMakeFiles/CaptureStream2.dir/all] エラー 2
-
-main.cpp
-
-#include "mainwindow.h"
-#include "settings.h"
-#include "runtimeconfig.h"
-#include "utility.h"
-#include "qt4qt5.h"
-
-#include <QApplication>
-#include <QStandardPaths>
-#include <stdio.h>
-
-int main(int argc, char *argv[])
+void Settingsdialog::pushbutton()
 {
-	qputenv("QT_AUTO_SCREEN_SCALE_FACTOR", "1");
-	qputenv("QT_SCALE_FACTOR", "1");
-#if defined(QT_NO_DEBUG)
-#ifdef QT4_QT5_WIN
-	const char* null = "nul";
-#else
-	const char* null = "/dev/null";
-#endif
-	freopen( null, "a", stdout );
-	freopen( null, "a", stderr );
-#endif
-	
-	QApplication a(argc, argv);
+    std::array<QLineEdit*, Constants::PRESET_SIZE > edits = { ui->edit1, ui->edit2, ui->edit3, ui->edit4 };
 
-	Settings::instance().load();
+    for (int i = 0; i < Constants::PRESET_SIZE; ++i) {
+        QString opt = edits[i]->text();
 
-	RuntimeConfig runtime;
-	runtime.applySettings(Settings);
+	QStringList title = MainWindow::name_map.keys();
+	QStringList id = MainWindow::name_map.values();	
 
-	MainWindow w(Settings, runtime);
-	if( !Utility::tryLockFile() )  return 1;
-	QGuiApplication::setWindowIcon(QIcon(":icon.png"));
-	Utility::nogui() ? w.download() : w.show();
-	return a.exec();
+        // name_map → id_map の変換
+        if (MainWindow::name_map.contains(opt))
+            opt = MainWindow::name_map[opt];
+        else if (MainWindow::id_map.contains(opt))
+            opt = MainWindow::id_map[opt];
+
+        opt = scramble_set(opt, i);
+        edits[i]->setText(opt);
+    }
+
+    ui->radioButton_9->setChecked(true);
+    updateLabels();
 }
 
+void Settingsdialog::pushbutton()
+{
+    std::array<QLineEdit*, Constants::PRESET_SIZE > edits = { ui->edit1, ui->edit2, ui->edit3, ui->edit4 };
 
+    for (int i = 0; i < Constants::PRESET_SIZE; ++i) {
+        QString opt = edits[i]->text();
+
+	QStringList title = MainWindow::name_map.keys();
+	QStringList id = MainWindow::name_map.values();	
+
+        // name_map → id_map の変換
+		if( !(MainWindow::id_map.contains(opt))){
+			for (int j = 0; j < title.count(); ++j){
+				if( title[j].contains(opt, Qt::CaseInsensitive)) {
+					opt = id[j];
+					break;
+				}
+			}
+		}
+		if( !(MainWindow::id_map.contains(opt))){
+			for (int j = 0; j < id.count(); ++j){
+				if( id[j].contains(opt, Qt::CaseInsensitive )) {
+					opt = id[j];
+					break;
+				}
+			}
+		}
+
+        opt = scramble_set(opt, i);
+        edits[i]->setText(opt);
+    }
+
+    ui->radioButton_9->setChecked(true);
+    updateLabels();
+}
 
 
 #include "settingsdialog.h"
