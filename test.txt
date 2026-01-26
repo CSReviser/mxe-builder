@@ -1,3 +1,10 @@
+Settings::Settings()
+{
+    // 何もせず load() に任せる
+        optionals.resize(8);
+        specials.resize(4);
+}
+
 [ 26%] Building CXX object CMakeFiles/CaptureStream2.dir/scrambledialog.cpp.obj
 In file included from /home/kazuo/cs/CaptureStream2/scrambledialog.cpp:24:
 /home/kazuo/cs/CaptureStream2/scrambledialog.h:70:16: error: 'QLineEdit' was not declared in this scope
