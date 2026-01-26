@@ -1,144 +1,54 @@
- [ 52%] Building CXX object CMakeFiles/CaptureStream2.dir/scrambledialog.cpp.obj
-/home/kazuo/cs/CaptureStream2/scrambledialog.cpp: In member function 'QString ScrambleDialog::scramble_set(QString, int)':
-/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:84:37: error: conversion from 'std::array<QString, 8>' to non-scalar type 'QStringList' {aka 'QList<QString>'} requested
-   84 |         QStringList opt1 = settings.optionals;
-      |                            ~~~~~~~~~^~~~~~~~~
-make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:203: CMakeFiles/CaptureStream2.dir/scrambledialog.cpp.obj] エラー 1
-make[1]: *** [CMakeFiles/Makefile2:86: CMakeFiles/CaptureStream2.dir/all] エラー 2
-make: *** [Makefile:91: all] エラー 2
-       ini.beginGroup(Constants::SETTING_GROUP_ScrambleDialog);
-    for (int i = 0; i < 8; ++i)
-        optionals[i] = ini.value(QString("optional%1").arg(i + 1), "").toString();
-    ini.endGroup();   
-    
-    ini.beginGroup(Constants::SETTING_GROUP_Settingsdialog);
+void MainWindow::customizeScramble() {
+	collectOptionalSettings();
+	MainWindow::id_flag = false;
+	setmap();
+	optional1 = optional[0]; optional2 = optional[1];
+	optional3 = optional[2]; optional4 = optional[3];
+	optional5 = optional[4]; optional6 = optional[5];
+	optional7 = optional[6]; optional8 = optional[7];
+	QString optional_temp[] = { optional1, optional2, optional3, optional4, optional5, optional6, optional7, optional8, "NULL" };
+	ScrambleDialog dialog( Settings::instance(), optional1, optional2, optional3, optional4, optional5, optional6, optional7, optional8, this );
+    if (dialog.exec() ) {
+    	QString pattern( "_01" );
+    	pattern = QRegularExpression::anchoredPattern(pattern);
+	QString optional[] = { dialog.scramble1(), dialog.scramble2(), dialog.scramble3(), dialog.scramble4(), dialog.scramble5(), dialog.scramble6(), dialog.scramble7(), dialog.scramble8(), "NULL" };	
+	QString title[8];
+	for ( int i = 0; optional[i] != "NULL"; i++ ) {
+		if ( id_map.contains( optional[i] ) ) title[i] = id_map.value( optional[i] );
+		if ( title[i]  == "" ) { title[i] = Utility::getProgram_name( optional[i] ); }
+		if ( title[i]  == "" || optional[i]  == "error" ) { optional[i] = optional_temp[i]; title[i] = Utility::getProgram_name( optional[i] ); }
+	}
+	optional1 = optional[0]; optional2 = optional[1];
+	optional3 = optional[2]; optional4 = optional[3];
+	optional5 = optional[4]; optional6 = optional[5];
+	optional7 = optional[6]; optional8 = optional[7];
+	program_title1 = title[0]; program_title2 = title[1];
+	program_title3 = title[2]; program_title4 = title[3];
+	program_title5 = title[4]; program_title6 = title[5];
+	program_title7 = title[6]; program_title8 = title[7];
 
-    for (int i = 0; i < 4; ++i)
-        specials[i] = ini.value(QString("special%1").arg(i + 1), "").toString();
+	QString program_title[] = { program_title1, program_title2, program_title3, program_title4, program_title5, program_title6, program_title7, program_title8, "NULL" };
+	QAbstractButton* checkboxx[] = { ui->toolButton_optional1, ui->toolButton_optional2,
+					 ui->toolButton_optional3, ui->toolButton_optional4,
+					 ui->toolButton_optional5, ui->toolButton_optional6,
+					 ui->toolButton_optional7, ui->toolButton_optional8,
+					 NULL
+		 	};
+	bool flag = false;
+	for ( int i = 0; program_title[i] != "NULL"; i++ ) {
+		if ( optional[i] == optional_temp[i] && checkboxx[i]->isChecked() ) flag = true; else flag = false;
+				checkboxx[i]->setChecked(false);
+				checkboxx[i]->setText( QString( program_title[i] ) );
+				if ( flag ) checkboxx[i]->setChecked( true );
+	}
 
-    ini.endGroup();
-    // ===== optionals1〜8 ===== 
-    QStringList optionals;
-    
-    // ===== special1〜4 ===== 
-    QStringList specials;
-    
-Settings::Settings()
-{
-    // 何もせず load() に任せる
-        optionals.resize(8);
-        specials.resize(4);
+	optional1 = optional[0]; optional2 = optional[1]; optional3 = optional[2]; optional4 = optional[3];
+	optional5 = optional[4]; optional6 = optional[5]; optional7 = optional[6]; optional8 = optional[7];
+	ScrambleDialog dialog( Settings::instance(), optional1, optional2, optional3, optional4, optional5, optional6, optional7, optional8, this );
+
+    }
 }
 
-[ 26%] Building CXX object CMakeFiles/CaptureStream2.dir/scrambledialog.cpp.obj
-In file included from /home/kazuo/cs/CaptureStream2/scrambledialog.cpp:24:
-/home/kazuo/cs/CaptureStream2/scrambledialog.h:70:16: error: 'QLineEdit' was not declared in this scope
-   70 |     std::array<QLineEdit*, Constants::OPT_PRESET_SIZE> edits;
-      |                ^~~~~~~~~
-/home/kazuo/cs/CaptureStream2/scrambledialog.h:70:54: error: template argument 1 is invalid
-   70 |     std::array<QLineEdit*, Constants::OPT_PRESET_SIZE> edits;
-      |                                                      ^
-/home/kazuo/cs/CaptureStream2/scrambledialog.h:70:54: error: template argument 2 is invalid
-/home/kazuo/cs/CaptureStream2/scrambledialog.cpp: In constructor 'ScrambleDialog::ScrambleDialog(Settings&, QString, QString, QString, QString, QString, QString, QString, QString, QWidget*)':
-/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:42:5: error: cannot convert '<brace-enclosed initializer list>' to 'int' in assignment
-   42 |     };
-      |     ^
-/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:49:14: error: invalid types 'int[int]' for array subscript
-   49 |         edits[i]->setText(opts[i]);
-      |              ^
-/home/kazuo/cs/CaptureStream2/scrambledialog.cpp: At global scope:
-/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:59:66: error: 'ui' was not declared in this scope; did you mean 'Ui'?
-   59 |     std::array<QLineEdit*, Constants::OPT_PRESET_SIZE> edits = { ui->edit1, ui->edit2, ui->edit3, ui->edit4, ui->edit5, ui->edit6, ui->edit7, ui->edit8 };
-      |                                                                  ^~
-      |                                                                  Ui
-/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:59:77: error: 'ui' was not declared in this scope; did you mean 'Ui'?
-   59 |     std::array<QLineEdit*, Constants::OPT_PRESET_SIZE> edits = { ui->edit1, ui->edit2, ui->edit3, ui->edit4, ui->edit5, ui->edit6, ui->edit7, ui->edit8 };
-      |                                                                             ^~
-      |                                                                             Ui
-/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:59:88: error: 'ui' was not declared in this scope; did you mean 'Ui'?
-   59 |     std::array<QLineEdit*, Constants::OPT_PRESET_SIZE> edits = { ui->edit1, ui->edit2, ui->edit3, ui->edit4, ui->edit5, ui->edit6, ui->edit7, ui->edit8 };
-      |                                                                                        ^~
-      |                                                                                        Ui
-/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:59:99: error: 'ui' was not declared in this scope; did you mean 'Ui'?
-   59 |     std::array<QLineEdit*, Constants::OPT_PRESET_SIZE> edits = { ui->edit1, ui->edit2, ui->edit3, ui->edit4, ui->edit5, ui->edit6, ui->edit7, ui->edit8 };
-      |                                                                                                   ^~
-      |                                                                                                   Ui
-/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:59:110: error: 'ui' was not declared in this scope; did you mean 'Ui'?
-   59 |     std::array<QLineEdit*, Constants::OPT_PRESET_SIZE> edits = { ui->edit1, ui->edit2, ui->edit3, ui->edit4, ui->edit5, ui->edit6, ui->edit7, ui->edit8 };
-      |                                                                                                              ^~
-      |                                                                                                              Ui
-/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:59:121: error: 'ui' was not declared in this scope; did you mean 'Ui'?
-   59 |     std::array<QLineEdit*, Constants::OPT_PRESET_SIZE> edits = { ui->edit1, ui->edit2, ui->edit3, ui->edit4, ui->edit5, ui->edit6, ui->edit7, ui->edit8 };
-      |                                                                                                                         ^~
-      |                                                                                                                         Ui
-/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:59:132: error: 'ui' was not declared in this scope; did you mean 'Ui'?
-   59 |     std::array<QLineEdit*, Constants::OPT_PRESET_SIZE> edits = { ui->edit1, ui->edit2, ui->edit3, ui->edit4, ui->edit5, ui->edit6, ui->edit7, ui->edit8 };
-      |                                                                                                                                    ^~
-      |                                                                                                                                    Ui
-/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:59:143: error: 'ui' was not declared in this scope; did you mean 'Ui'?
-   59 |     std::array<QLineEdit*, Constants::OPT_PRESET_SIZE> edits = { ui->edit1, ui->edit2, ui->edit3, ui->edit4, ui->edit5, ui->edit6, ui->edit7, ui->edit8 };
-      |                                                                                                                                               ^~
-      |                                                                                                                                               Ui
-/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:60:26: error: 'o1' was not declared in this scope; did you mean 'y1'?
-   60 |     QStringList opts = { o1, o2, o3, o4, o5, o6, o7, o8 };
-      |                          ^~
-      |                          y1
-/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:60:30: error: 'o2' was not declared in this scope
-   60 |     QStringList opts = { o1, o2, o3, o4, o5, o6, o7, o8 };
-      |                              ^~
-/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:60:34: error: 'o3' was not declared in this scope
-   60 |     QStringList opts = { o1, o2, o3, o4, o5, o6, o7, o8 };
-      |                                  ^~
-/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:60:38: error: 'o4' was not declared in this scope
-   60 |     QStringList opts = { o1, o2, o3, o4, o5, o6, o7, o8 };
-      |                                      ^~
-/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:60:42: error: 'o5' was not declared in this scope
-   60 |     QStringList opts = { o1, o2, o3, o4, o5, o6, o7, o8 };
-      |                                          ^~
-/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:60:46: error: 'o6' was not declared in this scope
-   60 |     QStringList opts = { o1, o2, o3, o4, o5, o6, o7, o8 };
-      |                                              ^~
-/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:60:50: error: 'o7' was not declared in this scope
-   60 |     QStringList opts = { o1, o2, o3, o4, o5, o6, o7, o8 };
-      |                                                  ^~
-/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:60:54: error: 'o8' was not declared in this scope
-   60 |     QStringList opts = { o1, o2, o3, o4, o5, o6, o7, o8 };
-      |                                                      ^~
-/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:60:57: error: could not convert '{<expression error>, <expression error>, <expression error>, <expression error>, <expression error>, <expression error>, <expression error>, <expression error>}' from '<brace-enclosed initializer list>' to 'QStringList' {aka 'QList<QString>'}
-   60 |     QStringList opts = { o1, o2, o3, o4, o5, o6, o7, o8 };
-      |                                                         ^
-      |                                                         |
-      |                                                         <brace-enclosed initializer list>
-/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:61:5: error: expected unqualified-id before 'for'
-   61 |     for (int i = 0; i < Constants::OPT_PRESET_SIZE; i++) {
-      |     ^~~
-/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:61:21: error: 'i' does not name a type
-   61 |     for (int i = 0; i < Constants::OPT_PRESET_SIZE; i++) {
-      |                     ^
-/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:61:53: error: 'i' does not name a type
-   61 |     for (int i = 0; i < Constants::OPT_PRESET_SIZE; i++) {
-      |                                                     ^
-/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:67:5: error: 'ui' does not name a type; did you mean 'uint'?
-   67 |     ui->radioButton_9->setChecked(true);
-      |     ^~
-      |     uint
-/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:69:5: error: 'ui' does not name a type; did you mean 'uint'?
-   69 |     ui->checkBox_1->setChecked(settings.checkBoxEnabled[Constants::KEY_KOZA_SEPARATION]);
-      |     ^~
-      |     uint
-/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:70:17: error: expected constructor, destructor, or type conversion before ';' token
-   70 |     applyFlags();
-      |                 ^
-/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:72:1: error: expected declaration before '}' token
-   72 | }
-      | ^
-/home/kazuo/cs/CaptureStream2/scrambledialog.cpp: In member function 'QString ScrambleDialog::scramble_set(QString, int)':
-/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:108:28: error: invalid types 'int[int]' for array subscript
-  108 |     QLineEdit* edit = edits[index];
-      |                            ^
-make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:203: CMakeFiles/CaptureStream2.dir/scrambledialog.cpp.obj] エラー 1
-make[1]: *** [CMakeFiles/Makefile2:86: CMakeFiles/CaptureStream2.dir/all] エラー 2
-make: *** [Makefile:91: all] エラー 2
 
 
 
