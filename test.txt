@@ -1,3 +1,10 @@
+    
+    // ===== optionals1〜8 ===== 
+    QStringList optionals;
+    
+    // ===== special1〜4 ===== 
+    QStringList specials;
+    
 Settings::Settings()
 {
     // 何もせず load() に任せる
