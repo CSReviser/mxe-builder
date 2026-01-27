@@ -1,77 +1,13 @@
-[ 10%] Building CXX object CMakeFiles/CaptureStream2.dir/customizedialog.cpp.obj
-/home/kazuo/cs/CaptureStream2/customizedialog.cpp: In member function 'void CustomizeDialog::loadSettings()':
-/home/kazuo/cs/CaptureStream2/customizedialog.cpp:73:25: error: 'QString Settings::titleFormat [2]' is private within this context
-   73 |             ? Settings::titleFormat(0)
-      |                         ^~~~~~~~~~~
-In file included from /home/kazuo/cs/CaptureStream2/customizedialog.cpp:25:
-/home/kazuo/cs/CaptureStream2/settings.h:128:13: note: declared private here
-  128 |     QString titleFormat[Constants::ITEM_COUNT];
-      |             ^~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/customizedialog.cpp:73:25: error: invalid use of non-static data member 'Settings::titleFormat'
-   73 |             ? Settings::titleFormat(0)
-      |                         ^~~~~~~~~~~
-In file included from /home/kazuo/cs/CaptureStream2/customizedialog.cpp:25:
-/home/kazuo/cs/CaptureStream2/settings.h:128:13: note: declared here
-  128 |     QString titleFormat[Constants::ITEM_COUNT];
-      |             ^~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/customizedialog.cpp:74:25: error: 'QString Settings::fileNameFormat [2]' is private within this context
-   74 |             : Settings::fileNameFormat(0)
-      |                         ^~~~~~~~~~~~~~
-In file included from /home/kazuo/cs/CaptureStream2/customizedialog.cpp:25:
-/home/kazuo/cs/CaptureStream2/settings.h:129:13: note: declared private here
-  129 |     QString fileNameFormat[Constants::ITEM_COUNT];
-      |             ^~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/customizedialog.cpp:74:25: error: invalid use of non-static data member 'Settings::fileNameFormat'
-   74 |             : Settings::fileNameFormat(0)
-      |                         ^~~~~~~~~~~~~~
-In file included from /home/kazuo/cs/CaptureStream2/customizedialog.cpp:25:
-/home/kazuo/cs/CaptureStream2/settings.h:129:13: note: declared here
-  129 |     QString fileNameFormat[Constants::ITEM_COUNT];
-      |             ^~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/customizedialog.cpp:79:25: error: 'QString Settings::titleFormat [2]' is private within this context
-   79 |             ? Settings::titleFormat(1)
-      |                         ^~~~~~~~~~~
-In file included from /home/kazuo/cs/CaptureStream2/customizedialog.cpp:25:
-/home/kazuo/cs/CaptureStream2/settings.h:128:13: note: declared private here
-  128 |     QString titleFormat[Constants::ITEM_COUNT];
-      |             ^~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/customizedialog.cpp:79:25: error: invalid use of non-static data member 'Settings::titleFormat'
-   79 |             ? Settings::titleFormat(1)
-      |                         ^~~~~~~~~~~
-In file included from /home/kazuo/cs/CaptureStream2/customizedialog.cpp:25:
-/home/kazuo/cs/CaptureStream2/settings.h:128:13: note: declared here
-  128 |     QString titleFormat[Constants::ITEM_COUNT];
-      |             ^~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/customizedialog.cpp:80:25: error: 'QString Settings::fileNameFormat [2]' is private within this context
-   80 |             : Settings::fileNameFormat(1)
-      |                         ^~~~~~~~~~~~~~
-In file included from /home/kazuo/cs/CaptureStream2/customizedialog.cpp:25:
-/home/kazuo/cs/CaptureStream2/settings.h:129:13: note: declared private here
-  129 |     QString fileNameFormat[Constants::ITEM_COUNT];
-      |             ^~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/customizedialog.cpp:80:25: error: invalid use of non-static data member 'Settings::fileNameFormat'
-   80 |             : Settings::fileNameFormat(1)
-      |                         ^~~~~~~~~~~~~~
-In file included from /home/kazuo/cs/CaptureStream2/customizedialog.cpp:25:
-/home/kazuo/cs/CaptureStream2/settings.h:129:13: note: declared here
-  129 |     QString fileNameFormat[Constants::ITEM_COUNT];
-      |             ^~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/customizedialog.cpp: In member function 'void CustomizeDialog::saveSettings()':
-/home/kazuo/cs/CaptureStream2/customizedialog.cpp:95:19: error: 'setTitleFormat' is not a member of 'Settings'
-   95 |         Settings::setTitleFormat(0, ui.lineEdit->text());
-      |                   ^~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/customizedialog.cpp:96:19: error: 'setTitleFormat' is not a member of 'Settings'
-   96 |         Settings::setTitleFormat(1, ui.lineEdit_2->text());
-      |                   ^~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/customizedialog.cpp:99:19: error: 'setFileNameFormat' is not a member of 'Settings'
-   99 |         Settings::setFileNameFormat(0, ui.lineEdit->text());
-      |                   ^~~~~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/customizedialog.cpp:100:19: error: 'setFileNameFormat' is not a member of 'Settings'
-  100 |         Settings::setFileNameFormat(1, ui.lineEdit_2->text());
-      |                   ^~~~~~~~~~~~~~~~~
-make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:113: CMakeFiles/CaptureStream2.dir/customizedialog.cpp.obj] エラー 1
+[ 78%] Linking CXX executable CaptureStream2.exe
+/opt/mxe/usr/bin/x86_64-w64-mingw32.static-ld: CMakeFiles/CaptureStream2.dir/objects.a(customizedialog.cpp.obj):customizedialog.cpp:(.text$_ZN15CustomizeDialog12loadSettingsEv+0xd9): undefined reference to `Settings::tagSpaceFlag()'
+/opt/mxe/usr/bin/x86_64-w64-mingw32.static-ld: CMakeFiles/CaptureStream2.dir/objects.a(customizedialog.cpp.obj):customizedialog.cpp:(.text$_ZN15CustomizeDialog12loadSettingsEv+0xfb): undefined reference to `Settings::nameSpaceFlag()'
+/opt/mxe/usr/bin/x86_64-w64-mingw32.static-ld: CMakeFiles/CaptureStream2.dir/objects.a(customizedialog.cpp.obj):customizedialog.cpp:(.text$_ZN15CustomizeDialog12saveSettingsEv+0xbb): undefined reference to `Settings::setTagSpaceFlag(bool)'
+/opt/mxe/usr/bin/x86_64-w64-mingw32.static-ld: CMakeFiles/CaptureStream2.dir/objects.a(customizedialog.cpp.obj):customizedialog.cpp:(.text$_ZN15CustomizeDialog12saveSettingsEv+0x158): undefined reference to `Settings::setNameSpaceFlag(bool)'
+collect2: error: ld returned 1 exit status
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:454: CaptureStream2.exe] エラー 1
 make[1]: *** [CMakeFiles/Makefile2:86: CMakeFiles/CaptureStream2.dir/all] エラー 2
 make: *** [Makefile:91: all] エラー 2
+
 
 
 
