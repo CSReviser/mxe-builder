@@ -1,3 +1,7 @@
+nameSpaceFlag() settings.checkBoxEnabled[Constants::KEY_NAME_SPACE]
+tagSpaceFlag()  settings.checkBoxEnabled[Constants::KEY_TAG_SPACE]
+
+
 [ 78%] Linking CXX executable CaptureStream2.exe
 /opt/mxe/usr/bin/x86_64-w64-mingw32.static-ld: CMakeFiles/CaptureStream2.dir/objects.a(customizedialog.cpp.obj):customizedialog.cpp:(.text$_ZN15CustomizeDialog12loadSettingsEv+0xd9): undefined reference to `Settings::tagSpaceFlag()'
 /opt/mxe/usr/bin/x86_64-w64-mingw32.static-ld: CMakeFiles/CaptureStream2.dir/objects.a(customizedialog.cpp.obj):customizedialog.cpp:(.text$_ZN15CustomizeDialog12loadSettingsEv+0xfb): undefined reference to `Settings::nameSpaceFlag()'
