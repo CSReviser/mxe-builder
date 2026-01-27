@@ -1,3 +1,39 @@
+QString Settings::titleFormat(int index)
+{
+    QSettings s = createSettings();
+    s.beginGroup(Customize::SETTING_GROUP);
+
+    const auto& item = Customize::TITLE_ITEMS[index];
+    QString value = s.value(item.key, item.defaultValue).toString();
+
+    s.endGroup();
+    return value;
+}
+
+
+
+namespace Customize {
+
+struct Item {
+    const char* key;
+    const char* defaultValue;
+};
+
+static const Item TITLE_ITEMS[] = {
+    { "customized_title1", "%f" },
+    { "customized_title2", "%k_%Y_%M_%D" }
+};
+
+static const Item FILENAME_ITEMS[] = {
+    { "customized_file_name1", "%k_%Y_%M_%D" },
+    { "customized_file_name2", "%k_%Y_%M_%D" }
+};
+
+static const int ITEM_COUNT = 2;
+
+}
+
+
 
 
 #ifndef CONSTANTS_H
