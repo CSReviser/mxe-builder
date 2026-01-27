@@ -1,3 +1,213 @@
+
+
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
+
+#include <QString>
+#include <QStringList>
+
+namespace Customize {
+
+    static const QString SETTING_GROUP = QStringLiteral("CustomizeDialog");
+
+    static const QStringList COURSES = {
+        QStringLiteral("json"),
+        QStringLiteral("xml")
+    };
+
+    static const QStringList TITLE_KEYS = {
+        QStringLiteral("customized_title1"),
+        QStringLiteral("customized_title2")
+    };
+
+    static const QStringList FILENAME_KEYS = {
+        QStringLiteral("customized_file_name1"),
+        QStringLiteral("customized_file_name2")
+    };
+
+    static const QStringList TITLE_DEFAULTS = {
+        QStringLiteral("%f"),
+        QStringLiteral("%k_%Y_%M_%D")
+    };
+
+    static const QStringList FILENAME_DEFAULTS = {
+        QStringLiteral("%k_%Y_%M_%D"),
+        QStringLiteral("%k_%Y_%M_%D")
+    };
+
+    // 個別デフォルト（UI ラジオボタン用）
+    static const QString DEFAULT_FILENAME  = "%k_%Y_%M_%D";
+    static const QString DEFAULT_FILENAME1 = "%f_%Y_%M_%D";
+    static const QString DEFAULT_FILENAME2 = "%k_%Y-%M-%D";
+    static const QString DEFAULT_FILENAME3 = "%h";
+    static const QString DEFAULT_FILENAME4 = "%f";
+    static const QString DEFAULT_FILENAME5 = "%k_%h";
+    static const QString DEFAULT_FILENAME6 = "%y%M%D_%k%x";
+
+}
+
+#endif // CONSTANTS_H
+
+
+
+
+#ifndef SETTINGS_H
+#define SETTINGS_H
+
+#include <QString>
+#include <QStringList>
+
+class Settings {
+public:
+    static QString titleFormat(int index);
+    static QString fileNameFormat(int index);
+
+    static void setTitleFormat(int index, const QString& value);
+    static void setFileNameFormat(int index, const QString& value);
+
+    static bool tagSpaceFlag();
+    static bool nameSpaceFlag();
+
+    static void setTagSpaceFlag(bool flag);
+    static void setNameSpaceFlag(bool flag);
+
+    static void initializeDefaults();
+};
+
+#endif // SETTINGS_H
+
+
+#include "settings.h"
+#include "constants.h"
+#include "mainwindow.h"
+
+#include <QSettings>
+
+static QSettings createSettings()
+{
+    QString path = MainWindow::ini_file_path;
+    return QSettings(path + INI_FILE, QSettings::IniFormat);
+}
+
+void Settings::initializeDefaults()
+{
+    QSettings settings = createSettings();
+    settings.beginGroup(Customize::SETTING_GROUP);
+
+    for (int i = 0; i < Customize::COURSES.size(); ++i) {
+        if (!settings.contains(Customize::TITLE_KEYS[i]))
+            settings.setValue(Customize::TITLE_KEYS[i], Customize::TITLE_DEFAULTS[i]);
+
+        if (!settings.contains(Customize::FILENAME_KEYS[i]))
+            settings.setValue(Customize::FILENAME_KEYS[i], Customize::FILENAME_DEFAULTS[i]);
+    }
+
+    settings.endGroup();
+}
+
+QString Settings::titleFormat(int index)
+{
+    QSettings settings = createSettings();
+    settings.beginGroup(Customize::SETTING_GROUP);
+    QString value = settings.value(Customize::TITLE_KEYS[index], Customize::TITLE_DEFAULTS[index]).toString();
+    settings.endGroup();
+    return value;
+}
+
+QString Settings::fileNameFormat(int index)
+{
+    QSettings settings = createSettings();
+    settings.beginGroup(Customize::SETTING_GROUP);
+    QString value = settings.value(Customize::FILENAME_KEYS[index], Customize::FILENAME_DEFAULTS[index]).toString();
+    settings.endGroup();
+    return value;
+}
+
+void Settings::setTitleFormat(int index, const QString& value)
+{
+    QSettings settings = createSettings();
+    settings.beginGroup(Customize::SETTING_GROUP);
+    settings.setValue(Customize::TITLE_KEYS[index], value);
+    settings.endGroup();
+}
+
+void Settings::setFileNameFormat(int index, const QString& value)
+{
+    QSettings settings = createSettings();
+    settings.beginGroup(Customize::SETTING_GROUP);
+    settings.setValue(Customize::FILENAME_KEYS[index], value);
+    settings.endGroup();
+}
+
+bool Settings::tagSpaceFlag()
+{
+    return MainWindow::tag_space_flag;
+}
+
+bool Settings::nameSpaceFlag()
+{
+    return MainWindow::name_space_flag;
+}
+
+void Settings::setTagSpaceFlag(bool flag)
+{
+    MainWindow::tag_space_flag = flag;
+}
+
+void Settings::setNameSpaceFlag(bool flag)
+{
+    MainWindow::name_space_flag = flag;
+}
+
+
+void CustomizeDialog::formats(QString course, QString& titleFormat, QString& fileNameFormat)
+{
+    int index = Customize::COURSES.indexOf(course);
+    if (index < 0) index = 0;
+
+    titleFormat    = Settings::titleFormat(index);
+    fileNameFormat = Settings::fileNameFormat(index);
+}
+
+
+
+void CustomizeDialog::loadSettings()
+{
+    ui.lineEdit->setText(
+        mode == Ui::TitleMode
+            ? Settings::titleFormat(0)
+            : Settings::fileNameFormat(0)
+    );
+
+    ui.lineEdit_2->setText(
+        mode == Ui::TitleMode
+            ? Settings::titleFormat(1)
+            : Settings::fileNameFormat(1)
+    );
+
+    if (mode == Ui::TitleMode)
+        ui.checkBox->setChecked(Settings::tagSpaceFlag());
+    else
+        ui.checkBox->setChecked(Settings::nameSpaceFlag());
+}
+
+
+void CustomizeDialog::saveSettings()
+{
+    if (mode == Ui::TitleMode) {
+        Settings::setTitleFormat(0, ui.lineEdit->text());
+        Settings::setTitleFormat(1, ui.lineEdit_2->text());
+        Settings::setTagSpaceFlag(ui.checkBox->isChecked());
+    } else {
+        Settings::setFileNameFormat(0, ui.lineEdit->text());
+        Settings::setFileNameFormat(1, ui.lineEdit_2->text());
+        Settings::setNameSpaceFlag(ui.checkBox->isChecked());
+    }
+}
+
+
+
+
 void MainWindow::customizeScramble() {
 	collectOptionalSettings();
 	MainWindow::id_flag = false;
