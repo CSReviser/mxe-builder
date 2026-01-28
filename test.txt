@@ -1,3 +1,325 @@
+
+#ifndef SETTINGS_H
+#define SETTINGS_H
+
+#include <QString>
+#include <QMap>
+#include <QVector>
+
+#include "constants.h"
+
+class Settings {
+public:
+    Settings();
+    static Settings& instance();
+
+    void load();
+    void save();
+
+    void loadMainWindow();
+    void saveMainWindow(const QByteArray &geometry);
+
+    void loadMessageWindow();
+    void saveMessageWindow(const QByteArray &geometry);
+
+    // ===== CustomizeDialog: TITLE / FILENAME =====
+    static QString getTitleFormat(int index);
+    static QString getFileNameFormat(int index);
+
+    void setTitleFormatValue(int index, const QString &value);
+    void setFileNameFormatValue(int index, const QString &value);
+
+    // ===== CheckBox flags =====
+    static bool tagSpaceFlag();
+    static bool nameSpaceFlag();
+
+    static void setTagSpaceFlag(bool flag);
+    static void setNameSpaceFlag(bool flag);
+
+    // ===== Program lists =====
+    QStringList allProgramIds() const;
+    QVector<bool> allProgramFlags() const;
+    QStringList allProgramTitles() const;
+
+    // ===== Public members =====
+    QMap<QString, bool> englishEnabled;
+    QMap<QString, bool> optionalEnabled;
+    QMap<QString, QString> optionalId;
+    QMap<QString, QString> optionalTitle;
+
+    QMap<QString, bool> specEnabled;
+    QMap<QString, QString> specId;
+    QMap<QString, QString> specTitle;
+
+    QMap<QString, bool> checkBoxEnabled;
+
+    QString audioExtension;
+    QString saveFolder;
+    QString ffmpegFolder;
+
+    QByteArray mainWindowGeometry;
+    QByteArray messageWindowGeometry;
+
+    QString optionals[Constants::OPT_PRESET_SIZE];
+    QString specials[Constants::PRESET_SIZE];
+
+private:
+    // CustomizeDialog formats
+    QString titleFormat[Constants::ITEM_COUNT];
+    QString fileNameFormat[Constants::ITEM_COUNT];
+};
+
+#endif // SETTINGS_H
+
+
+#include "settings.h"
+#include <QSettings>
+
+Settings::Settings()
+{
+}
+
+Settings& Settings::instance()
+{
+    static Settings inst;
+    return inst;
+}
+
+void Settings::load()
+{
+    QSettings ini(Constants::IniFileName, QSettings::IniFormat);
+
+    ini.beginGroup(Constants::SETTING_GROUP_MainWindow);
+
+    // ===== English =====
+    for (int i = 0; i < Constants::EnglishCount; i++) {
+        const auto &p = Constants::EnglishPrograms[i];
+        englishEnabled[p.key] =
+            ini.value(p.key, p.enabled).toBool();
+    }
+
+    // ===== Optional =====
+    for (int i = 0; i < Constants::OptionalCount; i++) {
+        const auto &p = Constants::OptionalPrograms[i];
+
+        optionalEnabled[p.keyEnabled] =
+            ini.value(p.keyEnabled, p.enabledDefault).toBool();
+
+        optionalId[p.keyId] =
+            ini.value(p.keyId, p.idDefault).toString();
+
+        optionalTitle[p.keyTitle] =
+            ini.value(p.keyTitle, p.titleDefault).toString();
+    }
+
+    // ===== Spec =====
+    for (int i = 0; i < Constants::SpecialCount; i++) {
+        const auto &p = Constants::SpecPrograms[i];
+
+        specEnabled[p.keyEnabled] =
+            ini.value(p.keyEnabled, p.enabledDefault).toBool();
+
+        specId[p.keyId] =
+            ini.value(p.keyId, p.idDefault).toString();
+
+        specTitle[p.keyTitle] =
+            ini.value(p.keyTitle, p.titleDefault).toString();
+    }
+
+    // ===== CheckBox =====
+    for (int i = 0; i < Constants::CheckBoxCount; i++) {
+        const auto &c = Constants::CheckBoxSettings[i];
+        checkBoxEnabled[c.keyEnabled] =
+            ini.value(c.keyEnabled, c.enabledDefault).toBool();
+    }
+
+    // ===== Other settings =====
+    audioExtension = ini.value(Constants::KEY_AudioExtension,
+                               Constants::DEFAULT_AudioExtension).toString();
+
+    {
+        QVariant v = ini.value(Constants::KEY_SaveFolder);
+        saveFolder = v.isValid() ? v.toString() : QString();
+    }
+
+    {
+        QVariant v = ini.value(Constants::KEY_FfmpegFolder);
+        ffmpegFolder = v.isValid() ? v.toString() : QString();
+    }
+
+    mainWindowGeometry = ini.value("geometry").toByteArray();
+
+    ini.endGroup();
+
+    // ===== MessageWindow =====
+    ini.beginGroup(Constants::SETTING_GROUP_MessageWindow);
+    messageWindowGeometry = ini.value("geometry").toByteArray();
+    ini.endGroup();
+
+    // ===== ScrambleDialog =====
+    ini.beginGroup(Constants::SETTING_GROUP_ScrambleDialog);
+    for (int i = 0; i < Constants::OPT_PRESET_SIZE; ++i) {
+        optionals[i] = ini.value(QString("optional%1").arg(i + 1), "").toString();
+    }
+    ini.endGroup();
+
+    // ===== Settingsdialog =====
+    ini.beginGroup(Constants::SETTING_GROUP_Settingsdialog);
+    for (int i = 0; i < Constants::PRESET_SIZE; ++i) {
+        specials[i] = ini.value(QString("special%1").arg(i + 1), "").toString();
+    }
+    ini.endGroup();
+
+    // ===== CustomizeDialog: TITLE / FILENAME =====
+    ini.beginGroup(Constants::SETTING_GROUP_CustomizeDialog);
+
+    for (int i = 0; i < Constants::ITEM_COUNT; ++i) {
+        const auto &t = Constants::TITLE_ITEMS[i];
+        titleFormat[i] = ini.value(t.key, t.defaultValue).toString();
+
+        const auto &f = Constants::FILENAME_ITEMS[i];
+        fileNameFormat[i] = ini.value(f.key, f.defaultValue).toString();
+    }
+
+    ini.endGroup();
+}
+
+void Settings::save()
+{
+    QSettings ini(Constants::IniFileName, QSettings::IniFormat);
+
+    ini.beginGroup(Constants::SETTING_GROUP_MainWindow);
+
+    // ===== English =====
+    for (int i = 0; i < Constants::EnglishCount; i++) {
+        const auto &p = Constants::EnglishPrograms[i];
+        ini.setValue(p.key, englishEnabled[p.key]);
+    }
+
+    // ===== Optional =====
+    for (int i = 0; i < Constants::OptionalCount; i++) {
+        const auto &p = Constants::OptionalPrograms[i];
+
+        ini.setValue(p.keyEnabled, optionalEnabled[p.keyEnabled]);
+        ini.setValue(p.keyId,      optionalId[p.keyId]);
+        ini.setValue(p.keyTitle,   optionalTitle[p.keyTitle]);
+    }
+
+    // ===== Spec =====
+    for (int i = 0; i < Constants::SpecialCount; i++) {
+        const auto &p = Constants::SpecPrograms[i];
+
+        ini.setValue(p.keyEnabled, specEnabled[p.keyEnabled]);
+        ini.setValue(p.keyId,      specId[p.keyId]);
+        ini.setValue(p.keyTitle,   specTitle[p.keyTitle]);
+    }
+
+    // ===== CheckBox =====
+    for (int i = 0; i < Constants::CheckBoxCount; i++) {
+        const auto &c = Constants::CheckBoxSettings[i];
+        ini.setValue(c.keyEnabled, checkBoxEnabled[c.keyEnabled]);
+    }
+
+    // ===== Other settings =====
+    ini.setValue(Constants::KEY_AudioExtension, audioExtension);
+
+    if (saveFolder.isNull())
+        ini.remove(Constants::KEY_SaveFolder);
+    else
+        ini.setValue(Constants::KEY_SaveFolder, saveFolder);
+
+    if (ffmpegFolder.isNull())
+        ini.remove(Constants::KEY_FfmpegFolder);
+    else
+        ini.setValue(Constants::KEY_FfmpegFolder, ffmpegFolder);
+
+    ini.setValue("geometry", mainWindowGeometry);
+
+    ini.endGroup();
+
+    // ===== MessageWindow =====
+    ini.beginGroup(Constants::SETTING_GROUP_MessageWindow);
+    ini.setValue("geometry", messageWindowGeometry);
+    ini.endGroup();
+
+    // ===== ScrambleDialog =====
+    ini.beginGroup(Constants::SETTING_GROUP_ScrambleDialog);
+    for (int i = 0; i < Constants::OPT_PRESET_SIZE; ++i) {
+        ini.setValue(QString("optional%1").arg(i + 1), optionals[i]);
+    }
+    ini.endGroup();
+
+    // ===== Settingsdialog =====
+    ini.beginGroup(Constants::SETTING_GROUP_Settingsdialog);
+    for (int i = 0; i < Constants::PRESET_SIZE; ++i) {
+        ini.setValue(QString("special%1").arg(i + 1), specials[i]);
+    }
+    ini.endGroup();
+
+    // ===== CustomizeDialog: TITLE / FILENAME =====
+    ini.beginGroup(Constants::SETTING_GROUP_CustomizeDialog);
+
+    for (int i = 0; i < Constants::ITEM_COUNT; ++i) {
+        const auto &t = Constants::TITLE_ITEMS[i];
+        ini.setValue(t.key, titleFormat[i]);
+
+        const auto &f = Constants::FILENAME_ITEMS[i];
+        ini.setValue(f.key, fileNameFormat[i]);
+    }
+
+    ini.endGroup();
+}
+
+/* ============================================================
+ *  CustomizeDialog API
+ * ============================================================ */
+QString Settings::getTitleFormat(int index)
+{
+    return instance().titleFormat[index];
+}
+
+QString Settings::getFileNameFormat(int index)
+{
+    return instance().fileNameFormat[index];
+}
+
+void Settings::setTitleFormatValue(int index, const QString &value)
+{
+    instance().titleFormat[index] = value;
+}
+
+void Settings::setFileNameFormatValue(int index, const QString &value)
+{
+    instance().fileNameFormat[index] = value;
+}
+
+/* ============================================================
+ *  CheckBox flags
+ * ============================================================ */
+bool Settings::tagSpaceFlag()
+{
+    return instance().checkBoxEnabled[Constants::KEY_TAG_SPACE];
+}
+
+bool Settings::nameSpaceFlag()
+{
+    return instance().checkBoxEnabled[Constants::KEY_NAME_SPACE];
+}
+
+void Settings::setTagSpaceFlag(bool flag)
+{
+    instance().checkBoxEnabled[Constants::KEY_TAG_SPACE] = flag;
+}
+
+void Settings::setNameSpaceFlag(bool flag)
+{
+    instance().checkBoxEnabled[Constants::KEY_NAME_SPACE] = flag;
+}
+
+
+
+
+
 nameSpaceFlag() settings.checkBoxEnabled[Constants::KEY_NAME_SPACE]
 tagSpaceFlag()  settings.checkBoxEnabled[Constants::KEY_TAG_SPACE]
 
