@@ -1,3 +1,26 @@
+MessageWindow::MessageWindow(QWidget *parent)
+    : QWidget(parent, Qt::CustomizeWindowHint|Qt::WindowTitleHint|Qt::WindowCloseButtonHint)
+{
+    setupGui();
+
+    // Settings から geometry を読み込む
+    const QByteArray &geo = Settings::instance().messageWindowGeometry;
+    if (!geo.isEmpty()) {
+        restoreGeometry(geo);
+    } else {
+        resize(DEFAULT_WIDTH, DEFAULT_HEIGHT);
+    }
+}
+
+MessageWindow::~MessageWindow()
+{
+    if (MainWindow::no_write_ini == "yes") {
+        Settings::instance().saveMessageWindow(saveGeometry());
+    }
+}
+
+
+
 [ 52%] Building CXX object CMakeFiles/CaptureStream2.dir/messagewindow.cpp.obj
 /home/kazuo/cs/CaptureStream2/messagewindow.cpp: In constructor 'MessageWindow::MessageWindow(QWidget*)':
 /home/kazuo/cs/CaptureStream2/messagewindow.cpp:59:49: error: base operand of '->' has non-pointer type 'Settings'
