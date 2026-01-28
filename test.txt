@@ -1,3 +1,137 @@
+settings.cpp
+void Settings::loadMessageWindow()
+{
+    QSettings ini(Constants::IniFileName, QSettings::IniFormat);
+    ini.beginGroup(Constants::SETTING_GROUP_MessageWindow);
+    messageWindowGeometry = ini.value("geometry").toByteArray();
+    ini.endGroup();
+}
+
+void Settings::saveMessageWindow(const QByteArray &geometry)
+{
+    messageWindowGeometry = geometry;
+    QSettings ini(Constants::IniFileName, QSettings::IniFormat);
+    ini.beginGroup(Constants::SETTING_GROUP_MessageWindow);
+    ini.setValue("geometry", geometry);
+    ini.endGroup();
+}
+
+messagewindow.cpp
+#include "messagewindow.h"
+#include "ui_messagewindow.h"
+#include "mainwindow.h"
+#include "utility.h"
+#include "qt4qt5.h"
+
+#include <QtGui>
+#include <QTextCursor>
+#include <QSettings>
+#include <QVariant>
+#include <QWidget>
+
+namespace {
+	const QString SETTING_GROUP( "MessageWindow" );
+	const QString SETTING_GEOMETRY( "geometry" );
+	const int DEFAULT_WIDTH = 540;
+	const int DEFAULT_HEIGHT = 300;
+#ifdef Q_OS_WIN
+	const int FONT_SIZE = 13;
+#else
+#ifdef Q_OS_MACOS
+	const int FONT_SIZE = 11;
+#else
+	const int FONT_SIZE = 14;
+#endif
+#endif
+}
+
+MessageWindow::MessageWindow(QWidget *parent) :
+		QWidget(parent, Qt::CustomizeWindowHint|Qt::WindowTitleHint|Qt::WindowCloseButtonHint) {
+	setupGui();
+	settings( false );
+}
+
+MessageWindow::~MessageWindow() {
+	if ( MainWindow::no_write_ini == "yes" )
+	settings( true );
+}
+
+void MessageWindow::changeEvent( QEvent *e ) {
+    QWidget::changeEvent(e);
+    switch (e->type()) {
+    case QEvent::LanguageChange:
+        break;
+    default:
+        break;
+    }
+}
+
+void MessageWindow::setupGui() {
+	textEdit = new QPlainTextEdit;
+	textEdit->setReadOnly( true );
+	textEdit->setWordWrapMode( QTextOption::WrapAnywhere );
+	QFont* font = new QFont();
+	font->setPixelSize( FONT_SIZE );
+	textEdit->setFont( *font );
+
+	clearTextButton = new QPushButton( QString::fromUtf8( "クリア" ) );
+	connect( clearTextButton, SIGNAL(clicked()), this, SLOT(clearText()) );
+
+	QVBoxLayout *mainLayout = new QVBoxLayout;
+	mainLayout->addWidget(textEdit);
+	mainLayout->addWidget(clearTextButton);
+
+	setLayout(mainLayout);
+}
+
+QString MessageWindow::text() {
+	return textEdit->toPlainText();
+}
+
+// 改行あり
+void MessageWindow::appendParagraph( const QString& text ) {
+	if ( !Utility::nogui() ) {
+		show();
+		textEdit->appendPlainText( text );
+	}
+}
+
+// 改行なし
+void MessageWindow::append( const QString& text ) {
+	if ( !Utility::nogui() ) {
+		show();
+		QTextCursor cursor = textEdit->textCursor();
+		cursor.movePosition( QTextCursor::End );
+		textEdit->setTextCursor( cursor );
+		textEdit->insertPlainText( text );
+	}
+}
+
+void MessageWindow::clearText() {
+	textEdit->clear();
+}
+
+void MessageWindow::settings( bool write ) {
+	QSettings settings( MainWindow::ini_file_path + INI_FILE, QSettings::IniFormat );
+	settings.beginGroup( SETTING_GROUP );
+
+	if ( !write ) {
+		QVariant saved = settings.value( SETTING_GEOMETRY );
+		if ( saved.isValid() ) 
+					restoreGeometry( saved.toByteArray() );
+		else
+			resize( DEFAULT_WIDTH, DEFAULT_HEIGHT );
+		
+	} else {
+		settings.setValue( SETTING_GEOMETRY, saveGeometry() );
+	}
+
+	settings.endGroup();
+}
+
+
+
+
 
 #ifndef SETTINGS_H
 #define SETTINGS_H
