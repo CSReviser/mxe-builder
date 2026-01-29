@@ -3,6 +3,16 @@ runtime->name_map.insert(program_name, url_id);
 runtime->thumbnail_map.insert(url_id, thumbnail_url);
 
 
+if (!runtime->name_map.contains(koza)) continue;
+
+QString url = runtime->name_map[koza];
+
+
+runtime->name_map.insert(temp1, temp2);
+runtime->id_map.insert(temp2, temp1);
+
+
+
 
 
 MainWindow.h
