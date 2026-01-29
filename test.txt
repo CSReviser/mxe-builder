@@ -1,3 +1,10 @@
+runtime->id_map.insert(url_id, program_name);
+runtime->name_map.insert(program_name, url_id);
+runtime->thumbnail_map.insert(url_id, thumbnail_url);
+
+
+
+
 MainWindow.h
 public:
 	MainWindow( Settings& settings, RuntimeConfig* r, QWidget* parent = nullptr );
