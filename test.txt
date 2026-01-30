@@ -1,3 +1,27 @@
+[ 83%] Building CXX object CMakeFiles/CaptureStream2.dir/commandlineparser.cpp.o
+/home/kazuo/cs/CaptureStream2/commandlineparser.cpp: In member function ‘RecordingConfig CommandLineParser::parse(int, char**)’:
+/home/kazuo/cs/CaptureStream2/commandlineparser.cpp:32:56: error: ISO C++ forbids declaration of ‘type name’ with no type [-fpermissive]
+   32 |     auto findOption = [&](const QString& arg) -> const CliOption* {
+      |                                                        ^~~~~~~~~
+/home/kazuo/cs/CaptureStream2/commandlineparser.cpp: In lambda function:
+/home/kazuo/cs/CaptureStream2/commandlineparser.cpp:32:56: error: expected ‘{’ before ‘CliOption’
+/home/kazuo/cs/CaptureStream2/commandlineparser.cpp:32:56: warning: no return statement in function returning non-void [-Wreturn-type]
+/home/kazuo/cs/CaptureStream2/commandlineparser.cpp: In member function ‘RecordingConfig CommandLineParser::parse(int, char**)’:
+/home/kazuo/cs/CaptureStream2/commandlineparser.cpp:32:56: error: expected ‘,’ or ‘;’ before ‘CliOption’
+/home/kazuo/cs/CaptureStream2/commandlineparser.cpp:42:15: error: ‘CliOption’ does not name a type
+   42 |         const CliOption* opt = findOption(arg);
+      |               ^~~~~~~~~
+/home/kazuo/cs/CaptureStream2/commandlineparser.cpp:44:14: error: ‘opt’ was not declared in this scope
+   44 |         if (!opt) {
+      |              ^~~
+/home/kazuo/cs/CaptureStream2/commandlineparser.cpp:51:13: error: ‘opt’ was not declared in this scope
+   51 |         if (opt->requiresValue) {
+      |             ^~~
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:267: CMakeFiles/CaptureStream2.dir/commandlineparser.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
+
+
 // RecordingConfig.h
 #pragma once
 #include <QString>
