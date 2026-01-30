@@ -1,3 +1,60 @@
+#include "commandlineparser.h"
+#include "constants.h"
+
+RecordingConfig CommandLineParser::parse(int argc, char* argv[])
+{
+    RecordingConfig cfg;
+
+    auto findOption = [&](const QString& arg) -> const Constants::CliOption* {
+        for (int i = 0; i < Constants::OPTION_TABLE_COUNT; ++i) {
+            if (arg == Constants::OPTION_TABLE[i].name)
+                return &Constants::OPTION_TABLE[i];
+        }
+        return nullptr;
+    };
+
+    for (int i = 1; i < argc; ++i) {
+        QString arg = argv[i];
+        const Constants::CliOption* opt = findOption(arg);
+
+        if (!opt) {
+            cfg.programIds.push_back(arg);
+            continue;
+        }
+
+        if (opt->requiresValue) {
+            if (i + 1 >= argc)
+                break;
+
+            QString value = argv[++i];
+
+            if (arg == "-t")      cfg.titleTagFormat = value;
+            else if (arg == "-f") cfg.fileNameFormat = value;
+            else if (arg == "-o") cfg.outputFolder = value;
+            else if (arg == "-e") cfg.extension = value;
+        }
+        else {
+            if (arg == "-nogui") cfg.nogui = true;
+            else if (arg == "-z") cfg.optionZ = true;
+            else if (arg == "-b") cfg.optionB = true;
+            else if (arg == "-s") cfg.optionS = true;
+        }
+    }
+
+    if (!cfg.hasProgramIds()) {
+        cfg.titleTagFormat.reset();
+        cfg.fileNameFormat.reset();
+        cfg.outputFolder.reset();
+        cfg.extension.reset();
+        cfg.optionS = false;
+    }
+
+    return cfg;
+}
+
+
+
+
 [ 83%] Building CXX object CMakeFiles/CaptureStream2.dir/commandlineparser.cpp.o
 /home/kazuo/cs/CaptureStream2/commandlineparser.cpp: In member function ‘RecordingConfig CommandLineParser::parse(int, char**)’:
 /home/kazuo/cs/CaptureStream2/commandlineparser.cpp:32:56: error: ISO C++ forbids declaration of ‘type name’ with no type [-fpermissive]
