@@ -1,3 +1,40 @@
+// MainWindow.h
+QMap<QString, QString> objectToKey;
+
+// MainWindow.cpp
+MainWindow::MainWindow(QWidget* parent)
+    : QMainWindow(parent)
+{
+    // EnglishPrograms
+    for (const auto& p : Constants::EnglishPrograms) {
+        if (!p.objectName.isEmpty())
+            objectToKey[p.objectName] = p.key;
+    }
+
+    // OptionalPrograms
+    for (const auto& p : Constants::OptionalPrograms) {
+        if (!p.objectName.isEmpty())
+            objectToKey[p.objectName] = p.keyEnabled;
+    }
+
+    // SpecPrograms
+    for (const auto& p : Constants::SpecPrograms) {
+        if (!p.objectName.isEmpty())
+            objectToKey[p.objectName] = p.keyEnabled;
+    }
+
+    // CheckBoxSettings
+    for (const auto& c : Constants::CheckBoxSettings) {
+        if (!c.objectName.isEmpty())
+            objectToKey[c.objectName] = c.keyEnabled;
+    }
+}
+
+
+
+
+
+
 void MainWindow::toggled(bool checked)
 {
     auto* button = qobject_cast<QToolButton*>(sender());
