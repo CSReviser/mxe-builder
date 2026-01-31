@@ -1,0 +1,9 @@
+[ 44%] Building CXX object CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o
+/home/kazuo/cs/CaptureStream2/mainwindow.cpp: In member function ‘void MainWindow::toggled(bool)’:
+/home/kazuo/cs/CaptureStream2/mainwindow.cpp:1033:22: error: ‘class Settings’ has no member named ‘enabled’; did you mean ‘specEnabled’?
+ 1033 |             settings.enabled[key] = checked;
+      |                      ^~~~~~~
+      |                      specEnabled
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:155: CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
