@@ -1,3 +1,92 @@
+template <typename T, size_t N, typename Func>
+void MainWindow::forEachProgram(const T (&array)[N], Func func)
+{
+    for (const auto& p : array) {
+        QAbstractButton* btn = findChild<QAbstractButton*>(p.objectName);
+        if (!btn)
+            continue;
+
+        func(p, btn);
+    }
+}
+
+void MainWindow::restoreEnglishProgramUI()
+{
+    forEachProgram(Constants::EnglishPrograms,
+        [&](const auto& p, QAbstractButton* btn) {
+            btn->setChecked(settings.englishEnabled[p.key]);
+        }
+    );
+}
+
+void MainWindow::restoreOptionalProgramUI()
+{
+    forEachProgram(Constants::OptionalPrograms,
+        [&](const auto& p, QAbstractButton* btn) {
+            btn->setText(settings.optionalTitle[p.keyTitle]);
+            special[i] = settings.optionalId[p.keyId];
+            btn->setChecked(settings.optionalEnabled[p.keyEnabled]);
+        }
+    );
+}
+void MainWindow::restoreSpecialProgramUI()
+{
+    forEachProgram(Constants::SpecPrograms,
+        [&](const auto& p, QAbstractButton* btn) {
+            btn->setText(settings.specTitle[p.keyTitle]);
+            special[i] = settings.specId[p.keyId];
+            btn->setChecked(settings.specEnabled[p.keyEnabled]);
+        }
+    );
+}
+
+
+void MainWindow::collectEnglishSettings()
+{
+    forEachProgram(Constants::EnglishPrograms,
+        [&](const auto& p, QAbstractButton* btn) {
+            settings.englishEnabled[p.key] = btn->isChecked();
+        }
+    );
+}
+
+void MainWindow::collectOptionalSettings()
+{
+    forEachProgram(Constants::OptionalPrograms,
+        [&](const auto& p, QAbstractButton* btn) {
+            settings.optionalEnabled[p.keyEnabled] = btn->isChecked();
+            settings.optionalTitle[p.keyTitle]     = btn->text();
+        }
+    );
+}
+
+void MainWindow::collectSpecSettings()
+{
+    forEachProgram(Constants::SpecPrograms,
+        [&](const auto& p, QAbstractButton* btn) {
+            settings.specEnabled[p.keyEnabled] = btn->isChecked();
+            settings.specTitle[p.keyTitle]     = btn->text();
+        }
+    );
+}
+
+void MainWindow::collectCheckBoxSettings()
+{
+    forEachProgram(Constants::CheckBoxSettings,
+        [&](const auto& c, QAbstractButton* btn) {
+            settings.checkBoxEnabled[c.keyEnabled] = btn->isChecked();
+        }
+    );
+
+    settings.checkBoxEnabled[Constants::KEY_NAME_SPACE] = name_space_flag;
+    settings.checkBoxEnabled[Constants::KEY_TAG_SPACE]  = tag_space_flag;
+}
+
+
+
+
+
+
 // MainWindow.h
 QMap<QString, QString> objectToKey;
 
