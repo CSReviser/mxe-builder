@@ -1,0 +1,41 @@
+void MainWindow::customizeSettings() {
+	collectSpecSettings();
+	settings.save();
+	setmap();
+	Settingsdialog dialog( Settings::instance(), runtime, this );
+
+	if (!dialog.exec())
+	    return;
+    	restoreSpecialProgramUI();   
+
+    using namespace Constants;
+
+    for (int i = 0; i < SpecialCount; i++) {
+        const auto &p = SpecPrograms[i];
+
+        // objectName からボタンを取得
+        QAbstractButton* btn = findChild<QAbstractButton*>(p.objectName);
+
+        if (!btn)
+            continue; // UI に存在しない場合はスキップ
+        btn->blockSignals(true);    
+	QString text = btn->text();
+	const QString check = QString::fromUtf8("✓ ");
+
+ 	// 必ず一旦リセット
+	if (text.startsWith(check)) {
+	    text.remove(0, check.size());
+	    btn->setChecked(false);
+	}
+
+        	// 状態に応じて付与
+        text = settings.specTitle[p.keyTitle];	
+	if (settings.specEnabled[p.keyEnabled]) {
+	    text.prepend(check);
+	}
+        btn->setText(text);
+        special[i] = settings.specId[p.keyId];
+        btn->setChecked(settings.specEnabled[p.keyEnabled]);
+        btn->blockSignals(false);
+    }
+}
