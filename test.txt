@@ -1,3 +1,42 @@
+toggled()
+void MainWindow::toggled(bool checked)
+{
+    auto* button = qobject_cast<QToolButton*>(sender());
+    if (!button) return;
+
+    button->setProperty("checkedMark", checked);
+
+    updateButtonText(button);
+}
+
+表示専用関数
+void MainWindow::updateButtonText(QToolButton* button)
+{
+    const QString check = QString::fromUtf8("✓ ");
+    QString title = button->property("title").toString();
+
+    if (button->property("checkedMark").toBool()) {
+        button->setText(check + title);
+    } else {
+        button->setText(title);
+    }
+}
+
+初期化・復元時
+btn->setProperty("title", settings.specTitle[p.keyTitle]);
+btn->setProperty("checkedMark", settings.specEnabled[p.keyEnabled]);
+
+btn->setChecked(settings.specEnabled[p.keyEnabled]);
+updateButtonText(btn);
+
+stylesheet と連動
+QToolButton[checkedMark="true"] {
+    font-weight: bold;
+}
+
+
+
+
 #include "commandlineparser.h"
 #include "constants.h"
 
