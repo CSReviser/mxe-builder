@@ -1,3 +1,27 @@
+void MainWindow::toggled(bool checked)
+{
+    auto* button = qobject_cast<QToolButton*>(sender());
+    if (!button) return;
+
+    QString text = button->text();
+    const QString check = QString::fromUtf8("✓ ");
+
+    // 必ず一旦リセット
+    if (text.startsWith(check)) {
+        text.remove(0, check.size());
+    }
+
+    // 状態に応じて付与
+    if (checked) {
+        text.prepend(check);
+    }
+
+    button->setText(text);
+}
+
+
+
+
 toggled()
 void MainWindow::toggled(bool checked)
 {
