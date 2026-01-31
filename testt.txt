@@ -1,9 +1,138 @@
-[ 44%] Building CXX object CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o
-/home/kazuo/cs/CaptureStream2/mainwindow.cpp: In member function ‘void MainWindow::toggled(bool)’:
-/home/kazuo/cs/CaptureStream2/mainwindow.cpp:1033:22: error: ‘class Settings’ has no member named ‘enabled’; did you mean ‘specEnabled’?
- 1033 |             settings.enabled[key] = checked;
-      |                      ^~~~~~~
-      |                      specEnabled
-make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:155: CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o] エラー 1
-make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
-make: *** [Makefile:91: all] エラー 2
+// Settings.h
+
+class Settings {
+public:
+    static Settings& instance();
+
+    // 既存のマップ
+    QMap<QString, bool> englishEnabled;
+    QMap<QString, bool> optionalEnabled;
+    QMap<QString, bool> specEnabled;
+    QMap<QString, bool> checkBoxEnabled;
+
+    // ★ 追加：横断 enabled キャッシュ（INI に保存しない）
+    QMap<QString, bool> enabled;
+
+    void buildUnifiedEnabled();   // load() の後に呼ぶ
+    void syncEnabledBack();       // save() の前に呼ぶ
+
+    // ...
+};
+
+
+void Settings::buildUnifiedEnabled()
+{
+    enabled.clear();
+
+    // English
+    for (const auto& p : Constants::EnglishPrograms) {
+        enabled[p.key] = englishEnabled[p.key];
+    }
+
+    // Optional
+    for (const auto& p : Constants::OptionalPrograms) {
+        enabled[p.keyEnabled] = optionalEnabled[p.keyEnabled];
+    }
+
+    // Spec
+    for (const auto& p : Constants::SpecPrograms) {
+        enabled[p.keyEnabled] = specEnabled[p.keyEnabled];
+    }
+
+    // CheckBox
+    for (const auto& c : Constants::CheckBoxSettings) {
+        enabled[c.keyEnabled] = checkBoxEnabled[c.keyEnabled];
+    }
+}
+
+
+void Settings::syncEnabledBack()
+{
+    // English
+    for (const auto& p : Constants::EnglishPrograms) {
+        englishEnabled[p.key] = enabled[p.key];
+    }
+
+    // Optional
+    for (const auto& p : Constants::OptionalPrograms) {
+        optionalEnabled[p.keyEnabled] = enabled[p.keyEnabled];
+    }
+
+    // Spec
+    for (const auto& p : Constants::SpecPrograms) {
+        specEnabled[p.keyEnabled] = enabled[p.keyEnabled];
+    }
+
+    // CheckBox
+    for (const auto& c : Constants::CheckBoxSettings) {
+        checkBoxEnabled[c.keyEnabled] = enabled[c.keyEnabled];
+    }
+}
+
+
+
+buildUnifiedEnabled();
+
+
+syncEnabledBack();
+
+
+QMap<QString, QString> objectToKey;
+
+
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent)
+{
+    using namespace Constants;
+
+    // English
+    for (const auto& p : EnglishPrograms) {
+        if (!p.objectName.isEmpty())
+            objectToKey[p.objectName] = p.key;
+    }
+
+    // Optional
+    for (const auto& p : OptionalPrograms) {
+        if (!p.objectName.isEmpty())
+            objectToKey[p.objectName] = p.keyEnabled;
+    }
+
+    // Spec
+    for (const auto& p : SpecPrograms) {
+        if (!p.objectName.isEmpty())
+            objectToKey[p.objectName] = p.keyEnabled;
+    }
+
+    // CheckBox
+    for (const auto& c : CheckBoxSettings) {
+        if (!c.objectName.isEmpty())
+            objectToKey[c.objectName] = c.keyEnabled;
+    }
+}
+
+
+void MainWindow::toggled(bool checked)
+{
+    auto* button = qobject_cast<QToolButton*>(sender());
+    if (!button) return;
+
+    const QString obj = button->objectName();
+
+    // ★ 横断 enabled に書き込むだけ
+    if (objectToKey.contains(obj)) {
+        const QString key = objectToKey.value(obj);
+        settings.enabled[key] = checked;
+    }
+
+    // UI のチェックマーク処理
+    QString text = button->text();
+    const QString check = QString::fromUtf8("✓ ");
+
+    if (text.startsWith(check))
+        text.remove(0, check.size());
+
+    if (checked)
+        text.prepend(check);
+
+    button->setText(text);
+}
