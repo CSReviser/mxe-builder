@@ -1,3 +1,109 @@
+/* ============================================================
+ *  CustomizeDialog API
+ * ============================================================ */
+QString Settings::getTitleFormat(int index)
+{
+    return instance().titleFormat[index];
+}
+
+QString Settings::getFileNameFormat(int index)
+{
+    return instance().fileNameFormat[index];
+}
+
+void Settings::setTitleFormatValue(int index, const QString &value)
+{
+    instance().titleFormat[index] = value;
+}
+
+void Settings::setFileNameFormatValue(int index, const QString &value)
+{
+    instance().fileNameFormat[index] = value;
+}
+
+/* ============================================================
+ *  CheckBox flags
+ * ============================================================ */
+bool Settings::tagSpaceFlag()
+{
+    return instance().enabled[Constants::KEY_TAG_SPACE];
+}
+
+bool Settings::nameSpaceFlag()
+{
+    return instance().enabled[Constants::KEY_NAME_SPACE];
+}
+
+bool Settings::multiGuiFlag()
+{
+    return instance().enabled[Constants::KEY_MULTI_GUI];
+}
+
+bool Settings::kozaSeparationFlag()
+{
+    return instance().enabled[Constants::KEY_KOZA_SEPARATION];
+}
+
+void Settings::setTagSpaceFlag(bool flag)
+{
+    instance().enabled[Constants::KEY_TAG_SPACE] = flag;
+}
+
+void Settings::setNameSpaceFlag(bool flag)
+{
+    instance().enabled[Constants::KEY_NAME_SPACE] = flag;
+}
+
+void Settings::setMultiGuiFlag(bool flag)
+{
+    instance().enabled[Constants::KEY_MULTI_GUI] = flag;
+}
+
+void Settings::setKozaSeparationFlag(bool flag)
+{
+    instance().enabled[Constants::KEY_KOZA_SEPARATION] = flag;
+}
+
+void Settings::loadMainWindow()
+{
+    QSettings ini(Constants::IniFileName, QSettings::IniFormat);
+    ini.beginGroup(Constants::SETTING_GROUP_MainWindow);
+    mainWindowGeometry = ini.value("geometry").toByteArray();
+    ini.endGroup();
+}
+
+void Settings::saveMainWindow(const QByteArray &geometry)
+{
+    mainWindowGeometry = geometry;
+    QSettings ini(Constants::IniFileName, QSettings::IniFormat);
+    ini.beginGroup(Constants::SETTING_GROUP_MainWindow);
+    ini.setValue("geometry", geometry);
+    ini.endGroup();
+}
+
+void Settings::loadMessageWindow()
+{
+    QSettings ini(Constants::IniFileName, QSettings::IniFormat);
+    ini.beginGroup(Constants::SETTING_GROUP_MessageWindow);
+    messageWindowGeometry = ini.value("geometry").toByteArray();
+    ini.endGroup();
+}
+
+void Settings::saveMessageWindow(const QByteArray &geometry)
+{
+    messageWindowGeometry = geometry;
+    QSettings ini(Constants::IniFileName, QSettings::IniFormat);
+    ini.beginGroup(Constants::SETTING_GROUP_MessageWindow);
+    ini.setValue("geometry", geometry);
+    ini.endGroup();
+}
+
+
+
+
+
+
+
 [100%] Linking CXX executable CaptureStream2
 /usr/bin/ld: CMakeFiles/CaptureStream2.dir/customizedialog.cpp.o: in function `CustomizeDialog::formats(QString, QString&, QString&)':
 customizedialog.cpp:(.text._ZN15CustomizeDialog7formatsE7QStringRS0_S1_+0x5f): undefined reference to `Settings::getTitleFormat(int)'
