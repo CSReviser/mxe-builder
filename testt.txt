@@ -78,7 +78,7 @@ private:
 };
 
 
-settings.cpp
+//settings.cpp
 #include "settings.h"
 #include <QSettings>
 
