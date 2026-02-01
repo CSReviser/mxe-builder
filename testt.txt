@@ -1,3 +1,43 @@
+[100%] Linking CXX executable CaptureStream2
+/usr/bin/ld: CMakeFiles/CaptureStream2.dir/customizedialog.cpp.o: in function `CustomizeDialog::formats(QString, QString&, QString&)':
+customizedialog.cpp:(.text._ZN15CustomizeDialog7formatsE7QStringRS0_S1_+0x5f): undefined reference to `Settings::getTitleFormat(int)'
+/usr/bin/ld: customizedialog.cpp:(.text._ZN15CustomizeDialog7formatsE7QStringRS0_S1_+0x8f): undefined reference to `Settings::getFileNameFormat(int)'
+/usr/bin/ld: CMakeFiles/CaptureStream2.dir/customizedialog.cpp.o: in function `CustomizeDialog::loadSettings()':
+customizedialog.cpp:(.text._ZN15CustomizeDialog12loadSettingsEv+0x43): undefined reference to `Settings::getTitleFormat(int)'
+/usr/bin/ld: customizedialog.cpp:(.text._ZN15CustomizeDialog12loadSettingsEv+0x56): undefined reference to `Settings::getFileNameFormat(int)'
+/usr/bin/ld: customizedialog.cpp:(.text._ZN15CustomizeDialog12loadSettingsEv+0x9b): undefined reference to `Settings::getTitleFormat(int)'
+/usr/bin/ld: customizedialog.cpp:(.text._ZN15CustomizeDialog12loadSettingsEv+0xae): undefined reference to `Settings::getFileNameFormat(int)'
+/usr/bin/ld: customizedialog.cpp:(.text._ZN15CustomizeDialog12loadSettingsEv+0xea): undefined reference to `Settings::tagSpaceFlag()'
+/usr/bin/ld: customizedialog.cpp:(.text._ZN15CustomizeDialog12loadSettingsEv+0x10c): undefined reference to `Settings::nameSpaceFlag()'
+/usr/bin/ld: CMakeFiles/CaptureStream2.dir/customizedialog.cpp.o: in function `CustomizeDialog::saveSettings()':
+customizedialog.cpp:(.text._ZN15CustomizeDialog12saveSettingsEv+0x5b): undefined reference to `Settings::setTitleFormatValue(int, QString const&)'
+/usr/bin/ld: customizedialog.cpp:(.text._ZN15CustomizeDialog12saveSettingsEv+0x97): undefined reference to `Settings::setTitleFormatValue(int, QString const&)'
+/usr/bin/ld: customizedialog.cpp:(.text._ZN15CustomizeDialog12saveSettingsEv+0xc0): undefined reference to `Settings::setTagSpaceFlag(bool)'
+/usr/bin/ld: customizedialog.cpp:(.text._ZN15CustomizeDialog12saveSettingsEv+0xf2): undefined reference to `Settings::setFileNameFormatValue(int, QString const&)'
+/usr/bin/ld: customizedialog.cpp:(.text._ZN15CustomizeDialog12saveSettingsEv+0x12e): undefined reference to `Settings::setFileNameFormatValue(int, QString const&)'
+/usr/bin/ld: customizedialog.cpp:(.text._ZN15CustomizeDialog12saveSettingsEv+0x157): undefined reference to `Settings::setNameSpaceFlag(bool)'
+/usr/bin/ld: CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o: in function `MainWindow::saveGui()':
+mainwindow.cpp:(.text._ZN10MainWindow7saveGuiEv+0x5a): undefined reference to `Settings::saveMainWindow(QByteArray const&)'
+/usr/bin/ld: CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o: in function `MainWindow::customizeScramble()':
+mainwindow.cpp:(.text._ZN10MainWindow17customizeScrambleEv+0x33): undefined reference to `MainWindow::collectOptionalSettings()'
+/usr/bin/ld: CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o: in function `MainWindow::customizeSettings()':
+mainwindow.cpp:(.text._ZN10MainWindow17customizeSettingsEv+0x30): undefined reference to `MainWindow::collectSpecSettings()'
+/usr/bin/ld: CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o: in function `MainWindow::download()':
+mainwindow.cpp:(.text._ZN10MainWindow8downloadEv+0x2a): undefined reference to `MainWindow::collectEnglishSettings()'
+/usr/bin/ld: mainwindow.cpp:(.text._ZN10MainWindow8downloadEv+0x36): undefined reference to `MainWindow::collectOptionalSettings()'
+/usr/bin/ld: mainwindow.cpp:(.text._ZN10MainWindow8downloadEv+0x42): undefined reference to `MainWindow::collectSpecSettings()'
+/usr/bin/ld: mainwindow.cpp:(.text._ZN10MainWindow8downloadEv+0x4e): undefined reference to `MainWindow::collectCheckBoxSettings()'
+/usr/bin/ld: CMakeFiles/CaptureStream2.dir/messagewindow.cpp.o: in function `MessageWindow::~MessageWindow()':
+messagewindow.cpp:(.text._ZN13MessageWindowD2Ev+0x8b): undefined reference to `Settings::saveMessageWindow(QByteArray const&)'
+collect2: error: ld returned 1 exit status
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:457: CaptureStream2] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
+
+
+
+
+
 #pragma once
 #include <QString>
 #include <QStringList>
