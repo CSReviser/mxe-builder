@@ -1,3 +1,99 @@
+void MainWindow::restoreGui()
+{
+    auto &s = Settings::instance();
+
+    // geometry 復元
+    if (!s.mainWindowGeometry.isEmpty()) {
+        restoreGeometry(s.mainWindowGeometry);
+    }
+
+    // ===== English =====
+    for (const auto &p : Constants::EnglishPrograms) {
+        if (auto btn = findChild<QToolButton*>(p.objectName)) {
+            btn->setChecked(s.enabled[p.keyEnabled]);
+            btn->setText(p.titleDefault);   // 固定タイトル
+        }
+    }
+
+    // ===== Optional =====
+    for (const auto &p : Constants::OptionalPrograms) {
+        if (auto btn = findChild<QToolButton*>(p.objectName)) {
+            btn->setChecked(s.enabled[p.keyEnabled]);
+
+            // INI に保存されたタイトルを復元
+            if (!p.keyTitle.isEmpty())
+                btn->setText(s.titles[p.keyTitle]);
+        }
+    }
+
+    // ===== Spec =====
+    for (const auto &p : Constants::SpecPrograms) {
+        if (auto btn = findChild<QToolButton*>(p.objectName)) {
+            btn->setChecked(s.enabled[p.keyEnabled]);
+
+            // INI に保存されたタイトルを復元
+            if (!p.keyTitle.isEmpty())
+                btn->setText(s.titles[p.keyTitle]);
+        }
+    }
+
+    // ===== Flag（チェックボックス）=====
+    for (const auto &p : Constants::FlagSettings) {
+        if (auto cb = findChild<QAbstractButton*>(p.objectName)) {
+            cb->setChecked(s.enabled[p.keyEnabled]);
+            // ラベルは UI 側の固定値を使うので setText は不要
+        }
+    }
+}
+
+void MainWindow::saveGui()
+{
+    auto &s = Settings::instance();
+
+    // geometry 保存
+    s.saveMainWindow(saveGeometry());
+
+    // enabled の書き戻し
+    for (const auto &p : Constants::EnglishPrograms) {
+        if (!p.objectName.isEmpty()) {
+            if (auto btn = findChild<QToolButton*>(p.objectName)) {
+                s.enabled[p.keyEnabled] = btn->isChecked();
+            }
+        }
+    }
+
+    for (const auto &p : Constants::OptionalPrograms) {
+        if (!p.objectName.isEmpty()) {
+            if (auto btn = findChild<QToolButton*>(p.objectName)) {
+                s.enabled[p.keyEnabled] = btn->isChecked();
+            }
+        }
+    }
+
+    for (const auto &p : Constants::SpecPrograms) {
+        if (!p.objectName.isEmpty()) {
+            if (auto btn = findChild<QToolButton*>(p.objectName)) {
+                s.enabled[p.keyEnabled] = btn->isChecked();
+            }
+        }
+    }
+
+    for (const auto &p : Constants::FlagSettings) {
+        if (!p.objectName.isEmpty()) {
+            if (auto cb = findChild<QAbstractButton*>(p.objectName)) {
+                s.enabled[p.keyEnabled] = cb->isChecked();
+            }
+        }
+    }
+
+    // 最後に settings.ini へ保存
+    s.save();
+}
+
+
+
+
+
 // Settings.h
 
 #pragma once
