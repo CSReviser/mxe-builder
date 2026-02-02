@@ -1,3 +1,37 @@
+void MainWindow::toggled(bool checked)
+{
+    auto* button = qobject_cast<QToolButton*>(sender());
+    if (!button) return;
+
+    const QString obj = button->objectName();
+
+    // ProgramEntry を直接探す
+    const Constants::ProgramEntry* p = nullptr;
+
+    auto findEntry = [&](const auto& list) {
+        for (const auto& e : list) {
+            if (e.objectName == obj) {
+                p = &e;
+                return;
+            }
+        }
+    };
+
+    findEntry(Constants::EnglishPrograms);
+    findEntry(Constants::OptionalPrograms);
+    findEntry(Constants::SpecPrograms);
+
+    if (!p) return;  // 見つからない → 何もしない
+
+    // Settings を更新
+    Settings::instance().enabled[p->keyEnabled] = checked;
+
+    // UI 更新
+    updateButtonUI(button, checked, p->titleDefault);
+}
+
+
+
 template <typename Container>
 void MainWindow::updateProgramButtons(const Container &programs, const Settings &s)
 {
