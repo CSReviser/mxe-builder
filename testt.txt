@@ -1,4 +1,51 @@
 
+void MainWindow::updateProgramButtons(
+    const QVector<ProgramEntry> &programs,
+    const Settings &s)
+{
+    for (const auto &p : programs) {
+        if (auto btn = findChild<QToolButton*>(p.objectName)) {
+
+            QString title;
+
+            if (p.keyTitle.isEmpty()) {
+                // English
+                title = p.titleDefault;
+            } else {
+                // Optional / Spec
+                title = s.titles[p.keyTitle];
+            }
+
+            updateButtonUI(btn, s.enabled[p.keyEnabled], title);
+        }
+    }
+}
+
+updateProgramButtons(Constants::EnglishPrograms, s, true);
+updateProgramButtons(Constants::OptionalPrograms, s, false);
+updateProgramButtons(Constants::SpecPrograms, s, false);
+
+void MainWindow::updateProgramButtons(
+    const QVector<ProgramEntry> &programs,
+    const Settings &s,
+    bool useDefaultTitle)
+{
+    for (const auto &p : programs) {
+        if (auto btn = findChild<QToolButton*>(p.objectName)) {
+
+            QString title = useDefaultTitle
+                ? p.titleDefault
+                : s.titles[p.keyTitle];
+
+            updateButtonUI(btn, s.enabled[p.keyEnabled], title);
+        }
+    }
+}
+
+
+
+
+
 
 
 #include <QToolButton>
