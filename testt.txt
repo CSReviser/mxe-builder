@@ -1,3 +1,46 @@
+[ 38%] Building CXX object CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o
+/home/kazuo/cs/CaptureStream2/mainwindow.cpp: In member function ‘void MainWindow::restoreGui()’:
+/home/kazuo/cs/CaptureStream2/mainwindow.cpp:753:33: error: cannot convert ‘const Constants::ProgramEntry [8]’ to ‘QVector<Constants::ProgramEntry>&’ {aka ‘const QList<Constants::ProgramEntry>&’}
+  753 | updateProgramButtons(Constants::EnglishPrograms, s);
+      |                      ~~~~~~~~~~~^~~~~~~~~~~~~~~
+      |                                 |
+      |                                 const Constants::ProgramEntry [8]
+In file included from /home/kazuo/cs/CaptureStream2/mainwindow.cpp:24:
+/home/kazuo/cs/CaptureStream2/mainwindow.h:187:76: note:   initializing argument 1 of ‘void MainWindow::updateProgramButtons(QVector<Constants::ProgramEntry>&, const Settings&)’
+  187 |        void updateProgramButtons( const QVector<Constants::ProgramEntry> &programs, const Settings &s);
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+
+/home/kazuo/cs/CaptureStream2/mainwindow.cpp:754:33: error: cannot convert ‘const Constants::ProgramEntry [8]’ to ‘QVector<Constants::ProgramEntry>&’ {aka ‘const QList<Constants::ProgramEntry>&’}
+  754 | updateProgramButtons(Constants::OptionalPrograms, s);
+      |                      ~~~~~~~~~~~^~~~~~~~~~~~~~~~
+      |                                 |
+      |                                 const Constants::ProgramEntry [8]
+In file included from /home/kazuo/cs/CaptureStream2/mainwindow.cpp:24:
+/home/kazuo/cs/CaptureStream2/mainwindow.h:187:76: note:   initializing argument 1 of ‘void MainWindow::updateProgramButtons(QVector<Constants::ProgramEntry>&, const Settings&)’
+  187 |        void updateProgramButtons( const QVector<Constants::ProgramEntry> &programs, const Settings &s);
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+
+/home/kazuo/cs/CaptureStream2/mainwindow.cpp:755:33: error: cannot convert ‘const Constants::ProgramEntry [4]’ to ‘QVector<Constants::ProgramEntry>&’ {aka ‘const QList<Constants::ProgramEntry>&’}
+  755 | updateProgramButtons(Constants::SpecPrograms, s);
+      |                      ~~~~~~~~~~~^~~~~~~~~~~~
+      |                                 |
+      |                                 const Constants::ProgramEntry [4]
+In file included from /home/kazuo/cs/CaptureStream2/mainwindow.cpp:24:
+/home/kazuo/cs/CaptureStream2/mainwindow.h:187:76: note:   initializing argument 1 of ‘void MainWindow::updateProgramButtons(QVector<Constants::ProgramEntry>&, const Settings&)’
+  187 |        void updateProgramButtons( const QVector<Constants::ProgramEntry> &programs, const Settings &s);
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~
+
+/home/kazuo/cs/CaptureStream2/mainwindow.cpp: In member function ‘void MainWindow::customizeScramble()’:
+/home/kazuo/cs/CaptureStream2/mainwindow.cpp:1208:55: error: ‘s’ was not declared in this scope
+ 1208 |         updateProgramButtons(Constants::SpecPrograms, s);
+      |                                                       ^
+/home/kazuo/cs/CaptureStream2/mainwindow.cpp: In member function ‘void MainWindow::customizeSettings()’:
+/home/kazuo/cs/CaptureStream2/mainwindow.cpp:1229:55: error: ‘s’ was not declared in this scope
+ 1229 |         updateProgramButtons(Constants::SpecPrograms, s);
+      |                                                       ^
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:155: CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
 
 void MainWindow::updateProgramButtons(
     const QVector<ProgramEntry> &programs,
