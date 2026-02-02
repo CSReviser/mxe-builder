@@ -1,3 +1,87 @@
+void MainWindow::updateButtonUI(QToolButton* btn, bool enabled, const QString& baseTitle)
+{
+    const QString check = QString::fromUtf8("✓ ");
+
+    btn->blockSignals(true);
+    btn->setChecked(enabled);
+    btn->blockSignals(false);
+
+    QString text = baseTitle;
+    if (enabled) {
+        text.prepend(check);
+    }
+    btn->setText(text);
+}
+
+void MainWindow::restoreGui()
+{
+    auto &s = Settings::instance();
+
+    // geometry
+    if (!s.mainWindowGeometry.isEmpty()) {
+        restoreGeometry(s.mainWindowGeometry);
+    }
+
+    // English
+    for (const auto &p : Constants::EnglishPrograms) {
+        if (auto btn = findChild<QToolButton*>(p.objectName)) {
+            updateButtonUI(btn, s.enabled[p.keyEnabled], p.titleDefault);
+        }
+    }
+
+    // Optional
+    for (const auto &p : Constants::OptionalPrograms) {
+        if (auto btn = findChild<QToolButton*>(p.objectName)) {
+            updateButtonUI(btn, s.enabled[p.keyEnabled], s.titles[p.keyTitle]);
+        }
+    }
+
+    // Spec
+    for (const auto &p : Constants::SpecPrograms) {
+        if (auto btn = findChild<QToolButton*>(p.objectName)) {
+            updateButtonUI(btn, s.enabled[p.keyEnabled], s.titles[p.keyTitle]);
+        }
+    }
+
+    // Flag
+    for (const auto &p : Constants::FlagSettings) {
+        if (auto cb = findChild<QAbstractButton*>(p.objectName)) {
+            cb->setChecked(s.enabled[p.keyEnabled]);
+        }
+    }
+}
+
+void MainWindow::toggled(bool checked)
+{
+    auto* button = qobject_cast<QToolButton*>(sender());
+    if (!button) return;
+
+    const QString obj = button->objectName();
+
+    // ① settings.enabled を更新
+    if (objectToKey.contains(obj)) {
+        const QString key = objectToKey.value(obj);
+        Settings::instance().enabled[key] = checked;
+    }
+
+    // ② UI 更新（✓ の付け外し）
+    QString baseTitle = button->text();
+    const QString check = QString::fromUtf8("✓ ");
+
+    // ✓ を除去して baseTitle を作る
+    if (baseTitle.startsWith(check)) {
+        baseTitle.remove(0, check.size());
+    }
+
+    updateButtonUI(button, checked, baseTitle);
+}
+
+
+
+
+
+
+
 /* ============================================================
  *  CustomizeDialog API
  * ============================================================ */
