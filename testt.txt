@@ -1,3 +1,7 @@
+private:
+    const Constants::ProgramEntry* findEntryByObjectName(const QString& obj) const;
+
+
 void MainWindow::toggled(bool checked)
 {
     auto* button = qobject_cast<QToolButton*>(sender());
