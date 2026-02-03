@@ -1,3 +1,51 @@
+
+void MainWindow::updateButtonUI(QToolButton* btn, bool checked, const QString& label)
+{
+    btn->blockSignals(true);
+    btn->setChecked(checked);
+    btn->blockSignals(false);
+
+    if (label.isEmpty())
+        return;
+
+    static const QString mark = QString::fromUtf8("✓ ");
+
+    btn->setText(checked ? mark + label : label);
+}
+
+void MainWindow::saveGui()
+{
+    auto &s = Settings::instance();
+
+    // geometry 保存
+    s.saveMainWindow(saveGeometry());
+
+    // English / Optional / Spec / Feature をすべて保存
+    saveProgramButtons(Constants::EnglishPrograms, s);
+    saveProgramButtons(Constants::OptionalPrograms, s);
+    saveProgramButtons(Constants::SpecPrograms, s);
+    saveProgramButtons(Constants::FeatureSettings, s);
+
+    // 最後に settings.ini へ保存
+    s.save();
+}
+
+template <typename Container>
+void MainWindow::saveProgramButtons(const Container &programs, Settings &s)
+{
+    for (const auto &p : programs) {
+        if (p.objectName.isEmpty())
+            continue;
+
+        // QAbstractButton で統一（QToolButton も QCheckBox も継承）
+        if (auto btn = findChild<QAbstractButton*>(p.objectName)) {
+            s.checked[p.keyChecked] = btn->isChecked();
+        }
+    }
+}
+
+
+
 void MainWindow::restoreGui()
 {
     auto &s = Settings::instance();
