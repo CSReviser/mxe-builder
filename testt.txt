@@ -1,3 +1,63 @@
+void MainWindow::restoreGui()
+{
+    auto &s = Settings::instance();
+
+    // geometry 復元
+    if (!s.mainWindowGeometry.isEmpty()) {
+        restoreGeometry(s.mainWindowGeometry);
+    }
+
+    // ===== English =====
+    updateProgramButtons(Constants::EnglishPrograms, s);
+     // ===== Optional =====   
+    updateProgramButtons(Constants::OptionalPrograms, s);
+    // ===== Spec =====
+    updateProgramButtons(Constants::SpecPrograms, s);
+    // ===== Feature（チェックボックス）=====
+    updateProgramButtons(Constants::FeatureSettings, s);
+}
+
+template <typename Container>
+void MainWindow::updateProgramButtons(const Container &programs, const Settings &s)
+{
+    for (const auto &p : programs) {
+        if (auto btn = findChild<QToolButton*>(p.objectName)) {
+
+            QString label;
+            if (p.keyLabel.isEmpty()) {
+                // English
+                label = p.labelDefault;
+            } else {
+                // Optional / Spec
+                label = s.labels[p.keyLabel];
+            }
+
+            updateButtonUI(btn, s.checked[p.keyChecked], label);
+        }
+    }
+}
+
+void MainWindow::updateButtonUI(QToolButton* btn, bool checked, const QString& baseLabel)
+{
+    const QString check = QString::fromUtf8("✓ ");
+
+    btn->blockSignals(true);
+    btn->setChecked(checked);
+    btn->blockSignals(false);
+
+    if (baseLabel.isEmpty()) return;
+    QString text = baseLabel;
+    if (checked) {		
+        text.prepend(check);	            // 状態に応じて「✓」付与
+    }
+    btn->setText(text);
+}
+
+
+
+
+
+
 settings.h
 
 #pragma once
