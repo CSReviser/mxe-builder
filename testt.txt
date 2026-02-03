@@ -1,4 +1,34 @@
 
+// audio_extension
+if (auto combo = findChild<QComboBox*>("comboBox_extension")) {
+    int index = combo->findText(s.audioExtension);
+    if (index >= 0)
+        combo->setCurrentIndex(index);
+}
+
+// saveFolder
+if (auto edit = findChild<QLineEdit*>("lineEdit_saveFolder"))
+    edit->setText(s.saveFolder);
+
+// ffmpegFolder
+if (auto edit = findChild<QLineEdit*>("lineEdit_ffmpegFolder"))
+    edit->setText(s.ffmpegFolder);
+
+// audio_extension
+if (auto combo = findChild<QComboBox*>("comboBox_extension"))
+    s.audioExtension = combo->currentText();
+
+// saveFolder
+if (auto edit = findChild<QLineEdit*>("lineEdit_saveFolder"))
+    s.saveFolder = edit->text();
+
+// ffmpegFolder
+if (auto edit = findChild<QLineEdit*>("lineEdit_ffmpegFolder"))
+    s.ffmpegFolder = edit->text();
+
+
+
+
 void MainWindow::updateButtonUI(QToolButton* btn, bool checked, const QString& label)
 {
     btn->blockSignals(true);
