@@ -1,3 +1,98 @@
+void MainWindow::customizeSaveFolder()
+{
+    auto &s = Settings::instance();
+    QString base = s.saveFolder;
+
+#if defined(Q_OS_WIN)
+    QString folderPath;
+    if (isWineEnvironment()) {
+        folderPath = getPortableFolderDialog(
+            this,
+            tr("書き込み可能な保存フォルダを指定してください"),
+            base
+        );
+    } else {
+        folderPath = QFileDialog::getExistingDirectory(
+            this,
+            tr("書き込み可能な保存フォルダを指定してください"),
+            base,
+            QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks
+        );
+    }
+    QString dir = QFileInfo(folderPath).absoluteFilePath();
+#else
+    QString dir = QFileDialog::getExistingDirectory(
+        this,
+        tr("書き込み可能な保存フォルダを指定してください"),
+        base,
+        QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks
+    );
+#endif
+
+    if (!dir.isEmpty()) {
+        s.saveFolder = dir + QDir::separator();
+    }
+}
+
+void MainWindow::customizeFolderOpen()
+{
+    auto &s = Settings::instance();
+    QString folder = s.saveFolder;
+
+    bool success = false;
+
+#if defined(Q_OS_WIN)
+    if (isWineEnvironment()) {
+        QString dir = convertWinePathToUnix(folder);
+        openUrlWithFallbackDialog(QUrl::fromLocalFile(dir), this);
+        success = true;
+    } else {
+        success = QDesktopServices::openUrl(QUrl("file:///" + folder, QUrl::TolerantMode));
+    }
+#elif defined(Q_OS_MAC)
+    success = QDesktopServices::openUrl(QUrl("file:///" + folder, QUrl::TolerantMode));
+#elif defined(Q_OS_LINUX)
+    QString dir = convertWinePathToUnixAuto(folder);
+    QString cmd = QString("xdg-open \"%1\"").arg(dir);
+    openUrlWithFallbackDialog(QUrl::fromLocalFile(dir), this);
+    success = QProcess::startDetached("/bin/sh", QStringList() << "-c" << cmd);
+    if (!success) {
+        success = QDesktopServices::openUrl(folder);
+    }
+#else
+    success = QDesktopServices::openUrl(QUrl("file:///" + folder, QUrl::TolerantMode));
+    if (!success) {
+        success = QDesktopServices::openUrl(folder);
+    }
+#endif
+
+    if (!success) {
+        success = QDesktopServices::openUrl(folder);
+    }
+
+    if (!success) {
+        QString fallbackMessage =
+            tr("フォルダを開くことができませんでした。\nパス: %1").arg(folder);
+        QMessageBox::warning(nullptr, tr("エラー"), fallbackMessage);
+    }
+}
+
+void MainWindow::restoreGui()
+{
+    auto &s = Settings::instance();
+
+    if (s.saveFolder.isEmpty()) {
+        customizeSaveFolder();
+    }
+
+    // 他の復元処理…
+}
+
+
+
+
+
+
 public:
     QString detectFfmpegFolder();   // MainWindow から呼べる
 
