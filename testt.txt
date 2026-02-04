@@ -89,6 +89,76 @@ void MainWindow::restoreGui()
 }
 
 
+private:
+    void initDefaultSaveFolder();          // OS別初期値設定
+    void validateSaveFolder();             // 妥当性チェック
+
+void Settings::load()
+{
+    QSettings ini(Constants::IniFileName, QSettings::IniFormat);
+
+    ini.beginGroup(Constants::SETTING_GROUP_MainWindow);
+
+    saveFolder = ini.value(Constants::KEY_SaveFolder).toString();
+
+    ini.endGroup();
+
+    // ===== 初期値設定（未設定の場合のみ） =====
+    initDefaultSaveFolder();
+
+    // ===== 妥当性チェック（存在しないフォルダなら空にする） =====
+    validateSaveFolder();
+}
+
+void Settings::initDefaultSaveFolder()
+{
+    if (!saveFolder.isEmpty())
+        return;  // すでに設定済みなら何もしない
+
+#ifdef Q_OS_WIN
+    saveFolder = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+#elif defined(Q_OS_MAC)
+    saveFolder = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+#elif defined(Q_OS_LINUX)
+    saveFolder = QDir::homePath();
+#else
+    saveFolder = QDir::homePath();
+#endif
+
+    // 最後は必ず末尾にセパレータを付ける
+    if (!saveFolder.endsWith(QDir::separator()))
+        saveFolder += QDir::separator();
+}
+
+void Settings::validateSaveFolder()
+{
+    if (saveFolder.isEmpty())
+        return;
+
+    QDir dir(saveFolder);
+
+    // フォルダが存在しない場合は空にする
+    if (!dir.exists()) {
+        saveFolder.clear();
+        return;
+    }
+
+    // 書き込み可能かどうかの最低限チェック
+    QFileInfo testFile(dir.filePath(".__cs2_test__"));
+    QFile f(testFile.absoluteFilePath());
+
+    if (f.open(QIODevice::WriteOnly)) {
+        f.close();
+        f.remove();  // テストファイル削除
+    } else {
+        // 書き込み不可 → 空にする
+        saveFolder.clear();
+    }
+}
+
+
+
+
 
 
 
