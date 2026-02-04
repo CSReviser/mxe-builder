@@ -1,3 +1,214 @@
+QString ffmpegFolder;
+
+private:
+    void initDefaultFfmpegFolder();
+    QString autoDetectFfmpeg();   // OS別探索
+
+
+
+settings cpp
+
+void Settings::load()
+{
+    QSettings ini(Constants::IniFileName, QSettings::IniFormat);
+
+    ini.beginGroup(Constants::SETTING_GROUP_MainWindow);
+
+    // ffmpegFolder（null 許容）
+    {
+        QVariant v = ini.value(Constants::KEY_FfmpegFolder);
+        ffmpegFolder = v.isValid() ? v.toString() : QString();
+    }
+
+    ini.endGroup();
+
+    // ===== 初回起動時の OS 別初期化 =====
+    initDefaultFfmpegFolder();
+}
+
+void Settings::initDefaultFfmpegFolder()
+{
+    if (!ffmpegFolder.isEmpty())
+        return;  // すでに設定済み
+
+    // OS別に自動探索
+    QString detected = autoDetectFfmpeg();
+    if (!detected.isEmpty()) {
+        ffmpegFolder = detected;
+        return;
+    }
+
+    // 見つからなければ空のまま（MainWindow がダイアログを出す）
+    ffmpegFolder.clear();
+}
+
+QString Settings::autoDetectFfmpeg()
+{
+    QProcess process;
+    QString ffmpegPath;
+
+#ifdef Q_OS_WIN
+    process.start("cmd.exe", QStringList() << "/c" << "where" << "ffmpeg");
+#else
+    process.start("which", QStringList() << "ffmpeg");
+#endif
+    process.waitForFinished();
+
+    ffmpegPath = QString::fromUtf8(process.readAllStandardOutput())
+                     .split("\n").first().trimmed();
+
+    if (!QFileInfo::exists(ffmpegPath)) {
+#ifdef Q_OS_MAC
+        QString arch = QSysInfo::buildCpuArchitecture();
+        if (arch == "x86_64") {
+            ffmpegPath = "/usr/local/bin/ffmpeg";
+        } else if (arch == "arm64") {
+            ffmpegPath = "/opt/homebrew/bin/ffmpeg";
+            if (!QFile::exists(ffmpegPath))
+                ffmpegPath = "/usr/local/bin/ffmpeg";
+        }
+#elif defined(Q_OS_LINUX)
+        ffmpegPath = "/usr/bin/ffmpeg";
+#elif defined(Q_OS_WIN)
+        ffmpegPath = "C:\\Program Files\\ffmpeg\\bin\\ffmpeg.exe";
+        if (!QFile::exists(ffmpegPath))
+            ffmpegPath = "C:\\ffmpeg\\bin\\ffmpeg.exe";
+#endif
+    }
+
+    if (QFile::exists(ffmpegPath))
+        return QFileInfo(ffmpegPath).absolutePath();
+
+    return QString();
+}
+
+mainwindowcっp
+void MainWindow::restoreGui()
+{
+    auto &s = Settings::instance();
+
+    // ffmpeg が未設定なら設定ダイアログを開く
+    if (s.ffmpegFolder.isEmpty()) {
+        ffmpegFolderDialog();
+    }
+
+    // その他の復元処理…
+}
+
+
+void MainWindow::ffmpegFolderDialog()
+{
+    auto &s = Settings::instance();
+
+    QMessageBox msgBox(this);
+    QString message = QString::fromUtf8("ffmpegがあるフォルダを設定しますか？\n現在設定：\n") 
+                      + s.ffmpegFolder;
+    msgBox.setIcon(QMessageBox::Question);
+    msgBox.setWindowTitle(tr("ffmpegがあるフォルダ設定"));
+    msgBox.setText(message);
+
+    QPushButton* setButton = msgBox.addButton(tr("設定する"), QMessageBox::ActionRole);
+    QPushButton* searchButton = msgBox.addButton(tr("検索"), QMessageBox::ActionRole);
+    QPushButton* bundledButton = msgBox.addButton(tr("同梱"), QMessageBox::ActionRole);
+    QPushButton* resetButton = msgBox.addButton(tr("初期値に戻す"), QMessageBox::ActionRole);
+    msgBox.setStandardButtons(QMessageBox::Cancel);
+
+    if (msgBox.exec() == QMessageBox::Cancel)
+        return;
+
+    QPushButton* clicked = qobject_cast<QPushButton*>(msgBox.clickedButton());
+
+    if (clicked == setButton) {
+
+        QString dir = QFileDialog::getExistingDirectory(
+            this, tr("ffmpegがあるフォルダを指定してください"),
+            s.ffmpegFolder,
+            QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+
+        if (!dir.isEmpty())
+            s.ffmpegFolder = dir + QDir::separator();
+
+    } else if (clicked == resetButton) {
+
+        s.ffmpegFolder = Utility::applicationBundlePath();
+
+    } else if (clicked == searchButton) {
+
+        QString dir = Settings::instance().autoDetectFfmpeg();
+        if (!dir.isEmpty()) {
+            QString msg = QString::fromUtf8("ffmpegがある下記フォルダを見つけました。\n設定しますか？\n\n") + dir;
+            if (QMessageBox::Yes == QMessageBox::question(this, tr("ffmpegフォルダ設定"), msg))
+                s.ffmpegFolder = dir + QDir::separator();
+        }
+
+    } else if (clicked == bundledButton) {
+
+        QString dir = Utility::applicationBundlePath();
+        QString msg = QString::fromUtf8("同梱のffmpegを使用します。\n設定しますか？\n\n") + dir;
+        if (QMessageBox::Yes == QMessageBox::question(this, tr("同梱ffmpeg設定"), msg))
+            s.ffmpegFolder = dir + QDir::separator();
+    }
+}
+
+private:
+    bool isValidFfmpegFolder(const QString& folder) const;
+    bool canExecuteFfmpeg(const QString& ffmpegPath) const;
+
+
+bool Settings::isValidFfmpegFolder(const QString& folder) const
+{
+    if (folder.isEmpty())
+        return false;
+
+    QDir dir(folder);
+    if (!dir.exists())
+        return false;
+
+#ifdef Q_OS_WIN
+    QString exe = dir.filePath("ffmpeg.exe");
+#else
+    QString exe = dir.filePath("ffmpeg");
+#endif
+
+    if (!QFileInfo::exists(exe))
+        return false;
+
+    return canExecuteFfmpeg(exe);
+}
+
+bool Settings::canExecuteFfmpeg(const QString& ffmpegPath) const
+{
+    QProcess p;
+    p.start(ffmpegPath, {"-version"});
+    if (!p.waitForFinished(1500))  // タイムアウト短めでOK
+        return false;
+
+    return (p.exitStatus() == QProcess::NormalExit);
+}
+
+
+void Settings::load()
+{
+    QSettings ini(Constants::IniFileName, QSettings::IniFormat);
+
+    ini.beginGroup(Constants::SETTING_GROUP_MainWindow);
+
+    ffmpegFolder = ini.value(Constants::KEY_FfmpegFolder).toString();
+
+    ini.endGroup();
+
+    // OS別初期値設定（未設定の場合のみ）
+    initDefaultFfmpegFolder();
+
+    // 妥当性確認（壊れたパスなら空にする）
+    if (!isValidFfmpegFolder(ffmpegFolder)) {
+        ffmpegFolder.clear();
+    }
+}
+
+
+
+
 
 // audio_extension
 if (auto combo = findChild<QComboBox*>("comboBox_extension")) {
