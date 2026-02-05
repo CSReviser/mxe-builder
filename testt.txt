@@ -1,3 +1,161 @@
+
+ 1. clioptions.h（CLI 専用構造体）
+
+#pragma once
+#include <QString>
+#include <vector>
+#include <optional>
+
+struct CliOptions {
+    bool nogui = false;
+
+    std::vector<QString> programIds;
+
+    std::optional<QString> titleTagFormat;   // -t
+    std::optional<QString> fileNameFormat;   // -f
+    std::optional<QString> outputFolder;     // -o
+    std::optional<QString> extension;        // -e
+
+    bool optionZ = false;  // -z
+    bool optionB = false;  // -b
+    bool optionS = false;  // -s
+
+    // ★ CLI が有効化した keyOption を保持
+    std::vector<QString> enabledKeys;
+};
+
+
+---
+
+✅ 2. commandlineparser.h
+
+#pragma once
+#include "clioptions.h"
+
+class CommandLineParser {
+public:
+    static CliOptions parse(int argc, char* argv[]);
+};
+
+
+---
+
+✅ 3. commandlineparser.cpp（keyOption 対応版）
+
+#include "commandlineparser.h"
+#include "constants.h"
+#include <QString>
+
+CliOptions CommandLineParser::parse(int argc, char* argv[])
+{
+    CliOptions opts;
+
+    auto findOption = [&](const QString& arg) -> const Constants::CliOption* {
+        for (int i = 0; i < Constants::OPTION_TABLE_COUNT; ++i) {
+            if (arg == Constants::OPTION_TABLE[i].name)
+                return &Constants::OPTION_TABLE[i];
+        }
+        return nullptr;
+    };
+
+    for (int i = 1; i < argc; ++i) {
+        QString arg = argv[i];
+        const Constants::CliOption* opt = findOption(arg);
+
+        if (!opt) {
+            // プログラムIDとして扱う
+            opts.programIds.push_back(arg);
+            continue;
+        }
+
+        // 値を取るオプション
+        if (opt->requiresValue) {
+            if (i + 1 >= argc)
+                break;
+
+            QString value = argv[++i];
+
+            if (arg == "-t")      opts.titleTagFormat = value;
+            else if (arg == "-f") opts.fileNameFormat = value;
+            else if (arg == "-o") opts.outputFolder   = value;
+            else if (arg == "-e") opts.extension      = value;
+
+            // ★ keyOption を登録
+            opts.enabledKeys.push_back(opt->keyOption);
+        }
+        else {
+            // 値を取らないオプション
+            if (arg == "-nogui") opts.nogui = true;
+            else if (arg == "-z") opts.optionZ = true;
+            else if (arg == "-b") opts.optionB = true;
+            else if (arg == "-s") opts.optionS = true;
+
+            // ★ keyOption を登録
+            opts.enabledKeys.push_back(opt->keyOption);
+        }
+    }
+
+    return opts;
+}
+
+
+---
+
+✅ 4. runtimeconfig.h（applyCommandLine を CliOptions 版に変更）
+
+void applyCommandLine(const CliOptions &cli);
+
+
+---
+
+✅ 5. runtimeconfig.cpp（flags 連動版）
+
+#include "runtimeconfig.h"
+#include "clioptions.h"
+
+void RuntimeConfig::applyCommandLine(const CliOptions &cli)
+{
+    //
+    // 1. 値を持つオプション
+    //
+    if (cli.outputFolder)
+        saveFolder = *cli.outputFolder;
+
+    if (cli.extension)
+        audioExtension = *cli.extension;
+
+    if (cli.titleTagFormat)
+        titleTagFormat = *cli.titleTagFormat;
+
+    if (cli.fileNameFormat)
+        fileNameFormat = *cli.fileNameFormat;
+
+    //
+    // 2. フラグ系（-s, -z, -b, -nogui）
+    //
+    if (cli.optionS) optionS = true;
+    if (cli.optionZ) optionZ = true;
+    if (cli.optionB) optionB = true;
+    if (cli.nogui)   nogui   = true;
+
+    //
+    // 3. programIds（CLI 専用）
+    //
+    if (!cli.programIds.empty())
+        programIds = cli.programIds;
+
+    //
+    // 4. flags に反映（GUI と CLI の統合ポイント）
+    //
+    for (const auto &key : cli.enabledKeys)
+        setFlag(key, true);
+}
+
+
+---
+
+
+
     // CLIコマンドラインオプション
 struct CliOption {
     const char* name;
