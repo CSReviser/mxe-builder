@@ -1,3 +1,40 @@
+namespace Constants {
+
+struct FlagEntry {
+    QString key;      // "previewEnabled" など
+    bool defaultValue;
+};
+
+static const FlagEntry FlagTable[] = {
+    { "previewEnabled", false },
+    { "useNewMode",     false },
+    { "featureX",       true  }, // ini に保存される Feature でもよい
+    // ...
+};
+
+
+void RuntimeConfig::applySettings(const Settings &s)
+{
+    // Feature 系（ini に保存されるもの）
+    for (int i = 0; i < Constants::FeatureCount; i++) {
+        const auto &p = Constants::FeatureSettings[i];
+        bool v = s.checked[p.keyChecked];
+        checkBox[i] = v;
+        setFlag(p.keyChecked, v);   // flags にも反映
+    }
+
+    // その他の Settings も必要に応じて flags にマージしてよい
+}
+
+
+
+static const int FlagCount = sizeof(FlagTable) / sizeof(FlagEntry);
+
+} // namespace Constants
+
+
+
+
 void MainWindow::customizeSaveFolder()
 {
     auto &s = Settings::instance();
