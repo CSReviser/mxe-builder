@@ -1,4 +1,15 @@
 
+void RuntimeConfig::setFlag(const QString &key, bool value)
+{
+    flags[key] = value;
+}
+
+bool RuntimeConfig::flag(const QString &key) const
+{
+    return flags.value(key, false);
+}
+
+
 private:
     QMap<QString, bool> flags;
 
