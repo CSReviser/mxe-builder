@@ -1,3 +1,13 @@
+
+void RuntimeConfig::applyRecordingConfig(const RecordingConfig &rc)
+{
+    setFlag(Constants::KEY_NOGUI, rc.nogui);
+    setFlag(Constants::KEY_Z, rc.optionZ);
+    setFlag(Constants::KEY_B, rc.optionB);
+    setFlag(Constants::KEY_S, rc.optionS);
+}
+
+
 [ 11%] Building CXX object CMakeFiles/CaptureStream2.dir/runtimeconfig.cpp.o
 /home/kazuo/cs/CaptureStream2/runtimeconfig.cpp: In member function ‘void RuntimeConfig::applyCommandLine(const QMap<QString, QString>&)’:
 /home/kazuo/cs/CaptureStream2/runtimeconfig.cpp:124:35: error: ‘rc’ was not declared in this scope
