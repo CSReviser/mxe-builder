@@ -1,3 +1,47 @@
+[ 77%] Building CXX object CMakeFiles/CaptureStream2.dir/runtimeconfig.cpp.o
+/home/kazuo/cs/CaptureStream2/runtimeconfig.cpp: In member function ‘void RuntimeConfig::applyCommandLine(const CliOptions&)’:
+/home/kazuo/cs/CaptureStream2/runtimeconfig.cpp:91:9: error: ‘titleTagFormat’ was not declared in this scope
+   91 |         titleTagFormat = *cli.titleTagFormat;
+      |         ^~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/runtimeconfig.cpp:94:9: error: ‘fileNameFormat’ was not declared in this scope
+   94 |         fileNameFormat = *cli.fileNameFormat;
+      |         ^~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/runtimeconfig.cpp:99:22: error: ‘optionS’ was not declared in this scope; did you mean ‘optional’?
+   99 |     if (cli.optionS) optionS = true;
+      |                      ^~~~~~~
+      |                      optional
+/home/kazuo/cs/CaptureStream2/runtimeconfig.cpp:100:22: error: ‘optionZ’ was not declared in this scope; did you mean ‘optional’?
+  100 |     if (cli.optionZ) optionZ = true;
+      |                      ^~~~~~~
+      |                      optional
+/home/kazuo/cs/CaptureStream2/runtimeconfig.cpp:101:22: error: ‘optionB’ was not declared in this scope; did you mean ‘optional’?
+  101 |     if (cli.optionB) optionB = true;
+      |                      ^~~~~~~
+      |                      optional
+/home/kazuo/cs/CaptureStream2/runtimeconfig.cpp:102:22: error: ‘nogui’ was not declared in this scope
+  102 |     if (cli.nogui)   nogui   = true;
+      |                      ^~~~~
+/home/kazuo/cs/CaptureStream2/runtimeconfig.cpp:108:9: error: ‘programIds’ was not declared in this scope
+  108 |         programIds = cli.programIds;
+      |         ^~~~~~~~~~
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:253: CMakeFiles/CaptureStream2.dir/runtimeconfig.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
+
+
+GUIも含めてsettingsの下記の部分がrunntimeConfigに反映されていない
+    // ===== CustomizeDialog =====
+    ini.beginGroup(Constants::SETTING_GROUP_CustomizeDialog);
+    for (int i = 0; i < Constants::ITEM_COUNT; ++i) {
+        const auto &t = Constants::TITLE_ITEMS[i];
+        titleFormat[i] = ini.value(t.key, t.defaultValue).toString();
+
+        const auto &f = Constants::FILENAME_ITEMS[i];
+        fileNameFormat[i] = ini.value(f.key, f.defaultValue).toString();
+    }
+    ini.endGroup();
+
+
 
  1. clioptions.h（CLI 専用構造体）
 
