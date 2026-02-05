@@ -1,3 +1,13 @@
+[ 11%] Building CXX object CMakeFiles/CaptureStream2.dir/runtimeconfig.cpp.o
+/home/kazuo/cs/CaptureStream2/runtimeconfig.cpp: In member function ‘void RuntimeConfig::applyCommandLine(const QMap<QString, QString>&)’:
+/home/kazuo/cs/CaptureStream2/runtimeconfig.cpp:124:35: error: ‘rc’ was not declared in this scope
+  124 |     setFlag(Constants::KEY_NOGUI, rc.nogui);
+      |                                   ^~
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:253: CMakeFiles/CaptureStream2.dir/runtimeconfig.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
+
+
 void RuntimeConfig::applyRecordingConfig(const RecordingConfig &rc)
 {
     setFlag("nogui", rc.nogui);
