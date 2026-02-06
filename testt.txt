@@ -1,32 +1,151 @@
-[ 77%] Building CXX object CMakeFiles/CaptureStream2.dir/runtimeconfig.cpp.o
-/home/kazuo/cs/CaptureStream2/runtimeconfig.cpp: In member function ‘void RuntimeConfig::applyCommandLine(const CliOptions&)’:
-/home/kazuo/cs/CaptureStream2/runtimeconfig.cpp:91:9: error: ‘titleTagFormat’ was not declared in this scope
-   91 |         titleTagFormat = *cli.titleTagFormat;
-      |         ^~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/runtimeconfig.cpp:94:9: error: ‘fileNameFormat’ was not declared in this scope
-   94 |         fileNameFormat = *cli.fileNameFormat;
-      |         ^~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/runtimeconfig.cpp:99:22: error: ‘optionS’ was not declared in this scope; did you mean ‘optional’?
-   99 |     if (cli.optionS) optionS = true;
-      |                      ^~~~~~~
-      |                      optional
-/home/kazuo/cs/CaptureStream2/runtimeconfig.cpp:100:22: error: ‘optionZ’ was not declared in this scope; did you mean ‘optional’?
-  100 |     if (cli.optionZ) optionZ = true;
-      |                      ^~~~~~~
-      |                      optional
-/home/kazuo/cs/CaptureStream2/runtimeconfig.cpp:101:22: error: ‘optionB’ was not declared in this scope; did you mean ‘optional’?
-  101 |     if (cli.optionB) optionB = true;
-      |                      ^~~~~~~
-      |                      optional
-/home/kazuo/cs/CaptureStream2/runtimeconfig.cpp:102:22: error: ‘nogui’ was not declared in this scope
-  102 |     if (cli.nogui)   nogui   = true;
-      |                      ^~~~~
-/home/kazuo/cs/CaptureStream2/runtimeconfig.cpp:108:9: error: ‘programIds’ was not declared in this scope
-  108 |         programIds = cli.programIds;
-      |         ^~~~~~~~~~
-make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:253: CMakeFiles/CaptureStream2.dir/runtimeconfig.cpp.o] エラー 1
-make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
-make: *** [Makefile:91: all] エラー 2
+#pragma once
+#include <QString>
+#include <QMap>
+#include <vector>
+#include <optional>
+
+#include "settings.h"
+#include "clioptions.h"
+#include "constants.h"
+
+class RuntimeConfig
+{
+public:
+    RuntimeConfig();
+
+    void applySettings(const Settings &s);
+    void applyCommandLine(const CliOptions &cli);
+
+    void setFlag(const QString &key, bool value);
+    bool flag(const QString &key) const;
+
+public:
+    // ===== GUI: English / Optional / Spec =====
+    ProgramEntry english[Constants::EnglishCount];
+    ProgramEntry optional[Constants::OptionalCount];
+    ProgramEntry spec[Constants::SpecCount];
+
+    // ===== GUI: Feature チェックボックス =====
+    bool checkBox[Constants::FeatureCount];
+
+    // ===== GUI: その他設定 =====
+    QString saveFolder;
+    QString ffmpegFolder;
+    QString audioExtension;
+
+    // ===== GUI: CustomizeDialog =====
+    QString titleFormat[Constants::ITEM_COUNT];
+    QString fileNameFormat[Constants::ITEM_COUNT];
+
+    // ===== CLI: 録画設定 =====
+    std::optional<QString> cliTitleTagFormat;   // -t
+    std::optional<QString> cliFileNameFormat;   // -f
+    std::optional<QString> cliOutputFolder;     // -o
+    std::optional<QString> cliExtension;        // -e
+
+    std::vector<QString> cliProgramIds;
+
+    // ===== flags（GUI + CLI 統合）=====
+    QMap<QString, bool> flags;
+};
+
+
+#include "runtimeconfig.h"
+#include "constants.h"
+
+RuntimeConfig::RuntimeConfig()
+{
+    // flags 初期化
+    for (int i = 0; i < Constants::FlagCount; ++i) {
+        const auto &f = Constants::FlagTable[i];
+        flags[f.keyFlag] = f.flagDefault;
+    }
+}
+
+void RuntimeConfig::applySettings(const Settings &s)
+{
+    // ===== English =====
+    for (int i = 0; i < Constants::EnglishCount; i++) {
+        const auto &p = Constants::EnglishPrograms[i];
+        english[i].checked = s.checked[p.keyChecked];
+        english[i].id      = p.idDefault;
+        english[i].label   = p.labelDefault;
+    }
+
+    // ===== Optional =====
+    for (int i = 0; i < Constants::OptionalCount; i++) {
+        const auto &p = Constants::OptionalPrograms[i];
+        optional[i].checked = s.checked[p.keyChecked];
+        optional[i].id      = s.ids[p.keyId];
+        optional[i].label   = s.labels[p.keyLabel];
+    }
+
+    // ===== Spec =====
+    for (int i = 0; i < Constants::SpecCount; i++) {
+        const auto &p = Constants::SpecPrograms[i];
+        spec[i].checked = s.checked[p.keyChecked];
+        spec[i].id      = s.ids[p.keyId];
+        spec[i].label   = s.labels[p.keyLabel];
+    }
+
+    // ===== Feature（チェックボックス）=====
+    for (int i = 0; i < Constants::FeatureCount; i++) {
+        const auto &p = Constants::FeatureSettings[i];
+        checkBox[i] = s.checked[p.keyChecked];
+        setFlag(p.keyChecked, s.checked[p.keyChecked]);
+    }
+
+    // ===== その他設定 =====
+    saveFolder     = s.saveFolder;
+    ffmpegFolder   = s.ffmpegFolder;
+    audioExtension = s.audioExtension;
+
+    // ===== CustomizeDialog =====
+    for (int i = 0; i < Constants::ITEM_COUNT; ++i) {
+        titleFormat[i]    = s.titleFormat[i];
+        fileNameFormat[i] = s.fileNameFormat[i];
+    }
+}
+
+void RuntimeConfig::applyCommandLine(const CliOptions &cli)
+{
+    // ===== CLI: 録画設定 =====
+    if (cli.titleTagFormat)
+        cliTitleTagFormat = *cli.titleTagFormat;
+
+    if (cli.fileNameFormat)
+        cliFileNameFormat = *cli.fileNameFormat;
+
+    if (cli.outputFolder)
+        cliOutputFolder = *cli.outputFolder;
+
+    if (cli.extension)
+        cliExtension = *cli.extension;
+
+    if (!cli.programIds.empty())
+        cliProgramIds = cli.programIds;
+
+    // ===== CLI: flags =====
+    for (const auto &key : cli.enabledKeys)
+        setFlag(key, true);
+}
+
+void RuntimeConfig::setFlag(const QString &key, bool value)
+{
+    flags[key] = value;
+}
+
+bool RuntimeConfig::flag(const QString &key) const
+{
+    return flags.value(key, false);
+}
+
+
+
+
+
+
+
 
 
 GUIも含めてsettingsの下記の部分がrunntimeConfigに反映されていない
