@@ -1,3 +1,210 @@
+[ 14%] Building CXX object CMakeFiles/CaptureStream2.dir/CaptureStream2_autogen/mocs_compilation.cpp.o
+In file included from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants.h:25,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../settings.h:29,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../mainwindow.h:40,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../downloadthread.h:31,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/moc_downloadthread.cpp:9,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/mocs_compilation.cpp:4:
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_core.h:6:39: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+    6 |     inline constexpr char*  AppName = "語学講座ＣＳ２";
+      |                                       ^~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_core.h:7:42: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+    7 |     inline constexpr char*  AppVersion = "2026/01/29";
+      |                                          ^~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_core.h:10:43: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   10 |     inline constexpr char*  IniFileName = "CaptureStream2.ini";
+      |                                           ^~~~~~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_core.h:13:56: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   13 |     inline constexpr char*  SETTING_GROUP_MainWindow = "MainWindow";
+      |                                                        ^~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_core.h:14:61: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   14 |    inline constexpr char*  SETTING_GROUP_CustomizeDialog = "CustomizeDialog";
+      |                                                            ^~~~~~~~~~~~~~~~~
+
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_core.h:15:59: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   15 |     inline constexpr char*  SETTING_GROUP_MessageWindow = "MessageWindow";
+      |                                                           ^~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_core.h:16:60: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   16 |     inline constexpr char*  SETTING_GROUP_ScrambleDialog = "ScrambleDialog";
+      |                                                            ^~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_core.h:17:60: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   17 |     inline constexpr char*  SETTING_GROUP_Settingsdialog = "Settingsdialog";
+      |                                                            ^~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_core.h:20:50: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   20 |     inline constexpr char*  KEY_AudioExtension = "audio_extension";
+      |                                                  ^~~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_core.h:21:54: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   21 |     inline constexpr char*  DEFAULT_AudioExtension = "m4a";
+      |                                                      ^~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_core.h:25:50: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   25 |     inline constexpr char*  KEY_SaveFolder     = "save_folder";
+      |                                                  ^~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_core.h:26:50: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   26 |     inline constexpr char*  KEY_FfmpegFolder   = "ffmpeg_folder";
+      |                                                  ^~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_core.h:29:42: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   29 |     inline constexpr char*  KEY_basic0 = "basic0";
+      |                                          ^~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_core.h:30:42: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   30 |     inline constexpr char*  KEY_basic1 = "basic1";
+      |                                          ^~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_core.h:31:42: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   31 |     inline constexpr char*  KEY_basic2 = "basic2";
+      |                                          ^~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_core.h:32:45: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   32 |     inline constexpr char*  KEY_timetrial = "timetrial";
+      |                                             ^~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_core.h:33:41: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   33 |     inline constexpr char*  KEY_enjoy = "enjoy";
+      |                                         ^~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_core.h:34:42: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   34 |     inline constexpr char*  KEY_kaiwa =  "kaiwa";
+      |                                          ^~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_core.h:35:44: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   35 |     inline constexpr char*  KEY_business = "business1";
+      |                                            ^~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_core.h:36:42: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   36 |     inline constexpr char*  KEY_gendai = "gendai";
+      |                                          ^~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_core.h:39:51: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   39 |     inline constexpr char*  KEY_KOZA_SEPARATION = "koza_separation";
+      |                                                   ^~~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_core.h:40:45: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   40 |     inline constexpr char*  KEY_MULTI_GUI = "multi_gui";
+      |                                             ^~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_core.h:41:46: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   41 |     inline constexpr char*  KEY_NAME_SPACE = "name_space";
+      |                                              ^~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_core.h:42:45: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   42 |     inline constexpr char*  KEY_TAG_SPACE = "tag_space";
+      |                                             ^~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_core.h:43:43: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   43 |     inline constexpr char*  KEY_NOGUI   = "nogui";              // CLI: -nogui
+      |                                           ^~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_core.h:44:51: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   44 |     inline constexpr char*  KEY_LAST_WEEK       = "last_week";          // GUI: [前週]、CLI: -z
+      |                                                   ^~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_core.h:45:51: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   45 |     inline constexpr char*  KEY_BOTH_WEEKS      = "both_weeks";         // CLI: -b
+      |                                                   ^~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_core.h:46:48: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   46 |     inline constexpr char*  KEY_PROGRAM_LIST = "program_list";  // GUI: 番組一覧表示
+      |                                                ^~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_core.h:49:59: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   49 |     inline constexpr char*  KEY_CUSTOMIZED_TITLE1       = "customized_title1";
+      |                                                           ^~~~~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_core.h:50:59: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   50 |     inline constexpr char*  KEY_CUSTOMIZED_TITLE2       = "customized_title2";
+      |                                                           ^~~~~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_core.h:51:59: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   51 |     inline constexpr char*  KEY_CUSTOMIZED_FILENAME1    = "customized_file_name1";
+      |                                                           ^~~~~~~~~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_core.h:52:59: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+   52 |     inline constexpr char*  KEY_CUSTOMIZED_FILENAME2    = "customized_file_name2";
+      |                                                           ^~~~~~~~~~~~~~~~~~~~~~~
+In file included from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../mainwindow.h:40,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../downloadthread.h:31,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/moc_downloadthread.cpp:9,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/mocs_compilation.cpp:4:
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../settings.h:62:51: error: the value of ‘Constants::OPT_PRESET_SIZE’ is not usable in a constant expression
+   62 |     std::array<QString, Constants::OPT_PRESET_SIZE> optionals;
+      |                                                   ^
+In file included from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants.h:26,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../settings.h:29,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../mainwindow.h:40,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../downloadthread.h:31,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/moc_downloadthread.cpp:9,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/mocs_compilation.cpp:4:
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_programs.h:173:22: note: ‘Constants::OPT_PRESET_SIZE’ was not initialized with a constant expression
+  173 |     extern const int OPT_PRESET_SIZE = OptionalCount;
+      |                      ^~~~~~~~~~~~~~~
+In file included from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../mainwindow.h:40,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../downloadthread.h:31,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/moc_downloadthread.cpp:9,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/mocs_compilation.cpp:4:
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../settings.h:62:51: note: in template argument for type ‘long unsigned int’
+   62 |     std::array<QString, Constants::OPT_PRESET_SIZE> optionals;
+      |                                                   ^
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../settings.h:63:47: error: the value of ‘Constants::PRESET_SIZE’ is not usable in a constant expression
+   63 |     std::array<QString, Constants::PRESET_SIZE> specials;
+      |                                               ^
+In file included from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants.h:26,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../settings.h:29,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../mainwindow.h:40,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../downloadthread.h:31,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/moc_downloadthread.cpp:9,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/mocs_compilation.cpp:4:
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_programs.h:195:22: note: ‘Constants::PRESET_SIZE’ was not initialized with a constant expression
+  195 |     extern const int PRESET_SIZE = SpecCount;
+      |                      ^~~~~~~~~~~
+In file included from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../mainwindow.h:40,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../downloadthread.h:31,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/moc_downloadthread.cpp:9,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/mocs_compilation.cpp:4:
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../settings.h:63:47: note: in template argument for type ‘long unsigned int’
+   63 |     std::array<QString, Constants::PRESET_SIZE> specials;
+      |                                               ^
+In file included from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../mainwindow.h:41,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../downloadthread.h:31,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/moc_downloadthread.cpp:9,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/mocs_compilation.cpp:4:
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../runtimeconfig.h:53:39: error: size of array ‘english’ is not an integral constant-expression
+   53 |     RuntimeProgram english[Constants::EnglishCount];
+      |                            ~~~~~~~~~~~^~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../runtimeconfig.h:54:40: error: size of array ‘optional’ is not an integral constant-expression
+   54 |     RuntimeProgram optional[Constants::OptionalCount];
+      |                             ~~~~~~~~~~~^~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../runtimeconfig.h:55:36: error: size of array ‘spec’ is not an integral constant-expression
+   55 |     RuntimeProgram spec[Constants::SpecCount];
+      |                         ~~~~~~~~~~~^~~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../runtimeconfig.h:56:30: error: size of array ‘checkBox’ is not an integral constant-expression
+   56 |     bool checkBox[Constants::FeatureCount];
+      |                   ~~~~~~~~~~~^~~~~~~~~~~~
+In file included from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/moc_scrambledialog.cpp:9,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/mocs_compilation.cpp:7:
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../scrambledialog.h:53:54: error: the value of ‘Constants::OPT_PRESET_SIZE’ is not usable in a constant expression
+   53 |     std::array<QLineEdit*, Constants::OPT_PRESET_SIZE> edits;
+      |                                                      ^
+In file included from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants.h:26,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../settings.h:29,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../mainwindow.h:40,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../downloadthread.h:31,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/moc_downloadthread.cpp:9,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/mocs_compilation.cpp:4:
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_programs.h:173:22: note: ‘Constants::OPT_PRESET_SIZE’ was not initialized with a constant expression
+  173 |     extern const int OPT_PRESET_SIZE = OptionalCount;
+      |                      ^~~~~~~~~~~~~~~
+In file included from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/moc_scrambledialog.cpp:9,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/mocs_compilation.cpp:7:
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../scrambledialog.h:53:54: note: in template argument for type ‘long unsigned int’
+   53 |     std::array<QLineEdit*, Constants::OPT_PRESET_SIZE> edits;
+      |                                                      ^
+In file included from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/moc_settingsdialog.cpp:9,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/mocs_compilation.cpp:8:
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../settingsdialog.h:53:50: error: the value of ‘Constants::PRESET_SIZE’ is not usable in a constant expression
+   53 |     std::array<QLineEdit*, Constants::PRESET_SIZE> edits;
+      |                                                  ^
+In file included from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants.h:26,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../settings.h:29,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../mainwindow.h:40,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../downloadthread.h:31,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/moc_downloadthread.cpp:9,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/mocs_compilation.cpp:4:
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants_programs.h:195:22: note: ‘Constants::PRESET_SIZE’ was not initialized with a constant expression
+  195 |     extern const int PRESET_SIZE = SpecCount;
+      |                      ^~~~~~~~~~~
+In file included from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/moc_settingsdialog.cpp:9,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/mocs_compilation.cpp:8:
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../settingsdialog.h:53:50: note: in template argument for type ‘long unsigned int’
+   53 |     std::array<QLineEdit*, Constants::PRESET_SIZE> edits;
+      |                                                  ^
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:85: CMakeFiles/CaptureStream2.dir/CaptureStream2_autogen/mocs_compilation.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
+
+
+
+
 struct ProgramDefinition {
     enum class Kind {
         English,   // 固定番組
