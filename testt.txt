@@ -1,3 +1,31 @@
+struct ProgramDefinition {
+    enum class Kind {
+        English,   // 固定番組
+        Optional,  // 任意設定番組
+        Spec,      // 特番
+        Feature    // チェックボックス
+    };
+
+    Kind kind;
+
+    // checked の保存キーとデフォルト値
+    const char* keyChecked;
+    bool    checkedDefault;
+
+    // id の保存キーとデフォルト値（English/Feature は空）
+    const char* keyId;
+    const char* idDefault;
+
+    // label の保存キーとデフォルト値（English は固定値、Feature は空）
+    const char* keyLabel;
+    const char* labelDefault;
+
+    // UI の objectName（Feature で空の場合もある）
+    const char* objectName;
+};
+
+
+
 void Settings::load()
 {
     QSettings ini(Constants::IniFileName, QSettings::IniFormat);
