@@ -1,3 +1,20 @@
+void Settings::loadProgramDefinition(const Constants::ProgramDefinition &p, QSettings &ini)
+{
+    // checked
+    checked[p.keyChecked] =
+        ini.value(p.keyChecked, p.checkedDefault).toBool();
+
+    // id
+    if (!qs(p.keyId).isEmpty())
+        ids[p.keyId] = ini.value(p.keyId, p.idDefault).toString();
+
+    // label
+    if (!qs(p.keyLabel).isEmpty())
+        labels[p.keyLabel] = ini.value(p.keyLabel, p.labelDefault).toString();
+}
+
+
+
 struct ProgramDefinition {
     enum class Kind {
         English,   // 固定番組
