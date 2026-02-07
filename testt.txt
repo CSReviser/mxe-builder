@@ -1,3 +1,31 @@
+#include <QTimer>
+
+int main(int argc, char *argv[])
+{
+#if defined(QT_NO_DEBUG)
+#ifdef QT4_QT5_WIN
+    const char* null = "nul";
+#else
+    const char* null = "/dev/null";
+#endif
+    freopen(null, "a", stdout);
+    freopen(null, "a", stderr);
+#endif
+
+    QApplication a(argc, argv);
+    MainWindow w;
+
+    if (Utility::nogui()) {
+        QTimer::singleShot(0, &w, SLOT(download()));
+    } else {
+        w.show();
+    }
+
+    return a.exec();
+}
+
+
+
 
 inline constexpr std::size_t OPT_PRESET_SIZE = OptionalCount;
 inline constexpr std::size_t PRESET_SIZE = SpecCount;
