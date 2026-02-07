@@ -1,5 +1,9 @@
-[ 14%] Building CXX object CMakeFiles/CaptureStream2.dir/CaptureStream2_autogen/mocs_compilation.cpp.o
-In file included from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants.h:25,
+
+inline constexpr std::size_t OPT_PRESET_SIZE = OptionalCount;
+inline constexpr std::size_t PRESET_SIZE = SpecCount;
+
+
+file included from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../constants.h:25,
                  from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../settings.h:29,
                  from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../mainwindow.h:40,
                  from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../downloadthread.h:31,
