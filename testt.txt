@@ -1,3 +1,52 @@
+
+struct ProgramDefinition {
+    enum class Kind {
+        English,
+        Optional,
+        Spec,
+        Feature
+    };
+
+    Kind kind;
+
+    const char* keyChecked;
+    bool checkedDefault;
+
+    const char* keyId;
+    const char* idDefault;
+    bool hasId;
+
+    const char* keyLabel;
+    const char* labelDefault;
+    bool hasLabel;
+
+    const char* objectName;
+};
+
+
+void Settings::loadProgramDefinition(const Constants::ProgramDefinition &p, QSettings &ini)
+{
+    // checked（必須）
+    checked[p.keyChecked] =
+        ini.value(p.keyChecked, p.checkedDefault).toBool();
+
+    // id（存在する場合のみ）
+    if (p.hasId) {
+        ids[p.keyId] =
+            ini.value(p.keyId, p.idDefault).toString();
+    }
+
+    // label（存在する場合のみ）
+    if (p.hasLabel) {
+        labels[p.keyLabel] =
+            ini.value(p.keyLabel, p.labelDefault).toString();
+    }
+}
+
+
+
+
+
 void Settings::loadProgramDefinition(const Constants::ProgramDefinition &p, QSettings &ini)
 {
     // checked
