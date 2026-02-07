@@ -1,27 +1,30 @@
-[ 44%] Building CXX object CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o
-/home/kazuo/cs/CaptureStream2/mainwindow.cpp: In member function ‘void MainWindow::toggled(bool)’:
-/home/kazuo/cs/CaptureStream2/mainwindow.cpp:1324:22: error: request for member ‘isEmpty’ in ‘p->Constants::ProgramDefinition::keyLabel’, which is of non-class type ‘const char* const’
- 1324 |     if (!p->keyLabel.isEmpty()) {
-      |                      ^~~~~~~
-/home/kazuo/cs/CaptureStream2/mainwindow.cpp: In instantiation of ‘void MainWindow::updateProgramButtons(const Container&, const Settings&) [with Container = Constants::ProgramDefinition [8]]’:
-/home/kazuo/cs/CaptureStream2/mainwindow.cpp:722:25:   required from here
-/home/kazuo/cs/CaptureStream2/mainwindow.cpp:756:28: error: request for member ‘isEmpty’ in ‘p.Constants::ProgramDefinition::keyLabel’, which is of non-class type ‘const char* const’
-  756 |             if (p.keyLabel.isEmpty()) {
-      |                 ~~~~~~~~~~~^~~~~~~
-/home/kazuo/cs/CaptureStream2/mainwindow.cpp: In instantiation of ‘void MainWindow::updateProgramButtons(const Container&, const Settings&) [with Container = Constants::ProgramDefinition [4]]’:
-/home/kazuo/cs/CaptureStream2/mainwindow.cpp:726:25:   required from here
-/home/kazuo/cs/CaptureStream2/mainwindow.cpp:756:28: error: request for member ‘isEmpty’ in ‘p.Constants::ProgramDefinition::keyLabel’, which is of non-class type ‘const char* const’
-/home/kazuo/cs/CaptureStream2/mainwindow.cpp: In instantiation of ‘void MainWindow::saveProgramButtons(const Container&, Settings&) [with Container = Constants::ProgramDefinition [8]]’:
-/home/kazuo/cs/CaptureStream2/mainwindow.cpp:791:23:   required from here
-/home/kazuo/cs/CaptureStream2/mainwindow.cpp:809:26: error: request for member ‘isEmpty’ in ‘p.Constants::ProgramDefinition::objectName’, which is of non-class type ‘const char* const’
-  809 |         if (p.objectName.isEmpty())
-      |             ~~~~~~~~~~~~~^~~~~~~
-/home/kazuo/cs/CaptureStream2/mainwindow.cpp: In instantiation of ‘void MainWindow::saveProgramButtons(const Container&, Settings&) [with Container = Constants::ProgramDefinition [4]]’:
-/home/kazuo/cs/CaptureStream2/mainwindow.cpp:793:23:   required from here
-/home/kazuo/cs/CaptureStream2/mainwindow.cpp:809:26: error: request for member ‘isEmpty’ in ‘p.Constants::ProgramDefinition::objectName’, which is of non-class type ‘const char* const’
-make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:155: CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o] エラー 1
-make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
-make: *** [Makefile:91: all] エラー 2
+struct ProgramDefinition {
+    enum class Kind {
+        English,   // 固定番組
+        Optional,  // 任意設定番組
+        Spec,      // 特番
+        Feature    // チェックボックス
+    };
+
+    Kind kind;
+
+    // checked の保存キーとデフォルト値
+    const char* keyChecked;
+    bool    checkedDefault;
+
+    // id の保存キーとデフォルト値（English/Feature は空）
+    const char* keyId;
+    const char* idDefault;
+    bool hasId;
+
+    // label の保存キーとデフォルト値（English は固定値、Feature は空）
+    const char* keyLabel;
+    const char* labelDefault;
+    bool hasLabel;
+
+    // UI の objectName（Feature で空の場合もある）
+    const char* objectName;
+};
 
 
 
