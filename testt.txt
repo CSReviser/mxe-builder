@@ -1,4 +1,4 @@
-save側
+save側の現在
 void Settings::saveProgramDefinition(const Constants::ProgramDefinition &p, QSettings &ini)
 {
     ini.setValue(p.keyChecked, checked[p.keyChecked]);
@@ -13,9 +13,10 @@ void Settings::saveProgramDefinition(const Constants::ProgramDefinition &p, QSet
 上記を下記に書き換える
 void Settings::saveProgramDefinition(const Constants::ProgramDefinition &p, QSettings &ini)
 {
+    // checked
     ini.setValue(p.keyChecked, checked[p.keyChecked]);
 
-    // checked
+    // id
     if (p.saveId)
         ini.setValue(p.keyId, ids[p.keyId]);
 
