@@ -21,7 +21,7 @@ void Settings::saveProgramDefinition(const Constants::ProgramDefinition &p, QSet
         ini.setValue(p.keyId, ids[p.keyId]);
 
     // label
-    if (p.hasLabel)
+    if (p.saveLabel)
         ini.setValue(p.keyLabel, labels[p.keyLabel]);
 }
 
