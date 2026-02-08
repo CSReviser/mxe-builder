@@ -1,3 +1,29 @@
+void Settings::loadProgramDefinition(const Constants::ProgramDefinition &p, QSettings &ini)
+{
+    // checked
+    checked[p.keyChecked] =
+        ini.value(p.keyChecked, p.checkedDefault).toBool();
+
+    // id
+    if (p.hasId) {
+        if (p.saveId) {
+            ids[p.keyId] = ini.value(p.keyId, p.idDefault).toString();
+        } else {
+            ids[p.keyId] = QString::fromUtf8(p.idDefault);
+        }
+    }
+
+    // label
+    if (p.hasLabel) {
+        if (p.saveLabel) {
+            labels[p.keyLabel] = ini.value(p.keyLabel, p.labelDefault).toString();
+        } else {
+            labels[p.keyLabel] = QString::fromUtf8(p.labelDefault);
+        }
+    }
+}
+
+
 
 struct ProgramDefinition {
     enum class Kind {
