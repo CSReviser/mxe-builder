@@ -1,3 +1,15 @@
+#ifdef Q_OS_MACOS
+	QString result = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation) + "/";
+	result += QDir::separator();
+	ini_file_path = result;
+#endif
+#if !defined( Q_OS_MACOS )
+	QString result = QCoreApplication::applicationDirPath();
+	result += QDir::separator();
+	ini_file_path = result;
+#endif	
+
+
 save側の現在
 void Settings::saveProgramDefinition(const Constants::ProgramDefinition &p, QSettings &ini)
 {
