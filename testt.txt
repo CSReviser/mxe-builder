@@ -1,3 +1,17 @@
+void Settings::saveProgramDefinition(const Constants::ProgramDefinition &p, QSettings &ini)
+{
+    ini.setValue(p.keyChecked, checked[p.keyChecked]);
+
+    if (!qs(p.keyId).isEmpty())
+        ini.setValue(p.keyId, ids[p.keyId]);
+
+    if (!qs(p.keyLabel).isEmpty())
+        ini.setValue(p.keyLabel, labels[p.keyLabel]);
+}
+
+
+
+
 void Settings::loadProgramDefinition(const Constants::ProgramDefinition &p, QSettings &ini)
 {
     // checked
