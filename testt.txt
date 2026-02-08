@@ -1,3 +1,30 @@
+private:
+    static QString iniFilePath();
+
+
+QString Settings::iniFilePath()
+{
+#ifdef Q_OS_MACOS
+    QString dir =
+        QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
+    return dir + QDir::separator() + Constants::IniFileName;
+#else
+    QString dir = QCoreApplication::applicationDirPath();
+    return dir + QDir::separator() + Constants::IniFileName;
+#endif
+}
+
+void Settings::load()
+{
+    QSettings ini(iniFilePath(), QSettings::IniFormat);
+
+
+void Settings::save()
+{
+    QSettings ini(iniFilePath(), QSettings::IniFormat);
+
+
+
 1. macOS飲みiniファイルの保存パスが異なる。という仕様が漏れていたので追加が必要。
 2.iniファイルの保存先はsettingsが持ち役割で良いか？
 3.load/saveで使えるように共通関数にしたい。
