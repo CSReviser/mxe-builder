@@ -1,11 +1,37 @@
-[ 42%] Building CXX object CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o
-/home/kazuo/cs/CaptureStream2/mainwindow.cpp: In constructor ‘MainWindow::MainWindow(Settings&, RuntimeConfig*, QWidget*)’:
-/home/kazuo/cs/CaptureStream2/mainwindow.cpp:172:32: error: ‘onProgramListUpdated’ is not a member of ‘MainWindow’
-  172 |             this, &MainWindow::onProgramListUpdated);
-      |                                ^~~~~~~~~~~~~~~~~~~~
-make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:155: CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o] エラー 1
+[ 21%] Building CXX object CMakeFiles/CaptureStream2.dir/settingsdialog.cpp.o
+/home/kazuo/cs/CaptureStream2/settingsdialog.cpp: In member function ‘void Settingsdialog::pushbutton_2()’:
+/home/kazuo/cs/CaptureStream2/settingsdialog.cpp:165:19: error: ‘repo’ was not declared in this scope
+  165 |         labels << repo.id_map.value(edits[i]->text());
+      |                   ^~~~
+/home/kazuo/cs/CaptureStream2/settingsdialog.cpp:165:43: error: ‘i’ was not declared in this scope; did you mean ‘ui’?
+  165 |         labels << repo.id_map.value(edits[i]->text());
+      |                                           ^
+      |                                           ui
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:197: CMakeFiles/CaptureStream2.dir/settingsdialog.cpp.o] エラー 1
 make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
 make: *** [Makefile:91: all] エラー 2
+
+
+void Settingsdialog::pushbutton_2()
+{
+    QStringList labels;
+
+    for (int i = 0; i < Constants::PRESET_SIZE; ++i)
+        auto &repo = ProgramRepository::instance();
+        labels << repo.id_map.value(edits[i]->text());
+
+    QString msg =
+        QStringLiteral("下記内容で上書きします。保存しますか？\n") +
+        "１：" + labels[0] + "\n" +
+        "２：" + labels[1] + "\n" +
+        "３：" + labels[2] + "\n" +
+        "４：" + labels[3];
+
+    if (QMessageBox::question(this, tr("特別番組設定保存"), msg) == QMessageBox::Yes) {
+        for (int i = 0; i < Constants::PRESET_SIZE; ++i)
+            settings.specials[i] = edits[i]->text();
+    }
+}
 
 
 MainWindow::MainWindow(QWidget *parent)
