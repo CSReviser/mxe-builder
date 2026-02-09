@@ -1,15 +1,73 @@
-[ 21%] Building CXX object CMakeFiles/CaptureStream2.dir/settingsdialog.cpp.o
-/home/kazuo/cs/CaptureStream2/settingsdialog.cpp: In member function ‘void Settingsdialog::pushbutton_2()’:
-/home/kazuo/cs/CaptureStream2/settingsdialog.cpp:165:19: error: ‘repo’ was not declared in this scope
-  165 |         labels << repo.id_map.value(edits[i]->text());
-      |                   ^~~~
-/home/kazuo/cs/CaptureStream2/settingsdialog.cpp:165:43: error: ‘i’ was not declared in this scope; did you mean ‘ui’?
-  165 |         labels << repo.id_map.value(edits[i]->text());
-      |                                           ^
-      |                                           ui
-make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:197: CMakeFiles/CaptureStream2.dir/settingsdialog.cpp.o] エラー 1
-make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
-make: *** [Makefile:91: all] エラー 2
+guistate.h
+
+#pragma once
+#include <QMap>
+#include <QString>
+
+class MainWindow;
+
+struct GuiState
+{
+    QMap<QString,bool> flags;
+
+    static GuiState fromMainWindow(const MainWindow& w);
+};
+
+
+
+guistate.cpp
+
+#include "guistate.h"
+#include "mainwindow.h"
+#include "constants_flag.h"
+
+GuiState GuiState::fromMainWindow(const MainWindow& w)
+{
+    GuiState s;
+
+    // FlagTableを使って全部まとめて収集
+    for (int i = 0; i < Constants::FlagCount; ++i) {
+        const auto &f = Constants::FlagTable[i];
+        s.flags[f.keyFlag] = w.guiFlagValue(f.keyFlag);
+    }
+
+    return s;
+}
+
+bool guiFlagValue(const QString& key) const;
+
+bool MainWindow::guiFlagValue(const QString& key) const
+{
+    if (key == KEY_LAST_WEEK)   return ui->checkLastWeek->isChecked();
+    if (key == KEY_PROGRAM_LIST)return programListMode;
+    if (key == KEY_NOGUI)       return false; // GUIでは常にfalse
+
+    return false;
+}
+
+void RuntimeConfig::applyGui(const GuiState& g)
+{
+    for (auto it = g.flags.begin(); it != g.flags.end(); ++it) {
+        setFlag(it.key(), it.value());
+    }
+}
+
+void MainWindow::onRun()
+{
+    GuiState gui = GuiState::fromMainWindow(*this);
+
+    RuntimeConfig rc;
+    rc.applySettings(settings);
+    rc.applyCommandLine(cli);
+    rc.applyGui(gui);
+
+    runner.start(rc);
+}
+
+
+
+
+
 
 
 void Settingsdialog::pushbutton_2()
