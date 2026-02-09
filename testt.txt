@@ -1,3 +1,13 @@
+[ 42%] Building CXX object CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o
+/home/kazuo/cs/CaptureStream2/mainwindow.cpp: In constructor ‘MainWindow::MainWindow(Settings&, RuntimeConfig*, QWidget*)’:
+/home/kazuo/cs/CaptureStream2/mainwindow.cpp:172:32: error: ‘onProgramListUpdated’ is not a member of ‘MainWindow’
+  172 |             this, &MainWindow::onProgramListUpdated);
+      |                                ^~~~~~~~~~~~~~~~~~~~
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:155: CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
+
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
