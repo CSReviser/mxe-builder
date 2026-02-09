@@ -1,3 +1,39 @@
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent)
+    , ui(new Ui::MainWindow)
+{
+    ui->setupUi(this);
+
+    // ★ 番組一覧の初期化（非同期）
+    auto &repo = ProgramRepository::instance();
+    repo.updatePrograms();
+
+    // ★ 番組一覧更新後に UI を更新したい場合
+    connect(&repo, &ProgramRepository::programListUpdated,
+            this, &MainWindow::onProgramListUpdated);
+}
+
+Settingsdialog::Settingsdialog(Settings& ini, QWidget *parent)
+    : QDialog(parent), ui(new Ui::Settingsdialog), settings(ini)
+
+
+auto &repo = ProgramRepository::instance();
+repo.name_map
+repo.id_map
+repo.thumbnail_map
+
+
+auto &repo = ProgramRepository::instance();
+if (repo.id_map.isEmpty()) {
+    QMessageBox::warning(this, "情報取得中", "番組一覧を取得中です。しばらくお待ちください。");
+    return;
+}
+
+
+
+
+
+
 private:
     static QString iniFilePath();
 
