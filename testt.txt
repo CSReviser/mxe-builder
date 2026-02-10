@@ -1,3 +1,28 @@
+const ProgramEntry &optionalProgram(int index) const {
+    return optional[index];
+}
+
+const ProgramEntry &specProgram(int index) const {
+    return spec[index];
+}
+
+optional1 = runtime.optionalProgram(0).id;
+optional2 = runtime.optionalProgram(1).id;
+optional3 = runtime.optionalProgram(2).id;
+optional4 = runtime.optionalProgram(3).id;
+optional5 = runtime.optionalProgram(4).id;
+optional6 = runtime.optionalProgram(5).id;
+optional7 = runtime.optionalProgram(6).id;
+optional8 = runtime.optionalProgram(7).id;
+
+special1 = runtime.specProgram(0).id;
+special2 = runtime.specProgram(1).id;
+special3 = runtime.specProgram(2).id;
+special4 = runtime.specProgram(3).id;
+
+
+
+
 guistate.h
 
 #pragma once
