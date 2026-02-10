@@ -1,3 +1,23 @@
+[ 10%] Building CXX object CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o
+/home/kazuo/cs/CaptureStream2/mainwindow.cpp: In member function ‘void MainWindow::download()’:
+/home/kazuo/cs/CaptureStream2/mainwindow.cpp:1296:88: error: no matching function for call to ‘DownloadThread::DownloadThread(Settings&, RuntimeConfig&, Ui::MainWindowClass*&)’
+ 1296 | nloadThread = new DownloadThread( Settings::instance(), runtime, ui );
+      |                                                                     ^
+
+In file included from /home/kazuo/cs/CaptureStream2/mainwindow.cpp:29:
+/home/kazuo/cs/CaptureStream2/downloadthread.h:40:9: note: candidate: ‘DownloadThread::DownloadThread(Settings&, RuntimeConfig*, Ui::MainWindowClass*)’
+   40 |         DownloadThread( Settings& settings, RuntimeConfig* runtime, Ui::MainWindowClass* ui );
+      |         ^~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/downloadthread.h:40:60: note:   no known conversion for argument 2 from ‘RuntimeConfig’ to ‘RuntimeConfig*’
+   40 |         DownloadThread( Settings& settings, RuntimeConfig* runtime, Ui::MainWindowClass* ui );
+      |                                             ~~~~~~~~~~~~~~~^~~~~~~
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:155: CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
+
+
+
+
 const ProgramEntry &optionalProgram(int index) const {
     return optional[index];
 }
