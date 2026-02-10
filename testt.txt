@@ -1,3 +1,22 @@
+	RuntimeConfig runtime;
+	runtime.applySettings(settings);
+	
+	optional1 = runtime.optional[0].id;
+	optional2 = runtime.optional[1].id;
+	optional3 = runtime.optional[2].id;
+	optional4 = runtime.optional[3].id;
+	optional5 = runtime.optional[4].id;
+	optional6 = runtime.optional[5].id;
+	optional7 = runtime.optional[6].id;
+	optional8 = runtime.optional[7].id;
+	special1 = runtime.spec[0].id;
+	special2 = runtime.spec[1].id;
+	special3 = runtime.spec[2].id;
+	special4 = runtime.spec[3].id;
+
+
+
+
 std::unique_ptr<RuntimeConfig> runtime;
 
 runtime = std::make_unique<RuntimeConfig>();
