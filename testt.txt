@@ -1,3 +1,5 @@
+DownloadThread内で
+
 	RuntimeConfig runtime;
 	runtime.applySettings(settings);
 	
