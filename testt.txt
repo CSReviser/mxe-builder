@@ -1,3 +1,11 @@
+optional[i].id = QString(s.ids[p.keyId]);
+optional[i].label = QString(s.labels[p.keyLabel]);
+
+
+optional[i].id = s.ids.value(p.keyId, QString());
+optional[i].label = s.labels.value(p.keyLabel, QString());
+
+
 DownloadThread内で
 
 	RuntimeConfig runtime;
