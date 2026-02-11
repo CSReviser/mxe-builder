@@ -1,3 +1,11 @@
+QString folder = runtime.saveFolder;
+QString ffmpeg = runtime.ffmpegFolder;
+QString ext    = runtime.audioExtension;
+
+
+
+
+
 optional[i].id = QString(s.ids[p.keyId]);
 optional[i].label = QString(s.labels[p.keyLabel]);
 
