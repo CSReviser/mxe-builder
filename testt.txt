@@ -1,3 +1,49 @@
+// customizedialog.h
+
+class CustomizeDialog : public QDialog
+{
+    Q_OBJECT
+
+public:
+    // ... 既存の定義 ...
+
+private:
+    Ui::CustomizeDialog ui; // クラス名に合わせて適宜
+    Ui::DialogMode mode;
+
+    // --- ここに追加 ---
+    // Constants から移動し、このクラス専用の定数にする
+    static inline const QStringList COURSES = {
+        QStringLiteral("json"),
+        QStringLiteral("xml")
+    };
+    // ----------------
+
+    void loadSettings();
+    void saveSettings();
+    void applyPreset(int index);
+};
+
+
+/* ============================================================
+ * formats()
+ * course → settings.ini から titleFormat / fileNameFormat を取得
+ * ============================================================ */
+void CustomizeDialog::formats(QString course, QString& titleFormat, QString& fileNameFormat)
+{
+    // Constants::COURSES から COURSES (自クラスの定数) に変更
+    int index = COURSES.indexOf(course);
+    if (index < 0)
+        index = 0;
+
+    titleFormat    = Settings::getTitleFormat(index);
+    fileNameFormat = Settings::getFileNameFormat(index);
+}
+
+
+
+
+
 
 エラーメッセージ
 [ 14%] Building CXX object CMakeFiles/CaptureStream2.dir/customizedialog.cpp.o
