@@ -1,3 +1,14 @@
+Settings::Settings()
+{
+    // ここでサイズを確保しないと、load() で [i] アクセスした時に落ちます
+    optionals.resize(Constants::getOptionalCount());
+    specials.resize(Constants::getSpecCount());
+    titleFormat.resize(Constants::getItemCount());
+    fileNameFormat.resize(Constants::getItemCount());
+}
+
+
+
 namespace Constants {
 
 // 配列そのものを関数の中に隠す（これが最も安全）
