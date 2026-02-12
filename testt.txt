@@ -1,3 +1,26 @@
+namespace Constants {
+
+// 配列そのものを関数の中に隠す（これが最も安全）
+const ProgramDefinition* getEnglishPrograms() {
+    static const ProgramDefinition instance[] = {
+        { ... }, { ... }
+    };
+    return instance;
+}
+
+// カウントもこの関数内の配列から計算するようにする
+int getEnglishCount() {
+    // getEnglishPrograms() 内の配列サイズを安全に取るために工夫が必要
+    // もしくは、ここに直接 static 配列を置く
+    static const ProgramDefinition instance[] = { { ... }, { ... } };
+    return sizeof(instance) / sizeof(instance[0]);
+}
+
+}
+
+
+
+
 Segmentation fault (コアダンプ)
 
 
