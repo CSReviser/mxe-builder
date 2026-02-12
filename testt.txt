@@ -1,3 +1,32 @@
+[  9%] Building CXX object CMakeFiles/CaptureStream2.dir/settings.cpp.o
+/home/kazuo/cs/CaptureStream2/settings.cpp: In member function ‘void Settings::load()’:
+/home/kazuo/cs/CaptureStream2/settings.cpp:49:37: error: range-based ‘for’ expression of type ‘const Constants::ProgramDefinition []’ has incomplete type
+   49 |     for (const auto &p : Constants::EnglishPrograms) loadProgramDefinition(p, ini);
+      |                                     ^~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/settings.cpp:50:37: error: range-based ‘for’ expression of type ‘const Constants::ProgramDefinition []’ has incomplete type
+   50 |     for (const auto &p : Constants::OptionalPrograms) loadProgramDefinition(p, ini);
+      |                                     ^~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/settings.cpp:51:37: error: range-based ‘for’ expression of type ‘const Constants::ProgramDefinition []’ has incomplete type
+   51 |     for (const auto &p : Constants::SpecPrograms)     loadProgramDefinition(p, ini);
+      |                                     ^~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/settings.cpp: In member function ‘void Settings::save()’:
+/home/kazuo/cs/CaptureStream2/settings.cpp:124:37: error: range-based ‘for’ expression of type ‘const Constants::ProgramDefinition []’ has incomplete type
+  124 |     for (const auto &p : Constants::EnglishPrograms) saveProgramDefinition(p, ini);
+      |                                     ^~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/settings.cpp:125:37: error: range-based ‘for’ expression of type ‘const Constants::ProgramDefinition []’ has incomplete type
+  125 |     for (const auto &p : Constants::OptionalPrograms) saveProgramDefinition(p, ini);
+      |                                     ^~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/settings.cpp:126:37: error: range-based ‘for’ expression of type ‘const Constants::ProgramDefinition []’ has incomplete type
+  126 |     for (const auto &p : Constants::SpecPrograms)     saveProgramDefinition(p, ini);
+      |                                     ^~~~~~~~~~~~
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:253: CMakeFiles/CaptureStream2.dir/settings.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
+
+
+
+
+
 void ScrambleDialog::updateLabels() {
     // std::array をやめて QVector にする
     QVector<QLabel*> labels = {
