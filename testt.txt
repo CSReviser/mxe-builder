@@ -1,34 +1,48 @@
-[100%] Linking CXX executable CaptureStream2
-/usr/bin/ld: CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o: in function `MainWindow::restoreGui()':
-mainwindow.cpp:(.text._ZN10MainWindow10restoreGuiEv+0x2be): undefined reference to `Constants::getFeatureCount()'
-/usr/bin/ld: mainwindow.cpp:(.text._ZN10MainWindow10restoreGuiEv+0x2d4): undefined reference to `Constants::FeatureSettings'
-/usr/bin/ld: CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o: in function `MainWindow::saveGui()':
-mainwindow.cpp:(.text._ZN10MainWindow7saveGuiEv+0xc5): undefined reference to `Constants::getFeatureCount()'
-/usr/bin/ld: mainwindow.cpp:(.text._ZN10MainWindow7saveGuiEv+0xdb): undefined reference to `Constants::FeatureSettings'
-/usr/bin/ld: CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o: in function `MainWindow::findEntryByObjectName(QString const&) const':
-mainwindow.cpp:(.text._ZNK10MainWindow21findEntryByObjectNameERK7QString+0xb9): undefined reference to `Constants::getFeatureCount()'
-/usr/bin/ld: mainwindow.cpp:(.text._ZNK10MainWindow21findEntryByObjectNameERK7QString+0xc6): undefined reference to `Constants::FeatureSettings'
-/usr/bin/ld: CMakeFiles/CaptureStream2.dir/settings.cpp.o: in function `Settings::load()':
-settings.cpp:(.text._ZN8Settings4loadEv+0x1d1): undefined reference to `Constants::FeatureSettings'
-/usr/bin/ld: settings.cpp:(.text._ZN8Settings4loadEv+0x1fa): undefined reference to `Constants::getFeatureCount()'
-/usr/bin/ld: CMakeFiles/CaptureStream2.dir/settings.cpp.o: in function `Settings::save()':
-settings.cpp:(.text._ZN8Settings4saveEv+0x1d1): undefined reference to `Constants::FeatureSettings'
-/usr/bin/ld: settings.cpp:(.text._ZN8Settings4saveEv+0x1fa): undefined reference to `Constants::getFeatureCount()'
-/usr/bin/ld: CMakeFiles/CaptureStream2.dir/runtimeconfig.cpp.o: in function `RuntimeConfig::RuntimeConfig()':
-runtimeconfig.cpp:(.text._ZN13RuntimeConfigC2Ev+0x13d): undefined reference to `Constants::getFeatureCount()'
-/usr/bin/ld: runtimeconfig.cpp:(.text._ZN13RuntimeConfigC2Ev+0x16b): undefined reference to `Constants::FlagTable'
-/usr/bin/ld: runtimeconfig.cpp:(.text._ZN13RuntimeConfigC2Ev+0x1c1): undefined reference to `Constants::getFlagCount()'
-/usr/bin/ld: CMakeFiles/CaptureStream2.dir/runtimeconfig.cpp.o: in function `RuntimeConfig::applySettings(Settings const&)':
-runtimeconfig.cpp:(.text._ZN13RuntimeConfig13applySettingsERK8Settings+0x566): undefined reference to `Constants::FeatureSettings'
-/usr/bin/ld: runtimeconfig.cpp:(.text._ZN13RuntimeConfig13applySettingsERK8Settings+0x662): undefined reference to `Constants::getFeatureCount()'
-/usr/bin/ld: CMakeFiles/CaptureStream2.dir/guistate.cpp.o: in function `GuiState::fromMainWindow(MainWindow const&)':
-guistate.cpp:(.text._ZN8GuiState14fromMainWindowERK10MainWindow+0x4c): undefined reference to `Constants::FlagTable'
-/usr/bin/ld: guistate.cpp:(.text._ZN8GuiState14fromMainWindowERK10MainWindow+0xca): undefined reference to `Constants::getFlagCount()'
-collect2: error: ld returned 1 exit status
-make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:505: CaptureStream2] エラー 1
-make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
-make: *** [Makefile:91: all] エラー 2
+#pragma once
+#include "constants_core.h"
 
+namespace Constants {
+
+struct CliOption {
+    const char* name;
+    bool requiresValue;
+    const char* keyOption; // GUI、Flagの キーと一致
+    const char* description;
+};
+
+// --- 外部参照の宣言 ---
+extern const CliOption OPTION_TABLE[];
+
+// --- 個数取得関数の宣言 ---
+int getOptionTableCount();
+
+} // namespace Constants
+
+
+#include "constants_cli.h"
+
+namespace Constants {
+
+/* ============================================================
+ * CLI オプションテーブル
+ * ========================================================== */
+const CliOption OPTION_TABLE[] = {
+    { "-nogui", false, KEY_NOGUI,              "GUI を起動せずに実行します" },
+    { "-t",     true,  KEY_CUSTOMIZED_TITLE1,  "タイトルタグ形式を指定します" },
+    { "-f",     true,  KEY_CUSTOMIZED_FILENAME1,"ファイル名形式を指定します" },
+    { "-o",     true,  KEY_SaveFolder,         "保存フォルダのフルパスを指定します" },
+    { "-e",     true,  KEY_AudioExtension,     "拡張子を指定します" },
+    { "-z",     false, KEY_LAST_WEEK,          "前週の動作を行います" },
+    { "-b",     false, KEY_BOTH_WEEKS,         "前週と当週の両方を実行します" },
+    { "-s",     false, KEY_KOZA_SEPARATION,    "応用編分離を有効にします" },
+};
+
+// --- 個数取得の実装 ---
+int getOptionTableCount() {
+    return sizeof(OPTION_TABLE) / sizeof(OPTION_TABLE[0]);
+}
+
+} // namespace Constants
 
 
 
