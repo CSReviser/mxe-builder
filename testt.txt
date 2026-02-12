@@ -1,3 +1,132 @@
+
+エラーメッセージ
+[ 14%] Building CXX object CMakeFiles/CaptureStream2.dir/customizedialog.cpp.o
+/home/kazuo/cs/CaptureStream2/customizedialog.cpp: In static member function ‘static void CustomizeDialog::formats(QString, QString&, QString&)’:
+/home/kazuo/cs/CaptureStream2/customizedialog.cpp:61:28: error: ‘COURSES’ is not a member of ‘Constants’
+   61 |     int index = Constants::COURSES.indexOf(course);
+      |                            ^~~~~~~
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:113: CMakeFiles/CaptureStream2.dir/customizedialog.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
+
+現在constantsに外出ししている
+    inline const QStringList COURSES = {
+        QStringLiteral("json"),
+        QStringLiteral("xml")
+    };
+の部分はcustomizedialog内でしか使っていないので、customizedialog側に戻したほうが良いと思うが、どうすればよいですか
+下記sのcustomizedialogの修正箇所を教えてください
+
+
+#include "customizedialog.h"
+#include "settings.h"
+#include "constants.h"
+#include "mainwindow.h"
+
+CustomizeDialog::CustomizeDialog(Ui::DialogMode mode, QWidget *parent)
+    : QDialog(parent), mode(mode)
+{
+    ui.setupUi(this);
+
+    setWindowTitle(mode == Ui::TitleMode
+                   ? QStringLiteral("タイトルタグ設定")
+                   : QStringLiteral("ファイル名設定"));
+
+    loadSettings();
+
+    // ラジオボタン → プリセット適用
+    connect(ui.radioButton, &QRadioButton::clicked, this, [this](){ applyPreset(0); });
+    connect(ui.radioButton_1, &QRadioButton::clicked, this, [this](){ applyPreset(1); });
+    connect(ui.radioButton_2, &QRadioButton::clicked, this, [this](){ applyPreset(2); });
+    connect(ui.radioButton_3, &QRadioButton::clicked, this, [this](){ applyPreset(3); });
+    connect(ui.radioButton_4, &QRadioButton::clicked, this, [this](){ applyPreset(4); });
+    connect(ui.radioButton_5, &QRadioButton::clicked, this, [this](){ applyPreset(5); });
+    connect(ui.radioButton_6, &QRadioButton::clicked, this, [this](){ applyPreset(6); });
+
+    connect(this, SIGNAL(accepted()), this, SLOT(accepted()));
+    
+    ui.radioButton_9->setChecked(true);
+    ui.radioButton_19->setChecked(true);
+}
+
+/* ============================================================
+ *  formats()
+ *  course → settings.ini から titleFormat / fileNameFormat を取得
+ * ============================================================ */
+void CustomizeDialog::formats(QString course, QString& titleFormat, QString& fileNameFormat)
+{
+    int index = Constants::COURSES.indexOf(course);
+    if (index < 0)
+        index = 0;
+
+    titleFormat    = Settings::getTitleFormat(index);
+    fileNameFormat = Settings::getFileNameFormat(index);
+}
+
+/* ============================================================
+ *  設定読み込み
+ * ============================================================ */
+void CustomizeDialog::loadSettings()
+{
+    ui.lineEdit->setText(
+        mode == Ui::TitleMode
+            ? Settings::getTitleFormat(0)
+            : Settings::getFileNameFormat(0)
+    );
+
+    ui.lineEdit_2->setText(
+        mode == Ui::TitleMode
+            ? Settings::getTitleFormat(1)
+            : Settings::getFileNameFormat(1)
+    );
+
+    if (mode == Ui::TitleMode)
+        ui.checkBox->setChecked(Settings::tagSpaceFlag());
+    else
+        ui.checkBox->setChecked(Settings::nameSpaceFlag());
+}
+
+/* ============================================================
+ *  設定保存
+ * ============================================================ */
+void CustomizeDialog::saveSettings()
+{
+    if (mode == Ui::TitleMode) {
+        Settings::instance().setTitleFormatValue(0, ui.lineEdit->text());
+        Settings::instance().setTitleFormatValue(1, ui.lineEdit_2->text());
+        Settings::setTagSpaceFlag(ui.checkBox->isChecked());
+    } else {
+        Settings::instance().setFileNameFormatValue(0, ui.lineEdit->text());
+        Settings::instance().setFileNameFormatValue(1, ui.lineEdit_2->text());
+        Settings::setNameSpaceFlag(ui.checkBox->isChecked());
+    }
+}
+
+
+/* ============================================================
+ *  OK ボタン
+ * ============================================================ */
+void CustomizeDialog::accepted()
+{
+    saveSettings();
+}
+
+/* ============================================================
+ *  プリセット適用（構造体ベース）
+ * ============================================================ */
+void CustomizeDialog::applyPreset(int index)
+{
+    if (mode == Ui::TitleMode) {
+        ui.lineEdit->setText(Constants::TITLE_PRESETS[index].value);
+    } else {
+        ui.lineEdit->setText(Constants::FILENAME_PRESETS[index].value);
+    }
+}
+
+
+
+
+
 // 修正前
 // std::array<QString, Constants::OPT_PRESET_SIZE> optionals;
 // std::array<QString, Constants::PRESET_SIZE> specials;
