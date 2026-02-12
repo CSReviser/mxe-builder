@@ -1,3 +1,12 @@
+void ScrambleDialog::someMethod() {
+    const auto& OPT_PRESETS = Constants::getOptPresets(); // ここで名前を定義
+    
+    // これ以降は以前と同じコード（OPT_PRESETS.size()など）がそのまま動く
+    for (int j = 0; j < OPT_PRESETS.size(); ++j) { ... }
+}
+
+
+
     // チェックされているプリセットを適用
     for (int j = 0; j < OPT_PRESETS.size() && j < radios.size(); ++j) {
         if (radios[j]->isChecked()) {
