@@ -1,3 +1,14 @@
+元々
+constants_programs.h
+inline const QVector<QStringList> OPT_PRESETS = {
+
+としていたところを下記のようにへんこうしたので
+constants_programs.cpp
+const QVector<QStringList>& getOptPresets() {
+    static const QVector<QStringList> instance = {
+下記エラーとなった
+   72 |     for (int j = 0; j < OPT_PRESETS.size() && j < radios.size(); ++j) {
+
 [  9%] Building CXX object CMakeFiles/CaptureStream2.dir/scrambledialog.cpp.o
 /home/kazuo/cs/CaptureStream2/scrambledialog.cpp: In member function ‘QString ScrambleDialog::scramble_set(QString, int)’:
 /home/kazuo/cs/CaptureStream2/scrambledialog.cpp:72:25: error: ‘OPT_PRESETS’ was not declared in this scope
