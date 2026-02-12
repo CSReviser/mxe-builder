@@ -1,9 +1,62 @@
-[ 70%] Building CXX object CMakeFiles/CaptureStream2.dir/settings.cpp.o
-/home/kazuo/cs/CaptureStream2/settings.cpp: In member function ‘void Settings::initDefaultSaveFolder()’:
-/home/kazuo/cs/CaptureStream2/settings.cpp:325:18: error: ‘QStandardPaths’ has not been declared
-  325 |     saveFolder = QStandardPaths::writableLocation(QCoreApplication::applicationDirPath());
-      |                  ^~~~~~~~~~~~~~
-make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:239: CMakeFiles/CaptureStream2.dir/settings.cpp.o] エラー 1
+[[ 15%] Building CXX object CMakeFiles/CaptureStream2.dir/CaptureStream2_autogen/mocs_compilation.cpp.o
+In file included from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../mainwindow.h:40,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../downloadthread.h:31,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/moc_downloadthread.cpp:9,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/mocs_compilation.cpp:4:
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../settings.h:63:36: error: ‘OPT_PRESET_SIZE’ is not a member of ‘Constants’
+   63 |     std::array<QString, Constants::OPT_PRESET_SIZE> optionals;
+      |                                    ^~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../settings.h:63:51: error: template argument 2 is invalid
+   63 |     std::array<QString, Constants::OPT_PRESET_SIZE> optionals;
+      |                                                   ^
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../settings.h:64:36: error: ‘PRESET_SIZE’ is not a member of ‘Constants’
+   64 |     std::array<QString, Constants::PRESET_SIZE> specials;
+      |                                    ^~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../settings.h:64:47: error: template argument 2 is invalid
+   64 |     std::array<QString, Constants::PRESET_SIZE> specials;
+      |                                               ^
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../settings.h:71:36: error: size of array ‘titleFormat’ is not an integral constant-expression
+   71 |     QString titleFormat[Constants::ITEM_COUNT];
+      |                         ~~~~~~~~~~~^~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../settings.h:72:39: error: size of array ‘fileNameFormat’ is not an integral constant-expression
+   72 |     QString fileNameFormat[Constants::ITEM_COUNT];
+      |                            ~~~~~~~~~~~^~~~~~~~~~
+In file included from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../mainwindow.h:41,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../downloadthread.h:31,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/moc_downloadthread.cpp:9,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/mocs_compilation.cpp:4:
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../runtimeconfig.h:57:39: error: size of array ‘english’ is not an integral constant-expression
+   57 |     RuntimeProgram english[Constants::EnglishCount];
+      |                            ~~~~~~~~~~~^~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../runtimeconfig.h:58:40: error: size of array ‘optional’ is not an integral constant-expression
+   58 |     RuntimeProgram optional[Constants::OptionalCount];
+      |                             ~~~~~~~~~~~^~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../runtimeconfig.h:59:36: error: size of array ‘spec’ is not an integral constant-expression
+   59 |     RuntimeProgram spec[Constants::SpecCount];
+      |                         ~~~~~~~~~~~^~~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../runtimeconfig.h:68:36: error: size of array ‘titleFormat’ is not an integral constant-expression
+   68 |     QString titleFormat[Constants::ITEM_COUNT];
+      |                         ~~~~~~~~~~~^~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../runtimeconfig.h:69:39: error: size of array ‘fileNameFormat’ is not an integral constant-expression
+   69 |     QString fileNameFormat[Constants::ITEM_COUNT];
+      |                            ~~~~~~~~~~~^~~~~~~~~~
+In file included from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/moc_scrambledialog.cpp:9,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/mocs_compilation.cpp:8:
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../scrambledialog.h:53:39: error: ‘OPT_PRESET_SIZE’ is not a member of ‘Constants’
+   53 |     std::array<QLineEdit*, Constants::OPT_PRESET_SIZE> edits;
+      |                                       ^~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../scrambledialog.h:53:54: error: template argument 2 is invalid
+   53 |     std::array<QLineEdit*, Constants::OPT_PRESET_SIZE> edits;
+      |                                                      ^
+In file included from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/moc_settingsdialog.cpp:9,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/mocs_compilation.cpp:9:
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../settingsdialog.h:53:39: error: ‘PRESET_SIZE’ is not a member of ‘Constants’
+   53 |     std::array<QLineEdit*, Constants::PRESET_SIZE> edits;
+      |                                       ^~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../settingsdialog.h:53:50: error: template argument 2 is invalid
+   53 |     std::array<QLineEdit*, Constants::PRESET_SIZE> edits;
+      |                                                  ^
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:85: CMakeFiles/CaptureStream2.dir/CaptureStream2_autogen/mocs_compilation.cpp.o] エラー 1
 make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
 make: *** [Makefile:91: all] エラー 2
 
