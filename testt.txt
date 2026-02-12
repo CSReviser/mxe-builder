@@ -1,3 +1,35 @@
+void ScrambleDialog::updateLabels() {
+    // std::array をやめて QVector にする
+    QVector<QLabel*> labels = {
+        ui.label_optional1, ui.label_optional2, ui.label_optional3, ui.label_optional4,
+        ui.label_optional5, ui.label_optional6, ui.label_optional7, ui.label_optional8
+    };
+
+    // labels.size() を使えば安全にループできます
+    for (int i = 0; i < labels.size() && i < Constants::getOptionalCount(); ++i) {
+        // ... ラベル更新処理 ...
+    }
+}
+
+void ScrambleDialog::updateLabels() {
+    // 初期化子リストを直接使ってループを回す
+    const auto labels = {
+        ui.label_optional1, ui.label_optional2, ui.label_optional3, ui.label_optional4,
+        ui.label_optional5, ui.label_optional6, ui.label_optional7, ui.label_optional8
+    };
+
+    int i = 0;
+    for (QLabel* label : labels) {
+        if (i >= Constants::getOptionalCount()) break;
+        // label->setText(...) 等の処理
+        i++;
+    }
+}
+
+
+
+
+
 void ScrambleDialog::someMethod() {
     const auto& OPT_PRESETS = Constants::getOptPresets(); // ここで名前を定義
     
