@@ -1,3 +1,28 @@
+RuntimeConfig::RuntimeConfig()
+{
+    // --- フラグ・チェックボックス系 ---
+    // ここで resize しないと applySettings などで落ちます
+    checkBox.resize(Constants::getFeatureCount());
+
+    // --- 番組データ系 ---
+    english.resize(Constants::getEnglishCount());
+    optional.resize(Constants::getOptionalCount());
+    spec.resize(Constants::getSpecCount());
+
+    // --- カスタマイズ形式系 ---
+    titleFormat.resize(Constants::getItemCount());
+    fileNameFormat.resize(Constants::getItemCount());
+
+    // --- フラグの初期値を Constants::FlagTable から読み込む ---
+    for (int i = 0; i < Constants::getFlagCount(); ++i) {
+        const auto& entry = Constants::FlagTable[i];
+        flags[entry.keyFlag] = entry.flagDefault;
+    }
+}
+
+
+
+
 #pragma once
 #include "constants_core.h"
 
