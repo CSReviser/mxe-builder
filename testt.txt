@@ -1,3 +1,33 @@
+// 修正前
+const int EnglishCount = sizeof(EnglishPrograms) / sizeof(EnglishPrograms[0]);
+
+// 修正後（関数の実装だけでOK。関数内で sizeof を使う）
+int getEnglishCount() {
+    return sizeof(EnglishPrograms) / sizeof(EnglishPrograms[0]);
+}
+
+// ... (前半の配列定義などはそのまま) ...
+
+// ===== カウント関数の実装 =====
+int getEnglishCount()  { return sizeof(EnglishPrograms) / sizeof(EnglishPrograms[0]); }
+int getOptionalCount() { return sizeof(OptionalPrograms) / sizeof(OptionalPrograms[0]); }
+int getSpecCount()     { return sizeof(SpecPrograms) / sizeof(SpecPrograms[0]); }
+int getItemCount()     { return sizeof(FILENAME_ITEMS) / sizeof(FILENAME_ITEMS[0]); }
+
+// getPresetsCount なども必要であれば追加
+int getOptPresetSize() { return static_cast<int>(getOptPresets().size()); }
+int getPresetSize()    { return static_cast<int>(getPresets().size()); }
+
+// プリセット等の個数も sizeof で
+int getFilenamePresetCount() { return sizeof(FILENAME_PRESETS) / sizeof(FILENAME_PRESETS[0]); }
+int getTitlePresetCount()    { return sizeof(TITLE_PRESETS) / sizeof(TITLE_PRESETS[0]); }
+
+} // namespace Constants
+
+
+
+
+
 #include "constants_flags.h"
 
 namespace Constants {
