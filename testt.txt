@@ -1,36 +1,31 @@
-[ 33%] Building CXX object CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o
+[ 28%] Building CXX object CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o
 /home/kazuo/cs/CaptureStream2/mainwindow.cpp: In instantiation of ‘MainWindow::findEntryByObjectName(const QString&) const::<lambda(const auto:34&)> [with auto:34 = Constants::ProgramDefinition []]’:
-/home/kazuo/cs/CaptureStream2/mainwindow.cpp:1375:25:   required from here
-/home/kazuo/cs/CaptureStream2/mainwindow.cpp:1368:9: error: range-based ‘for’ expression of type ‘const Constants::ProgramDefinition []’ has incomplete type
- 1368 |         for (const auto& p : list) {
+/home/kazuo/cs/CaptureStream2/mainwindow.cpp:1377:25:   required from here
+/home/kazuo/cs/CaptureStream2/mainwindow.cpp:1370:9: error: range-based ‘for’ expression of type ‘const Constants::ProgramDefinition []’ has incomplete type
+ 1370 |         for (const auto& p : list) {
       |         ^~~
-/home/kazuo/cs/CaptureStream2/mainwindow.cpp: In instantiation of ‘void MainWindow::updateProgramButtons(const Container&, const Settings&) [with Container = Constants::ProgramDefinition []]’:
-/home/kazuo/cs/CaptureStream2/mainwindow.cpp:731:25:   required from here
-/home/kazuo/cs/CaptureStream2/mainwindow.cpp:780:5: error: range-based ‘for’ expression of type ‘const Constants::ProgramDefinition []’ has incomplete type
-  780 |     for (const auto &p : programs) {
-      |     ^~~
-/home/kazuo/cs/CaptureStream2/mainwindow.cpp: In instantiation of ‘void MainWindow::saveProgramButtons(const Container&, Settings&) [with Container = Constants::ProgramDefinition []]’:
-/home/kazuo/cs/CaptureStream2/mainwindow.cpp:816:23:   required from here
-/home/kazuo/cs/CaptureStream2/mainwindow.cpp:833:5: error: range-based ‘for’ expression of type ‘const Constants::ProgramDefinition []’ has incomplete type
-  833 |     for (const auto &p : programs) {
-      |     ^~~
 make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:169: CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o] エラー 1
 make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
 make: *** [Makefile:91: all] エラー 2
 
-下記の部分どう直せばよいですか？
-template <typename Container>
-void MainWindow::saveProgramButtons(const Container &programs, Settings &s)
-{
-    for (const auto &p : programs) {
-        if (qs(p.objectName).isEmpty())
-            continue;
 
-        // QAbstractButton で統一（QToolButton も QCheckBox も継承）
-        if (auto btn = findChild<QAbstractButton*>(qs(p.objectName))) {
-            s.checked[p.keyChecked] = btn->isChecked();
+下記の部分どう直せばよいですか？
+const Constants::ProgramDefinition* MainWindow::findEntryByObjectName(const QString& obj) const
+{
+    auto search = [&](const auto& list) -> const Constants::ProgramDefinition* {
+        for (const auto& p : list) {
+            if (p.objectName == obj)
+                return &p;
         }
-    }
+        return nullptr;
+    };
+
+    if (auto* p = search(Constants::EnglishPrograms))  return p;
+    if (auto* p = search(Constants::OptionalPrograms)) return p;
+    if (auto* p = search(Constants::SpecPrograms))     return p;
+    if (auto* p = search(Constants::FeatureSettings))  return p;
+    
+    return nullptr;
 }
 
 
