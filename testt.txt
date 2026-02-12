@@ -1,3 +1,7 @@
+Segmentation fault (コアダンプ)
+
+
+
 void Settings::load() {
     // ... 前後の処理 ...
 
