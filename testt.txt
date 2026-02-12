@@ -1,3 +1,69 @@
+// 修正前
+// std::array<QString, Constants::OPT_PRESET_SIZE> optionals;
+// std::array<QString, Constants::PRESET_SIZE> specials;
+// QString titleFormat[Constants::ITEM_COUNT];
+// QString fileNameFormat[Constants::ITEM_COUNT];
+
+// 修正後
+#include <QVector>
+
+// ... クラス定義内 ...
+    QVector<QString> optionals;
+    QVector<QString> specials;
+    QVector<QString> titleFormat;
+    QVector<QString> fileNameFormat;
+
+
+Settings::Settings() {
+    optionals.resize(Constants::getOptionalCount());
+    specials.resize(Constants::getSpecCount());
+    titleFormat.resize(Constants::getItemCount());
+    fileNameFormat.resize(Constants::getItemCount());
+}
+
+// 修正前
+// RuntimeProgram english[Constants::EnglishCount];
+// RuntimeProgram optional[Constants::OptionalCount];
+// RuntimeProgram spec[Constants::SpecCount];
+// QString titleFormat[Constants::ITEM_COUNT];
+// QString fileNameFormat[Constants::ITEM_COUNT];
+
+// 修正後
+    QVector<RuntimeProgram> english;
+    QVector<RuntimeProgram> optional;
+    QVector<RuntimeProgram> spec;
+    QVector<QString> titleFormat;
+    QVector<QString> fileNameFormat;
+
+
+RuntimeConfig::RuntimeConfig() {
+    english.resize(Constants::getEnglishCount());
+    optional.resize(Constants::getOptionalCount());
+    spec.resize(Constants::getSpecCount());
+    titleFormat.resize(Constants::getItemCount());
+    fileNameFormat.resize(Constants::getItemCount());
+}
+
+// 修正前: std::array<QLineEdit*, Constants::OPT_PRESET_SIZE> edits;
+QVector<QLineEdit*> edits;
+
+// 修正前: std::array<QLineEdit*, Constants::PRESET_SIZE> edits;
+QVector<QLineEdit*> edits;
+
+
+修正前: for (int i = 0; i < Constants::EnglishCount; ++i)
+• 修正後: for (int i = 0; i < Constants::getEnglishCount(); ++i)
+• または for (int i = 0; i < english.size(); ++i)
+
+
+
+
+
+
+
+
+
+
 [  9%] Building CXX object CMakeFiles/CaptureStream2.dir/CaptureStream2_autogen/mocs_compilation.cpp.o
 In file included from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../mainwindow.h:40,
                  from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../downloadthread.h:31,
