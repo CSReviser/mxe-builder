@@ -1,3 +1,52 @@
+void Settings::load() {
+    // ... 前後の処理 ...
+
+    // English
+    for (int i = 0; i < Constants::getEnglishCount(); ++i) {
+        loadProgramDefinition(Constants::EnglishPrograms[i], ini);
+    }
+
+    // Optional
+    for (int i = 0; i < Constants::getOptionalCount(); ++i) {
+        loadProgramDefinition(Constants::OptionalPrograms[i], ini);
+    }
+
+    // Spec
+    for (int i = 0; i < Constants::getSpecCount(); ++i) {
+        loadProgramDefinition(Constants::SpecPrograms[i], ini);
+    }
+    
+    // ...
+}
+
+
+void Settings::save() {
+    // ... 前後の処理 ...
+
+    // English
+    for (int i = 0; i < Constants::getEnglishCount(); ++i) {
+        saveProgramDefinition(Constants::EnglishPrograms[i], ini);
+    }
+
+    // Optional
+    for (int i = 0; i < Constants::getOptionalCount(); ++i) {
+        saveProgramDefinition(Constants::OptionalPrograms[i], ini);
+    }
+
+    // Spec
+    for (int i = 0; i < Constants::getSpecCount(); ++i) {
+        saveProgramDefinition(Constants::SpecPrograms[i], ini);
+    }
+
+    // ...
+}
+
+
+
+
+
+
+
 [  9%] Building CXX object CMakeFiles/CaptureStream2.dir/settings.cpp.o
 /home/kazuo/cs/CaptureStream2/settings.cpp: In member function ‘void Settings::load()’:
 /home/kazuo/cs/CaptureStream2/settings.cpp:49:37: error: range-based ‘for’ expression of type ‘const Constants::ProgramDefinition []’ has incomplete type
