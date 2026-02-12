@@ -1,3 +1,29 @@
+const Constants::ProgramDefinition* MainWindow::findEntryByObjectName(const QString& obj) const
+{
+    // 引数を「配列の先頭ポインタ」と「個数」に変更する
+    auto search = [&](const Constants::ProgramDefinition* list, int count) -> const Constants::ProgramDefinition* {
+        for (int i = 0; i < count; ++i) {
+            const auto& p = list[i];
+            if (QString(p.objectName) == obj)
+                return &p;
+        }
+        return nullptr;
+    };
+
+    // 呼び出し時に Constants から取得した個数を渡す
+    if (auto* p = search(Constants::EnglishPrograms, Constants::getEnglishCount()))  return p;
+    if (auto* p = search(Constants::OptionalPrograms, Constants::getOptionalCount())) return p;
+    if (auto* p = search(Constants::SpecPrograms, Constants::getSpecCount()))     return p;
+    
+    // FeatureSettings も同様に関数化されている前提です
+    if (auto* p = search(Constants::FeatureSettings, Constants::getFeatureCount()))  return p;
+    
+    return nullptr;
+}
+
+
+
+
 [ 28%] Building CXX object CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o
 /home/kazuo/cs/CaptureStream2/mainwindow.cpp: In instantiation of ‘MainWindow::findEntryByObjectName(const QString&) const::<lambda(const auto:34&)> [with auto:34 = Constants::ProgramDefinition []]’:
 /home/kazuo/cs/CaptureStream2/mainwindow.cpp:1377:25:   required from here
