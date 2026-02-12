@@ -1,3 +1,15 @@
+RuntimeConfig::RuntimeConfig()
+{
+    // ここで Constants から個数を取得して resize する
+    checkBox.resize(Constants::getFeatureCount());
+    
+    // もし FlagTable 用の配列もあるなら同様に
+    // flags.resize(Constants::getFlagCount());
+}
+
+
+
+
 // 修正前
 const int EnglishCount = sizeof(EnglishPrograms) / sizeof(EnglishPrograms[0]);
 
