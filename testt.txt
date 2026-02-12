@@ -1,4 +1,4 @@
-[ 14%] Linking CXX executable CaptureStream2
+[100%] Linking CXX executable CaptureStream2
 /usr/bin/ld: CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o: in function `MainWindow::restoreGui()':
 mainwindow.cpp:(.text._ZN10MainWindow10restoreGuiEv+0x2be): undefined reference to `Constants::getFeatureCount()'
 /usr/bin/ld: mainwindow.cpp:(.text._ZN10MainWindow10restoreGuiEv+0x2d4): undefined reference to `Constants::FeatureSettings'
@@ -28,6 +28,7 @@ collect2: error: ld returned 1 exit status
 make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:505: CaptureStream2] エラー 1
 make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
 make: *** [Makefile:91: all] エラー 2
+
 
 
 
