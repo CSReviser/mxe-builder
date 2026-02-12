@@ -1,3 +1,41 @@
+[  9%] Building CXX object CMakeFiles/CaptureStream2.dir/scrambledialog.cpp.o
+/home/kazuo/cs/CaptureStream2/scrambledialog.cpp: In member function ‘QString ScrambleDialog::scramble_set(QString, int)’:
+/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:72:25: error: ‘OPT_PRESETS’ was not declared in this scope
+   72 |     for (int j = 0; j < OPT_PRESETS.size() && j < radios.size(); ++j) {
+      |                         ^~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/scrambledialog.cpp: In member function ‘void ScrambleDialog::updateLabels()’:
+/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:112:52: error: call to non-‘constexpr’ function ‘int Constants::getOptionalCount()’
+  112 |     std::array<QLabel*, Constants::getOptionalCount()> labels = {
+      |                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~^~
+In file included from /home/kazuo/cs/CaptureStream2/constants.h:26,
+                 from /home/kazuo/cs/CaptureStream2/settings.h:30,
+                 from /home/kazuo/cs/CaptureStream2/scrambledialog.h:28,
+                 from /home/kazuo/cs/CaptureStream2/scrambledialog.cpp:24:
+/home/kazuo/cs/CaptureStream2/constants_programs.h:71:9: note: ‘int Constants::getOptionalCount()’ declared here
+   71 |     int getOptionalCount();
+      |         ^~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:112:52: error: call to non-‘constexpr’ function ‘int Constants::getOptionalCount()’
+  112 |     std::array<QLabel*, Constants::getOptionalCount()> labels = {
+      |                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~^~
+In file included from /home/kazuo/cs/CaptureStream2/constants.h:26,
+                 from /home/kazuo/cs/CaptureStream2/settings.h:30,
+                 from /home/kazuo/cs/CaptureStream2/scrambledialog.h:28,
+                 from /home/kazuo/cs/CaptureStream2/scrambledialog.cpp:24:
+/home/kazuo/cs/CaptureStream2/constants_programs.h:71:9: note: ‘int Constants::getOptionalCount()’ declared here
+   71 |     int getOptionalCount();
+      |         ^~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:112:52: note: in template argument for type ‘long unsigned int’
+  112 |     std::array<QLabel*, Constants::getOptionalCount()> labels = {
+      |                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~^~
+/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:112:56: error: scalar object ‘labels’ requires one element in initializer
+  112 |     std::array<QLabel*, Constants::getOptionalCount()> labels = {
+      |                                                        ^~~~~~
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:197: CMakeFiles/CaptureStream2.dir/scrambledialog.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
+
+
+
 const Constants::ProgramDefinition* MainWindow::findEntryByObjectName(const QString& obj) const
 {
     // 引数を「配列の先頭ポインタ」と「個数」に変更する
