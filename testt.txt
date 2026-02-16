@@ -1,3 +1,62 @@
+// tryLockFile の改善
+bool Utility::tryLockFile() {
+    // 複数起動が許可されているなら、ロックせずに通す
+    if (multi_gui_flag_check()) {
+        return true;
+    }
+
+    // 0.1秒は短すぎるので、30秒（30000ms）程度に
+    lockFile.setStaleLockTime(30000); 
+
+    // もし古いロックファイルが残っていたら掃除する
+    // (これを tryLock の前に呼ぶのが一般的)
+    lockFile.removeStaleLockFile();
+
+    return lockFile.tryLock();
+}
+
+// 2つの解除関数を1つに統合してスッキリさせる
+void Utility::releaseLock() {
+    if (lockFile.isLocked()) {
+        lockFile.unlock();
+    }
+}
+
+int main(int argc, char *argv[]) {
+    // 1. 環境設定（QApplicationの前）
+    qputenv("QT_AUTO_SCREEN_SCALE_FACTOR", "1");
+
+    QApplication a(argc, argv);
+
+    // 2. 二重起動チェック（MainWindowを作る前に！）
+    // ここで失敗したら即終了
+    if (!Utility::tryLockFile()) {
+        return 0; 
+    }
+
+    // 3. GUI構築
+    MainWindow w;
+    QGuiApplication::setWindowIcon(QIcon(":icon.png"));
+
+    // 4. 実行
+    if (Utility::nogui()) {
+        w.download();
+    } else {
+        w.show();
+    }
+
+    int result = a.exec();
+
+    // 5. 終了時にロック解除
+    Utility::releaseLock();
+
+    return result;
+}
+
+
+
+
+
 SimpleCliOptions CommandLineParser::parseSimple(int argc, char* argv[])
 {
     SimpleCliOptions opts;
