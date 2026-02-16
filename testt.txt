@@ -1,3 +1,57 @@
+struct CommandLineOptions {
+    bool noGui = false;
+};
+
+CommandLineOptions parseCommandLine(int argc, char* argv[]) {
+    CommandLineOptions opts;
+
+    for (int i = 1; i < argc; ++i) {
+        QString arg = argv[i];
+
+        if (arg == "-nogui" || arg == "--nogui") {
+            opts.noGui = true;
+        }
+        // 必要になればここに追加（--record, --input など）
+    }
+
+    return opts;
+}
+
+class CLIController {
+public:
+    CLIController(RecordingOrchestrator* orchestrator)
+        : m_orchestrator(orchestrator) {}
+
+    int run() {
+        // ここで CLI の実行ロジックを書く
+        // 例: 録画開始 → 停止 → 終了
+        auto sessionId = m_orchestrator->startRecording();
+        if (!sessionId) {
+            qWarning() << "Failed to start recording";
+            return 1;
+        }
+
+        qInfo() << "Recording started. Press Ctrl+C to stop.";
+
+        // シンプルに待つだけ（本番はシグナルハンドラなど）
+        QThread::sleep(5);
+
+        m_orchestrator->stopRecording(*sessionId);
+        qInfo() << "Recording stopped.";
+
+        return 0;
+    }
+
+private:
+    RecordingOrchestrator* m_orchestrator;
+};
+
+
+
+
+
+
+
 RuntimeConfig::RuntimeConfig()
 {
     // --- フラグ・チェックボックス系 ---
