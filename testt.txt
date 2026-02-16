@@ -1,3 +1,55 @@
+#include <QApplication>
+#include <QCoreApplication>
+#include "mainwindow.h"
+#include "clicontroller.h"
+#include "utility.h"
+#include "settings.h"
+
+int main(int argc, char* argv[]) {
+    // 1. 設定のロード（共通）
+    Settings settings;
+    settings.load();
+
+    // 2. GUIなし（CLI）モードの判定
+    // SimpleCliOptions や Utility::nogui() を使用
+    if (Utility::checkNoGuiFlag(argc, argv)) {
+        // --- CLIモードのスコープ ---
+        QCoreApplication app(argc, argv); // GUI機能を除いた軽量版
+        
+        CLIController cli(settings, argc, argv);
+        // ロックチェックは行わず、そのまま実行
+        return cli.run(); 
+    }
+
+    // --- GUIモードのスコープ ---
+    // 高DPI設定などは QApplication 生成前に
+    qputenv("QT_AUTO_SCREEN_SCALE_FACTOR", "1");
+
+    QApplication app(argc, argv);
+
+    // 3. GUIのみ二重起動防止を適用
+    if (!Utility::tryLockFile()) {
+        // すでに起動している旨を通知（GUIならダイアログを出しても良い）
+        return 1; 
+    }
+
+    // 4. ウィンドウ生成と表示
+    MainWindow w(settings);
+    QGuiApplication::setWindowIcon(QIcon(":icon.png"));
+    w.show();
+
+    // 5. メインループ開始
+    int result = app.exec();
+
+    // 6. 終了時にロック解除
+    Utility::unLockFile();
+
+    return result;
+}
+
+
+
+
 SimpleCliOptions CommandLineParser::parseSimple(int argc, char* argv[])
 {
     SimpleCliOptions opts;
