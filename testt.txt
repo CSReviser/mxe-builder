@@ -1,3 +1,42 @@
+SimpleCliOptions CommandLineParser::parseSimple(int argc, char* argv[])
+{
+    SimpleCliOptions opts;
+
+    for (int i = 1; i < argc; ++i) {
+        QString arg = argv[i];
+        if (arg == "-nogui" || arg == "--nogui") {
+            opts.nogui = true;
+        }
+    }
+
+    return opts;
+}
+
+int main(int argc, char* argv[]) {
+    Settings settings;
+    settings.load();
+
+    // ---- 簡易パーサーで nogui だけ判定 ----
+    SimpleCliOptions simple = CommandLineParser::parseSimple(argc, argv);
+
+    if (simple.nogui) {
+        CLIController cli(settings, argc, argv);
+        return cli.run();
+    }
+
+    QApplication app(argc, argv);
+    MainWindow w(settings);
+    w.show();
+    return app.exec();
+}
+
+
+
+
+
+
+
+
 // tryLockFile の改善
 bool Utility::tryLockFile() {
     // 複数起動が許可されているなら、ロックせずに通す
