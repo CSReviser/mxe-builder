@@ -1,3 +1,88 @@
+CliOptions CommandLineParser::parse(int argc, char* argv[])
+{
+    CliOptions opts;
+
+    auto findOption = [&](const QString& arg) -> const Constants::CliOption* {
+        for (int i = 0; i < Constants::getOptionTableCount(); ++i) {
+            if (arg == Constants::OPTION_TABLE[i].name)
+                return &Constants::OPTION_TABLE[i];
+        }
+        return nullptr;
+    };
+
+    for (int i = 1; i < argc; ++i) {
+        QString arg = QString::fromLocal8Bit(argv[i]);
+        const Constants::CliOption* opt = findOption(arg);
+
+        if (!opt) {
+            // 未知の引数は一旦すべて ID候補として格納（妥当性確認は後続へ委ねる）
+            opts.programIds.push_back(arg);
+            continue;
+        }
+
+        opts.enabledKeys.push_back(opt->keyOption);
+
+        if (opt->requiresValue) {
+            if (i + 1 < argc) {
+                QString value = QString::fromLocal8Bit(argv[++i]);
+                // キーに基づいて値を格納
+                switch (opt->keyOption) {
+                    case Constants::KEY_CUSTOMIZED_TITLE1:  opts.titleTagFormat = value; break;
+                    case Constants::KEY_CUSTOMIZED_FILENAME1: opts.fileNameFormat = value; break;
+                    case Constants::KEY_SaveFolder:         opts.outputFolder   = value; break;
+                    case Constants::KEY_AudioExtension:     opts.extension      = value; break;
+                    default: break;
+                }
+            }
+        } else {
+            // フラグを単純にONにする
+            if (opt->keyOption == Constants::KEY_NOGUI)           opts.nogui = true;
+            else if (opt->keyOption == Constants::KEY_LAST_WEEK)  opts.optionZ = true;
+            else if (opt->keyOption == Constants::KEY_BOTH_WEEKS) opts.optionB = true;
+            else if (opt->keyOption == Constants::KEY_KOZA_SEPARATION) opts.optionS = true;
+        }
+    }
+    return opts;
+}
+
+
+int CLIController::run(const CliOptions& rawOpts)
+{
+    // 1. 基本的なバリデーション（番組ID形式のチェック等）
+    QStringList validIds;
+    for (const QString& id : rawOpts.programIds) {
+        if (isValidProgramId(id)) { // 別途定義したID形式チェック関数
+            validIds << id;
+        }
+    }
+
+    // 2. 仕様の適用：番組IDの有無による分岐
+    if (validIds.isEmpty()) {
+        // 【仕様】番組IDがない場合は -z, -b 以外無視
+        // settings はロード済みのGUI設定を使用し、z/bフラグだけ適用する
+        qDebug() << "CLI: No valid IDs. Recording GUI-selected programs.";
+        executeRecording(this->settings, rawOpts.optionZ, rawOpts.optionB, false);
+    } 
+    else {
+        // 【仕様】番組IDがある場合はオプションを上書き適用
+        Settings runSettings = this->settings; // ベース設定をコピー
+        
+        if (!rawOpts.titleTagFormat.isEmpty()) runSettings.setTitleFormat(rawOpts.titleTagFormat);
+        if (!rawOpts.outputFolder.isEmpty())   runSettings.setOutputDir(rawOpts.outputFolder);
+        // ... (以下、他のオプションも同様に上書き)
+        
+        qDebug() << "CLI: Recording target IDs:" << validIds;
+        executeRecordingForIds(validIds, runSettings, rawOpts.optionZ, rawOpts.optionB, rawOpts.optionS);
+    }
+
+    return 0;
+}
+
+
+
+
+
+
 #include <QApplication>
 #include <QCoreApplication>
 #include "mainwindow.h"
