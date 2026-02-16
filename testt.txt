@@ -1,3 +1,20 @@
+SimpleCliOptions CommandLineParser::parseSimple(int argc, char* argv[])
+{
+    SimpleCliOptions opts;
+
+    for (int i = 1; i < argc; ++i) {
+        QString arg = argv[i];
+        if (arg == "-nogui" || arg == "--nogui") {
+            opts.nogui = true;
+        }
+    }
+
+    return opts;
+}
+
+
+
+
 struct CommandLineOptions {
     bool noGui = false;
 };
