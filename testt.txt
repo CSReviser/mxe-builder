@@ -1,3 +1,308 @@
+h
+#pragma once
+#include <QString>
+#include <QMap>
+#include <QSet>
+#include <vector>
+
+struct SimpleCliOptions {
+    bool nogui = false;
+};
+
+struct CliOptions {
+    bool nogui = false;
+
+    // 値を取るオプション（キーは const char*）
+    QMap<const char*, QString> optionValues;
+
+    // 値を取らないフラグ（キーは const char*）
+    QSet<const char*> enabledFlags;
+
+    // プログラムID候補
+    std::vector<QString> programIds;
+};
+
+class CommandLineParser {
+public:
+    // main() が使う：-nogui だけ判定
+    static SimpleCliOptions parseSimple(int argc, char* argv[]);
+
+    // CLIController が使う：全オプション抽象パース
+    static CliOptions parse(int argc, char* argv[]);
+};
+
+
+cpp
+#include "commandlineparser.h"
+#include "constants_cli.h"
+
+SimpleCliOptions CommandLineParser::parseSimple(int argc, char* argv[])
+{
+    SimpleCliOptions opts;
+
+    for (int i = 1; i < argc; ++i) {
+        QString arg = QString::fromLocal8Bit(argv[i]);
+        if (arg == "-nogui" || arg == "--nogui") {
+            opts.nogui = true;
+        }
+    }
+    return opts;
+}
+
+CliOptions CommandLineParser::parse(int argc, char* argv[])
+{
+    CliOptions opts;
+
+    auto findOption = [&](const QString& arg) -> const Constants::CliOption* {
+        for (int i = 0; i < Constants::getOptionTableCount(); ++i) {
+            if (arg == Constants::OPTION_TABLE[i].name) {
+                return &Constants::OPTION_TABLE[i];
+            }
+        }
+        return nullptr;
+    };
+
+    for (int i = 1; i < argc; ++i) {
+        QString arg = QString::fromLocal8Bit(argv[i]);
+        const Constants::CliOption* opt = findOption(arg);
+
+        if (!opt) {
+            // 未知の引数はプログラムID候補として扱う
+            if (!arg.startsWith("-")) {
+                opts.programIds.push_back(arg);
+            }
+            continue;
+        }
+
+        // -nogui は main の分岐にも使うので特別扱い
+        if (opt->keyOption == Constants::KEY_NOGUI) {
+            opts.nogui = true;
+        }
+
+        if (opt->requiresValue) {
+            if (i + 1 < argc) {
+                QString value = QString::fromLocal8Bit(argv[++i]);
+                opts.optionValues[opt->keyOption] = value;
+            }
+        } else {
+            opts.enabledFlags.insert(opt->keyOption);
+        }
+    }
+
+    return opts;
+}
+
+
+#pragma once
+#include <QString>
+#include "settings.h"
+#include "commandlineparser.h"
+#include "runtimeconfig.h"
+
+class CLIController
+{
+public:
+    CLIController(const Settings& settings, int argc, char* argv[]);
+
+    int run();
+
+private:
+    bool validateOptions(const CliOptions& opts) const;
+    void applyCliOverrides(RuntimeConfig& config, const CliOptions& opts) const;
+
+private:
+    Settings m_settings;
+    int m_argc;
+    char** m_argv;
+};
+
+#include "clicontroller.h"
+#include "recordingorchestrator.h"
+#include <QDebug>
+
+CLIController::CLIController(const Settings& settings, int argc, char* argv[])
+    : m_settings(settings), m_argc(argc), m_argv(argv)
+{
+}
+
+int CLIController::run()
+{
+    // ---- 1. 本格パース（抽象化済み） ----
+    CliOptions opts = CommandLineParser::parse(m_argc, m_argv);
+
+    // ---- 2. 妥当性確認（CommandLineParser では行わない） ----
+    if (!validateOptions(opts)) {
+        qWarning() << "CLI option validation failed.";
+        return 1;
+    }
+
+    // ---- 3. Settings → RuntimeConfig へコピー ----
+    RuntimeConfig config;
+    config.applySettings(m_settings);
+
+    // ---- 4. CLI オプションで RuntimeConfig を上書き ----
+    applyCliOverrides(config, opts);
+
+    // ---- 5. 実行プログラムへ制御移譲 ----
+    RecordingOrchestrator orchestrator(&config);
+    return orchestrator.runHeadless();
+}
+
+bool CLIController::validateOptions(const CliOptions& opts) const
+{
+    // 例：値を取るオプションの妥当性確認
+    for (auto it = opts.optionValues.begin(); it != opts.optionValues.end(); ++it) {
+        const char* key = it.key();
+        const QString& value = it.value();
+
+        if (value.isEmpty()) {
+            qWarning() << "Empty value for option key:" << key;
+            return false;
+        }
+
+        // 必要に応じて追加の妥当性チェックをここに書く
+    }
+
+    // 例：プログラムIDの妥当性確認（必要なら）
+    // for (const QString& id : opts.programIds) { ... }
+
+    return true;
+}
+
+void CLIController::applyCliOverrides(RuntimeConfig& config, const CliOptions& opts) const
+{
+    // ---- 値を取るオプション ----
+    for (auto it = opts.optionValues.begin(); it != opts.optionValues.end(); ++it) {
+        const char* key = it.key();
+        const QString& value = it.value();
+        config.setValue(key, value);   // RuntimeConfig が文字列キーを受け取る前提
+    }
+
+    // ---- フラグ（bool） ----
+    for (const char* key : opts.enabledFlags) {
+        config.setValue(key, true);
+    }
+
+    // ---- プログラムID（必要なら） ----
+    if (!opts.programIds.empty()) {
+        // 例：RuntimeConfig にセットする
+        // config.setProgramIds(opts.programIds);
+    }
+}
+
+
+
+
+
+
+
+#pragma once
+#include <QString>
+#include <QMap>
+#include <QSet>
+#include <vector>
+
+struct SimpleCliOptions {
+    bool nogui = false;
+};
+
+struct CliOptions {
+    bool nogui = false;
+
+    // 値を取るオプション
+    QMap<int, QString> optionValues;
+
+    // 値を取らないフラグ
+    QSet<int> enabledFlags;
+
+    // プログラムID候補
+    std::vector<QString> programIds;
+};
+
+class CommandLineParser {
+public:
+    static SimpleCliOptions parseSimple(int argc, char* argv[]);
+    static CliOptions parse(int argc, char* argv[]);
+};
+
+
+cpp
+#include "commandlineparser.h"
+#include "constants.h"
+
+SimpleCliOptions CommandLineParser::parseSimple(int argc, char* argv[])
+{
+    SimpleCliOptions opts;
+
+    for (int i = 1; i < argc; ++i) {
+        QString arg = QString::fromLocal8Bit(argv[i]);
+        if (arg == "-nogui" || arg == "--nogui") {
+            opts.nogui = true;
+        }
+    }
+    return opts;
+}
+
+CliOptions CommandLineParser::parse(int argc, char* argv[])
+{
+    CliOptions opts;
+
+    auto findOption = [&](const QString& arg) -> const Constants::CliOption* {
+        for (int i = 0; i < Constants::getOptionTableCount(); ++i) {
+            if (arg == Constants::OPTION_TABLE[i].optionStr)
+                return &Constants::OPTION_TABLE[i];
+        }
+        return nullptr;
+    };
+
+    for (int i = 1; i < argc; ++i) {
+        QString arg = QString::fromLocal8Bit(argv[i]);
+        const Constants::CliOption* opt = findOption(arg);
+
+        if (!opt) {
+            if (!arg.startsWith("-")) {
+                opts.programIds.push_back(arg);
+            }
+            continue;
+        }
+
+        // -nogui は main の分岐用にも使うので特別扱い
+        if (opt->key == Constants::KEY_NOGUI) {
+            opts.nogui = true;
+        }
+
+        if (opt->hasValue) {
+            if (i + 1 < argc) {
+                QString value = QString::fromLocal8Bit(argv[++i]);
+                opts.optionValues[opt->key] = value;
+            }
+        } else {
+            opts.enabledFlags.insert(opt->key);
+        }
+    }
+
+    return opts;
+}
+
+
+main
+SimpleCliOptions simple = CommandLineParser::parseSimple(argc, argv);
+
+if (simple.nogui) {
+    CLIController cli(settings, argc, argv);
+    return cli.run();
+}
+
+
+
+
+
+
+
+
+
+
+
 // --- commandlineparser.h 等 ---
 struct CliOptions {
     bool nogui = false;
