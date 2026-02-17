@@ -1,3 +1,61 @@
+// --- commandlineparser.h 等 ---
+struct CliOptions {
+    bool nogui = false;
+    QStringList programIds;
+    
+    // 値を持たないフラグ系 (KEY_LAST_WEEK など)
+    QSet<int> enabledFlags; 
+    
+    // 値を持つオプション系 (KEY_SaveFolder とそのパス文字列など)
+    QMap<int, QString> optionValues; 
+};
+
+
+
+CliOptions CommandLineParser::parse(int argc, char* argv[])
+{
+    CliOptions opts;
+
+    auto findOption = [&](const QString& arg) -> const Constants::CliOption* {
+        for (int i = 0; i < Constants::getOptionTableCount(); ++i) {
+            if (arg == Constants::OPTION_TABLE[i].optionStr) // optionStrと照合
+                return &Constants::OPTION_TABLE[i];
+        }
+        return nullptr;
+    };
+
+    for (int i = 1; i < argc; ++i) {
+        QString arg = QString::fromLocal8Bit(argv[i]);
+        const Constants::CliOption* opt = findOption(arg);
+
+        if (!opt) {
+            if (!arg.startsWith("-")) {
+                opts.programIds.push_back(arg);
+            }
+            continue;
+        }
+
+        // 特別なフラグ "-nogui" だけは、mainでの分岐用に個別保持しても良い
+        if (opt->keyOption == Constants::KEY_NOGUI) {
+            opts.nogui = true;
+        }
+
+        if (opt->hasValue) { // Constants::CliOption の定義に基づく
+            if (i + 1 < argc) {
+                QString value = QString::fromLocal8Bit(argv[++i]);
+                // マップに格納（キーと値をセットで保持）
+                opts.optionValues[opt->keyOption] = value;
+            }
+        } else {
+            // セットに格納（どのキーが有効になったかだけ保持）
+            opts.enabledFlags.insert(opt->keyOption);
+        }
+    }
+    return opts;
+}
+
+
+
 CliOptions CommandLineParser::parse(int argc, char* argv[])
 {
     CliOptions opts;
