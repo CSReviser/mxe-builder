@@ -1,3 +1,71 @@
+[ 72%] Building CXX object CMakeFiles/CaptureStream2.dir/runtimeconfig.cpp.o
+/home/kazuo/cs/CaptureStream2/runtimeconfig.cpp: In member function ‘void RuntimeConfig::applyCommandLine(const CliOptions&)’:
+/home/kazuo/cs/CaptureStream2/runtimeconfig.cpp:103:13: error: ‘const struct CliOptions’ has no member named ‘titleTagFormat’
+  103 |     if (cli.titleTagFormat)
+      |             ^~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/runtimeconfig.cpp:104:34: error: ‘const struct CliOptions’ has no member named ‘titleTagFormat’
+  104 |         cliTitleTagFormat = *cli.titleTagFormat;
+      |                                  ^~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/runtimeconfig.cpp:106:13: error: ‘const struct CliOptions’ has no member named ‘fileNameFormat’
+  106 |     if (cli.fileNameFormat)
+      |             ^~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/runtimeconfig.cpp:107:34: error: ‘const struct CliOptions’ has no member named ‘fileNameFormat’
+  107 |         cliFileNameFormat = *cli.fileNameFormat;
+      |                                  ^~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/runtimeconfig.cpp:109:13: error: ‘const struct CliOptions’ has no member named ‘outputFolder’
+  109 |     if (cli.outputFolder)
+      |             ^~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/runtimeconfig.cpp:110:32: error: ‘const struct CliOptions’ has no member named ‘outputFolder’
+  110 |         cliOutputFolder = *cli.outputFolder;
+      |                                ^~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/runtimeconfig.cpp:112:13: error: ‘const struct CliOptions’ has no member named ‘extension’
+  112 |     if (cli.extension)
+      |             ^~~~~~~~~
+/home/kazuo/cs/CaptureStream2/runtimeconfig.cpp:113:29: error: ‘const struct CliOptions’ has no member named ‘extension’
+  113 |         cliExtension = *cli.extension;
+      |                             ^~~~~~~~~
+/home/kazuo/cs/CaptureStream2/runtimeconfig.cpp:116:29: error: no match for ‘operator=’ (operand types are ‘std::vector<QString>’ and ‘QVector<QString>’ {aka ‘const QList<QString>’})
+  116 |         cliProgramIds = cli.programIds;
+      |                             ^~~~~~~~~~
+In file included from /usr/include/c++/11/vector:72,
+                 from /usr/include/c++/11/functional:62,
+                 from /opt/qt6/include/QtCore/qchar.h:9,
+                 from /opt/qt6/include/QtCore/qstring.h:14,
+                 from /opt/qt6/include/QtCore/QString:1,
+                 from /home/kazuo/cs/CaptureStream2/runtimeconfig.h:27,
+                 from /home/kazuo/cs/CaptureStream2/runtimeconfig.cpp:24:
+/usr/include/c++/11/bits/vector.tcc:198:5: note: candidate: ‘std::vector<_Tp, _Alloc>& std::vector<_Tp, _Alloc>::operator=(const std::vector<_Tp, _Alloc>&) [with _Tp = QString; _Alloc = std::allocator<QString>]’
+  198 |     vector<_Tp, _Alloc>::
+      |     ^~~~~~~~~~~~~~~~~~~
+/usr/include/c++/11/bits/vector.tcc:199:42: note:   no known conversion for argument 1 from ‘QVector<QString>’ {aka ‘const QList<QString>’} to ‘const std::vector<QString>&’
+  199 |     operator=(const vector<_Tp, _Alloc>& __x)
+      |               ~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~
+In file included from /usr/include/c++/11/vector:67,
+                 from /usr/include/c++/11/functional:62,
+                 from /opt/qt6/include/QtCore/qchar.h:9,
+                 from /opt/qt6/include/QtCore/qstring.h:14,
+                 from /opt/qt6/include/QtCore/QString:1,
+                 from /home/kazuo/cs/CaptureStream2/runtimeconfig.h:27,
+                 from /home/kazuo/cs/CaptureStream2/runtimeconfig.cpp:24:
+/usr/include/c++/11/bits/stl_vector.h:709:7: note: candidate: ‘std::vector<_Tp, _Alloc>& std::vector<_Tp, _Alloc>::operator=(std::vector<_Tp, _Alloc>&&) [with _Tp = QString; _Alloc = std::allocator<QString>]’
+  709 |       operator=(vector&& __x) noexcept(_Alloc_traits::_S_nothrow_move())
+      |       ^~~~~~~~
+/usr/include/c++/11/bits/stl_vector.h:709:26: note:   no known conversion for argument 1 from ‘QVector<QString>’ {aka ‘const QList<QString>’} to ‘std::vector<QString>&&’
+  709 |       operator=(vector&& __x) noexcept(_Alloc_traits::_S_nothrow_move())
+      |                 ~~~~~~~~~^~~
+/usr/include/c++/11/bits/stl_vector.h:730:7: note: candidate: ‘std::vector<_Tp, _Alloc>& std::vector<_Tp, _Alloc>::operator=(std::initializer_list<_Tp>) [with _Tp = QString; _Alloc = std::allocator<QString>]’
+  730 |       operator=(initializer_list<value_type> __l)
+      |       ^~~~~~~~
+/usr/include/c++/11/bits/stl_vector.h:730:46: note:   no known conversion for argument 1 from ‘QVector<QString>’ {aka ‘const QList<QString>’} to ‘std::initializer_list<QString>’
+  730 |       operator=(initializer_list<value_type> __l)
+      |                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:309: CMakeFiles/CaptureStream2.dir/runtimeconfig.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
+
+
+
+
 #ifndef CLIOPTIONS_H
 #define CLIOPTIONS_H
 
@@ -15,51 +83,6 @@ struct CliOptions {
 
 
 
-[ 12%] Building CXX object CMakeFiles/CaptureStream2.dir/clicontroller.cpp.o
-In file included from /home/kazuo/cs/CaptureStream2/clicontroller.cpp:2:
-/home/kazuo/cs/CaptureStream2/commandlineparser.h:34:8: error: redefinition of ‘struct CliOptions’
-   34 | struct CliOptions {
-      |        ^~~~~~~~~~
-In file included from /home/kazuo/cs/CaptureStream2/runtimeconfig.h:33,
-                 from /home/kazuo/cs/CaptureStream2/clicontroller.h:4,
-                 from /home/kazuo/cs/CaptureStream2/clicontroller.cpp:1:
-/home/kazuo/cs/CaptureStream2/clioptions.h:29:8: note: previous definition of ‘struct CliOptions’
-   29 | struct CliOptions {
-      |        ^~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/clicontroller.cpp: In member function ‘bool CLIController::validateOptions(const CliOptions&) const’:
-/home/kazuo/cs/CaptureStream2/clicontroller.cpp:48:25: error: ‘const struct CliOptions’ has no member named ‘valueOptions’; did you mean ‘CliOptions’?
-   48 |     for (auto it = opts.valueOptions.constBegin(); it != opts.valueOptions.constEnd(); ++it) {
-      |                         ^~~~~~~~~~~~
-      |                         CliOptions
-/home/kazuo/cs/CaptureStream2/clicontroller.cpp:48:63: error: ‘const struct CliOptions’ has no member named ‘valueOptions’; did you mean ‘CliOptions’?
-   48 |   for (auto it = opts.valueOptions.constBegin(); it != opts.valueOptions.constEnd(); ++it) {
-      |                                                             ^~~~~~~~~~~~
-      |                                                             CliOptions
-/home/kazuo/cs/CaptureStream2/clicontroller.cpp: In member function ‘bool CLIController::validateProgramIds(const CliOptions&) const’:
-/home/kazuo/cs/CaptureStream2/clicontroller.cpp:73:49: error: invalid initialization of reference of type ‘const QHash<QString, QString>&’ from expression of type ‘QMap<QString, QString>’
-   73 |     const QHash<QString, QString>& idMap = repo.id_map;
-      |                                            ~~~~~^~~~~~
-/home/kazuo/cs/CaptureStream2/clicontroller.cpp: In member function ‘void CLIController::applyCliOverrides(RuntimeConfig&, const CliOptions&) const’:
-/home/kazuo/cs/CaptureStream2/clicontroller.cpp:87:25: error: ‘const struct CliOptions’ has no member named ‘optionValues’
-   87 |     for (auto it = opts.optionValues.constBegin(); it != opts.optionValues.constEnd(); ++it) {
-      |                         ^~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/clicontroller.cpp:87:63: error: ‘const struct CliOptions’ has no member named ‘optionValues’
-   87 |   for (auto it = opts.optionValues.constBegin(); it != opts.optionValues.constEnd(); ++it) {
-      |                                                             ^~~~~~~~~~~~
-
-/home/kazuo/cs/CaptureStream2/clicontroller.cpp:91:16: error: ‘class RuntimeConfig’ has no member named ‘setValue’
-   91 |         config.setValue(key, value);
-      |                ^~~~~~~~
-/home/kazuo/cs/CaptureStream2/clicontroller.cpp:95:36: error: ‘const struct CliOptions’ has no member named ‘enabledFlags’; did you mean ‘enabledKeys’?
-   95 |     for (const QString& key : opts.enabledFlags) {
-      |                                    ^~~~~~~~~~~~
-      |                                    enabledKeys
-/home/kazuo/cs/CaptureStream2/clicontroller.cpp:96:16: error: ‘class RuntimeConfig’ has no member named ‘setValue’
-   96 |         config.setValue(key, true);
-      |                ^~~~~~~~
-make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:337: CMakeFiles/CaptureStream2.dir/clicontroller.cpp.o] エラー 1
-make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
-make: *** [Makefile:91: all] エラー 2
 
 
 
