@@ -1,3 +1,44 @@
+#pragma once
+
+#include <QObject>
+#include <QMap>
+#include <QString>
+
+class QNetworkAccessManager;
+class QNetworkReply;
+
+class ProgramRepository : public QObject
+{
+    Q_OBJECT
+
+public:
+    explicit ProgramRepository(QObject *parent = nullptr);
+
+    void start();
+    bool waitUntilReady();
+    bool isReady() const;
+
+signals:
+    void ready();
+
+private slots:
+    void onReplyFinished(QNetworkReply *reply);
+
+private:
+    QNetworkAccessManager *m_manager;
+
+    // ★ これが無いのが今回のエラーの原因
+    bool m_started = false;
+    bool m_ready   = false;
+};
+
+
+#include <QEventLoop>
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QNetworkRequest>
+
+
 [ 16%] Building CXX object CMakeFiles/CaptureStream2.dir/programrepository.cpp.o
 /home/kazuo/cs/CaptureStream2/programrepository.cpp: In member function ‘void ProgramRepository::start()’:
 /home/kazuo/cs/CaptureStream2/programrepository.cpp:137:9: error: ‘m_started’ was not declared in this scope
