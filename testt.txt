@@ -1,3 +1,29 @@
+// clicontroller.h
+class CLIController {
+public:
+    CLIController(const Settings& settings, int argc, char** argv);
+
+private:
+    const Settings& m_settings;   // ← 参照にする
+    int m_argc;
+    char** m_argv;
+};
+
+// clicontroller.cpp
+CLIController::CLIController(const Settings& settings, int argc, char** argv)
+    : m_settings(settings)
+    , m_argc(argc)
+    , m_argv(argv)
+{}
+#include "commandlineparser.h"
+
+
+const QHash<QString, QString>& idMap = repo.id_map;
+
+
+
+
+
 [ 80%] Building CXX object CMakeFiles/CaptureStream2.dir/clicontroller.cpp.o
 /home/kazuo/cs/CaptureStream2/clicontroller.cpp: In constructor ‘CLIController::CLIController(const Settings&, int, char**)’:
 /home/kazuo/cs/CaptureStream2/clicontroller.cpp:8:7: error: use of deleted function ‘Settings::Settings(const Settings&)’
