@@ -1,3 +1,32 @@
+[  8%] Building CXX object CMakeFiles/CaptureStream2.dir/main.cpp.o
+In file included from /home/kazuo/cs/CaptureStream2/main.cpp:25:
+/home/kazuo/cs/CaptureStream2/clicontroller.h:22:14: error: redeclaration of ‘Settings CLIController::m_settings’
+   22 |     Settings m_settings;
+      |              ^~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/clicontroller.h:11:21: note: previous declaration ‘const Settings& CLIController::m_settings’
+   11 |     const Settings& m_settings;   // ← 参照にする
+      |                     ^~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/clicontroller.h:23:9: error: redeclaration of ‘int CLIController::m_argc’
+   23 |     int m_argc;
+      |         ^~~~~~
+/home/kazuo/cs/CaptureStream2/clicontroller.h:12:9: note: previous declaration ‘int CLIController::m_argc’
+   12 |     int m_argc;
+      |         ^~~~~~
+/home/kazuo/cs/CaptureStream2/clicontroller.h:24:12: error: redeclaration of ‘char** CLIController::m_argv’
+   24 |     char** m_argv;
+      |            ^~~~~~
+/home/kazuo/cs/CaptureStream2/clicontroller.h:13:12: note: previous declaration ‘char** CLIController::m_argv’
+   13 |     char** m_argv;
+      |            ^~~~~~
+/home/kazuo/cs/CaptureStream2/main.cpp: In function ‘int main(int, char**)’:
+/home/kazuo/cs/CaptureStream2/main.cpp:64:20: error: ‘class CLIController’ has no member named ‘run’
+   64 |         return cli.run();
+      |                    ^~~
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:197: CMakeFiles/CaptureStream2.dir/main.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
+
+
 // clicontroller.h
 class CLIController {
 public:
@@ -22,61 +51,6 @@ const QHash<QString, QString>& idMap = repo.id_map;
 
 
 
-
-
-[ 80%] Building CXX object CMakeFiles/CaptureStream2.dir/clicontroller.cpp.o
-/home/kazuo/cs/CaptureStream2/clicontroller.cpp: In constructor ‘CLIController::CLIController(const Settings&, int, char**)’:
-/home/kazuo/cs/CaptureStream2/clicontroller.cpp:8:7: error: use of deleted function ‘Settings::Settings(const Settings&)’
-    8 |     : m_settings(settings)
-      |       ^~~~~~~~~~~~~~~~~~~~
-In file included from /home/kazuo/cs/CaptureStream2/clicontroller.h:3,
-                 from /home/kazuo/cs/CaptureStream2/clicontroller.cpp:1:
-/home/kazuo/cs/CaptureStream2/settings.h:96:5: note: declared here
-   96 |     Settings(const Settings&) = delete;
-      |     ^~~~~~~~
-/home/kazuo/cs/CaptureStream2/clicontroller.cpp: In member function ‘int CLIController::run()’:
-/home/kazuo/cs/CaptureStream2/clicontroller.cpp:18:23: error: ‘CommandLineParser’ has not been declared
-   18 |     CliOptions opts = CommandLineParser::parse(m_argc, m_argv);
-      |                       ^~~~~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/clicontroller.cpp:34:5: error: ‘RecordingOrchestrator’ was not declared in this scope
-   34 |     RecordingOrchestrator orchestrator(&config);
-      |     ^~~~~~~~~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/clicontroller.cpp:35:12: error: ‘orchestrator’ was not declared in this scope
-   35 |     return orchestrator.runHeadless();
-      |            ^~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/clicontroller.cpp: In member function ‘bool CLIController::validateOptions(const CliOptions&) const’:
-/home/kazuo/cs/CaptureStream2/clicontroller.cpp:41:25: error: ‘const struct CliOptions’ has no member named ‘optionValues’
-   41 |     for (auto it = opts.optionValues.constBegin(); it != opts.optionValues.constEnd(); ++it) {
-      |                         ^~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/clicontroller.cpp:41:63: error: ‘const struct CliOptions’ has no member named ‘optionValues’
-   41 |   for (auto it = opts.optionValues.constBegin(); it != opts.optionValues.constEnd(); ++it) {
-      |                                                             ^~~~~~~~~~~~
-
-/home/kazuo/cs/CaptureStream2/clicontroller.cpp: In member function ‘bool CLIController::validateProgramIds(const CliOptions&) const’:
-/home/kazuo/cs/CaptureStream2/clicontroller.cpp:66:49: error: invalid initialization of reference of type ‘const QHash<QString, QString>&’ from expression of type ‘QMap<QString, QString>’
-   66 |     const QHash<QString, QString>& idMap = repo.id_map;
-      |                                            ~~~~~^~~~~~
-/home/kazuo/cs/CaptureStream2/clicontroller.cpp: In member function ‘void CLIController::applyCliOverrides(RuntimeConfig&, const CliOptions&) const’:
-/home/kazuo/cs/CaptureStream2/clicontroller.cpp:80:25: error: ‘const struct CliOptions’ has no member named ‘optionValues’
-   80 |     for (auto it = opts.optionValues.constBegin(); it != opts.optionValues.constEnd(); ++it) {
-      |                         ^~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/clicontroller.cpp:80:63: error: ‘const struct CliOptions’ has no member named ‘optionValues’
-   80 |   for (auto it = opts.optionValues.constBegin(); it != opts.optionValues.constEnd(); ++it) {
-      |                                                             ^~~~~~~~~~~~
-
-/home/kazuo/cs/CaptureStream2/clicontroller.cpp:84:16: error: ‘class RuntimeConfig’ has no member named ‘setValue’
-   84 |         config.setValue(key, value);
-      |                ^~~~~~~~
-/home/kazuo/cs/CaptureStream2/clicontroller.cpp:88:36: error: ‘const struct CliOptions’ has no member named ‘enabledFlags’; did you mean ‘enabledKeys’?
-   88 |     for (const QString& key : opts.enabledFlags) {
-      |                                    ^~~~~~~~~~~~
-      |                                    enabledKeys
-/home/kazuo/cs/CaptureStream2/clicontroller.cpp:89:16: error: ‘class RuntimeConfig’ has no member named ‘setValue’
-   89 |         config.setValue(key, true);
-      |                ^~~~~~~~
-make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:337: CMakeFiles/CaptureStream2.dir/clicontroller.cpp.o] エラー 1
-make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
-make: *** [Makefile:91: all] エラー 2
 
 
 
