@@ -1,10 +1,12 @@
-[100%] Linking CXX executable CaptureStream2
-/usr/bin/ld: CMakeFiles/CaptureStream2.dir/clicontroller.cpp.o: in function `RecordingCore::~RecordingCore()':
-clicontroller.cpp:(.text._ZN13RecordingCoreD2Ev[_ZN13RecordingCoreD5Ev]+0x13): undefined reference to `vtable for RecordingCore'
-/usr/bin/ld: CMakeFiles/CaptureStream2.dir/clicontroller.cpp.o: in function `CLIController::run()':
-clicontroller.cpp:(.text._ZN13CLIController3runEv+0x12e): undefined reference to `RecordingCore::RecordingCore(RuntimeConfig const&)'
+100%] Linking CXX executable CaptureStream2
+/usr/bin/ld: CMakeFiles/CaptureStream2.dir/recordingcore.cpp.o: in function `one2two(QList<QString> const&)':
+recordingcore.cpp:(.text._Z7one2twoRK5QListI7QStringE+0x0): multiple definition of `one2two(QList<QString> const&)'; CMakeFiles/CaptureStream2.dir/downloadthread.cpp.o:downloadthread.cpp:(.text._Z7one2twoRK5QListI7QStringE+0x0): first defined here
+/usr/bin/ld: CMakeFiles/CaptureStream2.dir/recordingcore.cpp.o: in function `thisweekfile(QList<QString>, QList<QString>)':
+recordingcore.cpp:(.text._Z12thisweekfile5QListI7QStringES1_+0x0): multiple definition of `thisweekfile(QList<QString>, QList<QString>)'; CMakeFiles/CaptureStream2.dir/downloadthread.cpp.o:downloadthread.cpp:(.text._Z12thisweekfile5QListI7QStringES1_+0x0): first defined here
+/usr/bin/ld: CMakeFiles/CaptureStream2.dir/recordingcore.cpp.o: in function `illegal(char)':
+recordingcore.cpp:(.text._Z7illegalc+0x0): multiple definition of `illegal(char)'; CMakeFiles/CaptureStream2.dir/downloadthread.cpp.o:downloadthread.cpp:(.text._Z7illegalc+0x0): first defined here
 collect2: error: ld returned 1 exit status
-make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:569: CaptureStream2] エラー 1
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:585: CaptureStream2] エラー 1
 make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
 make: *** [Makefile:91: all] エラー 2
 
