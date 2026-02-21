@@ -1,3 +1,93 @@
+ProgramRepository.h 
+public:
+    void start();          // 起動（非同期開始）
+    bool waitUntilReady(); // CLI用同期待機
+    bool isReady() const;
+
+
+ProgramRepository.cpp
+void ProgramRepository::start()
+{
+    if (m_started)
+        return;
+
+    m_started = true;
+    updatePrograms(); // ← 今まで呼んでいたやつ
+}
+
+bool ProgramRepository::waitUntilReady()
+{
+    if (m_ready)
+        return true;
+
+    QEventLoop loop;
+    QObject::connect(this, &ProgramRepository::programListUpdated,
+                     &loop, &QEventLoop::quit);
+    loop.exec();
+    return m_ready;
+}
+
+bool ProgramRepository::isReady() const
+{
+    return m_ready;
+}
+
+main
+int main(int argc, char *argv[])
+{
+    QCoreApplication app(argc, argv);
+
+    // ★ Repositoryをアプリとして起動（待たない）
+    ProgramRepository::instance().start();
+
+    Settings settings;
+    settings.load();
+
+    if (isCliMode(argc, argv)) {
+
+        // CLIだけ待つ
+        if (!ProgramRepository::instance().waitUntilReady()) {
+            qCritical() << "Failed to initialize program repository";
+            return 1;
+        }
+
+        CLIController cli(settings, argc, argv);
+        return cli.run();
+    }
+    else {
+        QApplication guiApp(argc, argv);
+
+        MainWindow w;
+        w.show();
+
+        return guiApp.exec();
+    }
+}
+
+
+CLIController
+int CLIController::run()
+{
+    // ★ もう Repository は準備済みという前提
+
+    CliOptions opts = CommandLineParser::parse(m_argc, m_argv);
+
+    if (!validateOptions(opts)) {
+        qWarning() << "CLI option validation failed.";
+        return 1;
+    }
+
+    RuntimeConfig config;
+    config.applySettings(m_settings);
+
+    applyCliOverrides(config, opts);
+
+    RecordingOrchestrator orchestrator(&config);
+    return orchestrator.runHeadless();
+}
+
+
+
 // clicontroller.h
 #pragma once
 
