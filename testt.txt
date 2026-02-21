@@ -1,3 +1,20 @@
+#ifndef CLIOPTIONS_H
+#define CLIOPTIONS_H
+
+#include <QHash>
+#include <QVector>
+#include <QString>
+
+struct CliOptions {
+    QVector<QString> programIds;
+    QHash<QString, QString> valueOptions;
+    QVector<QString> enabledKeys;
+};
+
+#endif
+
+
+
 [ 12%] Building CXX object CMakeFiles/CaptureStream2.dir/clicontroller.cpp.o
 In file included from /home/kazuo/cs/CaptureStream2/clicontroller.cpp:2:
 /home/kazuo/cs/CaptureStream2/commandlineparser.h:34:8: error: redefinition of ‘struct CliOptions’
