@@ -1,3 +1,79 @@
+#include "mainwindow.h"
+#include "clicontroller.h"
+#include "settings.h"
+#include "programrepository.h"
+#include "commandlineparser.h"
+
+#include <QApplication>
+#include <QCoreApplication>
+#include <QGuiApplication>
+#include <QIcon>
+
+int main(int argc, char *argv[])
+{
+#if defined(QT_NO_DEBUG)
+#ifdef QT4_QT5_WIN
+    const char* nullDevice = "nul";
+#else
+    const char* nullDevice = "/dev/null";
+#endif
+    freopen(nullDevice, "a", stdout);
+    freopen(nullDevice, "a", stderr);
+#endif
+
+    // ★ Qtを作る前に最小パース
+    SimpleCliOptions simple = CommandLineParser::parseSimple(argc, argv);
+
+    // =========================================================
+    // CLI MODE
+    // =========================================================
+    if (simple.nogui) {
+
+        QCoreApplication app(argc, argv);
+
+        // アプリ状態のロード（全モード共通）
+        Settings::instance().load();
+
+        // CLI は実行前に番組表が必要
+        ProgramRepository::instance().start();
+
+        if (!ProgramRepository::instance().waitUntilReady()) {
+            qCritical() << "Failed to initialize program repository";
+            return 1;
+        }
+
+        CLIController cli(Settings::instance(), argc, argv);
+        return cli.run();
+    }
+
+    // =========================================================
+    // GUI MODE
+    // =========================================================
+
+    // High DPI は QApplication 前
+    qputenv("QT_AUTO_SCREEN_SCALE_FACTOR", "1");
+    qputenv("QT_SCALE_FACTOR", "1");
+
+    QApplication app(argc, argv);
+
+    Settings::instance().load();
+
+    // 二重起動防止
+    if (!Utility::tryLockFile())
+        return 0;
+
+    // GUIはバックグラウンドで取得開始
+    ProgramRepository::instance().start();
+
+    MainWindow w(Settings::instance());
+    QGuiApplication::setWindowIcon(QIcon(":icon.png"));
+    w.show();
+
+    return app.exec();
+}
+
+
+
 int main(int argc, char *argv[])
 {
 #if defined(QT_NO_DEBUG)
