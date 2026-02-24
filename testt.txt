@@ -1,3 +1,57 @@
+void MainWindow::showProgramList()
+{
+    const QStringList keywords1 = { "英語", "英会話", "イングリッシュ", "ボキャブライダー", "Asian View" };
+    const QStringList keywords2 = { "まいにち", "中国語", "ハングル", "アラビア", "ポルトガル", "日本語", "Learn Japanese", "Living in Japan" };
+    const QString excludeTag = "【中級編】";
+
+    const QStringList allKeys = MainWindow::name_map.keys();
+    QStringList key;
+
+    switch (MainWindow::id_List_flag) {
+        case 1:
+            key = filteredNames(allKeys, keywords1, excludeTag);
+            break;
+        case 2:
+            key = filteredNames(allKeys, keywords2, excludeTag);
+            break;
+        case 3:
+            key = allKeys;
+            break;
+        default:
+            break;
+    }
+
+    messagewindow.appendParagraph("番組ＩＤ\t\t： 番組名");
+
+    for (int i = 0; i < key.count(); i++) {
+        QString line;
+        if (MainWindow::name_map[key[i]].left(1) == "F") {
+            line = MainWindow::name_map[key[i]] + "\t\t： " + key[i];
+        } else {
+            line = MainWindow::name_map[key[i]] + "\t： " + key[i];
+        }
+        messagewindow.appendParagraph(line);
+    }
+}
+
+if (button != QMessageBox::Cancel) {
+
+    if (msgbox.clickedButton() == anyButton)  id_List_flag = 1;
+    if (msgbox.clickedButton() == anyButton1) id_List_flag = 2;
+    if (msgbox.clickedButton() == anyButton2) id_List_flag = 3;
+
+    messagewindow.show();
+    messagewindow.appendParagraph("\n----------------------------------------");
+    messagewindow.appendParagraph("*****　　番組一覧　　*****");
+    messagewindow.appendParagraph("----------------------------------------");
+
+    // ★★★ DownloadThread を使わず直接表示 ★★★
+    showProgramList();
+}
+
+
+
+
 
 ResolveResult ProgramResolver::resolve(const QString& input)
 {
