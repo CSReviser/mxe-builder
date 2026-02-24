@@ -1,3 +1,19 @@
+RuntimeConfig::RuntimeConfig()
+{
+    checkBox.resize(Constants::getFeatureCount());
+    english.resize(Constants::EnglishCount);
+    optional.resize(Constants::OptionalCount);
+    spec.resize(Constants::SpecCount);
+
+    for (int i = 0; i < Constants::getFlagCount(); ++i) {
+        const auto &f = Constants::FlagTable[i];
+        flags[f.keyFlag] = f.flagDefault;
+    }
+}
+
+
+
+
 void MainWindow::showProgramList()
 {
     const QStringList keywords1 = { "英語", "英会話", "イングリッシュ", "ボキャブライダー", "Asian View" };
