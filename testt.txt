@@ -1,3 +1,48 @@
+bool CLIController::prepareOptions(CliOptions& opts) const
+{
+    // 値付きオプションの検証（これは純粋なバリデーション）
+    for (auto it = opts.valueOptions.constBegin();
+         it != opts.valueOptions.constEnd(); ++it) {
+        if (it.value().isEmpty()) {
+            qWarning() << "Empty value for option key:" << it.key();
+            return false;  // これは本当のエラー
+        }
+    }
+
+    // プログラムIDの解決（変換・正規化）
+    resolveProgramIds(opts);
+    
+    return true;  // 続行可能（IDが空でも）
+}
+
+void CLIController::resolveProgramIds(CliOptions& opts) const
+{
+    QStringList resolvedIds;
+    
+    for (const QString& input : opts.programIds) {
+        auto result = ProgramResolver::resolve(input);
+        
+        switch (result.status) {
+        case ResolveResult::Unique:
+            resolvedIds << result.id;
+            break;
+        case ResolveResult::Ambiguous:
+            qInfo() << "Ambiguous program specifier (skipped):" << input;
+            break;
+        default:
+            qInfo() << "Unknown program specifier (skipped):" << input;
+            break;
+        }
+    }
+    
+    resolvedIds.removeDuplicates();
+    opts.programIds = resolvedIds;
+    opts.hasValidProgramIds = !resolvedIds.isEmpty();
+}
+
+
+
+
 programresolver.h
 #pragma once
 #include <QString>
