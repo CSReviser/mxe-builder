@@ -1,3 +1,24 @@
+取得:2 http://security.ubuntu.com/ubuntu jammy-security InRelease [129 kB]                        
+エラー:19 https://dl.winehq.org/wine-builds/ubuntu jammy InRelease                                
+  Could not wait for server fd - select (11: リソースが一時的に利用できません) [IP: 2a04:4e42:8c::729 443]
+エラー:20 https://ppa.launchpadcontent.net/alex-p/smplayer/ubuntu jammy InRelease                 
+  Could not wait for server fd - select (11: リソースが一時的に利用できません) [IP: 2620:2d:4000:1::81 443]
+エラー:2 http://security.ubuntu.com/ubuntu jammy-security InRelease                             
+  接続タイムアウト [IP: 2620:2d:4000:1::101 80]
+7,089 kB を 2分 11秒 で取得しました (53.9 kB/s)
+パッケージリストを読み込んでいます... 完了
+依存関係ツリーを作成しています... 完了
+状態情報を読み取っています... 完了        
+アップグレードできるパッケージが 2 個あります。表示するには 'apt list --upgradable' を実行してください。
+W: http://security.ubuntu.com/ubuntu/dists/jammy-security/InRelease の取得に失敗しました  接続タイムアウト [IP: 2620:2d:4000:1::101 80]
+W: https://ppa.launchpadcontent.net/alex-p/smplayer/ubuntu/dists/jammy/InRelease の取得に失敗しました  Could not wait for server fd - select (11: リソースが一時的に利用できません) [IP: 2620:2d:4000:1::81 443]
+W: https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/InRelease の取得に失敗しました  Could not wait for server fd - select (11: リソースが一時的に利用できません) [IP: 2a04:4e42:8c::729 443]
+W: いくつかのインデックスファイルのダウンロードに失敗しました。これらは無視されるか、古いものが代わりに使われます
+
+
+
+
+
 bool CLIController::prepareOptions(CliOptions& opts) const
 {
     // 値付きオプションの検証（これは純粋なバリデーション）
