@@ -1,3 +1,10 @@
+sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1
+sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
+
+net.ipv6.conf.all.disable_ipv6 = 1
+net.ipv6.conf.default.disable_ipv6 = 1
+
+
 取得:2 http://security.ubuntu.com/ubuntu jammy-security InRelease [129 kB]                        
 エラー:19 https://dl.winehq.org/wine-builds/ubuntu jammy InRelease                                
   Could not wait for server fd - select (11: リソースが一時的に利用できません) [IP: 2a04:4e42:8c::729 443]
