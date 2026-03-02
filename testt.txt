@@ -5,6 +5,102 @@ net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
 
+#include <algorithm> // std::sort用
+
+std::tuple<QStringList, QStringList, QStringList, QStringList, QStringList>
+DownloadThread::getJsonData(const QString& urlInput) {
+    QStringList fileList, kouzaList, file_titleList, hdateList, yearList, contentsIdList;
+
+    QString url = urlInput;
+    const int urlLen = url.length();
+    int l = (urlLen != 13) ? urlLen - 3 : 10;
+
+    int json_ohyo = 0;
+    if (url.contains("_x1")) { url.replace("_x1", "_01"); json_ohyo = 1; }
+    else if (url.contains("_y1")) { url.replace("_y1", "_01"); json_ohyo = 2; }
+
+    const QString jsonUrl = "https://www.nhk.or.jp/radio-api/app/v1/web/ondemand/series?site_id=" 
+                            + url.left(l) + "&corner_site_id=" + url.right(2);
+
+    QString strReply;
+    bool success = false;
+    int timer = 100;
+    const int timerMax = 5000;
+    const int retryLimit = 15;
+
+    for (int i = 0; i < retryLimit; ++i) {
+        strReply = Utility::getJsonFile(jsonUrl, timer);
+        if (strReply != "error") {
+            success = true;
+            break;
+        }
+        timer = std::min(timer + ((timer < 500) ? 50 : 100), timerMax);
+    }
+
+    if (success) {
+        // Utility側から 6つ目の引数として contentsIdList を受け取る
+        std::tie(fileList, kouzaList, file_titleList, hdateList, yearList, contentsIdList) =
+            Utility::getJsonData1(strReply, json_ohyo);
+    } else {
+        kouzaList.append("");
+        emit critical(QString::fromUtf8("番組ID：") + url + QString::fromUtf8("のデータ取得エラー"));
+    }
+
+    // --- ここから放送時間順ソート処理 ---
+    const int count = kouzaList.size();
+    if (count > 1 && contentsIdList.size() == count) {
+        // 1. 各リストの要素を一つの構造体にまとめる
+        struct TempItem {
+            QString file, kouza, title, hdate, year, cid;
+        };
+        QList<TempItem> tempPacks;
+        tempPacks.reserve(count);
+
+        for (int i = 0; i < count; ++i) {
+            tempPacks.append({
+                fileList.value(i), 
+                kouzaList.value(i), 
+                file_titleList.value(i), 
+                hdateList.value(i), 
+                yearList.value(i),
+                contentsIdList.value(i)
+            });
+        }
+
+        // 2. contentsIdList(cid) の末尾にある ISO 8601 日時文字列でソート
+        std::sort(tempPacks.begin(), tempPacks.end(), [](const TempItem &a, const TempItem &b) {
+            // 例: "...;2024-02-27T06:45:00+09:00_..." の日時部分を比較
+            auto getTimePart = [](const QString &id) {
+                return id.section(';', -1).section('_', 0, 0);
+            };
+            return getTimePart(a.cid) < getTimePart(b.cid);
+        });
+
+        // 3. 各リストをクリアして、ソート順に詰め直す
+        fileList.clear(); kouzaList.clear(); file_titleList.clear(); hdateList.clear(); yearList.clear();
+        for (const auto &item : tempPacks) {
+            fileList << item.file;
+            kouzaList << item.kouza;
+            file_titleList << item.title;
+            hdateList << item.hdate;
+            yearList << item.year;
+        }
+    }
+    // --- ソート処理ここまで ---
+
+    // 以前と同様の不足分補完処理
+    const int finalCount = kouzaList.size();
+    while (file_titleList.size() < finalCount) file_titleList.append("\0");
+    while (fileList.size() < finalCount) fileList.append("\0");
+    while (hdateList.size() < finalCount) hdateList.append("\0");
+    while (yearList.size() < finalCount) yearList.append("\0");
+
+    return { fileList, kouzaList, file_titleList, hdateList, yearList };
+}
+
+
+
+
 std::tuple<QStringList, QStringList, QStringList, QStringList, QStringList>
 DownloadThread::getJsonData(const QString& urlInput) {
     QStringList fileList, kouzaList, file_titleList, hdateList, yearList, contentsIdList;
