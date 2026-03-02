@@ -5,22 +5,57 @@ net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
 
-取得:2 http://security.ubuntu.com/ubuntu jammy-security InRelease [129 kB]                        
-エラー:19 https://dl.winehq.org/wine-builds/ubuntu jammy InRelease                                
-  Could not wait for server fd - select (11: リソースが一時的に利用できません) [IP: 2a04:4e42:8c::729 443]
-エラー:20 https://ppa.launchpadcontent.net/alex-p/smplayer/ubuntu jammy InRelease                 
-  Could not wait for server fd - select (11: リソースが一時的に利用できません) [IP: 2620:2d:4000:1::81 443]
-エラー:2 http://security.ubuntu.com/ubuntu jammy-security InRelease                             
-  接続タイムアウト [IP: 2620:2d:4000:1::101 80]
-7,089 kB を 2分 11秒 で取得しました (53.9 kB/s)
-パッケージリストを読み込んでいます... 完了
-依存関係ツリーを作成しています... 完了
-状態情報を読み取っています... 完了        
-アップグレードできるパッケージが 2 個あります。表示するには 'apt list --upgradable' を実行してください。
-W: http://security.ubuntu.com/ubuntu/dists/jammy-security/InRelease の取得に失敗しました  接続タイムアウト [IP: 2620:2d:4000:1::101 80]
-W: https://ppa.launchpadcontent.net/alex-p/smplayer/ubuntu/dists/jammy/InRelease の取得に失敗しました  Could not wait for server fd - select (11: リソースが一時的に利用できません) [IP: 2620:2d:4000:1::81 443]
-W: https://dl.winehq.org/wine-builds/ubuntu/dists/jammy/InRelease の取得に失敗しました  Could not wait for server fd - select (11: リソースが一時的に利用できません) [IP: 2a04:4e42:8c::729 443]
-W: いくつかのインデックスファイルのダウンロードに失敗しました。これらは無視されるか、古いものが代わりに使われます
+std::tuple<QStringList, QStringList, QStringList, QStringList, QStringList>
+DownloadThread::getJsonData(const QString& urlInput) {
+    QStringList fileList, kouzaList, file_titleList, hdateList, yearList, contentsIdList;
+
+    QString url = urlInput;
+    const int urlLen = url.length();
+    int l = (urlLen != 13) ? urlLen - 3 : 10;
+
+    int json_ohyo = 0;
+    if (url.contains("_x1")) { url.replace("_x1", "_01"); json_ohyo = 1; }
+    else if (url.contains("_y1")) { url.replace("_y1", "_01"); json_ohyo = 2; }
+
+    const QString jsonUrl = "https://www.nhk.or.jp/radio-api/app/v1/web/ondemand/series?site_id=" 
+                            + url.left(l) + "&corner_site_id=" + url.right(2);
+
+    QString strReply;
+    bool success = false;
+    int timer = 100;
+    const int timerMax = 5000;
+    const int retryLimit = 15;
+
+    for (int i = 0; i < retryLimit; ++i) {
+        strReply = Utility::getJsonFile(jsonUrl, timer);
+        if (strReply != "error") {
+            success = true;
+            break;
+        }
+        timer = std::min(timer + ((timer < 500) ? 50 : 100), timerMax);
+    }
+
+    if (success) {
+        std::tie(fileList, kouzaList, file_titleList, hdateList, yearList, contentsIdList) =
+            Utility::getJsonData1(strReply, json_ohyo);
+    } else {
+        kouzaList.append("");
+        emit critical(QString::fromUtf8("番組ID：") + url + QString::fromUtf8("のデータ取得エラー"));
+    }
+
+    const int count = kouzaList.size();
+    fileList.reserve(count);
+    file_titleList.reserve(count);
+    hdateList.reserve(count);
+    yearList.reserve(count);
+
+    while (file_titleList.size() < count) file_titleList.append("\0");
+    while (fileList.size() < count) fileList.append("\0");
+    while (hdateList.size() < count) hdateList.append("\0");
+    while (yearList.size() < count) yearList.append("\0");
+
+    return { fileList, kouzaList, file_titleList, hdateList, yearList };
+}
 
 
 
