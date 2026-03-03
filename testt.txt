@@ -4,6 +4,17 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+[ 14%] Building CXX object CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o
+/home/kazuo/cs/CaptureStream2/mainwindow.cpp: In member function ‘void MainWindow::download()’:
+/home/kazuo/cs/CaptureStream2/mainwindow.cpp:1351:26: error: variable ‘GuiState gui’ has initializer but incomplete type
+ 1351 |                 GuiState gui = GuiState::fromMainWindow(*this);
+      |                          ^~~
+/home/kazuo/cs/CaptureStream2/mainwindow.cpp:1351:42: error: incomplete type ‘GuiState’ used in nested name specifier
+ 1351 |                 GuiState gui = GuiState::fromMainWindow(*this);
+      |                                          ^~~~~~~~~~~~~~
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:211: CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
 
 #pragma once
 
