@@ -5,6 +5,196 @@ net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
 
+#pragma once
+
+#include  #include  #include 
+
+class Settings; class GuiState; class CliOptions;
+
+class RuntimeConfig { public: RuntimeConfig();
+
+// ====== 設定適用（上書き順に呼ぶ） ======
+void applySettings(const Settings& s);          // 永続値
+void applyGui(const GuiState& g);               // GUI上書き
+void applyCommandLine(const CliOptions& cli);   // CLI最終上書き
+
+// ====== Getter（読み取り専用） ======
+bool flag(const QString& key) const;
+
+QString saveFolder() const;
+QString ffmpegFolder() const;
+QString audioExtension() const;
+
+QString titleFormatAt(int index) const;
+QString fileNameFormatAt(int index) const;
+
+QVector<QString> cliProgramIds() const;
+
+// ====== Program ======
+enum class Category {
+    English,
+    Optional,
+    Spec
+};
+
+struct ProgramEntry {
+    bool checked = false;
+    QString id;
+    QString label;
+    Category category;
+};
+
+QVector<ProgramEntry> allPrograms() const;
+QVector<ProgramEntry> checkedPrograms() const;
+
+
+private: // ====== 確定済みスナップショット ====== QString m_saveFolder; QString m_ffmpegFolder; QString m_audioExtension;
+
+QVector<QString> m_titleFormat;
+QVector<QString> m_fileNameFormat;
+
+QMap<QString, bool> m_flags;
+QVector<ProgramEntry> m_programs;
+QVector<QString> m_cliProgramIds;
+
+
+};
+
+#include “runtimeconfig.h” #include “constants.h” #include “settings.h” #include “guistate.h” #include “clioptions.h”
+
+RuntimeConfig::RuntimeConfig() { m_titleFormat.resize(Constants::ITEM_COUNT); m_fileNameFormat.resize(Constants::ITEM_COUNT); }
+
+// // Settings → 初期値 // void RuntimeConfig::applySettings(const Settings& s) { m_programs.clear();
+
+// ===== English =====
+for (int i = 0; i < Constants::EnglishCount; ++i) {
+    const auto& p = Constants::EnglishPrograms[i];
+
+    ProgramEntry e;
+    e.checked = s.checked[p.keyChecked];
+    if (p.hasId)
+        e.id = s.ids[p.keyId];
+    if (p.hasLabel)
+        e.label = s.labels[p.keyLabel];
+    e.category = Category::English;
+
+    m_programs.append(e);
+}
+
+// ===== Optional =====
+for (int i = 0; i < Constants::OptionalCount; ++i) {
+    const auto& p = Constants::OptionalPrograms[i];
+
+    ProgramEntry e;
+    e.checked = s.checked[p.keyChecked];
+    if (p.hasId)
+        e.id = s.ids[p.keyId];
+    if (p.hasLabel)
+        e.label = s.labels[p.keyLabel];
+    e.category = Category::Optional;
+
+    m_programs.append(e);
+}
+
+// ===== Spec =====
+for (int i = 0; i < Constants::SpecCount; ++i) {
+    const auto& p = Constants::SpecPrograms[i];
+
+    ProgramEntry e;
+    e.checked = s.checked[p.keyChecked];
+    if (p.hasId)
+        e.id = s.ids[p.keyId];
+    if (p.hasLabel)
+        e.label = s.labels[p.keyLabel];
+    e.category = Category::Spec;
+
+    m_programs.append(e);
+}
+
+// ===== Feature flags =====
+for (int i = 0; i < Constants::getFeatureCount(); ++i) {
+    const auto& f = Constants::FeatureSettings[i];
+    m_flags[QString::fromUtf8(f.keyChecked)] = s.checked[f.keyChecked];
+}
+
+// ===== その他 =====
+m_saveFolder     = s.saveFolder;
+m_ffmpegFolder   = s.ffmpegFolder;
+m_audioExtension = s.audioExtension;
+
+for (int i = 0; i < Constants::ITEM_COUNT; ++i) {
+    m_titleFormat[i]    = s.titleFormat[i];
+    m_fileNameFormat[i] = s.fileNameFormat[i];
+}
+
+
+}
+
+// // GUI → flags 上書きのみ // void RuntimeConfig::applyGui(const GuiState& g) { for (auto it = g.flags.begin(); it != g.flags.end(); ++it) { m_flags[it.key()] = it.value(); } }
+
+// // CLI → 最終上書き // void RuntimeConfig::applyCommandLine(const CliOptions& cli) { // ===== 値オプション ===== if (cli.valueOptions.contains(“saveFolder”)) m_saveFolder = cli.valueOptions.value(“saveFolder”);
+
+if (cli.valueOptions.contains("ffmpegFolder"))
+    m_ffmpegFolder = cli.valueOptions.value("ffmpegFolder");
+
+if (cli.valueOptions.contains("audioExtension"))
+    m_audioExtension = cli.valueOptions.value("audioExtension");
+
+// ===== titleFormat / fileNameFormat =====
+for (int i = 0; i < Constants::ITEM_COUNT; ++i) {
+    QString key1 = QString("titleFormat%1").arg(i);
+    QString key2 = QString("fileNameFormat%1").arg(i);
+
+    if (cli.valueOptions.contains(key1))
+        m_titleFormat[i] = cli.valueOptions.value(key1);
+
+    if (cli.valueOptions.contains(key2))
+        m_fileNameFormat[i] = cli.valueOptions.value(key2);
+}
+
+// ===== フラグ =====
+for (const QString& key : cli.enabledKeys) {
+    m_flags[key] = true;
+}
+
+// ===== CLI専用 programIds =====
+if (!cli.programIds.isEmpty())
+    m_cliProgramIds = cli.programIds;
+
+
+}
+
+// // ===== Getter ===== // bool RuntimeConfig::flag(const QString& key) const { return m_flags.value(key, false); }
+
+QString RuntimeConfig::saveFolder() const { return m_saveFolder; }
+
+QString RuntimeConfig::ffmpegFolder() const { return m_ffmpegFolder; }
+
+QString RuntimeConfig::audioExtension() const { return m_audioExtension; }
+
+QString RuntimeConfig::titleFormatAt(int index) const { return m_titleFormat.value(index); }
+
+QString RuntimeConfig::fileNameFormatAt(int index) const { return m_fileNameFormat.value(index); }
+
+QVector RuntimeConfig::cliProgramIds() const { return m_cliProgramIds; }
+
+QVectorRuntimeConfig::ProgramEntry RuntimeConfig::allPrograms() const { return m_programs; }
+
+QVectorRuntimeConfig::ProgramEntry RuntimeConfig::checkedPrograms() const { QVector result;
+
+for (const auto& p : m_programs) {
+    if (p.checked)
+        result.append(p);
+}
+
+return result;
+
+
+}
+
+上記
+
+
 #include <algorithm> // std::sort用
 
 std::tuple<QStringList, QStringList, QStringList, QStringList, QStringList>
