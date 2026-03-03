@@ -4,6 +4,21 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+QVector<QString> checkedProgramIds() const;
+
+QVector<QString> RuntimeConfig::checkedProgramIds() const
+{
+    QVector<QString> ids;
+
+    for (const auto& p : m_programs) {
+        if (p.checked && !p.id.isEmpty())
+            ids.append(p.id);
+    }
+
+    return ids;
+}
+
+
 [ 14%] Building CXX object CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o
 /home/kazuo/cs/CaptureStream2/mainwindow.cpp: In member function ‘void MainWindow::download()’:
 /home/kazuo/cs/CaptureStream2/mainwindow.cpp:1351:26: error: variable ‘GuiState gui’ has initializer but incomplete type
