@@ -4,6 +4,64 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+int m_pendingRequests = 0;
+
+void ProgramRepository::updatePrograms()
+{
+    m_pendingRequests = 1; // new_arrivals の 1 リクエスト
+
+    ...
+    connect(reply, &QNetworkReply::finished, this, [=]() {
+        ...
+        fetchKozaSeries(kozaList);
+        checkIfAllRequestsFinished();
+    });
+}
+
+void ProgramRepository::fetchKozaSeries(const QStringList& kozaList)
+{
+    for (const QString& koza : kozaList) {
+
+        if (!name_map.contains(koza)) continue;
+
+        m_pendingRequests++; // 追加の HTTP リクエスト
+
+        ...
+        connect(reply, &QNetworkReply::finished, this, [=]() {
+            ...
+            checkIfAllRequestsFinished();
+        });
+    }
+}
+
+void ProgramRepository::checkIfAllRequestsFinished()
+{
+    m_pendingRequests--;
+
+    if (m_pendingRequests == 0) {
+        m_ready = true;
+        emit programListUpdated();
+    }
+}
+
+bool ProgramRepository::waitUntilReady()
+{
+    if (m_ready)
+        return true;
+
+    QEventLoop loop;
+    connect(this, &ProgramRepository::programListUpdated,
+            &loop, &QEventLoop::quit);
+    loop.exec();
+    return m_ready;
+}
+
+
+
+
+
+
+
 // デバッグ中はここをまるごと無効化してください
 /*
 #if defined(QT_NO_DEBUG)
