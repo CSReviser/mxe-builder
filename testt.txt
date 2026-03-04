@@ -37,6 +37,10 @@ if (simple.nogui) {
     return result;
 }
 
+>>> Entering CLI Mode <<<
+Full Args from Qt: QList("/home/kazuo/cs/CaptureStream2/debug/CaptureStream2", "-nogui")
+Settings loaded. Ready to run CLI.
+Failed to initialize program repository
 
 
 
