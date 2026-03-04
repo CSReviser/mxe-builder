@@ -4,6 +4,42 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+// デバッグ中はここをまるごと無効化してください
+/*
+#if defined(QT_NO_DEBUG)
+    const char* nullDevice = "/dev/null";
+    freopen(nullDevice, "a", stdout);
+    freopen(nullDevice, "a", stderr);
+#endif
+*/
+
+
+
+if (simple.nogui) {
+    // 1. ここを通ったことを明示
+    fprintf(stderr, ">>> Entering CLI Mode <<<\n");
+
+    QCoreApplication app(argc, argv);
+    
+    // 2. Qtが認識している全引数を確認
+    qDebug() << "Full Args from Qt:" << app.arguments();
+
+    Settings::instance().load();
+    
+    // 3. CLIController生成直前のフラグ確認（Settingsが怪しい場合）
+    qDebug() << "Settings loaded. Ready to run CLI.";
+
+    CLIController cli(Settings::instance(), argc, argv);
+    
+    // 4. run() の戻り値を監視
+    int result = cli.run();
+    qDebug() << "CLIController finished with code:" << result;
+    return result;
+}
+
+
+
+
 QVector<QString> checkedProgramIds() const;
 
 QVector<QString> RuntimeConfig::checkedProgramIds() const
