@@ -4,6 +4,40 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+namespace Constants {
+    const char* AUDIO_EXT_LIST[] = {
+        "mp3",
+        "aac",
+        "wav",
+        "flac"
+    };
+    const int AUDIO_EXT_COUNT = sizeof(AUDIO_EXT_LIST) / sizeof(AUDIO_EXT_LIST[0]);
+}
+
+for (int i = 0; i < Constants::AUDIO_EXT_COUNT; ++i) {
+    ui->comboBoxExt->addItem(QString::fromUtf8(Constants::AUDIO_EXT_LIST[i]));
+}
+
+QString ext = settings->value("audio/ext", "mp3").toString();
+int index = ui->comboBoxExt->findText(ext);
+if (index >= 0) ui->comboBoxExt->setCurrentIndex(index);
+
+connect(ui->comboBoxExt, &QComboBox::currentTextChanged,
+        this, [this](const QString& text){
+            settings->setValue("audio/ext", text);
+        });
+
+bool isValidExt(const QString& ext) {
+    for (int i = 0; i < Constants::AUDIO_EXT_COUNT; ++i) {
+        if (ext == Constants::AUDIO_EXT_LIST[i]) return true;
+    }
+    return false;
+}
+
+
+
+
+
 int m_pendingRequests = 0;
 
 void ProgramRepository::updatePrograms()
