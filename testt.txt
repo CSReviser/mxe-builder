@@ -4,6 +4,27 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+
+[  7%] Building CXX object CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o
+/home/kazuo/cs/CaptureStream2/mainwindow.cpp: In constructor ‘MainWindow::MainWindow(Settings&, QWidget*)’:
+/home/kazuo/cs/CaptureStream2/mainwindow.cpp:270:31: error: base operand of ‘->’ has non-pointer type ‘Settings’
+  270 |         QString ext = settings->value("audio/ext", "mp3").toString();
+      |                               ^~
+/home/kazuo/cs/CaptureStream2/mainwindow.cpp: In lambda function:
+/home/kazuo/cs/CaptureStream2/mainwindow.cpp:276:21: error: ‘settings’ is not captured
+  276 |                     settings->setValue("audio/ext", text);
+      |                     ^~~~~~~~
+/home/kazuo/cs/CaptureStream2/mainwindow.cpp:275:28: note: the lambda has no capture-default
+  275 |                 this, [this](const QString& text){
+      |                            ^
+/home/kazuo/cs/CaptureStream2/mainwindow.cpp:156:35: note: ‘Settings& settings’ declared here
+  156 | MainWindow::MainWindow( Settings& settings, QWidget *parent )
+      |                         ~~~~~~~~~~^~~~~~~~
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:211: CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
+
+
 namespace Constants {
     const char* AUDIO_EXT_LIST[] = {
         "mp3",
