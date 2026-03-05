@@ -6,7 +6,7 @@ net.ipv6.conf.default.disable_ipv6 = 1
 
 
     // audio_extension
-    if (auto combo = findChild<QComboBox*>("comboBox_extension"))
+    if (auto combo = findChild<QComboBox*>( QString::fromUtf8(Constants::KEY_AudioExtension)))
         s.audioExtension = combo->currentText();
 
 
