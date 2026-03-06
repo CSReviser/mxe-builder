@@ -4,6 +4,17 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+
+critical
+information
+current
+messageWithoutBreak
+append
+setValue
+MessageWindow
+ui_
+
+
 [ 18%] Building CXX object CMakeFiles/CaptureStream2.dir/constants_programs.cpp.o
 /home/kazuo/cs/CaptureStream2/constants_programs.cpp: In function ‘int Constants::getAudioExtCount()’:
 /home/kazuo/cs/CaptureStream2/constants_programs.cpp:208:82: warning: no return statement in function returning non-void [-Wreturn-type]
