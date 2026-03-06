@@ -5,6 +5,18 @@ net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
 
+private:
+    std::atomic<bool> m_cancelRequested { false };
+
+public slots:
+    void requestCancel() { m_cancelRequested = true; }
+
+if (m_cancelRequested) {
+    emit messageGenerated("キャンセル要求を受けました。終了します。");
+    return;
+}
+
+
 [  7%] Building CXX object CMakeFiles/CaptureStream2.dir/CaptureStream2_autogen/mocs_compilation.cpp.o
 In file included from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/moc_recordingcore.cpp:9,
                  from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/mocs_compilation.cpp:8:
