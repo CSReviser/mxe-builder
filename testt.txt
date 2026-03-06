@@ -15,6 +15,52 @@ MessageWindow
 ui_
 
 
+signals:
+    void messageGenerated(const QString &msg);
+    void progressChanged(int percent);
+    void errorOccurred(const QString &msg);
+    void finished();
+
+
+emit errorOccurred("ffmpeg error");
+
+emit messageGenerated("録画中...");
+
+emit messageGenerated("...");
+
+
+connect(downloadThread, &DownloadThread::messageGenerated,
+        &messagewindow, &MessageWindow::appendParagraph);
+
+connect(downloadThread, &DownloadThread::errorOccurred,
+        &messagewindow, &MessageWindow::appendParagraph);
+
+connect(downloadThread, &DownloadThread::progressChanged,
+        ui->progressBar, &QProgressBar::setValue);
+
+connect(downloadThread, &DownloadThread::finished,
+        this, &MainWindow::finished);
+
+
+connect(downloadThread, &DownloadThread::messageGenerated,
+        [](const QString& msg){
+            std::cout << msg.toStdString() << std::endl;
+        });
+
+connect(downloadThread, &DownloadThread::errorOccurred,
+        [](const QString& msg){
+            std::cerr << msg.toStdString() << std::endl;
+        });
+
+public slots:
+    void requestCancel() { m_cancelRequested = true; }
+
+connect(ui->downloadButton, &QPushButton::clicked,
+        downloadThread, &DownloadThread::requestCancel);
+
+downloadThread.requestCancel();
+
+
 [ 18%] Building CXX object CMakeFiles/CaptureStream2.dir/constants_programs.cpp.o
 /home/kazuo/cs/CaptureStream2/constants_programs.cpp: In function ‘int Constants::getAudioExtCount()’:
 /home/kazuo/cs/CaptureStream2/constants_programs.cpp:208:82: warning: no return statement in function returning non-void [-Wreturn-type]
