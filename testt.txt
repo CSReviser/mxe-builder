@@ -4,6 +4,52 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+
+void CLIController::run()
+{
+    // 1. RuntimeConfig 構築
+    RuntimeConfig runtime;
+    runtime.applySettings(Settings::instance());
+    runtime.applyCLIOptions(parsedOptions);   // あなたの CLI パース結果
+
+    // 2. RecordingCore を生成
+    auto *core = new RecordingCore(runtime);
+
+    // 3. シグナルを CLI 出力に接続
+    connect(core, &RecordingCore::messageGenerated,
+            [](const QString &msg){
+                std::cout << msg.toStdString() << std::endl;
+            });
+
+    connect(core, &RecordingCore::errorOccurred,
+            [](const QString &msg){
+                std::cerr << msg.toStdString() << std::endl;
+            });
+
+    connect(core, &RecordingCore::progressChanged,
+            [](int percent){
+                std::cout << "Progress: " << percent << "%" << std::endl;
+            });
+
+    // 終了通知（必要なら）
+    connect(core, &RecordingCore::finished,
+            [](){
+                // 必要なら終了メッセージなど
+            });
+
+    // 4. Ctrl+C などからキャンセルを飛ばす場合（任意）
+    connect(this, &CLIController::cancelRequested,
+            core, &RecordingCore::requestCancel);
+
+    // 5. 実行
+    core->start();
+    core->wait();   // 終了待ち
+
+    delete core;
+}
+
+
+
 RecordingCore::RecordingCore( const RuntimeConfig& r ) : isCanceled(false), failed1935(false), runtime(r) {
 
 
