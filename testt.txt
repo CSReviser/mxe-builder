@@ -4,6 +4,27 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+RecordingCore::RecordingCore( const RuntimeConfig& r ) : isCanceled(false), failed1935(false), runtime(r) {
+
+
+	// ユーザのキャンセルを確認しながらffmpegの終了を待つ
+	while ( !process.waitForFinished( CancelCheckTimeOut ) ) {
+		// キャンセルボタンが押されていたらffmpegをkillしてリターン
+		if ( isCanceled ) {
+			process.kill();
+			return "2";
+		}
+		// 単なるタイムアウトは継続
+		if ( process.error() == QProcess::Timedout )
+			continue;
+		if ( process.error()  != QProcess::Timedout ) {
+		// エラー発生時はメッセージを表示し、出力ファイルを削除してリターン
+			Error_mes = processError[process.error()];
+			return "3";
+		}
+	}
+
+
 
 private:
     std::atomic<bool> m_cancelRequested { false };
