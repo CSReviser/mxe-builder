@@ -5,17 +5,17 @@ net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
 
-  7%] Building CXX object CMakeFiles/CaptureStream2.dir/recordingcore.cpp.o
-/home/kazuo/cs/CaptureStream2/recordingcore.cpp: In member function ‘virtual void RecordingCore::run()’:
-/home/kazuo/cs/CaptureStream2/recordingcore.cpp:1502:22: error: ‘information’ was not declared in this scope
- 1502 |                 emit information( QString::fromUtf8( "レコーディング作業が終了しました。" ) );
-      |                      ^~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/recordingcore.cpp:1665:14: error: ‘information’ was not declared in this scope
- 1665 |         emit information( QString::fromUtf8( "レコーディング作業が終了しました。" ) );
-      |              ^~~~~~~~~~~
-make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:365: CMakeFiles/CaptureStream2.dir/recordingcore.cpp.o] エラー 1
+[  7%] Building CXX object CMakeFiles/CaptureStream2.dir/CaptureStream2_autogen/mocs_compilation.cpp.o
+In file included from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/moc_recordingcore.cpp:9,
+                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/mocs_compilation.cpp:8:
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../recordingcore.h: In member function ‘void RecordingCore::requestCancel()’:
+/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../recordingcore.h:82:32: error: ‘m_cancelRequested’ was not declared in this scope
+   82 |         void requestCancel() { m_cancelRequested = true; }
+      |                                ^~~~~~~~~~~~~~~~~
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:85: CMakeFiles/CaptureStream2.dir/CaptureStream2_autogen/mocs_compilation.cpp.o] エラー 1
 make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
 make: *** [Makefile:91: all] エラー 2
+
 
 critical
 information
