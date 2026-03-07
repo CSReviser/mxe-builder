@@ -4,6 +4,18 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+[  8%] Building CXX object CMakeFiles/CaptureStream2.dir/clicontroller.cpp.o
+/home/kazuo/cs/CaptureStream2/clicontroller.cpp: In member function ‘int CLIController::run()’:
+/home/kazuo/cs/CaptureStream2/clicontroller.cpp:64:22: error: ‘const struct Constants::CliOption’ has no member named ‘hasValue’
+   64 |         if (optEntry.hasValue) {
+      |                      ^~~~~~~~
+/home/kazuo/cs/CaptureStream2/clicontroller.cpp:66:41: error: ‘class RuntimeConfig’ has no member named ‘value’
+   66 |             QString currentVal = config.value(internalKey); // RuntimeConfigにvalue()メソッドがある想定
+      |                                         ^~~~~
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:309: CMakeFiles/CaptureStream2.dir/clicontroller.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
+
 
     // 5. CLI 上書き適用
     config.applyCommandLine(opts);
