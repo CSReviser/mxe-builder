@@ -4,6 +4,48 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+[  4%] Built target CaptureStream2_autogen
+Consolidate compiler generated dependencies of target CaptureStream2
+[  8%] Building CXX object CMakeFiles/CaptureStream2.dir/constants_core.cpp.o
+[ 12%] Building CXX object CMakeFiles/CaptureStream2.dir/clicontroller.cpp.o
+/home/kazuo/cs/CaptureStream2/clicontroller.cpp: In lambda function:
+/home/kazuo/cs/CaptureStream2/clicontroller.cpp:53:35: error: ‘cout’ is not a member of ‘std’
+   53 |                              std::cout << msg.toStdString() << std::endl;
+      |                                   ^~~~
+/home/kazuo/cs/CaptureStream2/clicontroller.cpp:8:1: note: ‘std::cout’ is defined in header ‘<iostream>’; did you forget to ‘#include <iostream>’?
+    7 | #include <QDebug>
+  +++ |+#include <iostream>
+    8 | 
+/home/kazuo/cs/CaptureStream2/clicontroller.cpp:53:69: error: ‘endl’ is not a member of ‘std’
+   53 |                              std::cout << msg.toStdString() << std::endl;
+      |                                                                     ^~~~
+/home/kazuo/cs/CaptureStream2/clicontroller.cpp:8:1: note: ‘std::endl’ is defined in header ‘<ostream>’; did you forget to ‘#include <ostream>’?
+    7 | #include <QDebug>
+  +++ |+#include <ostream>
+    8 | 
+/home/kazuo/cs/CaptureStream2/clicontroller.cpp: In lambda function:
+/home/kazuo/cs/CaptureStream2/clicontroller.cpp:58:35: error: ‘cerr’ is not a member of ‘std’
+   58 |                              std::cerr << msg.toStdString() << std::endl;
+      |                                   ^~~~
+/home/kazuo/cs/CaptureStream2/clicontroller.cpp:58:35: note: ‘std::cerr’ is defined in header ‘<iostream>’; did you forget to ‘#include <iostream>’?
+/home/kazuo/cs/CaptureStream2/clicontroller.cpp:58:69: error: ‘endl’ is not a member of ‘std’
+   58 |                              std::cerr << msg.toStdString() << std::endl;
+      |                                                                     ^~~~
+/home/kazuo/cs/CaptureStream2/clicontroller.cpp:58:69: note: ‘std::endl’ is defined in header ‘<ostream>’; did you forget to ‘#include <ostream>’?
+/home/kazuo/cs/CaptureStream2/clicontroller.cpp: In lambda function:
+/home/kazuo/cs/CaptureStream2/clicontroller.cpp:63:35: error: ‘cout’ is not a member of ‘std’
+   63 |                              std::cout << "Progress: " << percent << "%" << std::endl;
+      |                                   ^~~~
+/home/kazuo/cs/CaptureStream2/clicontroller.cpp:63:35: note: ‘std::cout’ is defined in header ‘<iostream>’; did you forget to ‘#include <iostream>’?
+/home/kazuo/cs/CaptureStream2/clicontroller.cpp:63:82: error: ‘endl’ is not a member of ‘std’
+   63 |                              std::cout << "Progress: " << percent << "%" << std::endl;
+      |                                                                                  ^~~~
+/home/kazuo/cs/CaptureStream2/clicontroller.cpp:63:82: note: ‘std::endl’ is defined in header ‘<ostream>’; did you forget to ‘#include <ostream>’?
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:309: CMakeFiles/CaptureStream2.dir/clicontroller.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
+
+
 
 int CLIController::run()
 {
