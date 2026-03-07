@@ -5,6 +5,59 @@ net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
 
+int CLIController::run()
+{
+    if (!ProgramRepository::instance().waitUntilReady()) {
+        qCritical() << "Failed to initialize program repository";
+        return 1;
+    }
+
+    CliOptions opts = CommandLineParser::parse(m_argc, m_argv);
+
+    if (!validateOptions(opts)) {
+        qWarning() << "CLI option validation failed.";
+        return 1;
+    }
+
+    RuntimeConfig config;
+    config.applySettings(m_settings);
+    config.applyCommandLine(opts);
+
+    RecordingCore core(config);
+
+    //
+    // ★★★ ここがポイント：-m のときだけメッセージ出力を接続 ★★★
+    //
+    if (opts.enabledKeys.contains("m")) {
+        QObject::connect(&core, &RecordingCore::messageGenerated,
+                         [](const QString &msg){
+                             std::cout << msg.toStdString() << std::endl;
+                         });
+
+        QObject::connect(&core, &RecordingCore::errorOccurred,
+                         [](const QString &msg){
+                             std::cerr << msg.toStdString() << std::endl;
+                         });
+
+        QObject::connect(&core, &RecordingCore::progressChanged,
+                         [](int percent){
+                             std::cout << "Progress: " << percent << "%" << std::endl;
+                         });
+    }
+
+    // 終了通知は常に受け取ってもよい（任意）
+    QObject::connect(&core, &RecordingCore::finished,
+                     [](){
+                         // 必要なら終了メッセージ
+                     });
+
+    core.start();
+    core.wait();
+
+    return 0;
+}
+
+
 void CLIController::run()
 {
     // 1. RuntimeConfig 構築
