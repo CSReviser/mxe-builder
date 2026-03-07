@@ -4,6 +4,44 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+static const QHash<QString, const Constants::CliOption*>& optionMap()
+{
+    static const QHash<QString, const Constants::CliOption*> map = []{
+        QHash<QString, const Constants::CliOption*> m;
+        for (int i = 0; i < Constants::getOptionTableCount(); ++i) {
+            const auto& opt = Constants::OPTION_TABLE[i];
+            // OPTION_TABLE の name (例: "-m", "-o") を取得
+            QString name = QString::fromUtf8(opt.name);
+
+            // 1. 元の名前を登録 (例: "-m")
+            m.insert(name, &opt);
+
+            // 2. もし "-" で始まり、かつ "--" で始まっていない場合
+            //    ハイフンを一つ追加して登録する (例: "-m" -> "--m")
+            if (name.startsWith("-") && !name.startsWith("--")) {
+                m.insert("-" + name, &opt);
+            }
+        }
+        return m;
+    }();
+    return map;
+}
+
+SimpleCliOptions CommandLineParser::parseSimple(int argc, char* argv[])
+{
+    SimpleCliOptions opts;
+    for (int i = 1; i < argc; ++i) {
+        QString arg = QString::fromLocal8Bit(argv[i]);
+        // ハイフン1つでも2つでも一致するように判定
+        if (arg == "-nogui" || arg == "--nogui") {
+            opts.nogui = true;
+        }
+    }
+    return opts;
+}
+
+
+
 [  8%] Building CXX object CMakeFiles/CaptureStream2.dir/clicontroller.cpp.o
 /home/kazuo/cs/CaptureStream2/clicontroller.cpp: In member function ‘int CLIController::run()’:
 /home/kazuo/cs/CaptureStream2/clicontroller.cpp:64:22: error: ‘const struct Constants::CliOption’ has no member named ‘hasValue’
