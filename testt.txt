@@ -4,6 +4,63 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+
+int CLIController::run()
+{
+    if (!ProgramRepository::instance().waitUntilReady()) {
+           qCritical() << "Failed to initialize program repository";
+           return 1;
+    } 
+      
+    // 2. CLI オプション解析
+    CliOptions opts = CommandLineParser::parse(m_argc, m_argv);
+
+    // --- DEBUG: CommandLineParser の解析結果を表示 ---
+    qDebug() << "--- [DEBUG] CommandLineParser Results ---";
+    qDebug() << "Program IDs:" << opts.programIds;
+    for (auto it = opts.valueOptions.constBegin(); it != opts.valueOptions.constEnd(); ++it) {
+        qDebug() << "Value Option:" << it.key() << "=" << it.value();
+    }
+    for (const QString& flag : opts.flags) {
+        qDebug() << "Flag detected:" << flag;
+    }
+    // -----------------------------------------------
+
+    // 3. オプション検証
+    if (!validateOptions(opts)) {
+        qWarning() << "CLI option validation failed.";
+        return 1;
+    }
+
+    // 4. RuntimeConfig 構築
+    RuntimeConfig config;
+    config.applySettings(m_settings);
+
+    // 5. CLI 上書き適用
+    config.applyCommandLine(opts);
+
+    // --- DEBUG: RuntimeConfig の最終状態を表示 ---
+    // ※ config.allFlags() や config.allOptions() のようなアクセサがあると仮定しています
+    // もし無い場合は、主要なキーを直接 qDebug() してください
+    qDebug() << "--- [DEBUG] RuntimeConfig Final State ---";
+    QString msgKey = QString::fromUtf8(Constants::KEY_MESSAGE_ON);
+    qDebug() << "Message Flag (" << msgKey << "):" << config.flag(msgKey);
+    // --------------------------------------------
+
+    // 6. 実行
+    RecordingCore core(config);
+ 
+    if (config.flag(QString::fromUtf8(Constants::KEY_MESSAGE_ON))) {
+        // ... (省略: connect 処理)
+    }
+
+    core.start();
+    qDebug() << "core.start()";  
+    core.wait();
+    qDebug() << "core.wait()"; 
+    return 0;
+}
+
 [  4%] Built target CaptureStream2_autogen
 Consolidate compiler generated dependencies of target CaptureStream2
 [  8%] Building CXX object CMakeFiles/CaptureStream2.dir/constants_core.cpp.o
