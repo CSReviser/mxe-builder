@@ -5,6 +5,41 @@ net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
 
+    // 5. CLI 上書き適用
+    config.applyCommandLine(opts);
+
+    // --- DEBUG: OPTION_TABLE に基づく RuntimeConfig の最終状態表示 ---
+    qDebug() << "--- [DEBUG] RuntimeConfig State Check (via OPTION_TABLE) ---";
+    
+    int tableCount = Constants::getOptionTableCount();
+    for (int i = 0; i < tableCount; ++i) {
+        const auto& optEntry = Constants::OPTION_TABLE[i];
+        QString internalKey = QString::fromUtf8(optEntry.internalKey);
+        
+        // 値を持つオプションかフラグかによって判定を分ける
+        if (optEntry.hasValue) {
+            // 値オプションの確認（空でない場合のみ表示、または設定値を表示）
+            QString currentVal = config.value(internalKey); // RuntimeConfigにvalue()メソッドがある想定
+            qDebug() << QString("Option [%1] (%2): %3")
+                        .arg(optEntry.cliOption)
+                        .arg(internalKey)
+                        .arg(currentVal.isEmpty() ? "(Not Set)" : currentVal);
+        } else {
+            // フラグ（bool）の確認
+            bool isSet = config.flag(internalKey);
+            qDebug() << QString("Flag   [%1] (%2): %3")
+                        .arg(optEntry.cliOption)
+                        .arg(internalKey)
+                        .arg(isSet ? "ON" : "OFF");
+        }
+    }
+    
+    // 特殊：番組IDの確認
+    qDebug() << "Target Program IDs:" << opts.programIds;
+    qDebug() << "----------------------------------------------------------";
+
+
+
 int CLIController::run()
 {
     if (!ProgramRepository::instance().waitUntilReady()) {
