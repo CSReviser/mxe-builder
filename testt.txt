@@ -4,6 +4,71 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+// constants.h
+#pragma once
+
+struct FlagControl {
+    const char* onKey;   // 例: "thumbnail"
+    const char* offKey;  // 例: "thumbnail-off"
+    const char* target;  // 最終的に m_flags で使うキー: "thumbnail"
+};
+
+// 外部参照の宣言
+extern const FlagControl CLI_FLAG_CONTROLS[];
+
+// 個数取得関数の宣言
+int getCLI_FLAG_CONTROLSCount();
+
+
+// constants.cpp
+#include "constants.h"
+#include <iterator> // std::size用
+
+const FlagControl CLI_FLAG_CONTROLS[] = {
+    {"thumbnail", "thumbnail-off", "thumbnail"},
+    {"debug",     "debug-off",     "debug"},
+    // 必要に応じて追加
+};
+
+int getCLI_FLAG_CONTROLSCount() {
+    // C++17以降なら std::size、それ以前なら sizeof(array)/sizeof(element)
+    return static_cast<int>(std::size(CLI_FLAG_CONTROLS));
+}
+
+// ===== フラグの適用ロジック =====
+
+int controlCount = getCLI_FLAG_CONTROLSCount();
+QSet<QString> handledKeys; // ペアとして処理済みのキーを記録
+
+// 1. ペア定義に基づいたON/OFF制御
+for (int i = 0; i < controlCount; ++i) {
+    const FlagControl& control = CLI_FLAG_CONTROLS[i];
+    
+    // QStringに変換して検索（containsはconst char*を受け取れます）
+    bool hasOn = cli.enabledFlags.contains(control.onKey);
+    bool hasOff = cli.enabledFlags.contains(control.offKey);
+
+    // 両方指定、または両方なしの場合は「デフォルトから変更しない」
+    if (hasOn != hasOff) { 
+        // どちらか一方のみが指定されている場合のみ上書き
+        m_flags[control.target] = hasOn; 
+    }
+
+    // 後続の処理のために使用したキーを記録
+    handledKeys.insert(control.onKey);
+    handledKeys.insert(control.offKey);
+}
+
+// 2. ペア管理されていない、単独のフラグ（従来通り一律trueにするもの）を処理
+for (const QString& key : cli.enabledFlags) {
+    if (!handledKeys.contains(key)) {
+        m_flags[key] = true;
+    }
+}
+
+
+
+
 // ===== フラグの適用 =====
 
 // 1. まず、ペア定義に基づいた制御を行う
