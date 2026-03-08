@@ -4,6 +4,43 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+// constants.h
+struct FlagControl {
+    QString onKey;   // 例: "thumbnail"
+    QString offKey;  // 例: "thumbnail-off"
+    QString target;  // 最終的に m_flags で使うキー: "thumbnail"
+};
+
+extern const QVector<FlagControl> CLI_FLAG_CONTROLS;
+
+// constants.cpp
+const QVector<FlagControl> CLI_FLAG_CONTROLS = {
+    {"thumbnail", "thumbnail-off", "thumbnail"},
+    {"debug", "debug-off", "debug"}
+    // 他のフラグペアもここに追加
+};
+
+// constants.h
+struct FlagControl {
+    QString onKey;   // 例: "thumbnail"
+    QString offKey;  // 例: "thumbnail-off"
+    QString target;  // 最終的に m_flags で使うキー: "thumbnail"
+};
+
+extern const QVector<FlagControl> CLI_FLAG_CONTROLS;
+
+// constants.cpp
+const QVector<FlagControl> CLI_FLAG_CONTROLS = {
+    {"thumbnail", "thumbnail-off", "thumbnail"},
+    {"debug", "debug-off", "debug"}
+    // 他のフラグペアもここに追加
+};
+
+
+
+
+
+
 CliOptions CommandLineParser::parse(int argc, char* argv[])
 {
     CliOptions opts;
