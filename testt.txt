@@ -4,6 +4,63 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+CliOptions CommandLineParser::parse(int argc, char* argv[])
+{
+    CliOptions opts;
+
+    for (int i = 1; i < argc; ++i) {
+        QString arg = QString::fromLocal8Bit(argv[i]);
+
+        // 1. まずそのまま検索
+        const Constants::CliOption* opt = optionMap().value(arg, nullptr);
+
+        // 2. 見つからず、かつ "--" で始まっている場合、ハイフン1つにして再検索
+        if (!opt && arg.startsWith("--")) {
+            QString normalizedArg = arg.mid(1); // "--m" -> "-m"
+            opt = optionMap().value(normalizedArg, nullptr);
+        }
+
+        if (!opt) {
+            // オプションテーブルにない場合：IDとして扱うか、未知のオプションとして無視
+            if (!arg.startsWith("-")) {
+                opts.programIds.push_back(arg);
+            } else {
+                qWarning() << "Unknown option:" << arg;
+            }
+            continue;
+        }
+
+        // --- 以降は既存のロジックと同じ ---
+        QString key = QString::fromUtf8(opt->keyOption);
+
+        if (key == QString::fromUtf8(Constants::KEY_NOGUI)) {
+            opts.nogui = true;
+        }
+
+        if (opt->requiresValue) {
+            if (i + 1 < argc) {
+                QString value = QString::fromLocal8Bit(argv[++i]);
+                opts.optionValues[key] = value;
+            }
+        } else {
+            opts.enabledFlags.insert(key);
+        }
+    }
+
+    return opts;
+}
+
+// RuntimeConfig.cpp 内
+void RuntimeConfig::applyCommandLine(const CliOptions& cli) {
+    // ... 
+    if (cli.enabledFlags.contains(QString::fromUtf8(Constants::KEY_THUMBNAIL_OFF))) {
+        m_flags[QString::fromUtf8(Constants::KEY_THUMBNAIL)] = false; // 強制OFF
+    }
+}
+
+
+
+
 static const QHash<QString, const Constants::CliOption*>& optionMap()
 {
     static const QHash<QString, const Constants::CliOption*> map = []{
