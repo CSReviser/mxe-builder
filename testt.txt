@@ -5,6 +5,93 @@ net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
 
+const CliOption OPTION_TABLE[] = {
+
+{ "-h", false, KEY_HELP, "ヘルプを表示します", "help" },
+{ "-help", false, KEY_HELP, "ヘルプを表示します", "help" },
+
+{ "-nogui", false, KEY_NOGUI, "GUI を起動せずに実行します", nullptr },
+
+{ "-t", true, KEY_CUSTOMIZED_TITLE1,
+  "タイトルタグ形式を指定します", "title" },
+
+{ "-f", true, KEY_CUSTOMIZED_FILENAME1,
+  "ファイル名形式を指定します", "filename" },
+
+{ "-o", true, KEY_SaveFolder,
+  "保存フォルダのフルパスを指定します", "folder" },
+
+{ "-e", true, KEY_AudioExtension,
+  "拡張子を指定します", "extension" },
+
+{ "-z", false, KEY_LAST_WEEK,
+  "前週の動作を行います", "week" },
+
+{ "-b", false, KEY_BOTH_WEEKS,
+  "前週と当週の両方を実行します", "week" },
+
+{ "-s", false, KEY_KOZA_SEPARATION,
+  "応用編分離を有効にします", nullptr },
+
+{ "-m", false, KEY_MESSAGE_ON,
+  "メッセージ表示を有効にします", nullptr },
+
+{ "-a0", false, KEY_THUMBNAIL_OFF,
+  "サムネイル追加を無効にします", "thumbnail" },
+
+{ "-a1", false, KEY_THUMBNAIL,
+  "サムネイル追加を有効にします", "thumbnail" },
+
+};
+
+const int OPTION_COUNT =
+    sizeof(OPTION_TABLE) / sizeof(OPTION_TABLE[0]);
+
+void CLIController::showHelp()
+{
+    QTextStream out(stdout);
+
+    out << "Usage: capturestream2 [options] [program_id...]\n\n";
+
+    QMap<QString, QStringList> groupOptions;
+    QMap<QString, QString> groupDesc;
+    QMap<QString, bool> groupValue;
+
+    for (int i = 0; i < OPTION_COUNT; ++i)
+    {
+        const CliOption& opt = OPTION_TABLE[i];
+
+        QString group;
+
+        if (opt.group)
+            group = QString::fromUtf8(opt.group);
+        else
+            group = QString::fromUtf8(opt.name);
+
+        groupOptions[group].append(QString::fromUtf8(opt.name));
+
+        groupDesc[group] = QString::fromUtf8(opt.description);
+
+        groupValue[group] = opt.requiresValue;
+    }
+
+    out << "Options:\n\n";
+
+    for (auto it = groupOptions.begin(); it != groupOptions.end(); ++it)
+    {
+        QString names = it.value().join(" / ");
+
+        if (groupValue[it.key()])
+            names += " <value>";
+
+        out << "  " << names << "\n";
+        out << "      " << groupDesc[it.key()] << "\n\n";
+    }
+
+    out << "program_id を指定すると対象番組のみ処理します\n";
+}
+
+
 struct CliOption {
     const char* name;
     bool requiresValue;
