@@ -4,6 +4,95 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+
+struct CliOption {
+    const char* name;
+    bool requiresValue;
+    const char* keyOption;
+    const char* description;
+    const char* group;   // 追加
+};
+
+const CliOption OPTION_TABLE[] = {
+
+    { "-nogui", false, KEY_NOGUI, "GUI を起動せずに実行します", nullptr },
+
+    { "-a0", false, KEY_THUMBNAIL_OFF,
+      "サムネイル追加を無効にします", "thumbnail" },
+
+    { "-a1", false, KEY_THUMBNAIL,
+      "サムネイル追加を有効にします", "thumbnail" },
+
+};
+
+void CLIController::showHelp()
+{
+    QTextStream out(stdout);
+
+    QMap<QString, QStringList> groupNames;
+    QMap<QString, QStringList> groupDescriptions;
+
+    const int count = Constants::getOptionTableCount();
+
+    for (int i = 0; i < count; ++i) {
+
+        const auto &opt = Constants::OPTION_TABLE[i];
+
+        QString group =
+            opt.group ? QString::fromUtf8(opt.group)
+                      : QString::fromUtf8(opt.name);
+
+        groupNames[group].append(QString::fromUtf8(opt.name));
+        groupDescriptions[group].append(
+            QString::fromUtf8(opt.description));
+    }
+
+    for (auto it = groupNames.begin(); it != groupNames.end(); ++it) {
+
+        QString group = it.key();
+        QStringList names = it.value();
+        QStringList descs = groupDescriptions[group];
+
+        out << "  " << names.join(" / ") << "\n";
+        out << "      " << descs.join(" / ") << "\n";
+    }
+}
+
+namespace Constants {
+
+extern const char* HELP_USAGE;
+extern const char* HELP_HEADER;
+extern const char* HELP_PROGRAMID;
+
+}
+
+namespace Constants {
+
+const char* HELP_USAGE =
+"Usage: capturestream2 [options] [program_id...]";
+
+const char* HELP_HEADER =
+"Options:";
+
+const char* HELP_PROGRAMID =
+"program_id を指定すると対象番組のみ処理します";
+
+}
+
+int CLIController::run(const QStringList &args)
+{
+    CommandLineParser parser;
+    parser.parse(args);
+
+    if (parser.hasOption("help") || parser.hasOption("h")) {
+        showHelp();
+        return 0;
+    }
+
+    // 通常処理
+}
+
+
 // 1. まず「処理済み」としてマークするリストを作成
 QSet<QString> handledKeys;
 int controlCount = Constants::getCLI_FLAG_CONTROLSCount();
