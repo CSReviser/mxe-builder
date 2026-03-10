@@ -5,6 +5,86 @@ net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
 
+namespace Constants {
+
+extern const QStringList PROGRAM_KEYWORDS_ENGLISH;
+extern const QStringList PROGRAM_KEYWORDS_OTHER;
+
+extern const QString PROGRAM_EXCLUDE_TAG;
+
+bool matchEnglish(const QString& name);
+bool matchOtherLanguages(const QString& name);
+
+}
+
+#include "constants_program.h"
+
+namespace Constants {
+
+const QStringList PROGRAM_KEYWORDS_ENGLISH = {
+    "英語", "英会話", "イングリッシュ", "ボキャブライダー", "Asian View"
+};
+
+const QStringList PROGRAM_KEYWORDS_OTHER = {
+    "まいにち", "中国語", "ハングル", "アラビア",
+    "ポルトガル", "日本語", "Learn Japanese", "Living in Japan"
+};
+
+const QString PROGRAM_EXCLUDE_TAG = "【中級編】";
+
+static bool match(const QString& name, const QStringList& keywords)
+{
+    for (const QString& k : keywords) {
+        if (name.contains(k) && !name.contains(PROGRAM_EXCLUDE_TAG))
+            return true;
+    }
+    return false;
+}
+
+bool matchEnglish(const QString& name)
+{
+    return match(name, PROGRAM_KEYWORDS_ENGLISH);
+}
+
+bool matchOtherLanguages(const QString& name)
+{
+    return match(name, PROGRAM_KEYWORDS_OTHER);
+}
+
+}
+
+void MainWindow::showProgramList()
+{
+    QStringList key =
+        ProgramListService::buildProgramList(id_List_flag);
+
+    messagewindow.appendParagraph("番組ＩＤ\t\t： 番組名");
+
+    auto &repo = ProgramRepository::instance();
+
+    for (const QString& id : key) {
+
+        QString name = repo.name_map[id];
+
+        QString line;
+
+        if (name.left(1) == "F")
+            line = name + "\t\t： " + id;
+        else
+            line = name + "\t： " + id;
+
+        messagewindow.appendParagraph(line);
+    }
+}
+
+QStringList list =
+    ProgramListService::buildProgramList(type);
+
+for (const QString& id : list)
+    qInfo() << repo.name_map[id] << ":" << id;
+
+
+
 namespace {
 
 constexpr int X11_WINDOW_VERTICAL_INCREMENT = 5;
