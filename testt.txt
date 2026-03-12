@@ -4,6 +4,12 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+	connect(ui->checkBox_thumbnail, &QCheckBox::currentTextChanged,
+	        this, [](const QString& text){
+	            auto &s = Settings::instance();
+	            s.checked[QString::fromUtf8(Constants::KEY_THUMBNAIL)] = ui->checkBox_thumbnail->isChecked();
+	        }); 
+
 ui->checkBox->setStyleSheet(
     "QCheckBox::indicator:unchecked {"
     "    background-color: white;"   /* ← 白抜きに戻す */
