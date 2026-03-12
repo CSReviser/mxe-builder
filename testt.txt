@@ -4,6 +4,41 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+#include <QtGlobal> // Q_OS_MAC の判定に必要
+
+SettingsDialog::SettingsDialog(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::SettingsDialog)
+{
+    ui->setupUi(this);
+
+    // macOS以外の場合、チェックボックスを非表示にする
+#ifndef Q_OS_MAC
+    ui->checkBoxNativeMenuBar->hide();
+    
+    // もしラベルなどもセットにしている場合は、それも隠す
+    // ui->labelNativeMenuBar->hide();
+#endif
+}
+
+// 設定の保存時
+void SettingsDialog::accept() {
+#ifdef Q_OS_MAC
+    QSettings settings;
+    settings.setValue("useNativeMenuBar", ui->checkBoxNativeMenuBar->isChecked());
+#endif
+    QDialog::accept();
+}
+
+// メインウィンドウでの反映時
+// ※MainWindow側でもOS判定を入れないと他OSで予期せぬ挙動になる可能性があるため
+#ifdef Q_OS_MAC
+    bool useNative = settings.value("useNativeMenuBar", true).toBool();
+    menuBar()->setNativeMenuBar(useNative);
+#endif
+
+
+
 
 namespace Constants {
 
