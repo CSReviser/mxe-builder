@@ -4,6 +4,15 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+// Qt6では checkStateChanged を使用するのが一般的です
+connect(ui->checkBox_thumbnail, &QCheckBox::checkStateChanged, 
+        this, [this](int state) {
+            auto &s = Settings::instance();
+            // state を直接見るか、isChecked() で判定します
+            s.checked[QString::fromUtf8(Constants::KEY_THUMBNAIL)] = ui->checkBox_thumbnail->isChecked();
+        });
+
+
 	connect(ui->checkBox_thumbnail, &QCheckBox::currentTextChanged,
 	        this, [](const QString& text){
 	            auto &s = Settings::instance();
