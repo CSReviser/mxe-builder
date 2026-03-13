@@ -4,6 +4,56 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+enum class GuiWidgetType
+{
+    None,
+    CheckBox
+};
+
+struct FlagEntry
+{
+    const char* key;
+    bool defaultValue;
+    const char* objectName;
+    GuiWidgetType type;
+};
+
+GuiState GuiState::fromMainWindow(const MainWindow& w)
+{
+    GuiState s;
+
+    for (const auto &f : Constants::FlagTable)
+    {
+        if (!f.objectName)
+            continue;
+
+        auto cb = w.findChild<QCheckBox*>(f.objectName);
+
+        if (cb)
+            s.flags[f.key] = cb->isChecked();
+    }
+
+    return s;
+}
+
+const FlagEntry FlagTable[] = {
+
+{ KEY_LAST_WEEK,    false, "checkBox_next_week2" },
+{ KEY_BOTH_WEEKS,   false, "checkBox_both_weeks" },
+{ KEY_PROGRAM_LIST, false, nullptr },
+{ KEY_NOGUI,        false, nullptr }
+
+};
+
+struct FlagEntry
+{
+    const char* key;
+    bool defaultValue;
+    const char* objectName;   // GUI widget name
+};
+
+
+
 // Qt6では checkStateChanged を使用するのが一般的です
 connect(ui->checkBox_thumbnail, &QCheckBox::checkStateChanged, 
         this, [this](int state) {
