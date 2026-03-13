@@ -5,6 +5,12 @@ net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
 
+QTimer::singleShot(0, this, [this](){
+    applyMenuBarHeightFix();
+});
+
+
+
 #include "guistate.h"
 #include "mainwindow.h"
 #include "constants_flags.h"
