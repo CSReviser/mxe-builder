@@ -4,6 +4,23 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+[ 60%] Building CXX object CMakeFiles/CaptureStream2.dir/guistate.cpp.o
+/home/kazuo/cs/CaptureStream2/guistate.cpp: In static member function ‘static GuiState GuiState::fromMainWindow(const MainWindow&)’:
+/home/kazuo/cs/CaptureStream2/guistate.cpp:32:37: error: range-based ‘for’ expression of type ‘const Constants::FlagEntry []’ has incomplete type
+   32 |     for (const auto &f : Constants::FlagTable)
+      |                                     ^~~~~~~~~
+/home/kazuo/cs/CaptureStream2/guistate.cpp:37:31: error: ‘QCheckBox’ was not declared in this scope
+   37 |         auto cb = w.findChild<QCheckBox*>(f.objectName);
+      |                               ^~~~~~~~~
+/home/kazuo/cs/CaptureStream2/guistate.cpp:37:21: error: parse error in template argument list
+   37 |         auto cb = w.findChild<QCheckBox*>(f.objectName);
+      |                     ^~~~~~~~~~~~~~~~~~~~~
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:351: CMakeFiles/CaptureStream2.dir/guistate.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
+
+
+
 void MainWindow::showEvent(QShowEvent *event)
 {
     QMainWindow::showEvent(event);
