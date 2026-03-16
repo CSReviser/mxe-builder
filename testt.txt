@@ -48,17 +48,19 @@ bool matchOtherLanguages(const QString& name)
 
 }
 
-[ 11%] Building CXX object CMakeFiles/CaptureStream2.dir/programlistservice.cpp.o
+[  7%] Building CXX object CMakeFiles/CaptureStream2.dir/programlistservice.cpp.o
 /home/kazuo/cs/CaptureStream2/programlistservice.cpp: In static member function ‘static QStringList ProgramListService::buildProgramList(int)’:
-/home/kazuo/cs/CaptureStream2/programlistservice.cpp:16:29: error: cannot call member function ‘bool ProgramListService::matchEnglish(const QString&)’ without object
+/home/kazuo/cs/CaptureStream2/programlistservice.cpp:16:17: error: ‘matchEnglish’ was not declared in this scope
    16 |             if (matchEnglish(name))
-      |                 ~~~~~~~~~~~~^~~~~~
-/home/kazuo/cs/CaptureStream2/programlistservice.cpp:23:36: error: cannot call member function ‘bool ProgramListService::matchOtherLanguages(const QString&)’ without object
+      |                 ^~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/programlistservice.cpp:23:17: error: ‘matchOtherLanguages’ was not declared in this scope; did you mean ‘OtherLanguages’?
    23 |             if (matchOtherLanguages(name))
-      |                 ~~~~~~~~~~~~~~~~~~~^~~~~~
+      |                 ^~~~~~~~~~~~~~~~~~~
+      |                 OtherLanguages
 make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:379: CMakeFiles/CaptureStream2.dir/programlistservice.cpp.o] エラー 1
 make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
 make: *** [Makefile:91: all] エラー 2
+
 
 
 
