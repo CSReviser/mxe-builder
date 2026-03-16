@@ -4,6 +4,105 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+#pragma once
+
+namespace Constants {
+
+// English keywords
+extern const char* PROGRAM_KEYWORDS_ENGLISH[];
+
+// Other language keywords
+extern const char* PROGRAM_KEYWORDS_OTHER[];
+
+// keyword counts
+extern const int PROGRAM_KEYWORDS_ENGLISH_COUNT;
+extern const int PROGRAM_KEYWORDS_OTHER_COUNT;
+
+// exclude tag
+extern const char* PROGRAM_EXCLUDE_TAG;
+
+}
+
+#include "constants_programs.h"
+
+namespace Constants {
+
+const char* PROGRAM_KEYWORDS_ENGLISH[] = {
+    "英語",
+    "英会話",
+    "イングリッシュ",
+    "ボキャブライダー",
+    "Asian View"
+};
+
+const int PROGRAM_KEYWORDS_ENGLISH_COUNT =
+    sizeof(PROGRAM_KEYWORDS_ENGLISH) / sizeof(PROGRAM_KEYWORDS_ENGLISH[0]);
+
+const char* PROGRAM_KEYWORDS_OTHER[] = {
+    "まいにち",
+    "中国語",
+    "ハングル",
+    "アラビア",
+    "ポルトガル",
+    "日本語",
+    "Learn Japanese",
+    "Living in Japan"
+};
+
+const int PROGRAM_KEYWORDS_OTHER_COUNT =
+    sizeof(PROGRAM_KEYWORDS_OTHER) / sizeof(PROGRAM_KEYWORDS_OTHER[0]);
+
+const char* PROGRAM_EXCLUDE_TAG = "【中級編】";
+
+}
+
+#include "programlistservice.h"
+#include "programrepository.h"
+#include "constants_programs.h"
+
+namespace {
+
+bool match(const QString& name,
+           const char* keywords[],
+           int count)
+{
+    QString exclude = QString::fromUtf8(Constants::PROGRAM_EXCLUDE_TAG);
+
+    if (name.contains(exclude))
+        return false;
+
+    for (int i = 0; i < count; ++i) {
+        QString key = QString::fromUtf8(keywords[i]);
+
+        if (name.contains(key))
+            return true;
+    }
+
+    return false;
+}
+
+bool matchEnglish(const QString& name)
+{
+    return match(name,
+                 Constants::PROGRAM_KEYWORDS_ENGLISH,
+                 Constants::PROGRAM_KEYWORDS_ENGLISH_COUNT);
+}
+
+bool matchOtherLanguages(const QString& name)
+{
+    return match(name,
+                 Constants::PROGRAM_KEYWORDS_OTHER,
+                 Constants::PROGRAM_KEYWORDS_OTHER_COUNT);
+}
+
+} // namespace
+
+
+
+
+
+
+
 static bool settingsDeleted;
 
 bool Settings::settingsDeleted = false;
