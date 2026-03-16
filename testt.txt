@@ -5,6 +5,27 @@ net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
 
+QFontMetrics fm(messagewindow.font());
+
+int maxWidth = 0;
+
+for (const QString& id : key) {
+    QString name = repo.name_map[id];
+    maxWidth = std::max(maxWidth, fm.horizontalAdvance(name));
+}
+
+for (const QString& id : key) {
+
+    QString name = repo.name_map[id];
+
+    int spaceWidth = fm.horizontalAdvance(" ");
+    int padding = (maxWidth - fm.horizontalAdvance(name)) / spaceWidth;
+
+    QString line = name + QString(padding, ' ') + " ： " + id;
+
+    messagewindow.appendParagraph(line);
+}
+
 QFont font;
 font.setPixelSize(FONT_SIZE);
 textEdit->setFont(font);
