@@ -4,6 +4,50 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+
+class ProgramListService
+{
+public:
+    static QStringList buildProgramList(int type);
+};
+
+namespace {
+
+bool match(const QString& name,
+           const char* keywords[],
+           int count)
+{
+    QString exclude = QString::fromUtf8(Constants::PROGRAM_EXCLUDE_TAG);
+
+    if (name.contains(exclude))
+        return false;
+
+    for (int i = 0; i < count; ++i) {
+        QString key = QString::fromUtf8(keywords[i]);
+
+        if (name.contains(key))
+            return true;
+    }
+
+    return false;
+}
+
+bool matchEnglish(const QString& name)
+{
+    return match(name,
+                 Constants::PROGRAM_KEYWORDS_ENGLISH,
+                 Constants::PROGRAM_KEYWORDS_ENGLISH_COUNT);
+}
+
+bool matchOtherLanguages(const QString& name)
+{
+    return match(name,
+                 Constants::PROGRAM_KEYWORDS_OTHER,
+                 Constants::PROGRAM_KEYWORDS_OTHER_COUNT);
+}
+
+}
+
 [ 11%] Building CXX object CMakeFiles/CaptureStream2.dir/programlistservice.cpp.o
 /home/kazuo/cs/CaptureStream2/programlistservice.cpp: In static member function ‘static QStringList ProgramListService::buildProgramList(int)’:
 /home/kazuo/cs/CaptureStream2/programlistservice.cpp:16:29: error: cannot call member function ‘bool ProgramListService::matchEnglish(const QString&)’ without object
