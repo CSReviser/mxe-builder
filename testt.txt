@@ -5,6 +5,25 @@ net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
 
+QFont font;
+font.setPixelSize(FONT_SIZE);
+textEdit->setFont(font);
+
+QFont font;
+font.setStyleHint(QFont::Monospace);
+font.setPixelSize(FONT_SIZE);
+textEdit->setFont(font);
+
+QFont font;
+font.setStyleHint(QFont::Monospace);
+font.setFamily("monospace");
+font.setPixelSize(FONT_SIZE);
+
+textEdit->setFont(font);
+
+QString line = QString("%1 : %2").arg(name, -30).arg(id);
+
+
 #include "programlistservice.h"
 #include "programrepository.h"
 #include "constants_programs.h"
