@@ -4,6 +4,20 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+[ 11%] Building CXX object CMakeFiles/CaptureStream2.dir/programlistservice.cpp.o
+/home/kazuo/cs/CaptureStream2/programlistservice.cpp: In static member function ‘static QStringList ProgramListService::buildProgramList(int)’:
+/home/kazuo/cs/CaptureStream2/programlistservice.cpp:16:29: error: cannot call member function ‘bool ProgramListService::matchEnglish(const QString&)’ without object
+   16 |             if (matchEnglish(name))
+      |                 ~~~~~~~~~~~~^~~~~~
+/home/kazuo/cs/CaptureStream2/programlistservice.cpp:23:36: error: cannot call member function ‘bool ProgramListService::matchOtherLanguages(const QString&)’ without object
+   23 |             if (matchOtherLanguages(name))
+      |                 ~~~~~~~~~~~~~~~~~~~^~~~~~
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:379: CMakeFiles/CaptureStream2.dir/programlistservice.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
+
+
+
 #pragma once
 
 namespace Constants {
@@ -210,16 +224,6 @@ menuBar()->setVisible(true);
 
 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
 
-[  8%] Building CXX object CMakeFiles/CaptureStream2.dir/CaptureStream2_autogen/mocs_compilation.cpp.o
-In file included from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/moc_mainwindow.cpp:9,
-                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/mocs_compilation.cpp:3:
-/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../mainwindow.h:172:48: error: expected identifier before numeric constant
-  172 |         static const QSize DEFAULT_WINDOW_SIZE(540,500);
-      |                                                ^~~
-/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../mainwindow.h:172:48: error: expected ‘,’ or ‘...’ before numeric constant
-make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:85: CMakeFiles/CaptureStream2.dir/CaptureStream2_autogen/mocs_compilation.cpp.o] エラー 1
-make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
-make: *** [Makefile:91: all] エラー 2
 
 
 static const QSize DEFAULT_WINDOW_SIZE(540,500);
