@@ -4,6 +4,19 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+#pragma once
+#include <QStringList>
+
+class ProgramFormatter
+{
+public:
+    static QStringList toLines(const QStringList& ids);
+};
+
+
+
+
+
 void appendHtml(const QString& html);
 
 void MessageWindow::appendHtml(const QString& html)
