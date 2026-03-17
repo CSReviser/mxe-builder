@@ -5,6 +5,42 @@ net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
 
+QStringList ProgramListService::buildProgramList(int type)
+{
+    auto &repo = ProgramRepository::instance();
+
+    QStringList allIds = repo.name_map.keys();
+    QStringList result;
+
+    switch (type) {
+
+    case English:
+        for (const QString& id : allIds) {
+            QString name = repo.name_map[id];
+
+            if (matchEnglish(name))
+                result << id;   // ← IDを入れる
+        }
+        break;
+
+    case OtherLanguages:
+        for (const QString& id : allIds) {
+            QString name = repo.name_map[id];
+
+            if (matchOtherLanguages(name))
+                result << id;
+        }
+        break;
+
+    case All:
+        result = allIds;
+        break;
+    }
+
+    return result;
+}
+
+
 qsizetype maxWidth = 0;
 
 for (const QString& id : ids) {
