@@ -20,6 +20,13 @@ QPlainTextEdit#messageTextEdit {
 textEdit->setObjectName("messageTextEdit");
 
 
+MessageWindow QPlainTextEdit {
+    font-family: monospace;
+}
+QFont font = QFontDatabase::systemFont(QFontDatabase::FixedFont);
+textEdit->setFont(font);
+textEdit->setStyleSheet("font-family: monospace;");
+
 #include <QFontDatabase>
 
 textEdit->setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
