@@ -4,6 +4,10 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+QPlainTextEdit#messageTextEdit {
+    font-family: "Menlo", "Monaco", "Courier";
+}
+
 [  7%] Building CXX object CMakeFiles/CaptureStream2.dir/programformatter.cpp.o
 /home/kazuo/cs/CaptureStream2/programformatter.cpp: In static member function ‘static QStringList ProgramFormatter::toLines(const QStringList&)’:
 /home/kazuo/cs/CaptureStream2/programformatter.cpp:11:1: error: ‘textEdit’ was not declared in this scope
