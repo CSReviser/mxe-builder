@@ -8,6 +8,12 @@ QPlainTextEdit#messageTextEdit {
     font-family: "Menlo", "Monaco", "Courier";
 }
 
+QPlainTextEdit#messageTextEdit {
+    font-family: "Menlo", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;
+}
+
+textEdit->setObjectName("messageTextEdit");
+
 [  7%] Building CXX object CMakeFiles/CaptureStream2.dir/programformatter.cpp.o
 /home/kazuo/cs/CaptureStream2/programformatter.cpp: In static member function ‘static QStringList ProgramFormatter::toLines(const QStringList&)’:
 /home/kazuo/cs/CaptureStream2/programformatter.cpp:11:1: error: ‘textEdit’ was not declared in this scope
