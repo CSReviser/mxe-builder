@@ -4,6 +4,42 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+[  7%] Building CXX object CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o
+/home/kazuo/cs/CaptureStream2/mainwindow.cpp: In member function ‘void MainWindow::showProgramList()’:
+/home/kazuo/cs/CaptureStream2/mainwindow.cpp:764:19: error: ‘class MessageWindow’ has no member named ‘appendHtml’; did you mean ‘append’?
+  764 |     messagewindow.appendHtml(html);
+      |                   ^~~~~~~~~~
+      |                   append
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:183: CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
+
+
+void MainWindow::showProgramList()
+{
+    QStringList key =
+        ProgramListService::buildProgramList(id_List_flag);
+
+    auto &repo = ProgramRepository::instance();
+
+    QString html;
+    html += "<table>";
+    html += "<tr><th align='left'>番組名</th><th align='left'>番組ID</th></tr>";
+
+    for (const QString& id : key) {
+        QString name = repo.name_map[id];
+
+        html += "<tr>";
+        html += "<td>" + name + "</td>";
+        html += "<td>" + id + "</td>";
+        html += "</tr>";
+    }
+
+    html += "</table>";
+
+    messagewindow.appendHtml(html);
+}
+
 void MainWindow::showProgramList()
 {
     QStringList key =
