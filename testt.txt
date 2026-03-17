@@ -4,6 +4,16 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+[  7%] Building CXX object CMakeFiles/CaptureStream2.dir/programformatter.cpp.o
+/home/kazuo/cs/CaptureStream2/programformatter.cpp: In static member function ‘static QStringList ProgramFormatter::toLines(const QStringList&)’:
+/home/kazuo/cs/CaptureStream2/programformatter.cpp:11:1: error: ‘textEdit’ was not declared in this scope
+   11 | textEdit->setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
+      | ^~~~~~~~
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:393: CMakeFiles/CaptureStream2.dir/programformatter.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
+
+
 #include <QFontDatabase>
 
 textEdit->setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
