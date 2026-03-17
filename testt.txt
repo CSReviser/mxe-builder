@@ -5,6 +5,12 @@ net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
 
+qsizetype maxWidth = 0;
+
+for (const QString& id : ids) {
+    maxWidth = std::max(maxWidth, repo.name_map[id].length());
+}
+
 [ 11%] Building CXX object CMakeFiles/CaptureStream2.dir/programformatter.cpp.o
 /home/kazuo/cs/CaptureStream2/programformatter.cpp: In static member function ‘static QStringList ProgramFormatter::toLines(const QStringList&)’:
 /home/kazuo/cs/CaptureStream2/programformatter.cpp:12:28: error: no matching function for call to ‘max(int&, qsizetype)’
