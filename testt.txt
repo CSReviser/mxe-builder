@@ -4,6 +4,13 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+void appendHtml(const QString& html);
+
+void MessageWindow::appendHtml(const QString& html)
+{
+    ui->textEdit->append(html);
+}
+
 [  7%] Building CXX object CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o
 /home/kazuo/cs/CaptureStream2/mainwindow.cpp: In member function ‘void MainWindow::showProgramList()’:
 /home/kazuo/cs/CaptureStream2/mainwindow.cpp:764:19: error: ‘class MessageWindow’ has no member named ‘appendHtml’; did you mean ‘append’?
