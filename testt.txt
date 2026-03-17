@@ -4,6 +4,54 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+struct OptionPresetLabel {
+    const char* objectName;
+    const char* label;
+};
+
+const OptionPresetLabel OPTION_LABEL[] = { 
+    { "radioButton",   "日本語、アラビア語、AsianView" },
+    { "radioButton_1", "ロシア語 、中国語、ハングル講座" },
+    { "radioButton_2", "ロシア語 、アラビア語、ポルトガル語" },
+    { "radioButton_3", "中国語、ハングル講座、アラビア語、ポルトガル語" },
+    { "radioButton_4", "ニュース" },
+    { "radioButton_5", "ドラマ" }
+};
+
+const int OPTION_LABEL_COUNT =
+    sizeof(OPTION_LABEL) / sizeof(OPTION_LABEL[0]);
+
+
+void SettingsDialog::applyOptionPresetLabels()
+{
+    for (int i = 0; i < OPTION_LABEL_COUNT; ++i) {
+        const auto& item = OPTION_LABEL[i];
+
+        QObject* obj = this->findChild<QObject*>(item.objectName);
+        if (!obj)
+            continue;
+
+        QRadioButton* rb = qobject_cast<QRadioButton*>(obj);
+        if (!rb)
+            continue;
+
+        rb->setText(QString::fromUtf8(item.label));
+    }
+}
+
+SettingsDialog::SettingsDialog(QWidget *parent)
+    : QDialog(parent)
+    , ui(new Ui::SettingsDialog)
+{
+    ui->setupUi(this);
+
+    applyOptionPresetLabels();   // ← ここでラベルを上書き
+}
+
+
+
+
+
 QPlainTextEdit#messageTextEdit {
     font-family: "Menlo", "Monaco", "Courier";
 }
