@@ -4,6 +4,90 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+
+[ 11%] Building CXX object CMakeFiles/CaptureStream2.dir/programformatter.cpp.o
+/home/kazuo/cs/CaptureStream2/programformatter.cpp: In static member function ‘static QStringList ProgramFormatter::toLines(const QStringList&)’:
+/home/kazuo/cs/CaptureStream2/programformatter.cpp:12:28: error: no matching function for call to ‘max(int&, qsizetype)’
+   12 |         maxWidth = std::max(maxWidth, repo.name_map[id].length());
+      |                    ~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/c++/11/array:40,
+                 from /usr/include/c++/11/tuple:39,
+                 from /opt/qt6/include/QtCore/qtypeinfo.h:9,
+                 from /opt/qt6/include/QtCore/qglobal.h:46,
+                 from /opt/qt6/include/QtCore/qpair.h:7,
+                 from /opt/qt6/include/QtCore/qarraydata.h:8,
+                 from /opt/qt6/include/QtCore/qarraydataops.h:8,
+                 from /opt/qt6/include/QtCore/qarraydatapointer.h:7,
+                 from /opt/qt6/include/QtCore/qlist.h:8,
+                 from /opt/qt6/include/QtCore/qstringlist.h:5,
+                 from /opt/qt6/include/QtCore/QStringList:1,
+                 from /home/kazuo/cs/CaptureStream2/programformatter.h:2,
+                 from /home/kazuo/cs/CaptureStream2/programformatter.cpp:1:
+/usr/include/c++/11/bits/stl_algobase.h:254:5: note: candidate: ‘template<class _Tp> constexpr const _Tp& std::max(const _Tp&, const _Tp&)’
+  254 |     max(const _Tp& __a, const _Tp& __b)
+      |     ^~~
+/usr/include/c++/11/bits/stl_algobase.h:254:5: note:   template argument deduction/substitution failed:
+/home/kazuo/cs/CaptureStream2/programformatter.cpp:12:28: note:   deduced conflicting types for parameter ‘const _Tp’ (‘int’ and ‘qsizetype’ {aka ‘long long int’})
+   12 |         maxWidth = std::max(maxWidth, repo.name_map[id].length());
+      |                    ~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/c++/11/array:40,
+                 from /usr/include/c++/11/tuple:39,
+                 from /opt/qt6/include/QtCore/qtypeinfo.h:9,
+                 from /opt/qt6/include/QtCore/qglobal.h:46,
+                 from /opt/qt6/include/QtCore/qpair.h:7,
+                 from /opt/qt6/include/QtCore/qarraydata.h:8,
+                 from /opt/qt6/include/QtCore/qarraydataops.h:8,
+                 from /opt/qt6/include/QtCore/qarraydatapointer.h:7,
+                 from /opt/qt6/include/QtCore/qlist.h:8,
+                 from /opt/qt6/include/QtCore/qstringlist.h:5,
+                 from /opt/qt6/include/QtCore/QStringList:1,
+                 from /home/kazuo/cs/CaptureStream2/programformatter.h:2,
+                 from /home/kazuo/cs/CaptureStream2/programformatter.cpp:1:
+/usr/include/c++/11/bits/stl_algobase.h:300:5: note: candidate: ‘template<class _Tp, class _Compare> constexpr const _Tp& std::max(const _Tp&, const _Tp&, _Compare)’
+  300 |     max(const _Tp& __a, const _Tp& __b, _Compare __comp)
+      |     ^~~
+/usr/include/c++/11/bits/stl_algobase.h:300:5: note:   template argument deduction/substitution failed:
+/home/kazuo/cs/CaptureStream2/programformatter.cpp:12:28: note:   deduced conflicting types for parameter ‘const _Tp’ (‘int’ and ‘qsizetype’ {aka ‘long long int’})
+   12 |         maxWidth = std::max(maxWidth, repo.name_map[id].length());
+      |                    ~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/c++/11/algorithm:62,
+                 from /opt/qt6/include/QtCore/qcontainertools_impl.h:22,
+                 from /opt/qt6/include/QtCore/qarraydataops.h:9,
+                 from /opt/qt6/include/QtCore/qarraydatapointer.h:7,
+                 from /opt/qt6/include/QtCore/qlist.h:8,
+                 from /opt/qt6/include/QtCore/qstringlist.h:5,
+                 from /opt/qt6/include/QtCore/QStringList:1,
+                 from /home/kazuo/cs/CaptureStream2/programformatter.h:2,
+                 from /home/kazuo/cs/CaptureStream2/programformatter.cpp:1:
+/usr/include/c++/11/bits/stl_algo.h:3461:5: note: candidate: ‘template<class _Tp> constexpr _Tp std::max(std::initializer_list<_Tp>)’
+ 3461 |     max(initializer_list<_Tp> __l)
+      |     ^~~
+/usr/include/c++/11/bits/stl_algo.h:3461:5: note:   template argument deduction/substitution failed:
+/home/kazuo/cs/CaptureStream2/programformatter.cpp:12:28: note:   mismatched types ‘std::initializer_list<_Tp>’ and ‘int’
+   12 |         maxWidth = std::max(maxWidth, repo.name_map[id].length());
+      |                    ~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /usr/include/c++/11/algorithm:62,
+                 from /opt/qt6/include/QtCore/qcontainertools_impl.h:22,
+                 from /opt/qt6/include/QtCore/qarraydataops.h:9,
+                 from /opt/qt6/include/QtCore/qarraydatapointer.h:7,
+                 from /opt/qt6/include/QtCore/qlist.h:8,
+                 from /opt/qt6/include/QtCore/qstringlist.h:5,
+                 from /opt/qt6/include/QtCore/QStringList:1,
+                 from /home/kazuo/cs/CaptureStream2/programformatter.h:2,
+                 from /home/kazuo/cs/CaptureStream2/programformatter.cpp:1:
+/usr/include/c++/11/bits/stl_algo.h:3467:5: note: candidate: ‘template<class _Tp, class _Compare> constexpr _Tp std::max(std::initializer_list<_Tp>, _Compare)’
+ 3467 |     max(initializer_list<_Tp> __l, _Compare __comp)
+      |     ^~~
+/usr/include/c++/11/bits/stl_algo.h:3467:5: note:   template argument deduction/substitution failed:
+/home/kazuo/cs/CaptureStream2/programformatter.cpp:12:28: note:   mismatched types ‘std::initializer_list<_Tp>’ and ‘int’
+   12 |         maxWidth = std::max(maxWidth, repo.name_map[id].length());
+      |                    ~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:393: CMakeFiles/CaptureStream2.dir/programformatter.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
+
+
+
 QStringList list = ProgramListService::buildProgramList(type);
 
 for (auto& line : ProgramFormatter::toLines(list))
@@ -29,16 +113,6 @@ void MessageWindow::appendHtml(const QString& html)
 {
     ui->textEdit->append(html);
 }
-
-[ 23%] Building CXX object CMakeFiles/CaptureStream2.dir/messagewindow.cpp.o
-/home/kazuo/cs/CaptureStream2/messagewindow.cpp: In member function ‘void MessageWindow::appendHtml(const QString&)’:
-/home/kazuo/cs/CaptureStream2/messagewindow.cpp:129:5: error: ‘ui’ was not declared in this scope; did you mean ‘Ui’?
-  129 |     ui->textEdit->append(html);
-      |     ^~
-      |     Ui
-make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:197: CMakeFiles/CaptureStream2.dir/messagewindow.cpp.o] エラー 1
-make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
-make: *** [Makefile:91: all] エラー 2
 
 
 
