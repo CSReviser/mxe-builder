@@ -13,6 +13,12 @@ make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:393: CMakeFiles/CaptureSt
 make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
 make: *** [Makefile:91: all] エラー 2
 
+QPlainTextEdit#messageTextEdit {
+    font-family: monospace;
+}
+
+textEdit->setObjectName("messageTextEdit");
+
 
 #include <QFontDatabase>
 
