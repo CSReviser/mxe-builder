@@ -29,6 +29,31 @@ void MainWindow::showProgramList()
     messagewindow.appendHtml(html);
 }
 
+void MainWindow::showProgramList()
+{
+    QStringList key =
+        ProgramListService::buildProgramList(id_List_flag);
+
+    auto &repo = ProgramRepository::instance();
+
+    QString html;
+    html += "<table>";
+    html += "<tr><th align='left'>番組名</th><th align='left'>番組ID</th></tr>";
+
+    for (const QString& id : key) {
+        QString name = repo.name_map[id];
+
+        html += "<tr>";
+        html += "<td>" + name + "</td>";
+        html += "<td>" + id + "</td>";
+        html += "</tr>";
+    }
+
+    html += "</table>";
+
+    messagewindow.appendHtml(html);
+}
+
 
 lineEdit->setStyleSheet(
     "QLineEdit {"
