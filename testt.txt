@@ -11,15 +11,16 @@ void MessageWindow::appendHtml(const QString& html)
     ui->textEdit->append(html);
 }
 
-[  7%] Building CXX object CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o
-/home/kazuo/cs/CaptureStream2/mainwindow.cpp: In member function ‘void MainWindow::showProgramList()’:
-/home/kazuo/cs/CaptureStream2/mainwindow.cpp:764:19: error: ‘class MessageWindow’ has no member named ‘appendHtml’; did you mean ‘append’?
-  764 |     messagewindow.appendHtml(html);
-      |                   ^~~~~~~~~~
-      |                   append
-make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:183: CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o] エラー 1
+[ 23%] Building CXX object CMakeFiles/CaptureStream2.dir/messagewindow.cpp.o
+/home/kazuo/cs/CaptureStream2/messagewindow.cpp: In member function ‘void MessageWindow::appendHtml(const QString&)’:
+/home/kazuo/cs/CaptureStream2/messagewindow.cpp:129:5: error: ‘ui’ was not declared in this scope; did you mean ‘Ui’?
+  129 |     ui->textEdit->append(html);
+      |     ^~
+      |     Ui
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:197: CMakeFiles/CaptureStream2.dir/messagewindow.cpp.o] エラー 1
 make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
 make: *** [Makefile:91: all] エラー 2
+
 
 
 void MainWindow::showProgramList()
