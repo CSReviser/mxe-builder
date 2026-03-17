@@ -4,6 +4,9 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+----------------------------------------
+*****　　番組一覧　　*****
+----------------------------------------番組名           : 番組IDGLZQ4M519X_01 : Asian ViewBR8Z3NX7XM_01 : エンジョイ・シンプル・イングリッシュ77RQWQX1L6_01 : ニュースで学ぶ「現代英語」368315KKP8_01 : ラジオビジネス英語PMMJ59J6N2_01 : ラジオ英会話148W8XX226_01 : 中学生の基礎英語 レベル１83RW6PK3GG_01 : 中学生の基礎英語 レベル２GGQY3M1929_01 : 小学生の基礎英語8Z6XJ6J415_01 : 英会話タイムトライアル
 
 qsizetype maxWidth = 0;
 
