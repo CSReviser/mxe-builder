@@ -4,6 +4,122 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+[ 22%] Building CXX object CMakeFiles/CaptureStream2.dir/settings.cpp.o
+In file included from /home/kazuo/cs/CaptureStream2/settings.cpp:24:
+/home/kazuo/cs/CaptureStream2/settings.h:70:12: error: field ‘mainWindowPos’ has incomplete type ‘QPoint’
+   70 |     QPoint mainWindowPos;
+      |            ^~~~~~~~~~~~~
+In file included from /opt/qt6/include/QtCore/qobject.h:18,
+                 from /opt/qt6/include/QtCore/qsettings.h:7,
+                 from /opt/qt6/include/QtCore/QSettings:1,
+                 from /home/kazuo/cs/CaptureStream2/settings.h:25,
+                 from /home/kazuo/cs/CaptureStream2/settings.cpp:24:
+/opt/qt6/include/QtCore/qmetatype.h:1544:1: note: forward declaration of ‘class QPoint’
+ 1544 | QT_FOR_EACH_STATIC_CORE_CLASS(QT_FORWARD_DECLARE_STATIC_TYPES_ITER)
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /home/kazuo/cs/CaptureStream2/settings.cpp:24:
+/home/kazuo/cs/CaptureStream2/settings.h:71:12: error: field ‘mainWindowSize’ has incomplete type ‘QSize’
+   71 |     QSize  mainWindowSize;
+      |            ^~~~~~~~~~~~~~
+In file included from /opt/qt6/include/QtCore/qobject.h:18,
+                 from /opt/qt6/include/QtCore/qsettings.h:7,
+                 from /opt/qt6/include/QtCore/QSettings:1,
+                 from /home/kazuo/cs/CaptureStream2/settings.h:25,
+                 from /home/kazuo/cs/CaptureStream2/settings.cpp:24:
+/opt/qt6/include/QtCore/qmetatype.h:1544:1: note: forward declaration of ‘class QSize’
+ 1544 | QT_FOR_EACH_STATIC_CORE_CLASS(QT_FORWARD_DECLARE_STATIC_TYPES_ITER)
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /home/kazuo/cs/CaptureStream2/settings.cpp:24:
+/home/kazuo/cs/CaptureStream2/settings.h:73:12: error: field ‘messageWindowPos’ has incomplete type ‘QPoint’
+   73 |     QPoint messageWindowPos;
+      |            ^~~~~~~~~~~~~~~~
+In file included from /opt/qt6/include/QtCore/qobject.h:18,
+                 from /opt/qt6/include/QtCore/qsettings.h:7,
+                 from /opt/qt6/include/QtCore/QSettings:1,
+                 from /home/kazuo/cs/CaptureStream2/settings.h:25,
+                 from /home/kazuo/cs/CaptureStream2/settings.cpp:24:
+/opt/qt6/include/QtCore/qmetatype.h:1544:1: note: forward declaration of ‘class QPoint’
+ 1544 | QT_FOR_EACH_STATIC_CORE_CLASS(QT_FORWARD_DECLARE_STATIC_TYPES_ITER)
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /home/kazuo/cs/CaptureStream2/settings.cpp:24:
+/home/kazuo/cs/CaptureStream2/settings.h:74:12: error: field ‘messageWindowSize’ has incomplete type ‘QSize’
+   74 |     QSize  messageWindowSize;
+      |            ^~~~~~~~~~~~~~~~~
+In file included from /opt/qt6/include/QtCore/qobject.h:18,
+                 from /opt/qt6/include/QtCore/qsettings.h:7,
+                 from /opt/qt6/include/QtCore/QSettings:1,
+                 from /home/kazuo/cs/CaptureStream2/settings.h:25,
+                 from /home/kazuo/cs/CaptureStream2/settings.cpp:24:
+/opt/qt6/include/QtCore/qmetatype.h:1544:1: note: forward declaration of ‘class QSize’
+ 1544 | QT_FOR_EACH_STATIC_CORE_CLASS(QT_FORWARD_DECLARE_STATIC_TYPES_ITER)
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/settings.cpp: In member function ‘void Settings::load()’:
+/home/kazuo/cs/CaptureStream2/settings.cpp:108:48: error: invalid use of incomplete type ‘class QPoint’
+  108 |     messageWindowPos = ini.value("pos", QPoint()).toPoint();
+      |                                                ^
+In file included from /opt/qt6/include/QtCore/qobject.h:18,
+                 from /opt/qt6/include/QtCore/qsettings.h:7,
+                 from /opt/qt6/include/QtCore/QSettings:1,
+                 from /home/kazuo/cs/CaptureStream2/settings.h:25,
+                 from /home/kazuo/cs/CaptureStream2/settings.cpp:24:
+/opt/qt6/include/QtCore/qmetatype.h:1544:1: note: forward declaration of ‘class QPoint’
+ 1544 | QT_FOR_EACH_STATIC_CORE_CLASS(QT_FORWARD_DECLARE_STATIC_TYPES_ITER)
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/settings.cpp:109:49: error: invalid use of incomplete type ‘class QSize’
+  109 |     messageWindowSize = ini.value("size", QSize()).toSize();
+      |                                                 ^
+In file included from /opt/qt6/include/QtCore/qobject.h:18,
+                 from /opt/qt6/include/QtCore/qsettings.h:7,
+                 from /opt/qt6/include/QtCore/QSettings:1,
+                 from /home/kazuo/cs/CaptureStream2/settings.h:25,
+                 from /home/kazuo/cs/CaptureStream2/settings.cpp:24:
+/opt/qt6/include/QtCore/qmetatype.h:1544:1: note: forward declaration of ‘class QSize’
+ 1544 | QT_FOR_EACH_STATIC_CORE_CLASS(QT_FORWARD_DECLARE_STATIC_TYPES_ITER)
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/settings.cpp: In member function ‘void Settings::saveMessageWindow(const QByteArray&, const QPoint&, const QSize&)’:
+/home/kazuo/cs/CaptureStream2/settings.cpp:369:25: error: invalid use of incomplete type ‘const class QPoint’
+  369 |     ini.setValue("pos", pos);
+      |                         ^~~
+In file included from /opt/qt6/include/QtCore/qobject.h:18,
+                 from /opt/qt6/include/QtCore/qsettings.h:7,
+                 from /opt/qt6/include/QtCore/QSettings:1,
+                 from /home/kazuo/cs/CaptureStream2/settings.h:25,
+                 from /home/kazuo/cs/CaptureStream2/settings.cpp:24:
+/opt/qt6/include/QtCore/qmetatype.h:1544:1: note: forward declaration of ‘class QPoint’
+ 1544 | QT_FOR_EACH_STATIC_CORE_CLASS(QT_FORWARD_DECLARE_STATIC_TYPES_ITER)
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /opt/qt6/include/QtCore/qsettings.h:8,
+                 from /opt/qt6/include/QtCore/QSettings:1,
+                 from /home/kazuo/cs/CaptureStream2/settings.h:25,
+                 from /home/kazuo/cs/CaptureStream2/settings.cpp:24:
+/opt/qt6/include/QtCore/qvariant.h:237:21: note:   initializing argument 1 of ‘QVariant::QVariant(QPoint)’
+  237 |     QVariant(QPoint pt) noexcept;
+      |              ~~~~~~~^~
+/home/kazuo/cs/CaptureStream2/settings.cpp:370:26: error: invalid use of incomplete type ‘const class QSize’
+  370 |     ini.setValue("size", size);
+      |                          ^~~~
+In file included from /opt/qt6/include/QtCore/qobject.h:18,
+                 from /opt/qt6/include/QtCore/qsettings.h:7,
+                 from /opt/qt6/include/QtCore/QSettings:1,
+                 from /home/kazuo/cs/CaptureStream2/settings.h:25,
+                 from /home/kazuo/cs/CaptureStream2/settings.cpp:24:
+/opt/qt6/include/QtCore/qmetatype.h:1544:1: note: forward declaration of ‘class QSize’
+ 1544 | QT_FOR_EACH_STATIC_CORE_CLASS(QT_FORWARD_DECLARE_STATIC_TYPES_ITER)
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from /opt/qt6/include/QtCore/qsettings.h:8,
+                 from /opt/qt6/include/QtCore/QSettings:1,
+                 from /home/kazuo/cs/CaptureStream2/settings.h:25,
+                 from /home/kazuo/cs/CaptureStream2/settings.cpp:24:
+/opt/qt6/include/QtCore/qvariant.h:235:20: note:   initializing argument 1 of ‘QVariant::QVariant(QSize)’
+  235 |     QVariant(QSize size) noexcept;
+      |              ~~~~~~^~~~
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:267: CMakeFiles/CaptureStream2.dir/settings.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
+
+
+
+
 this->show();
 
 Settings& s = Settings::instance();
@@ -27,40 +143,7 @@ Settings::instance().saveMessageWindow(
 );
 
 
-[  7%] Building CXX object CMakeFiles/CaptureStream2.dir/messagewindow.cpp.o
-/home/kazuo/cs/CaptureStream2/messagewindow.cpp: In constructor ‘MessageWindow::MessageWindow(QWidget*)’:
-/home/kazuo/cs/CaptureStream2/messagewindow.cpp:67:14: error: expected unqualified-id before ‘.’ token
-   67 | MessageWindow.show();
-      |              ^
-/home/kazuo/cs/CaptureStream2/messagewindow.cpp:73:5: error: ‘messagewindow’ was not declared in this scope; did you mean ‘MessageWindow’?
-   73 |     messagewindow.resize(s.messageWindowSize);
-      |     ^~~~~~~~~~~~~
-      |     MessageWindow
-/home/kazuo/cs/CaptureStream2/messagewindow.cpp:76:5: error: ‘messagewindow’ was not declared in this scope; did you mean ‘MessageWindow’?
-   76 |     messagewindow.move(s.messageWindowPos);
-      |     ^~~~~~~~~~~~~
-      |     MessageWindow
-/home/kazuo/cs/CaptureStream2/messagewindow.cpp:80:5: error: ‘messagewindow’ was not declared in this scope; did you mean ‘MessageWindow’?
-   80 |     messagewindow.restoreGeometry(s.messageWindowGeometry);
-      |     ^~~~~~~~~~~~~
-      |     MessageWindow
-/home/kazuo/cs/CaptureStream2/messagewindow.cpp:85:5: error: ‘messagewindow’ was not declared in this scope; did you mean ‘MessageWindow’?
-   85 |     messagewindow.move(pos);
-      |     ^~~~~~~~~~~~~
-      |     MessageWindow
-/home/kazuo/cs/CaptureStream2/messagewindow.cpp: In destructor ‘virtual MessageWindow::~MessageWindow()’:
-/home/kazuo/cs/CaptureStream2/messagewindow.cpp:94:23: error: expected primary-expression before ‘.’ token
-   94 |          MessageWindow.saveGeometry(),
-      |                       ^
-/home/kazuo/cs/CaptureStream2/messagewindow.cpp:95:23: error: expected primary-expression before ‘.’ token
-   95 |          MessageWindow.pos(),
-      |                       ^
-/home/kazuo/cs/CaptureStream2/messagewindow.cpp:96:23: error: expected primary-expression before ‘.’ token
-   96 |          MessageWindow.size()
-      |                       ^
-make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:197: CMakeFiles/CaptureStream2.dir/messagewindow.cpp.o] エラー 1
-make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
-make: *** [Makefile:91: all] エラー 2
+
 
 
 QPoint messageWindowPos;
