@@ -5,6 +5,15 @@ net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
 
+if (!Settings::instance().messageWindowGeometry.isEmpty()) {
+    messagewindow.restoreGeometry(Settings::instance().messageWindowGeometry);
+} else {
+    QPoint pos = mapToGlobal(QPoint(width(), 0));
+    pos += QPoint(20, 20);
+    messagewindow.move(pos);
+}
+
+
 #if defined(QT_NO_DEBUG)
 static void releaseMessageHandler(QtMsgType type,
                                   const QMessageLogContext &,
