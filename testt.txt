@@ -4,6 +4,94 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+QPoint messageWindowPos;
+QSize  messageWindowSize;
+
+ini.beginGroup(Constants::SETTING_GROUP_MessageWindow);
+
+messageWindowGeometry = ini.value("geometry").toByteArray();
+
+// ★追加
+messageWindowPos = ini.value("pos", QPoint()).toPoint();
+messageWindowSize = ini.value("size", QSize()).toSize();
+
+ini.endGroup();
+
+
+
+ini.beginGroup(Constants::SETTING_GROUP_MessageWindow);
+
+ini.setValue("geometry", messageWindowGeometry);
+
+// ★追加
+if (!messageWindowPos.isNull())
+    ini.setValue("pos", messageWindowPos);
+else
+    ini.remove("pos");
+
+if (messageWindowSize.isValid())
+    ini.setValue("size", messageWindowSize);
+else
+    ini.remove("size");
+
+ini.endGroup();
+
+
+void Settings::saveMessageWindow(const QByteArray &geometry,
+                                 const QPoint &pos,
+                                 const QSize &size)
+{
+    if (settingsDeleted)
+        return;
+
+    messageWindowGeometry = geometry;
+    messageWindowPos = pos;
+    messageWindowSize = size;
+
+    QSettings ini(Constants::IniFileName, QSettings::IniFormat);
+    ini.beginGroup(Constants::SETTING_GROUP_MessageWindow);
+
+    ini.setValue("geometry", geometry);
+    ini.setValue("pos", pos);
+    ini.setValue("size", size);
+
+    ini.endGroup();
+}
+
+messagewindow.show();
+
+Settings& s = Settings::instance();
+
+// ★ 新方式（優先）
+if (s.messageWindowSize.isValid())
+    messagewindow.resize(s.messageWindowSize);
+
+if (!s.messageWindowPos.isNull())
+    messagewindow.move(s.messageWindowPos);
+
+// ★ fallback（旧データ）
+else if (!s.messageWindowGeometry.isEmpty())
+    messagewindow.restoreGeometry(s.messageWindowGeometry);
+
+// ★ 最終fallback
+else {
+    QPoint pos = mapToGlobal(QPoint(width(), 0)) + QPoint(20, 20);
+    messagewindow.move(pos);
+}
+
+
+
+Settings::instance().saveMessageWindow(
+    messagewindow.saveGeometry(),
+    messagewindow.pos(),
+    messagewindow.size()
+);
+
+
+
+
+
+
 int main(int argc, char *argv[])
 {
 #if defined(QT_NO_DEBUG)
