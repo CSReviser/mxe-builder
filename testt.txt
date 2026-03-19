@@ -6,7 +6,13 @@ net.ipv6.conf.default.disable_ipv6 = 1
 
 
 ===== DPI / Scale Info =====
-Segmentation fault (コアダンプ)
+Screen: "HDMI-1"
+Logical DPI: 96
+Physical DPI: 81.5973
+Device Pixel Ratio: 1
+Font: "Sans Serif" PointSize: 9
+============================
+
 
 
 #include <QScreen>
