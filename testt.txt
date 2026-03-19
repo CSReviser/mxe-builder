@@ -4,6 +4,9 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+
+#include <QPoint>
+#include <QSize>
 [ 22%] Building CXX object CMakeFiles/CaptureStream2.dir/settings.cpp.o
 In file included from /home/kazuo/cs/CaptureStream2/settings.cpp:24:
 /home/kazuo/cs/CaptureStream2/settings.h:70:12: error: field ‘mainWindowPos’ has incomplete type ‘QPoint’
