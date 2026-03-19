@@ -5,6 +5,84 @@ net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
 
+QPoint mainWindowPos;
+QSize  mainWindowSize;
+
+ini.beginGroup(Constants::SETTING_GROUP_MainWindow);
+
+mainWindowGeometry = ini.value("geometry").toByteArray();
+
+// ★追加
+mainWindowPos = ini.value("pos", QPoint()).toPoint();
+mainWindowSize = ini.value("size", QSize()).toSize();
+
+ini.endGroup();
+
+ini.beginGroup(Constants::SETTING_GROUP_MainWindow);
+
+ini.setValue("geometry", mainWindowGeometry);
+
+// ★追加
+if (!mainWindowPos.isNull())
+    ini.setValue("pos", mainWindowPos);
+else
+    ini.remove("pos");
+
+if (mainWindowSize.isValid())
+    ini.setValue("size", mainWindowSize);
+else
+    ini.remove("size");
+
+ini.endGroup();
+
+void Settings::saveMainWindow(const QByteArray &geometry,
+                             const QPoint &pos,
+                             const QSize &size)
+{
+    if (settingsDeleted)
+        return;
+
+    mainWindowGeometry = geometry;
+    mainWindowPos = pos;
+    mainWindowSize = size;
+
+    QSettings ini(iniFilePath(), QSettings::IniFormat);
+    ini.beginGroup(Constants::SETTING_GROUP_MainWindow);
+
+    ini.setValue("geometry", geometry);
+    ini.setValue("pos", pos);
+    ini.setValue("size", size);
+
+    ini.endGroup();
+}
+
+this->show();
+
+Settings& s = Settings::instance();
+
+// ★ 新方式優先
+if (s.mainWindowSize.isValid())
+    this->resize(s.mainWindowSize);
+
+if (!s.mainWindowPos.isNull())
+    this->move(s.mainWindowPos);
+
+// ★ fallback
+else if (!s.mainWindowGeometry.isEmpty())
+    this->restoreGeometry(s.mainWindowGeometry);
+
+
+Settings::instance().saveMainWindow(
+    this->saveGeometry(),
+    this->pos(),
+    this->size()
+);
+
+
+
+
+
+
 #include <QPoint>
 #include <QSize>
 [ 22%] Building CXX object CMakeFiles/CaptureStream2.dir/settings.cpp.o
