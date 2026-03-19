@@ -5,6 +5,44 @@ net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
 
+#if defined(QT_NO_DEBUG)
+static void releaseMessageHandler(QtMsgType type,
+                                  const QMessageLogContext &,
+                                  const QString &msg)
+{
+    if (type == QtDebugMsg) {
+        return;
+    }
+
+    QByteArray localMsg = msg.toLocal8Bit();
+    fprintf(stderr, "%s\n", localMsg.constData());
+}
+#endif
+
+#if defined(QT_NO_DEBUG)
+    qInstallMessageHandler(releaseMessageHandler);
+#endif
+
+
+#if defined(QT_NO_DEBUG)
+static void releaseMessageHandler(QtMsgType type,
+                                  const QMessageLogContext &,
+                                  const QString &msg)
+{
+    if (type == QtDebugMsg) {
+        return;
+    }
+
+    QByteArray localMsg = msg.toLocal8Bit();
+    fprintf(stderr, "%s\n", localMsg.constData());
+}
+#endif
+
+#if defined(QT_NO_DEBUG)
+    qInstallMessageHandler(releaseMessageHandler);
+#endif
+
+
 ===== DPI / Scale Info =====
 Screen: "HDMI-1"
 Logical DPI: 96
