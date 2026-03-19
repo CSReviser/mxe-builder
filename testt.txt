@@ -4,6 +4,29 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+this->show();
+
+Settings& s = Settings::instance();
+
+if (s.messageWindowSize.isValid())
+    this->resize(s.messageWindowSize);
+
+if (!s.messageWindowPos.isNull())
+    this->move(s.messageWindowPos);
+else if (!s.messageWindowGeometry.isEmpty())
+    this->restoreGeometry(s.messageWindowGeometry);
+else {
+    QPoint pos = parentWidget()->mapToGlobal(QPoint(width(), 0)) + QPoint(20, 20);
+    this->move(pos);
+}
+
+Settings::instance().saveMessageWindow(
+    this->saveGeometry(),
+    this->pos(),
+    this->size()
+);
+
+
 [  7%] Building CXX object CMakeFiles/CaptureStream2.dir/messagewindow.cpp.o
 /home/kazuo/cs/CaptureStream2/messagewindow.cpp: In constructor ‘MessageWindow::MessageWindow(QWidget*)’:
 /home/kazuo/cs/CaptureStream2/messagewindow.cpp:67:14: error: expected unqualified-id before ‘.’ token
