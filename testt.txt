@@ -4,6 +4,30 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+
+#include <QScreen>
+#include <QDebug>
+#include <QFont>
+
+void dumpDpiInfo()
+{
+    QScreen* screen = QGuiApplication::primaryScreen();
+
+    qDebug() << "\n===== DPI / Scale Info =====";
+    qDebug() << "Screen:" << screen->name();
+
+    qDebug() << "Logical DPI:" << screen->logicalDotsPerInch();
+    qDebug() << "Physical DPI:" << screen->physicalDotsPerInch();
+    qDebug() << "Device Pixel Ratio:" << screen->devicePixelRatio();
+
+    QFont f = QApplication::font();
+    qDebug() << "Font:" << f.family()
+             << "PointSize:" << f.pointSizeF();
+
+    qDebug() << "============================\n";
+}
+
+
 struct OptionPresetLabel {
     const char* objectName;
     const char* label;
