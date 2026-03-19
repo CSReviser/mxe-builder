@@ -5,6 +5,31 @@ net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
 
+[ 14%] Building CXX object CMakeFiles/CaptureStream2.dir/main.cpp.o
+/home/kazuo/cs/CaptureStream2/main.cpp:53:27: error: expected constructor, destructor, or type conversion before ‘(’ token
+   53 |     qInstallMessageHandler(releaseMessageHandler);
+      |                           ^
+/home/kazuo/cs/CaptureStream2/main.cpp: In function ‘int main(int, char**)’:
+/home/kazuo/cs/CaptureStream2/main.cpp:72:5: error: ‘messagewindow’ was not declared in this scope; did you mean ‘MessageWindow’?
+   72 |     messagewindow.restoreGeometry(Settings::instance().messageWindowGeometry);
+      |     ^~~~~~~~~~~~~
+      |     MessageWindow
+/home/kazuo/cs/CaptureStream2/main.cpp:74:37: error: ‘width’ was not declared in this scope; did you mean ‘wcwidth’?
+   74 |     QPoint pos = mapToGlobal(QPoint(width(), 0));
+      |                                     ^~~~~
+      |                                     wcwidth
+/home/kazuo/cs/CaptureStream2/main.cpp:74:18: error: ‘mapToGlobal’ was not declared in this scope
+   74 |     QPoint pos = mapToGlobal(QPoint(width(), 0));
+      |                  ^~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/main.cpp:76:5: error: ‘messagewindow’ was not declared in this scope; did you mean ‘MessageWindow’?
+   76 |     messagewindow.move(pos);
+      |     ^~~~~~~~~~~~~
+      |     MessageWindow
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:169: CMakeFiles/CaptureStream2.dir/main.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
+
+
 if (!Settings::instance().messageWindowGeometry.isEmpty()) {
     messagewindow.restoreGeometry(Settings::instance().messageWindowGeometry);
 } else {
