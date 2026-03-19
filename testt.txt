@@ -4,6 +4,31 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+int main(int argc, char *argv[])
+{
+#if defined(QT_NO_DEBUG)
+    qInstallMessageHandler(releaseMessageHandler);
+#endif
+
+    QApplication app(argc, argv);
+
+    MainWindow w;
+    MessageWindow messagewindow(&w);
+
+    // geometry復元 or 初期配置
+    if (!Settings::instance().messageWindowGeometry.isEmpty()) {
+        messagewindow.restoreGeometry(Settings::instance().messageWindowGeometry);
+    } else {
+        QPoint pos = w.mapToGlobal(QPoint(w.width(), 0));
+        pos += QPoint(20, 20);
+        messagewindow.move(pos);
+    }
+
+    w.show();
+    messagewindow.show();
+
+    return app.exec();
+}
 
 [ 14%] Building CXX object CMakeFiles/CaptureStream2.dir/main.cpp.o
 /home/kazuo/cs/CaptureStream2/main.cpp:53:27: error: expected constructor, destructor, or type conversion before ‘(’ token
