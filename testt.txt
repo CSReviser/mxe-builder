@@ -5,6 +5,43 @@ net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
 
+this->show();
+
+Settings& s = Settings::instance();
+
+#ifdef Q_OS_MACOS
+
+// macは復元を使わず固定配置
+QWidget* parent = parentWidget();
+
+QPoint pos;
+
+if (parent) {
+    QPoint base = parent->frameGeometry().topRight();
+    pos = base + QPoint(10, 0);  // 右に少しずらす
+} else {
+    pos = QPoint(100, 100); // fallback
+}
+
+this->move(pos);
+
+#else
+
+// 通常復元（他OS）
+if (s.messageWindowSize.isValid())
+    this->resize(s.messageWindowSize);
+
+if (!s.messageWindowPos.isNull())
+    this->move(s.messageWindowPos);
+else if (!s.messageWindowGeometry.isEmpty())
+    this->restoreGeometry(s.messageWindowGeometry);
+
+#endif
+
+
+
+
+
 show();
 
 QTimer::singleShot(0, this, [this]() {
