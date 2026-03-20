@@ -5,6 +5,13 @@ net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
 
+show();
+
+QTimer::singleShot(0, this, [this]() {
+    move(savedPos);
+});
+
+
 QPoint mainWindowPos;
 QSize  mainWindowSize;
 
