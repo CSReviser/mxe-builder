@@ -4,6 +4,17 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+private:
+    void normalizeWidth(QString& s);
+
+void ProgramRepository::normalizeWidth(QString& s)
+{
+    for (ushort i = 0xFF1A; i < 0xFF5F; ++i)
+        s.replace(QChar(i), QChar(i - 0xFEE0));
+
+    for (ushort i = 0xFF10; i < 0xFF1A; ++i)
+        s.replace(QChar(i - 0xFEE0), QChar(i));
+}
 
 [ 29%] Building CXX object CMakeFiles/CaptureStream2.dir/programrepository.cpp.o
 /home/kazuo/cs/CaptureStream2/programrepository.cpp: In member function ‘QString ProgramRepository::formatProgramName(const QString&, const QString&)’:
