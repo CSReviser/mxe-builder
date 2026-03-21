@@ -5,6 +5,33 @@ net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
 
+[  7%] Building CXX object CMakeFiles/CaptureStream2.dir/scrambledialog.cpp.o
+/home/kazuo/cs/CaptureStream2/scrambledialog.cpp: In member function ‘QString ScrambleDialog::scramble_set(QString, int)’:
+/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:100:36: error: ‘QString ProgramRepository::getProgramNameById(const QString&)’ is private within this context
+  100 |         if (repo.getProgramNameById(edit->text()).isEmpty())
+      |             ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~
+In file included from /home/kazuo/cs/CaptureStream2/scrambledialog.cpp:28:
+/home/kazuo/cs/CaptureStream2/programrepository.h:58:13: note: declared private here
+   58 |     QString getProgramNameById(const QString& url);
+      |             ^~~~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/scrambledialog.cpp: In member function ‘void ScrambleDialog::updateLabels()’:
+/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:128:28: error: ‘repo’ was not declared in this scope
+  128 |         labels[i]->setText(repo.getProgramNameById(edits[i]->text()));
+      |                            ^~~~
+/home/kazuo/cs/CaptureStream2/scrambledialog.cpp: In member function ‘QString ScrambleDialog::updateOptional(int, const QString&)’:
+/home/kazuo/cs/CaptureStream2/scrambledialog.cpp:194:62: error: ‘QString ProgramRepository::getProgramNameById(const QString&)’ is private within this context
+  194 |      settings.labels[p.keyLabel] = repo.getProgramNameById(newValue);
+      |                                    ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~
+
+In file included from /home/kazuo/cs/CaptureStream2/scrambledialog.cpp:28:
+/home/kazuo/cs/CaptureStream2/programrepository.h:58:13: note: declared private here
+   58 |     QString getProgramNameById(const QString& url);
+      |             ^~~~~~~~~~~~~~~~~~
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:211: CMakeFiles/CaptureStream2.dir/scrambledialog.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
+
+
 QString ProgramRepository::getProgramNameById(const QString& url)
 {
     // キャッシュ優先
