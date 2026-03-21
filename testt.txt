@@ -5,6 +5,43 @@ net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
 
+QString ProgramRepository::formatProgramName(
+    const QString& title,
+    const QString& corner_name)
+{
+    QString attribute = title;
+    attribute.replace("　", " ");
+
+    if (!corner_name.isEmpty()) {
+        if (corner_name.contains("曜日放送", Qt::CaseInsensitive) ||
+            corner_name.contains("曜放送", Qt::CaseInsensitive) ||
+            corner_name.contains("特集", Qt::CaseInsensitive)) {
+            attribute = title + "-" + corner_name;
+        } else {
+            attribute = corner_name;
+        }
+    }
+
+    normalizeWidth(attribute);
+
+    attribute.remove("【らじる文庫】");
+    attribute.remove("より");
+    attribute.remove("カルチャーラジオ ");
+    attribute.remove("【恋する朗読】");
+    attribute.remove("【ラジオことはじめ】");
+    attribute.remove("【生朗読！】");
+    attribute.remove("NHK高校講座");
+
+    attribute.replace("初級編", "【初級編】");
+    attribute.replace("入門編", "【入門編】");
+    attribute.replace("中級編", "【中級編】");
+    attribute.replace("応用編", "【応用編】");
+
+    return attribute;
+}
+
+
+
 this->show();
 
 Settings& s = Settings::instance();
