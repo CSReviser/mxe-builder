@@ -4,6 +4,146 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+
+class NetworkClient : public QObject
+{
+    Q_OBJECT
+
+public:
+    explicit NetworkClient(QObject* parent = nullptr);
+
+    // 非同期
+    QNetworkReply* get(const QUrl& url);
+
+    // 同期（CLI用）
+    QByteArray getSync(const QUrl& url,
+                       int timeoutMs = 1000,
+                       int maxRetry = 3);
+
+signals:
+    void requestFinished(QNetworkReply* reply);
+
+private:
+    QNetworkAccessManager m_manager;
+
+    QByteArray performRequestSync(const QNetworkRequest& request,
+                                  int timeoutMs);
+};
+
+NetworkClient::NetworkClient(QObject* parent)
+    : QObject(parent)
+{
+}
+
+QNetworkReply* NetworkClient::get(const QUrl& url)
+{
+    QNetworkRequest request(url);
+    return m_manager.get(request);
+}
+
+QByteArray NetworkClient::getSync(const QUrl& url,
+                                  int timeoutMs,
+                                  int maxRetry)
+{
+    QNetworkRequest request(url);
+
+    int wait = timeoutMs;
+
+    for (int i = 0; i < maxRetry; ++i) {
+
+        QByteArray result = performRequestSync(request, wait);
+
+        if (!result.isEmpty())
+            return result;
+
+        // バックオフ
+        if (wait < 500) wait += 50;
+        else if (wait < 5000) wait += 100;
+    }
+
+    return QByteArray();
+}
+
+QByteArray NetworkClient::performRequestSync(
+    const QNetworkRequest& request,
+    int timeoutMs)
+{
+    QEventLoop loop;
+    QNetworkReply* reply = m_manager.get(request);
+
+    QTimer timer;
+    timer.setSingleShot(true);
+
+    connect(&timer, &QTimer::timeout, &loop, &QEventLoop::quit);
+    connect(reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
+
+    timer.start(timeoutMs);
+    loop.exec();
+
+    QByteArray data;
+
+    if (reply->isFinished() && reply->error() == QNetworkReply::NoError) {
+        data = reply->readAll();
+    }
+
+    reply->deleteLater();
+    return data;
+}
+
+QByteArray NetworkClient::getSync(
+    const QUrl& url,
+    int timeoutMs,
+    int maxRetry)
+{
+    QNetworkRequest request(url);
+
+    int wait = timeoutMs;
+
+    for (int i = 0; i < maxRetry; ++i) {
+
+        QEventLoop loop;
+        QNetworkReply* reply = m_manager.get(request);
+
+        QTimer timer;
+        timer.setSingleShot(true);
+
+        // reply単位で待つ ← 重要
+        connect(reply, &QNetworkReply::finished,
+                &loop, &QEventLoop::quit);
+
+        connect(&timer, &QTimer::timeout,
+                &loop, &QEventLoop::quit);
+
+        timer.start(wait);
+        loop.exec();
+
+        QByteArray data;
+
+        if (reply->isFinished() &&
+            reply->error() == QNetworkReply::NoError) {
+
+            data = reply->readAll();
+        } else {
+            reply->abort();
+        }
+
+        reply->deleteLater();
+
+        if (!data.isEmpty())
+            return data;
+
+        // バックオフ
+        if (wait < 500) wait += 50;
+        else if (wait < 5000) wait += 100;
+    }
+
+    return QByteArray(); // ← error文字列廃止
+}
+
+networkclient.h
+networkclient.cpp
+
+
 // label
 if (p.hasLabel) {
     QString raw = p.saveLabel
