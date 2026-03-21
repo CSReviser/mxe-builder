@@ -4,6 +4,65 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+
+QString ProgramRepository::getProgramNameById(const QString& url)
+{
+    // キャッシュ優先
+    if (id_map.contains(url))
+        return id_map.value(url);
+
+    // 未取得なら取得
+    QString json = fetchProgramJson(url);
+    if (json.isEmpty())
+        return QString();
+
+    auto [title, corner] = parseProgramJson(json);
+    QString name = formatProgramName(title, corner);
+
+    id_map.insert(url, name);
+    name_map.insert(name, url);
+
+    return name;
+}
+
+QString ProgramRepository::fetchProgramJson(const QString& url)
+{
+    int l = (url.length() != 13) ? url.length() - 3 : 10;
+
+    QString api =
+        "https://www.nhk.or.jp/radio-api/app/v1/web/ondemand/series?site_id=" +
+        url.left(l) + "&corner_site_id=" + url.right(2);
+
+    int timer = 100;
+    for (int i = 0; i < 20; ++i) {
+        QString res = Utility::getJsonFile(api, timer);
+        if (res != "error")
+            return res;
+
+        if (timer < 500) timer += 50;
+        else if (timer < 5000) timer += 100;
+    }
+    return QString();
+}
+
+std::tuple<QString, QString>
+ProgramRepository::parseProgramJson(const QString& str)
+{
+    QJsonDocument doc = QJsonDocument::fromJson(str.toUtf8());
+    QJsonObject obj = doc.object();
+
+    QString title = obj["title"].toString().replace("　", " ");
+    QString corner = obj["corner_name"]
+                        .toString()
+                        .remove("を聴く")
+                        .replace("　", " ");
+
+    return { title, corner };
+}
+
+
+
+
 private:
     void normalizeWidth(QString& s);
 
