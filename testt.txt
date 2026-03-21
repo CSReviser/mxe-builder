@@ -5,6 +5,55 @@ net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
 
+QString ProgramRepository::buildBaseProgramName(
+    const QString& title,
+    const QString& corner_name)
+{
+    QString attribute = title;
+    attribute.replace("　", " ");
+
+    if (!corner_name.isEmpty()) {
+        if (corner_name.contains("曜日放送", Qt::CaseInsensitive) ||
+            corner_name.contains("曜放送", Qt::CaseInsensitive) ||
+            corner_name.contains("特集", Qt::CaseInsensitive)) {
+            attribute = title + "-" + corner_name;
+        } else {
+            attribute = corner_name;
+        }
+    }
+
+    return attribute;
+}
+
+QString ProgramRepository::normalizeProgramName(QString attribute)
+{
+    normalizeWidth(attribute);
+
+    attribute.remove("【らじる文庫】");
+    attribute.remove("より");
+    attribute.remove("カルチャーラジオ ");
+    attribute.remove("【恋する朗読】");
+    attribute.remove("【ラジオことはじめ】");
+    attribute.remove("【生朗読！】");
+    attribute.remove("NHK高校講座");
+
+    attribute.replace("初級編", "【初級編】");
+    attribute.replace("入門編", "【入門編】");
+    attribute.replace("中級編", "【中級編】");
+    attribute.replace("応用編", "【応用編】");
+
+    return attribute;
+}
+
+QString ProgramRepository::formatProgramName(
+    const QString& title,
+    const QString& corner_name)
+{
+    QString attribute = buildBaseProgramName(title, corner_name);
+    attribute = normalizeProgramName(attribute);
+    return attribute;
+}
+
 [  7%] Building CXX object CMakeFiles/CaptureStream2.dir/scrambledialog.cpp.o
 /home/kazuo/cs/CaptureStream2/scrambledialog.cpp: In member function ‘QString ScrambleDialog::scramble_set(QString, int)’:
 /home/kazuo/cs/CaptureStream2/scrambledialog.cpp:100:36: error: ‘QString ProgramRepository::getProgramNameById(const QString&)’ is private within this context
