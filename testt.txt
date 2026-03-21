@@ -4,6 +4,26 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+// label
+if (p.hasLabel) {
+    QString raw = p.saveLabel
+        ? ini.value(p.keyLabel, p.labelDefault).toString()
+        : QString::fromUtf8(p.labelDefault);
+
+    // 旧版 ini の混入対策：UI 状態（✓）を除去
+    raw.remove(QChar(0x2713)); // ✓
+    raw.remove("✓ ");          // 念のためプレフィックスも除去
+
+    labels[p.keyLabel] = raw;
+}
+
+
+QString clean = label;
+clean.remove("✓ ");
+btn->setText(checked ? "✓ " + clean : clean);
+
+
+
 void MainWindow::updateButtonUI(QToolButton* btn, bool checked, const QString& label)
 {
     btn->blockSignals(true);
