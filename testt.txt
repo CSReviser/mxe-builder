@@ -51,6 +51,7 @@ struct RecordingRequest {
 
 
     FfmpegCapabilities.h/.cpp   ← 環境検出
+		PresetRepository.h/.cpp    GUIキー変換
     FfmpegCommandBuilder.h/.cpp ← 引数生成
     FfmpegExecutor.h/.cpp       ← QProcess実行
     RecordingCore.h/.cpp        ← 全体統合
