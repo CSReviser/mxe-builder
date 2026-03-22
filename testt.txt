@@ -4,6 +4,17 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+QString Utility::parseLatestVersion(const QByteArray& json)
+{
+    QJsonDocument doc = QJsonDocument::fromJson(json);
+    QJsonObject obj = doc.object();
+    return obj["tag_name"].toString();
+}
+
+QByteArray res = m_client.getSync(QUrl(url), 100, 20);
+
+QString version = Utility::parseLatestVersion(res);
+
 
 QString Utility::getLatest_version(NetworkClient& client)
 {
