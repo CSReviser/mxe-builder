@@ -5,6 +5,35 @@ net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
 
+QString Utility::getLatest_version(NetworkClient& client)
+{
+    const QString url =
+        "https://api.github.com/repos/CSReviser/CaptureStream2/releases/latest";
+
+    int timer = 100;
+
+    for (int i = 0; i < 20; ++i) {
+
+        QByteArray res = client.getSync(QUrl(url), timer, 1);
+
+        if (!res.isEmpty()) {
+            QJsonDocument json = QJsonDocument::fromJson(res);
+            QJsonObject obj = json.object();
+            return obj["tag_name"].toString();
+        }
+
+        if (timer < 500) timer += 50;
+        else if (timer < 5000) timer += 100;
+    }
+
+    return QString();
+}
+
+NetworkClient client;
+
+QString version = Utility::getLatest_version(client);
+
+
 QString ProgramRepository::fetchProgramJson(const QString& url)
 {
     int l = (url.length() != 13) ? url.length() - 3 : 10;
