@@ -5,6 +5,95 @@ net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
 
+[ 17%] Building CXX object CMakeFiles/CaptureStream2.dir/networkclient.cpp.o
+In file included from /home/kazuo/cs/CaptureStream2/networkclient.cpp:1:
+/home/kazuo/cs/CaptureStream2/networkclient.h:2:1: error: expected class-name before ‘{’ token
+    2 | {
+      | ^
+/home/kazuo/cs/CaptureStream2/networkclient.h:3:5: error: ‘Q_OBJECT’ does not name a type
+    3 |     Q_OBJECT
+      |     ^~~~~~~~
+/home/kazuo/cs/CaptureStream2/networkclient.h:3:5: note: the macro ‘Q_OBJECT’ had not yet been defined
+In file included from /opt/qt6/include/QtCore/qnamespace.h:13,
+                 from /opt/qt6/include/QtCore/qbytearray.h:9,
+                 from /opt/qt6/include/QtCore/qstringview.h:8,
+                 from /opt/qt6/include/QtCore/qchar.h:656,
+                 from /opt/qt6/include/QtCore/qstring.h:14,
+                 from /opt/qt6/include/QtCore/qhashfunctions.h:8,
+                 from /opt/qt6/include/QtCore/qshareddata.h:9,
+                 from /opt/qt6/include/QtCore/QSharedDataPointer:1,
+                 from /opt/qt6/include/QtNetwork/qnetworkrequest.h:8,
+                 from /opt/qt6/include/QtNetwork/qnetworkaccessmanager.h:8,
+                 from /opt/qt6/include/QtNetwork/QNetworkAccessManager:1,
+                 from /home/kazuo/cs/CaptureStream2/networkclient.cpp:3:
+/opt/qt6/include/QtCore/qtmetamacros.h:117: note: it was later defined here
+  117 | #define Q_OBJECT \
+      | 
+In file included from /home/kazuo/cs/CaptureStream2/networkclient.cpp:1:
+/home/kazuo/cs/CaptureStream2/networkclient.h:9:5: error: ‘QNetworkReply’ does not name a type
+    9 |     QNetworkReply* get(const QUrl& url);
+      |     ^~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/networkclient.h:12:5: error: ‘QByteArray’ does not name a type
+   12 |     QByteArray getSync(const QUrl& url,
+      |     ^~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/networkclient.h:16:1: error: ‘signals’ does not name a type
+   16 | signals:
+      | ^~~~~~~
+/home/kazuo/cs/CaptureStream2/networkclient.h:16:1: note: the macro ‘signals’ had not yet been defined
+In file included from /opt/qt6/include/QtCore/qnamespace.h:13,
+                 from /opt/qt6/include/QtCore/qbytearray.h:9,
+                 from /opt/qt6/include/QtCore/qstringview.h:8,
+                 from /opt/qt6/include/QtCore/qchar.h:656,
+                 from /opt/qt6/include/QtCore/qstring.h:14,
+                 from /opt/qt6/include/QtCore/qhashfunctions.h:8,
+                 from /opt/qt6/include/QtCore/qshareddata.h:9,
+                 from /opt/qt6/include/QtCore/QSharedDataPointer:1,
+                 from /opt/qt6/include/QtNetwork/qnetworkrequest.h:8,
+                 from /opt/qt6/include/QtNetwork/qnetworkaccessmanager.h:8,
+                 from /opt/qt6/include/QtNetwork/QNetworkAccessManager:1,
+                 from /home/kazuo/cs/CaptureStream2/networkclient.cpp:3:
+/opt/qt6/include/QtCore/qtmetamacros.h:41: note: it was later defined here
+   41 | #     define signals Q_SIGNALS
+      | 
+In file included from /home/kazuo/cs/CaptureStream2/networkclient.cpp:1:
+/home/kazuo/cs/CaptureStream2/networkclient.h:20:5: error: ‘QNetworkAccessManager’ does not name a type
+   20 |     QNetworkAccessManager m_manager;
+      |     ^~~~~~~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/networkclient.h:22:5: error: ‘QByteArray’ does not name a type
+   22 |     QByteArray performRequestSync(const QNetworkRequest& request,
+      |     ^~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/networkclient.cpp:11:1: error: no declaration matches ‘NetworkClient::NetworkClient(QObject*)’
+   11 | NetworkClient::NetworkClient(QObject* parent)
+      | ^~~~~~~~~~~~~
+In file included from /home/kazuo/cs/CaptureStream2/networkclient.cpp:1:
+/home/kazuo/cs/CaptureStream2/networkclient.h:1:7: note: candidates are: ‘constexpr NetworkClient::NetworkClient(NetworkClient&&)’
+    1 | class NetworkClient : public QObject
+      |       ^~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/networkclient.h:1:7: note:                 ‘constexpr NetworkClient::NetworkClient(const NetworkClient&)’
+/home/kazuo/cs/CaptureStream2/networkclient.h:1:7: note:                 ‘constexpr NetworkClient::NetworkClient()’
+/home/kazuo/cs/CaptureStream2/networkclient.h:1:7: note: ‘class NetworkClient’ defined here
+/home/kazuo/cs/CaptureStream2/networkclient.cpp:16:16: error: no declaration matches ‘QNetworkReply* NetworkClient::get(const QUrl&)’
+   16 | QNetworkReply* NetworkClient::get(const QUrl& url)
+      |                ^~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/networkclient.cpp:16:16: note: no functions named ‘QNetworkReply* NetworkClient::get(const QUrl&)’
+In file included from /home/kazuo/cs/CaptureStream2/networkclient.cpp:1:
+/home/kazuo/cs/CaptureStream2/networkclient.h:1:7: note: ‘class NetworkClient’ defined here
+    1 | class NetworkClient : public QObject
+      |       ^~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/networkclient.cpp:22:12: error: no declaration matches ‘QByteArray NetworkClient::getSync(const QUrl&, int, int)’
+   22 | QByteArray NetworkClient::getSync(
+      |            ^~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/networkclient.cpp:22:12: note: no functions named ‘QByteArray NetworkClient::getSync(const QUrl&, int, int)’
+In file included from /home/kazuo/cs/CaptureStream2/networkclient.cpp:1:
+/home/kazuo/cs/CaptureStream2/networkclient.h:1:7: note: ‘class NetworkClient’ defined here
+    1 | class NetworkClient : public QObject
+      |       ^~~~~~~~~~~~~
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:407: CMakeFiles/CaptureStream2.dir/networkclient.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
+
+
+
 class NetworkClient : public QObject
 {
     Q_OBJECT
