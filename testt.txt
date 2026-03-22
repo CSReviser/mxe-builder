@@ -5,6 +5,30 @@ net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
 
+QByteArray res;
+bool success = false;
+
+for (int i = 0; i < retryLimit; ++i) {
+
+    res = m_client.getSync(QUrl(jsonUrl), timer, 1);
+
+    if (!res.isEmpty()) {
+        success = true;
+        break;
+    }
+
+    timer = std::min(timer + ((timer < 500) ? 50 : 100), timerMax);
+}
+
+if (success) {
+    QString strReply = QString::fromUtf8(res);
+
+    std::tie(fileList, kouzaList, file_titleList, hdateList, yearList, contentsIdList) =
+        Utility::getJsonData1(strReply, json_ohyo);
+}
+
+
+
 #include "networkclient.h"
 private:
     NetworkClient m_client;
