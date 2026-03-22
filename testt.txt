@@ -4,6 +4,31 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+
+QString Utility::getLatest_version(NetworkClient& client)
+{
+    const QString url =
+        "https://api.github.com/repos/CSReviser/CaptureStream2/releases/latest";
+
+    int timer = 100;
+
+    for (int i = 0; i < 20; ++i) {
+
+        QByteArray res = client.getSync(QUrl(url), timer, 1);
+
+        if (!res.isEmpty()) {
+            QJsonDocument json = QJsonDocument::fromJson(res);
+            QJsonObject obj = json.object();
+            return obj["tag_name"].toString();
+        }
+
+        if (timer < 500) timer += 50;
+        else if (timer < 5000) timer += 100;
+    }
+
+    return QString();
+}
+
 [  6%] Building CXX object CMakeFiles/CaptureStream2.dir/main.cpp.o
 In file included from /home/kazuo/cs/CaptureStream2/main.cpp:28:
 /home/kazuo/cs/CaptureStream2/utility.h:42:35: error: ‘NetworkClient’ was not declared in this scope
