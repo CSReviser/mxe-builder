@@ -4,6 +4,56 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+① フォーマット定義を構造化
+struct AudioFormat {
+    QString codec;
+    QString bitrate;
+    int channels;
+    QString sampleRate;
+    bool copyCodec;
+};
+
+② メタデータを分離
+struct Metadata {
+    QString title;
+    QString artist;
+    QString album;
+    QString date;
+    QString genre;
+};
+
+③ 入力設定（ここに version差分を集約）
+struct InputOptions {
+    QString url;
+
+    QString userAgent;
+    QString cookie;
+    bool httpSeekable = false;
+};
+
+FfmpegInput input;
+
+input.inputPath = downloadedFile;
+input.outputPath = finalFile;
+input.thumbnailPath = thumb;
+input.embedThumbnail = true;
+
+
+④ RecordingRequest（最終形）
+struct RecordingRequest {
+    InputOptions input;
+    AudioFormat format;
+    Metadata meta;
+    QString outputPath;
+};
+
+
+
+    FfmpegCapabilities.h/.cpp   ← 環境検出
+    FfmpegCommandBuilder.h/.cpp ← 引数生成
+    FfmpegExecutor.h/.cpp       ← QProcess実行
+    RecordingCore.h/.cpp        ← 全体統合
+
 
 QNetworkReply* get(const QUrl& url);
 
