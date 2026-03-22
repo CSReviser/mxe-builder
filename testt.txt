@@ -25,7 +25,7 @@ struct Metadata {
 ③ 入力設定（ここに version差分を集約）
 struct InputOptions {
     QString url;
-
+		QString url;
     QString userAgent;
     QString cookie;
     bool httpSeekable = false;
