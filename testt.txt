@@ -4,6 +4,19 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+[  6%] Building CXX object CMakeFiles/CaptureStream2.dir/main.cpp.o
+In file included from /home/kazuo/cs/CaptureStream2/main.cpp:28:
+/home/kazuo/cs/CaptureStream2/utility.h:42:35: error: ‘NetworkClient’ was not declared in this scope
+   42 |         QString getLatest_version(NetworkClient& client);
+      |                                   ^~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/utility.h:42:50: error: ‘client’ was not declared in this scope
+   42 |         QString getLatest_version(NetworkClient& client);
+      |                                                  ^~~~~~
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:169: CMakeFiles/CaptureStream2.dir/main.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
+
+
 QString Utility::parseLatestVersion(const QByteArray& json)
 {
     QJsonDocument doc = QJsonDocument::fromJson(json);
