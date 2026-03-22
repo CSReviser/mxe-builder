@@ -5,6 +5,69 @@ net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
 
+QNetworkReply* get(const QUrl& url);
+
+QNetworkReply* NetworkClient::get(const QUrl& url)
+{
+    QNetworkRequest request(url);
+    return m_manager.get(request);
+}
+
+
+#include "networkclient.h"
+
+private:
+    NetworkClient m_client;
+
+
+QNetworkReply* reply = m_client.get(url);
+
+const QUrl url("https://www.nhk.or.jp/...");
+
+QNetworkReply* reply = m_client.get(url);
+
+connect(reply, &QNetworkReply::finished, this, [=]() {
+
+    QByteArray response_data = reply->readAll();
+    reply->deleteLater();
+
+    QJsonDocument jsonResponse = QJsonDocument::fromJson(response_data);
+    QJsonObject jsonObject = jsonResponse.object();
+    QJsonArray jsonArray = jsonObject["corners"].toArray();
+
+    for (const QJsonValue& value : jsonArray) {
+        QJsonObject objxx = value.toObject();
+
+        QString title = objxx["title"].toString();
+        QString corner_name = objxx["corner_name"].toString();
+        QString series_site_id = objxx["series_site_id"].toString();
+        QString corner_site = objxx["corner_site_id"].toString();
+        QString thumbnail_url = objxx["thumbnail_url"].toString();
+
+        QString program_name = formatProgramName(title, corner_name);
+        QString url_id = series_site_id + "_" + corner_site;
+
+        id_map.insert(url_id, program_name);
+        name_map.insert(program_name, url_id);
+        thumbnail_map.insert(url_id, thumbnail_url);
+    }
+
+    fetchKozaSeries(kozaList);
+    checkIfAllRequestsFinished();
+});
+
+QNetworkReply* reply = m_client.get(QUrl(fullUrl));
+
+connect(reply, &QNetworkReply::finished,
+        this, &ProgramRepository::onReplyFinished);
+
+connect(reply, &QNetworkReply::finished, this, [=]() {
+    emit requestFinished(reply);
+});
+
+
+
+
 QByteArray res;
 bool success = false;
 
