@@ -4,6 +4,17 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+[  6%] Building CXX object CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o
+/home/kazuo/cs/CaptureStream2/mainwindow.cpp: In constructor ‘MainWindow::MainWindow(Settings&, QWidget*)’:
+/home/kazuo/cs/CaptureStream2/mainwindow.cpp:117:26: error: ‘m_client’ was not declared in this scope
+  117 |         QByteArray res = m_client.getSync(QUrl(url), 100, 20);
+      |                          ^~~~~~~~
+/home/kazuo/cs/CaptureStream2/mainwindow.cpp:117:48: error: ‘url’ was not declared in this scope
+  117 |         QByteArray res = m_client.getSync(QUrl(url), 100, 20);
+      |                                                ^~~
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:183: CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
 
 QString Utility::getLatest_version(NetworkClient& client)
 {
