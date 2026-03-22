@@ -5,6 +5,30 @@ net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
 
+QString ProgramRepository::fetchProgramJson(const QString& url)
+{
+    int l = (url.length() != 13) ? url.length() - 3 : 10;
+
+    QString api =
+        "https://www.nhk.or.jp/radio-api/app/v1/web/ondemand/series?site_id=" +
+        url.left(l) + "&corner_site_id=" + url.right(2);
+
+    int timer = 100;
+
+    for (int i = 0; i < 20; ++i) {
+
+        QByteArray res = m_client.getSync(QUrl(api), timer, 1);
+
+        if (!res.isEmpty())
+            return QString::fromUtf8(res);
+
+        if (timer < 500) timer += 50;
+        else if (timer < 5000) timer += 100;
+    }
+
+    return QString();
+}
+
 [ 17%] Building CXX object CMakeFiles/CaptureStream2.dir/networkclient.cpp.o
 In file included from /home/kazuo/cs/CaptureStream2/networkclient.cpp:1:
 /home/kazuo/cs/CaptureStream2/networkclient.h:2:1: error: expected class-name before ‘{’ token
