@@ -4,6 +4,9 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+FfmpegCapabilities caps;
+QStringList args = FfmpegCommandBuilder::build(req, caps);
+
 [  6%] Building CXX object CMakeFiles/CaptureStream2.dir/clicontroller.cpp.o
 /home/kazuo/cs/CaptureStream2/clicontroller.cpp: In member function ‘void CLIController::testFfmpeg()’:
 /home/kazuo/cs/CaptureStream2/clicontroller.cpp:314:51: error: no matching function for call to ‘FfmpegCommandBuilder::build(RecordingRequest&)’
