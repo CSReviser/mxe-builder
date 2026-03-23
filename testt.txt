@@ -5,6 +5,20 @@ net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
 
+class RecordingCore : public QObject
+{
+    Q_OBJECT
+
+public:
+    ...
+
+signals:
+    void logMessage(const QString& message);
+    void errorOccurred(const QString& message);
+};
+
+
+
 [  6%] Building CXX object CMakeFiles/CaptureStream2.dir/recordingcore.cpp.o
 /home/kazuo/cs/CaptureStream2/recordingcore.cpp: In member function ‘bool RecordingCore::execute(const RecordingRequest&, const QString&)’:
 /home/kazuo/cs/CaptureStream2/recordingcore.cpp:1680:10: error: ‘logMessage’ was not declared in this scope
