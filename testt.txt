@@ -277,6 +277,8 @@ struct RecordingRequest {
     thumbnailoptionsbuilder.h/.cpp ← thumbnail追加
     FfmpegExecutor.h/.cpp       ← QProcess実行
     RecordingCore.h/.cpp        ← 全体統合
+		RecordingCore::execute       recoding core内実行関数
+		FfmpegRunner               ？
 
 
     req.input.inputPath = "input.aac";
