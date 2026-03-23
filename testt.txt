@@ -5,26 +5,6 @@ net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
 
-[  9%] Building CXX object CMakeFiles/CaptureStream2.dir/presetrepository.cpp.o
-In file included from /home/kazuo/cs/CaptureStream2/presetrepository.h:4,
-                 from /home/kazuo/cs/CaptureStream2/presetrepository.cpp:1:
-/home/kazuo/cs/CaptureStream2/recordingrequest.h:69:17: error: field ‘extraOutputOptions’ has incomplete type ‘QStringList’ {aka ‘QList<QString>’}
-   69 |     QStringList extraOutputOptions;
-      |                 ^~~~~~~~~~~~~~~~~~
-In file included from /opt/qt6/include/QtCore/qtypeinfo.h:6,
-                 from /opt/qt6/include/QtCore/qglobal.h:46,
-                 from /opt/qt6/include/QtCore/qchar.h:7,
-                 from /opt/qt6/include/QtCore/qstring.h:14,
-                 from /opt/qt6/include/QtCore/QString:1,
-                 from /home/kazuo/cs/CaptureStream2/presetrepository.h:3,
-                 from /home/kazuo/cs/CaptureStream2/presetrepository.cpp:1:
-/opt/qt6/include/QtCore/qcontainerfwd.h:29:29: note: declaration of ‘using QStringList = class QList<QString>’ {aka ‘class QList<QString>’}
-   29 | template <typename T> class QList;
-      |                             ^~~~~
-make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:435: CMakeFiles/CaptureStream2.dir/presetrepository.cpp.o] エラー 1
-make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
-make: *** [Makefile:91: all] エラー 2
-
 
 
 
@@ -91,8 +71,9 @@ struct RecordingRequest {
 
 
     FfmpegCapabilities.h/.cpp   ← 環境検出
-		PresetRepository.h/.cpp    GUIキー変換
+    PresetRepository.h/.cpp     ← GUIキー変換
     FfmpegCommandBuilder.h/.cpp ← 引数生成
+    thumbnailoptionsbuilder.h/.cpp ← thumbnail追加
     FfmpegExecutor.h/.cpp       ← QProcess実行
     RecordingCore.h/.cpp        ← 全体統合
 
