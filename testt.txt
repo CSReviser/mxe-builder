@@ -4,6 +4,20 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+
+[  6%] Building CXX object CMakeFiles/CaptureStream2.dir/ffmpegcommandbuilder.cpp.o
+/home/kazuo/cs/CaptureStream2/ffmpegcommandbuilder.cpp: In static member function ‘static QStringList FfmpegCommandBuilder::build(const RecordingRequest&, const FfmpegCapabilities&)’:
+/home/kazuo/cs/CaptureStream2/ffmpegcommandbuilder.cpp:112:14: error: ‘const struct RecordingRequest’ has no member named ‘extraOutputOptions’
+  112 |     if (!req.extraOutputOptions.isEmpty()) {
+      |              ^~~~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/ffmpegcommandbuilder.cpp:113:21: error: ‘const struct RecordingRequest’ has no member named ‘extraOutputOptions’
+  113 |         args << req.extraOutputOptions;
+      |                     ^~~~~~~~~~~~~~~~~~
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:449: CMakeFiles/CaptureStream2.dir/ffmpegcommandbuilder.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
+
+
 FfmpegCapabilities caps;
 QStringList args = FfmpegCommandBuilder::build(req, caps);
 
