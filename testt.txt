@@ -4,6 +4,141 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+
+#pragma once
+
+#include <QObject>
+#include <QString>
+
+#include "recordingrequest.h"
+#include "ffmpegexecutor.h"
+
+class RecordingCore : public QObject
+{
+    Q_OBJECT
+
+public:
+    explicit RecordingCore(QObject* parent = nullptr);
+
+    bool execute(const RecordingRequest& req,
+                 const QString& ffmpegPath);
+
+signals:
+    void errorOccurred(const QString& message);
+    void logMessage(const QString& message);
+};
+
+#include "recordingcore.h"
+
+#include <QFileInfo>
+#include <QDir>
+
+#include "ffmpegcommandbuilder.h"
+#include "thumbnailoptionsbuilder.h"
+
+RecordingCore::RecordingCore(QObject* parent)
+    : QObject(parent)
+{
+}
+
+bool RecordingCore::execute(const RecordingRequest& req,
+                            const QString& ffmpegPath)
+{
+    // =========================
+    // ffmpeg実行ファイルチェック
+    // =========================
+    QFileInfo fileInfo(ffmpegPath);
+
+    if (!fileInfo.exists()) {
+        emit errorOccurred(ffmpegPath + QString::fromUtf8(" が見つかりません。"));
+        return false;
+    }
+
+    if (!fileInfo.isExecutable()) {
+        emit errorOccurred(ffmpegPath + QString::fromUtf8(" は実行可能ではありません。"));
+        return false;
+    }
+
+    // =========================
+    // 出力先チェック
+    // =========================
+    if (req.outputPath.isEmpty()) {
+        emit errorOccurred(QString::fromUtf8("出力パスが空です。"));
+        return false;
+    }
+
+    QFileInfo outInfo(req.outputPath);
+    QString dirPath = outInfo.absolutePath();
+    QDir dir;
+
+    if (!dir.exists(dirPath)) {
+        if (!dir.mkpath(dirPath)) {
+            emit errorOccurred(QString::fromUtf8("出力フォルダ作成失敗：") + dirPath);
+            return false;
+        }
+    }
+
+    // =========================
+    // ffmpeg引数生成
+    // =========================
+    QStringList args =
+        FfmpegCommandBuilder::build(req, {});
+
+    if (args.isEmpty()) {
+        emit errorOccurred(QString::fromUtf8("ffmpeg引数生成に失敗しました。"));
+        return false;
+    }
+
+    // =========================
+    // ログ（デバッグ用）
+    // =========================
+    emit logMessage("ffmpeg " + args.join(" "));
+
+    // =========================
+    // 実行
+    // =========================
+    FfmpegResult result =
+        FfmpegExecutor::run(ffmpegPath, args);
+
+    // =========================
+    // 起動失敗
+    // =========================
+    if (!result.started) {
+        emit errorOccurred(QString::fromUtf8("ffmpeg起動失敗"));
+        return false;
+    }
+
+    // =========================
+    // 実行失敗
+    // =========================
+    if (result.exitCode != 0) {
+
+        QString err = result.stdErr;
+
+        // 代表的な原因だけ補足（判定には使わない）
+        if (err.contains("HTTP error")) {
+            emit errorOccurred(QString::fromUtf8("HTTP取得失敗\n") + err);
+        }
+        else if (err.contains("Unable to open resource")) {
+            emit errorOccurred(QString::fromUtf8("入力リソースを開けません\n") + err);
+        }
+        else {
+            emit errorOccurred(QString::fromUtf8("ffmpeg実行失敗\n") + err);
+        }
+
+        return false;
+    }
+
+    // =========================
+    // 成功
+    // =========================
+    emit logMessage(QString::fromUtf8("録音完了：") + req.outputPath);
+
+    return true;
+}
+
+
+
 	if ( !fileInfo.exists() ) {
 		emit errorOccurred( path + QString::fromUtf8( "が見つかりません。" ) );
 		return false;
