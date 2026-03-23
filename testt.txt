@@ -59,12 +59,14 @@ struct RecordingRequest {
 
     req.input.inputPath = "input.aac";
     req.outputPath = "output.m4a";
+    req.format.copyCodec = true;
     req.format.bitrate = "128k";
     req.format.channels = 2;
     req.meta.title = "test";
     req.container = Container::M4A;
     FfmpegCapabilities caps;
 
+ffmpeg "-y -i input.aac -c:a libmp3lame -b:a 128k -ac 2 -metadata title=test output.m4a"
 ffmpeg "-y -i input.aac -c:a libmp3lame -b:a 128k -ac 2 -metadata title=test output.m4a"
 
 
