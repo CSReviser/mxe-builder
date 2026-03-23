@@ -4,6 +4,15 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+FfmpegCapabilities.h/.cpp   ← 環境検出
+PresetRepository.h/.cpp     ← GUIキー変換
+FfmpegCommandBuilder.h/.cpp ← 引数生成
+thumbnailoptionsbuilder.h/.cpp ← thumbnail追加
+FfmpegExecutor.h/.cpp       ← QProcess実行
+RecordingCore.h/.cpp        ← 全体統合
+RecordingCore::execute       recoding core内実行関数
+FfmpegRunner               ？
+
 emit messageGenerated("[ffmpeg] " + args.join(" "));
 
 class RecordingCore : public QObject
