@@ -4,7 +4,39 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
-
+	if ( !fileInfo.exists() ) {
+		emit errorOccurred( path + QString::fromUtf8( "が見つかりません。" ) );
+		return false;
+	} else if ( !fileInfo.isExecutable() ) {
+		emit errorOccurred( path + QString::fromUtf8( "は実行可能ではありません。" ) );
+		return false;
+	if ( dirInfo.exists() ) {
+		if ( !dirInfo.isDir() )
+			emit errorOccurred( QString::fromUtf8( "「" ) + dirPath + QString::fromUtf8( "」が存在しますが、フォルダではありません。" ) );
+		else if ( !dirInfo.isWritable() )
+			emit errorOccurred( QString::fromUtf8( "「" ) + dirPath + QString::fromUtf8( "」フォルダが書き込み可能ではありません。" ) );
+		else
+			result = true;
+	} else {
+		QDir dir;
+		if ( !dir.mkpath( dirPath ) )
+			emit errorOccurred( QString::fromUtf8( "「" ) + dirPath + QString::fromUtf8( "」フォルダの作成に失敗しました。" ) );
+		else
+			result = true;
+	}
+			emit errorOccurred( QString::fromUtf8( "一時ファイルの作成に失敗しました：　" ) + kouza + QString::fromUtf8( "　" ) + yyyymmdd );
+			
+			    if (!success) {
+        emit errorOccurred(QString::fromUtf8("レコーディング失敗：　%1　　%2").arg(kouza, yyyymmdd));
+            if (!process.waitForStarted(-1)) {
+        emit errorOccurred(QString::fromUtf8("ffmpeg起動エラー(%3)：　%1　　%2")
+                      .arg(kouza, yyyymmdd, processError[process.error()]));
+                      
+       emit errorOccurred(QString::fromUtf8("ffmpeg実行エラー(%3)：　%1　　%2")
+                      .arg(kouza, yyyymmdd, processError[process.error()]));
+                      
+                          QString err = process.readAllStandardError();
+    if (process.exitCode() || err.contains("HTTP error") || err.contains("Unable to open resource") || err.contains("parse_playlist error")) {
 
 
 
