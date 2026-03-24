@@ -34,6 +34,38 @@ RecordingCore.h/.cpp        ← 全体統合
 RecordingCore::execute       recoding core内実行関数
 FfmpegRunner         一時フォルダ方式実現
 
+
+FfmpegRunner runner;
+
+connect(&runner, &FfmpegRunner::messageGenerated,
+        this, &RecordingCore::messageGenerated);
+
+connect(&runner, &FfmpegRunner::progressChanged,
+        this, &RecordingCore::progressChanged);
+
+connect(&runner, &FfmpegRunner::errorOccurred,
+        this, &RecordingCore::errorOccurred);
+
+connect(&runner, &FfmpegRunner::finished,
+        this, &RecordingCore::finished);
+
+bool RecordingCore::execute(const RecordingRequest& req,
+                            const QString& ffmpegPath)
+{
+    runner.start(req, ffmpegPath);
+    return true;
+}
+
+void RecordingCore::cancel()
+{
+    runner.cancel();
+}
+
+
+
+
+
+
 emit messageGenerated("[ffmpeg] " + args.join(" "));
 
 class RecordingCore : public QObject
