@@ -65,7 +65,14 @@ void RecordingCore::cancel()
 finalPath: /home/kazuo/cs/CaptureStream2/debug/エンジョイ・シンプル・イングリッシュ/エンジョイ・シンプル・イングリッシュ_2026_03_18.m4a
 tempPath: /home/kazuo/cs/CaptureStream2/debug/エンジョイ・シンプル・イングリッシュ/エンジョイ・シンプル・イングリッシュ_2026_03_18.m4a.tmp
 
-
+[ 17%] Building CXX object CMakeFiles/CaptureStream2.dir/recordingcore.cpp.o
+/home/kazuo/cs/CaptureStream2/recordingcore.cpp: In member function ‘bool RecordingCore::execute(const RecordingRequest&, const QString&)’:
+/home/kazuo/cs/CaptureStream2/recordingcore.cpp:1687:25: error: expression cannot be used as a function
+ 1687 |     if (runner.isRunning()) {
+      |         ~~~~~~~~~~~~~~~~^~
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:337: CMakeFiles/CaptureStream2.dir/recordingcore.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
 class FfmpegRunner : public QObject {
     Q_OBJECT
     bool isRunning = false;
