@@ -1,3 +1,90 @@
+QString RecordingCore::formatName( QString format, QString kouza, QString hdate, QString file, QString nendo, QString dupnmb, bool checkIllegal ) {
+	int month = hdate.left( 2 ).toInt();
+	int year = nendo.right( 4 ).toInt();
+	int day = hdate.mid( 3, 2 ).toInt();
+
+	QDate on_air_date1(year, month, day);
+	if ( on_air_date1 <= nendo_end_date1 ) nendo = nendo1;
+	if ( on_air_date1 >= nendo_start_date1 ) nendo = nendo2;
+
+	if ( file.right( 4 ) == ".flv" )
+		file = file.left( file.length() - 4 );
+
+	QString dupnmb1 = dupnmb;
+	if ( format.contains( "%i", Qt::CaseInsensitive)) dupnmb1 = "";
+	if ( format.contains( "%_%i", Qt::CaseInsensitive)) { dupnmb.replace( "-", "_" ); format.remove( "%_" ); }
+
+	QString result;
+
+	bool percent = false;
+	for ( int i = 0; i < format.length(); i++ ) {
+		QChar qchar = format[i];
+		if ( percent ) {
+			percent = false;
+			char ascii = qchar.toLatin1();
+			if ( checkIllegal && illegal( ascii ) )
+				continue;
+			switch ( ascii ) {
+			case 'k': result += kouza; break;
+			case 'h': result += hdate.left( 6 ) + QString::fromUtf8( "放送分" ) + dupnmb1; break;
+			case 'f': result += file; break;
+			//case 'r': result += MainWindow::applicationDirPath(); break;
+			//case 'p': result += QDir::separator(); break;
+			case 'Y': result += QString::number( year ); break;
+			case 'y': result += QString::number( year ).right( 2 ); break;
+			case 'N': result += nendo + QString::fromUtf8( "年度" ); break;
+			case 'n': result += nendo.right( 2 ) + QString::fromUtf8( "年度" ); break;
+			case 'M': result += QString::number( month + 100 ).right( 2 ); break;
+			case 'm': result += QString::number( month ); break;
+			case 'D': result += QString::number( day + 100 ).right( 2 ) + dupnmb1; break;
+			case 'd': result += QString::number( day ) + dupnmb1; break;
+			case 'i': result += dupnmb; break;
+			case 'x': break;
+			case 's': break;
+			default: result += qchar; break;
+			}
+		} else {
+			if ( qchar == QChar( '%' ) )
+				percent = true;
+			else if ( checkIllegal && illegal( qchar.toLatin1() ) )
+				continue;
+			else
+				result += qchar;
+		}
+	}
+
+	return result;
+}
+
+	if ( ouyou_koza_separation_flag || runtime.flag( QString::fromUtf8( Constants::KEY_KOZA_SEPARATION )) ) {
+		if( runtime.flag( QString::fromUtf8( Constants::KEY_NAME_SPACE ))  ) {
+			if ( title.contains( "入門", Qt::CaseInsensitive) ) kouza = kouza + "【入門編】";
+			if ( title.contains( "初級", Qt::CaseInsensitive) ) kouza = kouza + "【初級編】";
+			if ( title.contains( "中級", Qt::CaseInsensitive) ) kouza = kouza + "【中級編】";
+			if ( title.contains( "応用", Qt::CaseInsensitive) ) kouza = kouza + "【応用編】";
+		} else {
+			if ( title.contains( "入門", Qt::CaseInsensitive) ) kouza = kouza + " 入門編";
+			if ( title.contains( "初級", Qt::CaseInsensitive) ) kouza = kouza + " 初級編";
+			if ( title.contains( "中級", Qt::CaseInsensitive) ) kouza = kouza + " 中級編";
+			if ( title.contains( "応用", Qt::CaseInsensitive) ) kouza = kouza + " 応用編";
+		} 
+	}
+
+	if ( fileNameFormat.contains( "%x", Qt::CaseInsensitive) ) {
+		id3tag_album.remove( "まいにち" );
+		if ( kouza.contains( "レベル１", Qt::CaseInsensitive) ) id3tag_album = "L1_" + id3tag_album.remove( "レベル１" );
+		if ( kouza.contains( "レベル２", Qt::CaseInsensitive) ) id3tag_album = "L2_" + id3tag_album.remove( "レベル２" );
+		if ( kouza.contains( "入門", Qt::CaseInsensitive) ) id3tag_album = "入門_" + id3tag_album.remove( "入門編" );
+		if ( kouza.contains( "初級", Qt::CaseInsensitive) ) id3tag_album = "初級_" + id3tag_album.remove( "初級編" );
+		if ( kouza.contains( "中級", Qt::CaseInsensitive) ) id3tag_album = "中級_" + id3tag_album.remove( "中級編" );
+		if ( kouza.contains( "応用", Qt::CaseInsensitive) ) id3tag_album = "応用_" + id3tag_album.remove( "応用編" );
+	}
+
+
+
+
+
+
 // RecordingCore.h
 #pragma once
 #include <QObject>
