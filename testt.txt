@@ -82,17 +82,16 @@ signals:
 
 
 
-[ 41%] Building CXX object CMakeFiles/CaptureStream2.dir/recordingcore.cpp.o
-/home/kazuo/cs/CaptureStream2/recordingcore.cpp:1675:6: error: redefinition of ‘void RecordingCore::cancel()’
- 1675 | void RecordingCore::cancel()
-      |      ^~~~~~~~~~~~~
-In file included from /home/kazuo/cs/CaptureStream2/recordingcore.cpp:26:
-/home/kazuo/cs/CaptureStream2/recordingcore.h:46:14: note: ‘void RecordingCore::cancel()’ previously defined here
-   46 |         void cancel() { isCanceled = true; }
-      |              ^~~~~~
-make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:337: CMakeFiles/CaptureStream2.dir/recordingcore.cpp.o] エラー 1
+[ 55%] Linking CXX executable CaptureStream2
+/usr/bin/ld: CMakeFiles/CaptureStream2.dir/CaptureStream2_autogen/mocs_compilation.cpp.o: in function `RecordingCore::qt_static_metacall(QObject*, QMetaObject::Call, int, void**)':
+mocs_compilation.cpp:(.text._ZN13RecordingCore18qt_static_metacallEP7QObjectN11QMetaObject4CallEiPPv+0xd1): undefined reference to `RecordingCore::requestCancel()'
+/usr/bin/ld: CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o: in function `MainWindow::download()':
+mainwindow.cpp:(.text._ZN10MainWindow8downloadEv+0x314): undefined reference to `RecordingCore::requestCancel()'
+collect2: error: ld returned 1 exit status
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:713: CaptureStream2] エラー 1
 make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
 make: *** [Makefile:91: all] エラー 2
+
 
 
 
