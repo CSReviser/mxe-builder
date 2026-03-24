@@ -126,27 +126,14 @@ QString tmpTemplate = QDir::tempPath() + "/" + QFileInfo(finalPath).completeBase
 
 tempFile.reset(new QTemporaryFile(tmpTemplate));
 
-5%] Building CXX object CMakeFiles/CaptureStream2.dir/CaptureStream2_autogen/mocs_compilation.cpp.o
-In file included from /usr/include/c++/11/memory:76,
-                 from /opt/qt6/include/QtCore/qobjectdefs_impl.h:15,
-                 from /opt/qt6/include/QtCore/qobjectdefs.h:13,
-                 from /opt/qt6/include/QtGui/qwindowdefs.h:8,
-                 from /opt/qt6/include/QtWidgets/qwidget.h:8,
-                 from /opt/qt6/include/QtWidgets/qdialog.h:8,
-                 from /opt/qt6/include/QtWidgets/QDialog:1,
-                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../customizedialog.h:25,
-                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/moc_customizedialog.cpp:9,
-                 from /home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/mocs_compilation.cpp:2:
-/usr/include/c++/11/bits/unique_ptr.h: In instantiation of ‘void std::default_delete<_Tp>::operator()(_Tp*) const [with _Tp = QTemporaryFile]’:
-/usr/include/c++/11/bits/unique_ptr.h:361:17:   required from ‘std::unique_ptr<_Tp, _Dp>::~unique_ptr() [with _Tp = QTemporaryFile; _Dp = std::default_delete<QTemporaryFile>]’
-/home/kazuo/cs/CaptureStream2/CaptureStream2_autogen/EWIEGA46WW/../../ffmpegrunner.h:13:7:   required from here
-/usr/include/c++/11/bits/unique_ptr.h:83:23: error: invalid application of ‘sizeof’ to incomplete type ‘QTemporaryFile’
-   83 |         static_assert(sizeof(_Tp)>0,
-      |                       ^~~~~~~~~~~
-make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:85: CMakeFiles/CaptureStream2.dir/CaptureStream2_autogen/mocs_compilation.cpp.o] エラー 1
+[ 23%] Linking CXX executable CaptureStream2
+/usr/bin/ld: CMakeFiles/CaptureStream2.dir/ffmpegrunner.cpp.o: in function `FfmpegRunner::start(RecordingRequest const&, QString const&)':
+ffmpegrunner.cpp:(.text._ZN12FfmpegRunner5startERK16RecordingRequestRK7QString+0x119): undefined reference to `FfmpegRunner::getExtension(QString const&)'
+collect2: error: ld returned 1 exit status
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:713: CaptureStream2] エラー 1
 make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
 make: *** [Makefile:91: all] エラー 2
-kazuo@kazuo-OptiPlex-3050:~/cs/CaptureStre
+
 
 
 
