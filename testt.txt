@@ -4,6 +4,27 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 
+req.input.inputPath = filem3u8aA;
+req.outputPath = dstPathA;
+req.input.httpSeekable = true;
+req.meta.title =id3tagTitleA;
+req.meta.artist = "NHK";
+req.meta.album = id3tag_album;
+req.meta.date = nendo;	
+req.meta.genre= "Speech";
+req.thumbnail.enabled = runtime.flag( QString::fromUtf8( Constants::KEY_THUMBNAIL ));
+req.thumbnail.imagePath	 = repo.thumbnail_map.value(key);
+
+inputPath 
+outputPath = save_folder + sub_folder + kouza + FILE_NAME + "." + 拡張子
+title
+album = kouza
+date = nendo
+thumbnail.imagePath
+
+
+
+
 FfmpegCapabilities.h/.cpp   ← 環境検出
 PresetRepository.h/.cpp     ← GUIキー変換
 FfmpegCommandBuilder.h/.cpp ← 引数生成
