@@ -62,7 +62,8 @@ void RecordingCore::cancel()
 }
 
 
-
+finalPath: /home/kazuo/cs/CaptureStream2/debug/エンジョイ・シンプル・イングリッシュ/エンジョイ・シンプル・イングリッシュ_2026_03_18.m4a
+tempPath: /home/kazuo/cs/CaptureStream2/debug/エンジョイ・シンプル・イングリッシュ/エンジョイ・シンプル・イングリッシュ_2026_03_18.m4a.tmp
 
 
 
