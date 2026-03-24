@@ -73,6 +73,31 @@ tempPath: /home/kazuo/cs/CaptureStream2/debug/エンジョイ・シンプル・�
 make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:337: CMakeFiles/CaptureStream2.dir/recordingcore.cpp.o] エラー 1
 make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
 make: *** [Makefile:91: all] エラー 2
+
+
+
+auto escapeMeta = [](const QString &s){
+    QString out = s;
+    out.replace("\"", "\\\""); // ダブルクオートエスケープ
+    return "\"" + out + "\"";  // 両端をダブルクオートで囲む
+};
+
+if (!req.meta.title.isEmpty()) {
+    args << "-metadata" << "title=" + escapeMeta(req.meta.title);
+}
+if (!req.meta.artist.isEmpty()) {
+    args << "-metadata" << "artist=" + escapeMeta(req.meta.artist);
+}
+if (!req.meta.album.isEmpty()) {
+    args << "-metadata" << "album=" + escapeMeta(req.meta.album);
+}
+if (!req.meta.date.isEmpty()) {
+    args << "-metadata" << "date=" + escapeMeta(req.meta.date);
+}
+if (!req.meta.genre.isEmpty()) {
+    args << "-metadata" << "genre=" + escapeMeta(req.meta.genre);
+}
+
 class FfmpegRunner : public QObject {
     Q_OBJECT
     bool isRunning = false;
