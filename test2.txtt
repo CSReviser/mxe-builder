@@ -1,3 +1,287 @@
+// RecordingCore.h
+#pragma once
+#include <QObject>
+#include <QString>
+#include <QTemporaryFile>
+#include <QProcess>
+#include <QTimer>
+
+struct RecordingRequest {
+    QString inputPath;
+    QString outputPath;
+    bool copyCodec = true;
+    QString codec;
+    QString bitrate;
+    int channels = 0;
+    QString sampleRate;
+    QString title;
+    QString artist;
+    QString album;
+    QString date;
+    QString genre;
+};
+
+class RecordingCore : public QObject {
+    Q_OBJECT
+public:
+    explicit RecordingCore(QObject* parent = nullptr);
+    bool execute(const RecordingRequest& req, const QString& ffmpegPath);
+    void requestCancel() { isCanceled = true; }
+
+signals:
+    void messageGenerated(const QString& msg);
+    void errorOccurred(const QString& msg);
+    void progressChanged(int percent);
+    void finished(bool success);
+
+private:
+    bool isCanceled = false;
+    QString outputExtension;
+};
+
+// RecordingCore.cpp
+#include "recordingcore.h"
+#include <QFileInfo>
+#include <QDir>
+#include <QFile>
+#include <QDebug>
+#include <QRegularExpression>
+
+RecordingCore::RecordingCore(QObject* parent)
+    : QObject(parent)
+{
+}
+
+bool RecordingCore::execute(const RecordingRequest& req, const QString& ffmpegPath)
+{
+    // =========================
+    // ffmpeg実行ファイルチェック
+    // =========================
+    QFileInfo fileInfo(ffmpegPath);
+    if (!fileInfo.exists()) { emit errorOccurred(ffmpegPath + " が見つかりません"); return false; }
+    if (!fileInfo.isExecutable()) { emit errorOccurred(ffmpegPath + " は実行可能ではありません"); return false; }
+
+    // =========================
+    // 出力先チェック
+    // =========================
+    if (req.outputPath.isEmpty()) { emit errorOccurred("出力パスが空です"); return false; }
+    QFileInfo outInfo(req.outputPath);
+    QString dirPath = outInfo.absolutePath();
+    QDir dir;
+    if (!dir.exists(dirPath)) {
+        if (!dir.mkpath(dirPath)) { emit errorOccurred("出力フォルダ作成失敗: " + dirPath); return false; }
+    }
+
+    // =========================
+    // 拡張子取得
+    // =========================
+    int dotIndex = req.outputPath.lastIndexOf('.');
+    if (dotIndex == -1 || dotIndex == req.outputPath.length() - 1) {
+        emit errorOccurred("出力パスに拡張子がありません");
+        return false;
+    }
+    outputExtension = req.outputPath.mid(dotIndex + 1);
+
+    // =========================
+    // 一時ファイル作成（OS依存なし、安全）
+    // =========================
+    QString tmpTemplate = QDir::temp().filePath(outInfo.fileName() + "_XXXXXX." + outputExtension);
+    QTemporaryFile tempFile(tmpTemplate);
+    if (!tempFile.open()) { emit errorOccurred("一時ファイル作成失敗"); return false; }
+
+    QString tempPath = tempFile.fileName();
+    tempFile.close(); // ffmpeg に書き込ませる
+
+    emit messageGenerated("finalPath: " + req.outputPath);
+    emit messageGenerated("tempPath: " + tempPath);
+
+    // =========================
+    // ffmpeg 引数生成
+    // =========================
+    QStringList args = FfmpegCommandBuilder::build(req, {}, tempPath);
+    if (args.isEmpty()) { emit errorOccurred("ffmpeg引数生成失敗"); return false; }
+
+    QProcess process;
+    process.setProgram(ffmpegPath);
+    process.setArguments(args);
+    process.setProcessChannelMode(QProcess::MergedChannels);
+
+    process.start();
+    if (!process.waitForStarted()) { emit errorOccurred("ffmpeg起動失敗"); return false; }
+
+    // =========================
+    // 実行ループ＋キャンセル監視
+    // =========================
+    while (process.state() != QProcess::NotRunning) {
+        process.waitForReadyRead(100);
+        QByteArray data = process.readAll();
+        if (!data.isEmpty()) emit messageGenerated(QString::fromUtf8(data));
+
+        // 簡易進捗解析（例：time=00:03:21.45）
+        QRegularExpression re("time=(\\d+):(\\d+):(\\d+\\.\\d+)");
+        auto match = re.match(QString::fromUtf8(data));
+        if (match.hasMatch()) emit progressChanged(0); // TODO: duration対応
+
+        if (isCanceled) {
+            process.terminate();
+            if (!process.waitForFinished(3000)) process.kill();
+            QFile::remove(tempPath);
+            emit errorOccurred("キャンセルされました");
+            emit finished(false);
+            return false;
+        }
+    }
+
+    // =========================
+    // 実行結果確認
+    // =========================
+    if (process.exitStatus() != QProcess::NormalExit || process.exitCode() != 0) {
+        QFile::remove(tempPath);
+        emit errorOccurred("ffmpeg実行失敗\n" + QString::fromUtf8(process.readAllStandardError()));
+        emit finished(false);
+        return false;
+    }
+
+    if (!QFile::exists(tempPath) || QFileInfo(tempPath).size() == 0) {
+        QFile::remove(tempPath);
+        emit errorOccurred("出力ファイル不正");
+        emit finished(false);
+        return false;
+    }
+
+    // =========================
+    // commit
+    // =========================
+    if (QFile::exists(req.outputPath)) QFile::remove(req.outputPath);
+    if (!QFile::rename(tempPath, req.outputPath)) {
+        QFile::remove(tempPath);
+        emit errorOccurred("ファイル確定失敗");
+        emit finished(false);
+        return false;
+    }
+
+    emit finished(true);
+    return true;
+}
+
+
+
+QStringList FfmpegCommandBuilder::build(
+    const RecordingRequest& req,
+    const FfmpegCapabilities& caps,
+    const QString& outputPath)
+{
+    QStringList args;
+
+    // 早期リターン：必須パラメータのチェック
+    if (req.input.inputPath.isEmpty() || outputPath.trimmed().isEmpty()) {
+        return {}; 
+    }
+
+    // =========================
+    // 入力
+    // =========================
+    args << "-y";
+
+    if (req.input.httpSeekable && caps.httpSeekableSupported) {
+        args << "-http_seekable" << "0";
+    }
+
+    // パスの正規化（http/httpsでない場合のみNative形式に変換）
+    QUrl url = QUrl::fromUserInput(req.input.inputPath);
+    if (url.isLocalFile()) {
+        args << "-i" << QDir::toNativeSeparators(url.toLocalFile());
+    } else {
+        // URLやストリームパスはそのまま渡す
+        args << "-i" << req.input.inputPath;
+    }
+
+    args << ThumbnailOptionsBuilder::buildInput(req);
+
+    // =========================
+    // コンテナチェック
+    // =========================
+    const bool isValidContainer = (req.container == Container::MP3 || 
+                                   req.container == Container::M4A || 
+                                   req.container == Container::AAC);
+    if (!isValidContainer) {
+        return {};
+    }
+
+    // =========================
+    // 音声エンコード
+    // =========================
+    if (req.format.copyCodec) {
+        args << "-c:a" << "copy";
+    } else {
+        // codecが空でないことを確認（念のため）
+        if (!req.format.codec.isEmpty()) {
+            args << "-c:a" << req.format.codec;
+        }
+        if (!req.format.bitrate.isEmpty()) {
+            args << "-b:a" << req.format.bitrate;
+        }
+        if (req.format.channels > 0) {
+            args << "-ac" << QString::number(req.format.channels);
+        }
+        if (!req.format.sampleRate.isEmpty()) {
+            args << "-ar" << req.format.sampleRate;
+        }
+    }
+
+    // =========================
+    // M4A/MP3 オプション
+    // =========================
+    if (req.container == Container::M4A && req.format.copyCodec) {
+        args << "-bsf:a" << "aac_adtstoasc";
+    }
+
+    if (req.container == Container::MP3) {
+        if (req.useId3v2) args << "-id3v2_version" << "3";
+        if (!req.writeXing) args << "-write_xing" << "0";
+    }
+
+    // =========================
+    // メタデータ（ここが重要！）
+    // =========================
+    // FFmpegの -metadata key=value 形式において、
+    // valueにスペースがある場合、QProcessでも極稀に解釈が揺れることがあります。
+    // その対策として、空でない場合のみ、かつ「一つの引数」として確実に渡します。
+    auto addMeta = [&](const QString& key, const QString& value) {
+        if (!value.isEmpty()) {
+            // "title=My Song" という一つのQStringとしてargsに追加
+            args << "-metadata" << QString("%1=%2").arg(key, value);
+        }
+    };
+
+    addMeta("title", req.meta.title);
+    addMeta("artist", req.meta.artist);
+    addMeta("album", req.meta.album);
+    addMeta("date", req.meta.date);
+    addMeta("genre", req.meta.genre);
+
+    // =========================
+    // サムネイル・追加オプション
+    // =========================
+    args << ThumbnailOptionsBuilder::buildOutput(req);
+
+    if (!req.extraOutputOptions.isEmpty()) {
+        args << req.extraOutputOptions;
+    }
+    
+    // =========================
+    // 出力パス
+    // =========================
+    args << QDir::toNativeSeparators(outputPath);
+
+    return args;
+}
+
+
+
+
+
+
 void MainWindow::customizeSettings() {
 	collectSpecSettings();
 	settings.save();
