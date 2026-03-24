@@ -82,14 +82,18 @@ signals:
 
 
 
-[ 26%] Building CXX object CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o
-In file included from /home/kazuo/cs/CaptureStream2/mainwindow.cpp:29:
-/home/kazuo/cs/CaptureStream2/recordingcore.h:178:9: error: ‘FfmpegRunner’ does not name a type
-  178 |         FfmpegRunner runner;
-      |         ^~~~~~~~~~~~
-make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:183: CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o] エラー 1
+[ 41%] Building CXX object CMakeFiles/CaptureStream2.dir/recordingcore.cpp.o
+/home/kazuo/cs/CaptureStream2/recordingcore.cpp:1675:6: error: redefinition of ‘void RecordingCore::cancel()’
+ 1675 | void RecordingCore::cancel()
+      |      ^~~~~~~~~~~~~
+In file included from /home/kazuo/cs/CaptureStream2/recordingcore.cpp:26:
+/home/kazuo/cs/CaptureStream2/recordingcore.h:46:14: note: ‘void RecordingCore::cancel()’ previously defined here
+   46 |         void cancel() { isCanceled = true; }
+      |              ^~~~~~
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:337: CMakeFiles/CaptureStream2.dir/recordingcore.cpp.o] エラー 1
 make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
 make: *** [Makefile:91: all] エラー 2
+
 
 
 #pragma once
