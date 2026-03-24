@@ -82,24 +82,15 @@ signals:
 
 
 
-[  6%] Building CXX object CMakeFiles/CaptureStream2.dir/recordingcore.cpp.o
-/home/kazuo/cs/CaptureStream2/recordingcore.cpp: In member function ‘bool RecordingCore::execute(const RecordingRequest&, const QString&)’:
-/home/kazuo/cs/CaptureStream2/recordingcore.cpp:1680:10: error: ‘logMessage’ was not declared in this scope
- 1680 |     emit logMessage("ffmpeg " + args.join(" "));
-      |          ^~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/recordingcore.cpp:1685:5: error: ‘FfmpegResult’ was not declared in this scope
- 1685 |     FfmpegResult result =
-      |     ^~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/recordingcore.cpp:1691:10: error: ‘result’ was not declared in this scope
- 1691 |     if (!result.started) {
-      |          ^~~~~~
-/home/kazuo/cs/CaptureStream2/recordingcore.cpp:1699:9: error: ‘result’ was not declared in this scope
- 1699 |     if (result.exitCode != 0) {
-      |         ^~~~~~
-make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:337: CMakeFiles/CaptureStream2.dir/recordingcore.cpp.o] エラー 1
+[ 26%] Building CXX object CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o
+In file included from /home/kazuo/cs/CaptureStream2/mainwindow.cpp:29:
+/home/kazuo/cs/CaptureStream2/recordingcore.h:178:9: error: ‘FfmpegRunner’ does not name a type
+  178 |         FfmpegRunner runner;
+      |         ^~~~~~~~~~~~
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:183: CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o] エラー 1
 make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
 make: *** [Makefile:91: all] エラー 2
-kazuo@kazuo-OptiPlex-3050:~/cs/CaptureStream2
+
 
 #pragma once
 
