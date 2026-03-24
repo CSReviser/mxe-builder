@@ -66,6 +66,35 @@ finalPath: /home/kazuo/cs/CaptureStream2/debug/エンジョイ・シンプル・
 tempPath: /home/kazuo/cs/CaptureStream2/debug/エンジョイ・シンプル・イングリッシュ/エンジョイ・シンプル・イングリッシュ_2026_03_18.m4a.tmp
 
 
+class FfmpegRunner : public QObject {
+    Q_OBJECT
+    bool isRunning = false;
+    QProcess process;
+public:
+    bool run(const QStringList &args) {
+        if (isRunning) {
+            emit messageGenerated("既に実行中です");
+            return false;
+        }
+        isRunning = true;
+        connect(&process, &QProcess::finished, this, [this](int code, QProcess::ExitStatus status){
+            isRunning = false;
+            emit finished(code == 0);
+        });
+        process.start("ffmpeg", args);
+        return true;
+    }
+};
+
+bool RecordingCore::execute(const RecordingRequest& req, const QString& ffmpegPath) {
+    if (runner.isRunning()) {
+        emit messageGenerated("既に実行中です");
+        return false;
+    }
+    return runner.run(args);
+}
+
+
 レコーディング中：　エンジョイ・シンプル・イングリッシュ　2026_03_18
 finalPath: /home/kazuo/cs/CaptureStream2/debug/エンジョイ・シンプル・イングリッシュ/エンジョイ・シンプル・イングリッシュ_2026_03_18.m4a
 tempPath: /home/kazuo/cs/CaptureStream2/debug/エンジョイ・シンプル・イングリッシュ/エンジョイ・シンプル・イングリッシュ_2026_03_18.m4a.tmp
