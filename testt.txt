@@ -65,14 +65,37 @@ void RecordingCore::cancel()
 finalPath: /home/kazuo/cs/CaptureStream2/debug/エンジョイ・シンプル・イングリッシュ/エンジョイ・シンプル・イングリッシュ_2026_03_18.m4a
 tempPath: /home/kazuo/cs/CaptureStream2/debug/エンジョイ・シンプル・イングリッシュ/エンジョイ・シンプル・イングリッシュ_2026_03_18.m4a.tmp
 
-[ 17%] Building CXX object CMakeFiles/CaptureStream2.dir/recordingcore.cpp.o
-/home/kazuo/cs/CaptureStream2/recordingcore.cpp: In member function ‘bool RecordingCore::execute(const RecordingRequest&, const QString&)’:
-/home/kazuo/cs/CaptureStream2/recordingcore.cpp:1687:25: error: expression cannot be used as a function
- 1687 |     if (runner.isRunning()) {
-      |         ~~~~~~~~~~~~~~~~^~
-make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:337: CMakeFiles/CaptureStream2.dir/recordingcore.cpp.o] エラー 1
+[  5%] Building CXX object CMakeFiles/CaptureStream2.dir/ffmpegrunner.cpp.o
+/home/kazuo/cs/CaptureStream2/ffmpegrunner.cpp: In member function ‘void FfmpegRunner::start(const RecordingRequest&, const QString&)’:
+/home/kazuo/cs/CaptureStream2/ffmpegrunner.cpp:45:5: error: ‘tempFile’ was not declared in this scope; did you mean ‘tmpfile’?
+   45 |     tempFile.reset(new QTemporaryFile(tmpTemplate));
+      |     ^~~~~~~~
+      |     tmpfile
+/home/kazuo/cs/CaptureStream2/ffmpegrunner.cpp: In member function ‘void FfmpegRunner::onFinished(int, QProcess::ExitStatus)’:
+/home/kazuo/cs/CaptureStream2/ffmpegrunner.cpp:126:9: error: ‘tempFile’ was not declared in this scope; did you mean ‘tmpfile’?
+  126 |         tempFile.reset(); // QTemporaryFileの破棄で自動削除
+      |         ^~~~~~~~
+      |         tmpfile
+/home/kazuo/cs/CaptureStream2/ffmpegrunner.cpp:135:9: error: ‘tempFile’ was not declared in this scope; did you mean ‘tmpfile’?
+  135 |         tempFile.reset();
+      |         ^~~~~~~~
+      |         tmpfile
+/home/kazuo/cs/CaptureStream2/ffmpegrunner.cpp:144:9: error: ‘tempFile’ was not declared in this scope; did you mean ‘tmpfile’?
+  144 |         tempFile.reset();
+      |         ^~~~~~~~
+      |         tmpfile
+/home/kazuo/cs/CaptureStream2/ffmpegrunner.cpp:157:9: error: ‘tempFile’ was not declared in this scope; did you mean ‘tmpfile’?
+  157 |         tempFile.reset();
+      |         ^~~~~~~~
+      |         tmpfile
+/home/kazuo/cs/CaptureStream2/ffmpegrunner.cpp:164:5: error: ‘tempFile’ was not declared in this scope; did you mean ‘tmpfile’?
+  164 |     tempFile.reset(); // 自動削除解除
+      |     ^~~~~~~~
+      |     tmpfile
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:491: CMakeFiles/CaptureStream2.dir/ffmpegrunner.cpp.o] エラー 1
 make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
 make: *** [Makefile:91: all] エラー 2
+
 
 
 
