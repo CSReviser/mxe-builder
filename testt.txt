@@ -110,6 +110,22 @@ private:
     std::unique_ptr<QTemporaryFile> tempFile; // 完全型になったのでOK
 };
 
+QString getExtension(const QString &filePath)
+{
+    int dotIndex = filePath.lastIndexOf('.');
+    if (dotIndex == -1 || dotIndex == filePath.length() - 1)
+        return ""; // 拡張子なし
+    return filePath.mid(dotIndex + 1); // '.'以降すべて
+}
+
+// 使用例
+QString finalPath = req.outputPath;
+QString extension = getExtension(finalPath);
+
+QString tmpTemplate = QDir::tempPath() + "/" + QFileInfo(finalPath).completeBaseName() + "_XXXXXX." + extension;
+
+tempFile.reset(new QTemporaryFile(tmpTemplate));
+
 5%] Building CXX object CMakeFiles/CaptureStream2.dir/CaptureStream2_autogen/mocs_compilation.cpp.o
 In file included from /usr/include/c++/11/memory:76,
                  from /opt/qt6/include/QtCore/qobjectdefs_impl.h:15,
