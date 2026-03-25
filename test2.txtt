@@ -1,3 +1,11 @@
+Updating d22dbe3..d2e5ad7
+error: Your local changes to the following files would be overwritten by merge:
+	recordingcore.cpp
+Please commit your changes or stash them before you merge.
+Aborting
+
+
+
 QString RecordingCore::formatName( QString format, QString kouza, QString hdate, QString file, QString nendo, QString dupnmb, bool checkIllegal ) {
 	int month = hdate.left( 2 ).toInt();
 	int year = nendo.right( 4 ).toInt();
