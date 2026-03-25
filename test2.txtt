@@ -1,3 +1,252 @@
+
+static QString normalizeExtension(const QString& ext)
+{
+    if (ext.startsWith("mp3"))
+        return "mp3";
+
+    if (ext.startsWith("m4a"))
+        return "m4a";
+
+    if (ext.startsWith("aac"))
+        return "aac";
+
+    return ext;
+}
+
+RecordingRequest req;
+
+// 🔷 extension系
+req.presetKey = runtime.audioExtension();   // 元キー
+req.extension = normalizeExtension(req.presetKey);
+
+struct RecordingRequest {
+
+    Input input;
+    Output output;
+    Meta meta;
+    Thumbnail thumbnail;
+
+    QString extension;   // 🔥 追加（mp3 / m4a）
+    QString presetKey;   // 🔥 追加（元の指定）
+};
+
+
+void RecordingCore::execute(const RecordingRequest& req)
+{
+    QFileInfo fi(req.output.fullPath);
+
+    // 🔷 スキップ判定
+    if (runtime.skipIfExists && fi.exists()) {
+        emit logInfo("Skip (exists): " + req.output.fullPath);
+        return;
+    }
+
+    // 🔷 ディレクトリ作成
+    QDir().mkpath(fi.path());
+
+    // 🔷 ffmpeg引数生成
+    QStringList args =
+        FfmpegCommandBuilder::build(req, caps);
+
+    // 🔷 上書き制御
+    if (!runtime.skipIfExists) {
+        args.prepend("-y");
+    }
+
+    // 🔷 実行
+    FfmpegExecutor::run(args);
+}
+
+
+QVector<RecordingRequest> RecordingCore::buildRequests(
+    const QVector<EpisodeInfo>& episodes,
+    const RuntimeConfig& runtime)
+{
+    QVector<RecordingRequest> requests;
+    requests.reserve(episodes.size());
+
+    for (const auto& ep : episodes) {
+
+        // 🔷 フォーマット
+        auto formatted =
+            EpisodeFormatter::format(ep, runtime);
+
+        RecordingRequest req;
+
+        // 🔷 input
+        req.input.inputPath = ep.inputUrl;
+
+        // 🔷 metadata
+        req.meta.title  = formatted.title;
+        req.meta.album  = formatted.album;
+        req.meta.artist = "NHK";
+        req.meta.date   = ep.nendo;
+
+        // 🔷 output
+        req.output.fullPath =
+            OutputPathBuilder::build(
+                runtime.pathConfig,
+                formatted.fileNameBase,
+                ep);
+
+        // 🔷 thumbnail
+        req.thumbnail.enabled = !ep.thumbnailPath.isEmpty();
+        req.thumbnail.imagePath = ep.thumbnailPath;
+
+        requests.push_back(std::move(req));
+    }
+
+    return requests;
+}
+
+
+void RecordingCore::assignDupIfNeeded(QVector<EpisodeInfo>& episodes)
+{
+    QMap<QString, QVector<EpisodeInfo*>> groups;
+
+    for (auto& ep : episodes) {
+
+        // XMLは対象外
+        if (!ep.time.isValid()) {
+            ep.dupnmb = "";
+            continue;
+        }
+
+        QString key =
+            ep.kouza + "_" + ep.date.toString("yyyyMMdd");
+
+        groups[key].push_back(&ep);
+    }
+
+    for (auto& list : groups) {
+
+        std::sort(list.begin(), list.end(),
+            [](EpisodeInfo* a, EpisodeInfo* b) {
+                return a->time < b->time;
+            });
+
+        int idx = 1;
+
+        for (auto* ep : list) {
+
+            if (list.size() == 1) {
+                ep->dupnmb = "";
+            } else {
+                ep->dupnmb = QString::number(idx);
+            }
+
+            idx++;
+        }
+    }
+}
+
+
+#include "recordingcore.h"
+#include <algorithm>
+#include <QFileInfo>
+#include <QDir>
+
+// =========================
+// エントリーポイント
+// =========================
+
+void RecordingCore::run(
+    QVector<EpisodeInfo> episodes,
+    const RuntimeConfig& runtime)
+{
+    // 🔥 ① dup付与（JSONのみ）
+    assignDupIfNeeded(episodes);
+
+    // 🔥 ② ffmpeg用データ構築
+    auto requests = buildRequests(episodes, runtime);
+
+    // 🔥 ③ 実行
+    for (const auto& req : requests) {
+        execute(req);
+    }
+}
+
+
+#pragma once
+
+#include <QVector>
+#include "episodeinfo.h"
+#include "recordingrequest.h"
+#include "episodeformatter.h"
+#include "outputpathbuilder.h"
+
+class RecordingCore
+{
+public:
+    void run(
+        QVector<EpisodeInfo> episodes,
+        const RuntimeConfig& runtime);
+
+private:
+    void assignDupIfNeeded(QVector<EpisodeInfo>& episodes);
+
+    QVector<RecordingRequest> buildRequests(
+        const QVector<EpisodeInfo>& episodes,
+        const RuntimeConfig& runtime);
+
+    void execute(const RecordingRequest& req);
+};
+
+
+QString OutputPathBuilder::buildSubDir(
+    const QString& format,
+    const EpisodeInfo& ep)
+{
+    // 🔥 XML特別処理
+    if (ep.isXml) {
+        QString dir =
+            QString::fromUtf8("[前週]/") + ep.kouza;
+
+        return sanitize(dir);
+    }
+
+    // 🔷 通常（JSON）
+    if (format.isEmpty())
+        return "";
+
+    LegacyFormatInput in;
+    in.format = format;
+    in.kouza  = ep.kouza;
+    in.hdate  = ep.date.toString("MMdd");
+    in.file   = ep.fileId;
+    in.nendo  = ep.nendo;
+    in.dupnmb = ep.dupnmb;
+    in.checkIllegal = true;
+
+    QString dir = LegacyFormatEngine::formatName(in);
+
+    return sanitize(dir);
+}
+
+
+struct EpisodeInfo {
+    QString inputUrl;
+
+    QString rawTitle;
+    QString kouza;
+
+    QDate date;
+    QTime time;
+
+    QString nendo;
+    QString fileId;
+    QString thumbnailPath;
+
+    QString dupnmb;
+
+    bool isXml = false;  // 🔥 追加
+};
+
+
+
+
+
+
 Updating d22dbe3..d2e5ad7
 error: Your local changes to the following files would be overwritten by merge:
 	recordingcore.cpp
