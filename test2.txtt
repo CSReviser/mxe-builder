@@ -1,3 +1,17 @@
+FfmpegRunRequest runReq;
+
+runReq.program = "ffmpeg";
+runReq.args = builder.build(req);
+
+runReq.finalPath = finalPath;
+runReq.saveFolder = saveFolder;
+runReq.extension = extension;
+
+runner.run(runReq);
+
+
+
+
 
 QString finalPath =
     QDir(save_folder).filePath(
