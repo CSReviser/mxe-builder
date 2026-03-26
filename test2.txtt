@@ -1,3 +1,25 @@
+
+void RecordingCore::run()
+{
+    auto result = m_runner.run(plan);
+
+    if (result.canceled || m_cancelRequested) {
+        emit messageGenerated("キャンセルされました");
+    }
+
+    emit finished();
+}
+
+void RecordingCore::cancel()
+{
+    m_cancelRequested = true;
+    m_runner.requestCancel();   // ★ これだけで効く
+}
+
+recordingCore->cancel();
+
+
+
 [  5%] Building CXX object CMakeFiles/CaptureStream2.dir/recordingcore.cpp.o
 /home/kazuo/cs/CaptureStream2/recordingcore.cpp: In member function ‘bool RecordingCore::captureStream_json(QString, QString, QString, QString, QString, QString, QString, bool)’:
 /home/kazuo/cs/CaptureStream2/recordingcore.cpp:1133:9: error: ‘runner’ was not declared in this scope; did you mean ‘runReq’?
