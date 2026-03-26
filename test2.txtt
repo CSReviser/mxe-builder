@@ -1,3 +1,13 @@
+if (m_cancelRequested) {
+    qDebug() << "runner cancel detected";  // ★追加
+
+    proc.kill();
+    proc.waitForFinished();
+    QFile::remove(tempPath);
+    return -2;
+}
+
+
 cancel called
 before requestCancel
 after requestCancel
