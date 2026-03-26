@@ -26,6 +26,17 @@ runner.run(
 );
 
 
+FfmpegRunRequest r;
+
+r.program = "ffmpeg";
+r.args = builder.build(req);
+
+r.finalPath = finalPath;
+r.saveFolder = saveFolder;
+r.extension = extension;
+
+auto result = runner.run(r);
+
 void RecordingCore::execute(const RecordingRequest& req)
 {
     // ===== ① コマンド生成 =====
