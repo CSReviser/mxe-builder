@@ -1,3 +1,39 @@
+
+void RecordingCore::execute(const RecordingRequest& req)
+{
+    // ===== ① コマンド生成 =====
+    FfmpegCommandBuilder builder;
+
+    QString program = "ffmpeg";
+    QStringList args = builder.build(req);
+
+    // ===== ② Runner =====
+    FfmpegRunner runner;
+
+    runner.setLogCallback([this](const QString& msg) {
+        emit messageGenerated(msg); // or CLI出力
+    });
+
+    // ===== ③ 実行 =====
+    auto result = runner.run(
+        program,
+        args,
+        3,          // retry
+        1000,       // base delay
+        30000       // idle timeout
+    );
+
+    // ===== ④ 結果処理 =====
+    if (result.success) {
+        emit finished(true);
+    } else if (result.canceled) {
+        emit canceled();
+    } else {
+        emit finished(false);
+    }
+}
+
+
  13%] Linking CXX executable CaptureStream2
 /usr/bin/ld: CMakeFiles/CaptureStream2.dir/recordingcore.cpp.o: in function `RecordingCore::captureStream_json(QString, QString, QString, QString, QString, QString, QString, bool)':
 recordingcore.cpp:(.text._ZN13RecordingCore18captureStream_jsonE7QStringS0_S0_S0_S0_S0_S0_b+0xd4e): undefined reference to `LegacyFormatEngine::formatName(LegacyFormatInput const&)'
