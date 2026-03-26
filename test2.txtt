@@ -1,3 +1,24 @@
+[ 15%] Building CXX object CMakeFiles/CaptureStream2.dir/recordingcore.cpp.o
+/home/kazuo/cs/CaptureStream2/recordingcore.cpp: In member function ‘virtual void RecordingCore::run()’:
+/home/kazuo/cs/CaptureStream2/recordingcore.cpp:1536:23: error: ‘m_runner’ was not declared in this scope
+ 1536 |         auto result = m_runner.run(plan);
+      |                       ^~~~~~~~
+/home/kazuo/cs/CaptureStream2/recordingcore.cpp:1536:36: error: ‘plan’ was not declared in this scope
+ 1536 |         auto result = m_runner.run(plan);
+      |                                    ^~~~
+/home/kazuo/cs/CaptureStream2/recordingcore.cpp:1538:32: error: ‘m_cancelRequested’ was not declared in this scope
+ 1538 |         if (result.canceled || m_cancelRequested) {
+      |                                ^~~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/recordingcore.cpp: In member function ‘void RecordingCore::cancel()’:
+/home/kazuo/cs/CaptureStream2/recordingcore.cpp:1551:5: error: ‘m_cancelRequested’ was not declared in this scope
+ 1551 |     m_cancelRequested = true;
+      |     ^~~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/recordingcore.cpp:1553:5: error: ‘m_runner’ was not declared in this scope
+ 1553 |     m_runner.requestCancel();   // ★ これだけで効く
+      |     ^~~~~~~~
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:337: CMakeFiles/CaptureStream2.dir/recordingcore.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
 
 void RecordingCore::run()
 {
