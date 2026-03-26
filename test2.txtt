@@ -1,4 +1,31 @@
 
+QString finalPath =
+    QDir(save_folder).filePath(
+        file_name + "." + extension
+    );
+
+auto result = runner.run(
+    "ffmpeg",
+    args,
+    3,
+    1000,
+    30000,
+    finalPath,
+    extension
+);
+
+runner.run(
+    program,
+    args,
+    retry,
+    delay,
+    timeout,
+    finalPath,   // 主
+    saveFolder,  // 補助（temp用）
+    extension    // 補助（temp用）
+);
+
+
 void RecordingCore::execute(const RecordingRequest& req)
 {
     // ===== ① コマンド生成 =====
