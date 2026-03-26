@@ -16,19 +16,7 @@ void RecordingCore::cancel()
     m_runner.requestCancel();   // ★ これだけで効く
 }
 
-recordingCore->cancel();
 
-
-
-[  5%] Building CXX object CMakeFiles/CaptureStream2.dir/recordingcore.cpp.o
-/home/kazuo/cs/CaptureStream2/recordingcore.cpp: In member function ‘bool RecordingCore::captureStream_json(QString, QString, QString, QString, QString, QString, QString, bool)’:
-/home/kazuo/cs/CaptureStream2/recordingcore.cpp:1133:9: error: ‘runner’ was not declared in this scope; did you mean ‘runReq’?
- 1133 |         runner.run(runReq);
-      |         ^~~~~~
-      |         runReq
-make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:337: CMakeFiles/CaptureStream2.dir/recordingcore.cpp.o] エラー 1
-make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
-make: *** [Makefile:91: all] エラー 2
 
 
 
