@@ -1,3 +1,18 @@
+cancel called
+before requestCancel
+after requestCancel
+cancel called
+before requestCancel
+after requestCancel
+QObject: Cannot create children for a parent that is in a different thread.
+(Parent is QNetworkAccessManager(0x5acbc898c148), parent's thread is QThread(0x5acbc8936080), current thread is RecordingCore(0x5acbc898c000)
+
+
+
+
+
+
+
 void RecordingCore::cancel()
 {
     qDebug() << "cancel called";
