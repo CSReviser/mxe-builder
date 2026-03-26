@@ -1,3 +1,18 @@
+void RecordingCore::cancel()
+{
+    qDebug() << "cancel called";
+
+    m_cancelRequested = true;
+
+    qDebug() << "before requestCancel";
+
+    m_runner.requestCancel();
+
+    qDebug() << "after requestCancel";
+}
+
+
+
 #include "FfmpegRunner.h"
 #include <atomic>
 
