@@ -1,3 +1,18 @@
+/home/kazuo/cs/CaptureStream2/recordingcore.cpp:1127:23: error: ‘builder’ was not declared in this scope
+ 1127 |         runReq.args = builder.build(req);
+      |                       ^~~~~~~
+/home/kazuo/cs/CaptureStream2/recordingcore.cpp:1133:9: error: ‘runner’ was not declared in this scope; did you mean ‘runReq’?
+ 1133 |         runner.run(runReq);
+      |         ^~~~~~
+      |         runReq
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:337: CMakeFiles/CaptureStream2.dir/recordingcore.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
+
+
+
+
+
 FfmpegRunRequest runReq;
 
 runReq.program = "ffmpeg";
@@ -85,15 +100,6 @@ void RecordingCore::execute(const RecordingRequest& req)
     }
 }
 
-
- 13%] Linking CXX executable CaptureStream2
-/usr/bin/ld: CMakeFiles/CaptureStream2.dir/recordingcore.cpp.o: in function `RecordingCore::captureStream_json(QString, QString, QString, QString, QString, QString, QString, bool)':
-recordingcore.cpp:(.text._ZN13RecordingCore18captureStream_jsonE7QStringS0_S0_S0_S0_S0_S0_b+0xd4e): undefined reference to `LegacyFormatEngine::formatName(LegacyFormatInput const&)'
-/usr/bin/ld: recordingcore.cpp:(.text._ZN13RecordingCore18captureStream_jsonE7QStringS0_S0_S0_S0_S0_S0_b+0xd80): undefined reference to `LegacyFormatEngine::formatName(LegacyFormatInput const&)'
-collect2: error: ld returned 1 exit status
-make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:745: CaptureStream2] エラー 1
-make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
-make: *** [Makefile:91: all] エラー 2
 
 static QString normalizeExtension(const QString& ext)
 {
