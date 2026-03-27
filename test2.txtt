@@ -1,16 +1,28 @@
- 15%] Building CXX object CMakeFiles/CaptureStream2.dir/recordingcore.cpp.o
-/home/kazuo/cs/CaptureStream2/recordingcore.cpp: In member function ‘void RecordingCore::cancel()’:
-/home/kazuo/cs/CaptureStream2/recordingcore.cpp:1490:13: error: could not convert ‘((RecordingCore*)this)->RecordingCore::m_runner’ from ‘FfmpegRunner’ to ‘bool’
- 1490 |         if (m_runner) {
-      |             ^~~~~~~~
-      |             |
-      |             FfmpegRunner
-/home/kazuo/cs/CaptureStream2/recordingcore.cpp:1491:17: error: base operand of ‘->’ has non-pointer type ‘FfmpegRunner’
- 1491 |         m_runner->cancel();   // ← ここが重要
-      |                 ^~
-make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:337: CMakeFiles/CaptureStream2.dir/recordingcore.cpp.o] エラー 1
+  7%] Building CXX object CMakeFiles/CaptureStream2.dir/ffmpegrunner.cpp.o
+In file included from /home/kazuo/cs/CaptureStream2/ffmpegrunner.cpp:1:
+/home/kazuo/cs/CaptureStream2/ffmpegrunner.h:51:5: error: ‘QProcess’ does not name a type
+   51 |     QProcess* m_process = nullptr;
+      |     ^~~~~~~~
+/home/kazuo/cs/CaptureStream2/ffmpegrunner.cpp: In member function ‘FfmpegRunner::Result FfmpegRunner::run(const FfmpegRunRequest&)’:
+/home/kazuo/cs/CaptureStream2/ffmpegrunner.cpp:29:5: error: ‘m_process’ was not declared in this scope; did you mean ‘QProcess’?
+   29 |     m_process = new QProcess;
+      |     ^~~~~~~~~
+      |     QProcess
+/home/kazuo/cs/CaptureStream2/ffmpegrunner.cpp:31:32: error: ‘args’ was not declared in this scope
+   31 |     m_process->start("ffmpeg", args);
+      |                                ^~~~
+/home/kazuo/cs/CaptureStream2/ffmpegrunner.cpp:92:12: error: type ‘<type error>’ argument given to ‘delete’, expected pointer
+   92 |     delete m_process;
+      |            ^~~~~~~~~
+/home/kazuo/cs/CaptureStream2/ffmpegrunner.cpp: In member function ‘void FfmpegRunner::cancel()’:
+/home/kazuo/cs/CaptureStream2/ffmpegrunner.cpp:223:9: error: ‘m_process’ was not declared in this scope; did you mean ‘QProcess’?
+  223 |     if (m_process) {
+      |         ^~~~~~~~~
+      |         QProcess
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:491: CMakeFiles/CaptureStream2.dir/ffmpegrunner.cpp.o] エラー 1
 make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
 make: *** [Makefile:91: all] エラー 2
+
 
 
 class FfmpegRunner {
