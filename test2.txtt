@@ -1,3 +1,50 @@
+class FfmpegRunner {
+public:
+    void run(const QStringList& args);
+    void cancel();  // ← 追加
+private:
+    QProcess* m_process = nullptr;
+};
+
+void FfmpegRunner::run(const QStringList& args)
+{
+    m_process = new QProcess;
+
+    m_process->start("ffmpeg", args);
+    m_process->waitForFinished(-1);
+
+    delete m_process;
+    m_process = nullptr;
+}
+
+void FfmpegRunner::cancel()
+{
+    if (m_process) {
+        m_process->kill();   // or terminate()
+    }
+}
+
+void RecordingCore::cancel()
+{
+    m_cancelRequested = true;
+
+    if (m_runner) {
+        m_runner->cancel();   // ← ここが重要
+    }
+}
+
+for (...) {
+
+    if (m_cancelRequested)
+        break;
+
+    m_runner->run(args);
+
+    if (m_cancelRequested)
+        break;
+}
+
+
 bool includeOutputPath = false;
 
 build(req, caps, outputPath)
