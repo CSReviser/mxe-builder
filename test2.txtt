@@ -1,3 +1,25 @@
+bool includeOutputPath = false;
+
+build(req, caps, outputPath)
+
+QStringList build(
+    const RecordingRequest& req,
+    const FfmpegCapabilities& caps,
+    const QString& outputPath = QString() // optional化
+);
+
+if (req.includeOutputPath) {
+    if (outputPath.isEmpty()) return {};
+    args << QDir::toNativeSeparators(outputPath);
+}
+
+args << tempPath; // Builderが入れてない前提で使う
+
+const QString& outputPath = QString()
+
+
+
+
 if (m_cancelRequested) {
     qDebug() << "runner cancel detected";  // ★追加
 
