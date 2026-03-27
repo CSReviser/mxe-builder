@@ -1,3 +1,29 @@
+static QString buildCommandString(const QString& program, const QStringList& args)
+{
+    QStringList escaped;
+
+    for (const QString& arg : args) {
+        // スペース対策
+        if (arg.contains(' ') || arg.contains('"')) {
+            QString a = arg;
+            a.replace("\"", "\\\"");
+            escaped << "\"" + a + "\"";
+        } else {
+            escaped << arg;
+        }
+    }
+
+    return program + " " + escaped.join(" ");
+}
+
+QString cmd = buildCommandString(plan.program, args);
+
+if (m_logCallback) {
+    m_logCallback("[ffmpeg cmd] " + cmd);
+}
+
+
+
 QProcess proc;
 proc.setProcessChannelMode(QProcess::MergedChannels);
 proc.start(plan.program, args);
