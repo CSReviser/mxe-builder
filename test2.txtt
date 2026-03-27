@@ -1,3 +1,71 @@
+QProcess proc;
+proc.setProcessChannelMode(QProcess::MergedChannels);
+proc.start(plan.program, args);
+
+void FfmpegRunner::requestCancel()
+{
+    m_cancelRequested = true;
+}
+
+
+if (m_cancelRequested) {
+    proc.terminate();
+
+    if (!proc.waitForFinished(1000)) {
+        proc.kill();
+        proc.waitForFinished();
+    }
+
+    removeFileForce(tempPath);   // ★ 必須
+    return -2;
+}
+
+if (exitCode == 0) {
+    ...
+} else {
+    QFile::remove(tempPath);   // ❌ 1回だけ
+}
+
+if (exitCode == 0) {
+    if (!safeReplace(tempPath, plan.finalPath)) {
+        outLog += "\n[replace failed]";
+        removeFileForce(tempPath);   // ★ 追加
+        return -4;
+    }
+    return 0;
+}
+
+removeFileForce(tempPath);   // ★ 修正
+return exitCode;
+
+if (lastActivity.elapsed() > plan.idleTimeoutMs) {
+    proc.kill();
+    proc.waitForFinished();
+
+    removeFileForce(tempPath);   // ★ 既存removeを置換
+    outLog += "\n[timeout]";
+    return -3;
+}
+
+bool removeFileForce(const QString& path)
+{
+    for (int i = 0; i < 10; ++i) {
+
+        if (!QFile::exists(path))
+            return true;
+
+        if (QFile::remove(path))
+            return true;
+
+        QThread::msleep(50);
+    }
+
+    return false;
+}
+
+
+
+
   7%] Building CXX object CMakeFiles/CaptureStream2.dir/ffmpegrunner.cpp.o
 In file included from /home/kazuo/cs/CaptureStream2/ffmpegrunner.cpp:1:
 /home/kazuo/cs/CaptureStream2/ffmpegrunner.h:51:5: error: ‘QProcess’ does not name a type
