@@ -1,3 +1,114 @@
+// constants.h
+namespace constants {
+    extern const char* LEVEL_NYUMON;
+    extern const char* LEVEL_SHOKYU;
+    extern const char* LEVEL_CHUKYU;
+    extern const char* LEVEL_OYO;
+}
+
+// constants.cpp
+namespace constants {
+    const char* LEVEL_NYUMON = "入門編";
+    const char* LEVEL_SHOKYU = "初級編";
+    const char* LEVEL_CHUKYU = "中級編";
+    const char* LEVEL_OYO    = "応用編";
+}
+
+static QStringList levelWords()
+{
+    return {
+        QString::fromUtf8(constants::LEVEL_NYUMON),
+        QString::fromUtf8(constants::LEVEL_SHOKYU),
+        QString::fromUtf8(constants::LEVEL_CHUKYU),
+        QString::fromUtf8(constants::LEVEL_OYO)
+    };
+}
+
+QString buildLevelRegexPattern()
+{
+    QStringList escaped;
+
+    for (const QString &w : levelWords()) {
+        escaped << QRegularExpression::escape(w);
+    }
+
+    // (入門編|初級編|中級編|応用編) の形を動的生成
+    return "(" + escaped.join("|") + ")";
+}
+
+QString extractLevel(const QString &rawTitle)
+{
+    QString title = rawTitle;
+    title.replace(QChar(0x3000), QChar(' '));
+    title = title.simplified();
+
+    const QString levelPattern = buildLevelRegexPattern();
+
+    // まいにち○○語 の直後だけを対象にする
+    QString pattern = QStringLiteral(R"(まいにち[^\s]+語\s*)") + levelPattern;
+
+    QRegularExpression re(pattern, QRegularExpression::CaseInsensitiveOption);
+    QRegularExpressionMatch m = re.match(title);
+
+    if (!m.hasMatch())
+        return QString();
+
+    return m.captured(1);  // 最初の XX編
+}
+
+QString level = extractLevel(title);
+
+if (!level.isEmpty()) {
+    if (MainWindow::name_space_flag)
+        kouza += "【" + level + "】";
+    else
+        kouza += " " + level;
+}
+
+QString normalizeSpaces(const QString &raw)
+{
+    QString s = raw;
+    s.replace(QChar(0x3000), QChar(' ')); // 全角→半角
+    return s.simplified();                // 連続空白を1つに
+}
+
+QString extractLevel(const QString &rawTitle)
+{
+    const QString title = normalizeSpaces(rawTitle);
+
+    // 将来「上級編」などが増えてもここに追加するだけ
+    static const QStringList levelWords = {
+        "入門編",
+        "初級編",
+        "中級編",
+        "応用編"
+    };
+
+    // 「まいにち○○語 XX編」だけを対象にする正規表現
+    // 例: まいにちイタリア語 初級編
+    QRegularExpression re(
+        R"(まいにち[^\s]+語\s*(入門編|初級編|中級編|応用編))",
+        QRegularExpression::CaseInsensitiveOption
+    );
+
+    QRegularExpressionMatch m = re.match(title);
+    if (!m.hasMatch())
+        return QString();
+
+    const QString level = m.captured(1);
+
+    // 念のため語彙チェック（将来の拡張に備える）
+    if (levelWords.contains(level, Qt::CaseInsensitive))
+        return level;
+
+    return QString();
+}
+
+
+
+
+
+
 static QString buildCommandString(const QString& program, const QStringList& args)
 {
     QStringList escaped;
