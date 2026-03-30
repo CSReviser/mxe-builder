@@ -1,3 +1,69 @@
+// constants.h
+namespace constants {
+    extern const char* LEVEL_WORDS[];
+    extern const int LEVEL_WORDS_COUNT;
+}
+
+// constants.cpp
+namespace constants {
+    const char* LEVEL_WORDS[] = {
+        "入門",
+        "初級",
+        "中級",
+        "応用"
+    };
+    const int LEVEL_WORDS_COUNT = sizeof(LEVEL_WORDS) / sizeof(LEVEL_WORDS[0]);
+}
+
+static QStringList levelWordsBase()
+{
+    QStringList list;
+    for (int i = 0; i < constants::LEVEL_WORDS_COUNT; ++i) {
+        list << QString::fromUtf8(constants::LEVEL_WORDS[i]);
+    }
+    return list;
+}
+
+static QStringList levelWordsWithHen()
+{
+    QStringList list;
+    for (const QString &w : levelWordsBase()) {
+        list << (w + "編");
+    }
+    return list;
+}
+
+QString extractLevel(const QString &rawTitle)
+{
+    QString title = rawTitle;
+    title.replace(QChar(0x3000), QChar(' '));
+    title = title.simplified();
+
+    QString pattern = QStringLiteral(R"(まいにち[^\s]+語\s*)") + buildLevelRegexPattern();
+    QRegularExpression re(pattern, QRegularExpression::CaseInsensitiveOption);
+
+    QRegularExpressionMatch m = re.match(title);
+    if (!m.hasMatch())
+        return QString();
+
+    return m.captured(1);
+}
+
+QString id3tag_album = kouza;
+
+for (const QString &base : levelWordsBase()) {
+    QString withHen = base + "編";
+
+    if (kouza.contains(base, Qt::CaseInsensitive)) {
+        id3tag_album = base + "_" + id3tag_album.remove("【" + withHen + "】");
+        break;
+    }
+}
+
+
+
+
+
 static QStringList levelWordsBase()
 {
     return {
