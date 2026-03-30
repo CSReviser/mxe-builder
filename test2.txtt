@@ -1,3 +1,56 @@
+static const QStringList& levelWordsBase()
+{
+    static QStringList list;
+    if (list.isEmpty()) {
+        for (int i = 0; i < Constants::LEVEL_WORDS_COUNT; ++i) {
+            list << QString::fromUtf8(Constants::LEVEL_WORDS[i]);
+        }
+    }
+    return list;
+}
+
+static const QStringList& levelWordsWithHen()
+{
+    static QStringList list;
+    if (list.isEmpty()) {
+        for (const QString &w : levelWordsBase()) {
+            list << (w + "編");
+        }
+    }
+    return list;
+}
+
+QString extractLevelFromTitle(const QString &rawTitle, const QString &rawKouza)
+{
+    QString title = rawTitle;
+    title.replace(QChar(0x3000), QChar(' '));
+    title = title.simplified();
+
+    QString kouza = rawKouza;
+    kouza.replace(QChar(0x3000), QChar(' '));
+    kouza = kouza.simplified();
+
+    if (!title.startsWith(kouza))
+        return QString();
+
+    int pos = kouza.length();
+    while (pos < title.length() && title[pos].isSpace())
+        ++pos;
+
+    // ここで levelWordsWithHen() を使う
+    for (const QString &withHen : levelWordsWithHen()) {
+        if (title.mid(pos).startsWith(withHen, Qt::CaseInsensitive)) {
+            return withHen;
+        }
+    }
+
+    return QString();
+}
+
+
+
+
+
 QString extractLevelFromTitle(const QString &rawTitle, const QString &rawKouza)
 {
     auto normalize = [](QString s) {
