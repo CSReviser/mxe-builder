@@ -1,3 +1,71 @@
+QString buildId3TagAlbum(const QString &kouza, const QString &fileNameFormat)
+{
+    QString album = kouza;
+
+    // %x が無いなら何もせず返す
+    if (!fileNameFormat.contains("%x", Qt::CaseInsensitive))
+        return album;
+
+    // 「まいにち」を除去
+    album.remove("まいにち", Qt::CaseInsensitive);
+
+    //
+    // レベル1 / レベル2 の処理（従来仕様）
+    //
+    struct LevelNumRule {
+        QString key;      // kouza に含まれる語
+        QString prefix;   // 出力の接頭辞
+        QString remove;   // 除去対象
+    };
+
+    static const QVector<LevelNumRule> numRules = {
+        { "レベル1", "L1_", "【レベル1】" },
+        { "レベル2", "L2_", "【レベル2】" },
+        { "レベル１", "L1_", "レベル１" },
+        { "レベル２", "L2_", "レベル２" }
+    };
+
+    for (const auto &r : numRules) {
+        if (kouza.contains(r.key, Qt::CaseInsensitive)) {
+            album = r.prefix + album.remove(r.remove, Qt::CaseInsensitive);
+            break;
+        }
+    }
+
+    //
+    // 「入門／初級／中級／応用」などのレベル語（constants 連動）
+    //
+    const QStringList &bases   = levelWordsBase();      // 入門, 初級, 中級, 応用
+    const QStringList &withHen = levelWordsWithHen();   // 入門編, 初級編, 中級編, 応用編
+
+    for (int i = 0; i < bases.size(); ++i) {
+
+        const QString &base = bases[i];     // 例: "初級"
+        const QString &hen  = withHen[i];   // 例: "初級編"
+
+        if (kouza.contains(base, Qt::CaseInsensitive)) {
+
+            // 例: "初級_" + album.remove("【初級編】")
+            album = base + "_" + album.remove("【" + hen + "】", Qt::CaseInsensitive);
+
+            // 念のため "初級編" 単体も除去
+            album.remove(hen, Qt::CaseInsensitive);
+
+            break;
+        }
+    }
+
+    return album;
+}
+
+
+if (m_cancelRequested || isCanceled)
+    return false;
+
+QString id3tag_album = buildId3TagAlbum(kouza, fileNameFormat);
+
+
+
 static const QStringList& levelWordsBase()
 {
     static QStringList list;
