@@ -23,6 +23,13 @@ static const QStringList& levelWordsWithHen()
 if (m_cancelRequested || isCanceled)
     return false;
 
+QString id3tag_album = buildId3TagAlbum(kouza, fileNameFormat);
+
+
+
+if (m_cancelRequested || isCanceled)
+    return false;
+
 QString id3tag_album = kouza;
 
 if (fileNameFormat.contains("%x", Qt::CaseInsensitive)) {
