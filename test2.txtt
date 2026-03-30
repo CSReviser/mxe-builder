@@ -1,3 +1,85 @@
+QString extractLevelFromTitle(const QString &rawTitle, const QString &rawKouza)
+{
+    // 空白正規化
+    QString title = rawTitle;
+    title.replace(QChar(0x3000), QChar(' '));
+    title = title.simplified();
+
+    QString kouza = rawKouza;
+    kouza.replace(QChar(0x3000), QChar(' '));
+    kouza = kouza.simplified();
+
+    // title が kouza で始まっている前提
+    if (!title.startsWith(kouza))
+        return QString();
+
+    // kouza の直後からレベル語を探す
+    int pos = kouza.length();
+
+    // kouza の直後の空白をスキップ
+    while (pos < title.length() && title[pos].isSpace())
+        ++pos;
+
+    // constants の「編なし」レベル語を QString に変換
+    QStringList baseWords;
+    for (int i = 0; i < constants::LEVEL_WORDS_COUNT; ++i) {
+        baseWords << QString::fromUtf8(constants::LEVEL_WORDS[i]);
+    }
+
+    // kouza 直後に「入門編／初級編／中級編／応用編…」があるかを見る
+    for (const QString &base : baseWords) {
+        QString withHen = base + "編";
+
+        if (title.mid(pos).startsWith(withHen, Qt::CaseInsensitive)) {
+            return withHen;   // 最初に見つかった XX編 だけ返す
+        }
+    }
+
+    return QString();
+}
+
+QString level = extractLevelFromTitle(title, kouza);
+
+if (!level.isEmpty()) {
+    if (MainWindow::name_space_flag)
+        kouza += "【" + level + "】";
+    else
+        kouza += " " + level;
+}
+
+
+
+
+
+QString extractLevel(const QString &rawTitle)
+{
+    // 空白正規化
+    QString title = rawTitle;
+    title.replace(QChar(0x3000), QChar(' '));
+    title = title.simplified();
+
+    // constants の編なし語を QStringList に変換
+    QStringList baseWords;
+    for (int i = 0; i < constants::LEVEL_WORDS_COUNT; ++i) {
+        baseWords << QString::fromUtf8(constants::LEVEL_WORDS[i]);
+    }
+
+    // title の先頭から「XX編」を探す
+    for (const QString &base : baseWords) {
+        QString withHen = base + "編";
+
+        // title の中で最初に出てくる「XX編」を採用
+        int pos = title.indexOf(withHen, 0, Qt::CaseInsensitive);
+        if (pos >= 0) {
+            return withHen;   // 最初に見つかった XX編 を返す
+        }
+    }
+
+    return QString();
+}
+
+
+
 // constants.h
 namespace constants {
     extern const char* LEVEL_WORDS[];
