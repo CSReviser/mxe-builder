@@ -1,5 +1,47 @@
 QString extractLevelFromTitle(const QString &rawTitle, const QString &rawKouza)
 {
+    auto normalize = [](QString s) {
+        s.replace(QChar(0x3000), QChar(' '));
+        return s.simplified();
+    };
+
+    QString title = normalize(rawTitle);
+    QString kouza = normalize(rawKouza);
+
+    if (!title.startsWith(kouza, Qt::CaseInsensitive))
+        return QString();
+
+    int pos = kouza.length();
+
+    while (pos < title.length() && title[pos].isSpace())
+        ++pos;
+
+    QString rest = title.mid(pos);
+
+    static QStringList baseWords;
+    if (baseWords.isEmpty()) {
+        for (int i = 0; i < constants::LEVEL_WORDS_COUNT; ++i) {
+            baseWords << QString::fromUtf8(constants::LEVEL_WORDS[i]);
+        }
+    }
+
+    for (const QString &base : baseWords) {
+        QString withHen = base + "編";
+
+        if (rest.contains(withHen, Qt::CaseInsensitive))
+            return withHen;
+
+        if (rest.contains(base, Qt::CaseInsensitive))
+            return base;
+    }
+
+    return QString();
+}
+
+
+
+QString extractLevelFromTitle(const QString &rawTitle, const QString &rawKouza)
+{
     // 空白正規化
     QString title = rawTitle;
     title.replace(QChar(0x3000), QChar(' '));
