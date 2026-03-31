@@ -1,19 +1,29 @@
-[  5%] Building CXX object CMakeFiles/CaptureStream2.dir/recordingcore.cpp.o
-/home/kazuo/cs/CaptureStream2/recordingcore.cpp: In member function ‘bool RecordingCore::captureStream(QString, QString, QString, QString, QString, QString, QString, bool)’:
-/home/kazuo/cs/CaptureStream2/recordingcore.cpp:937:68: error: cannot call member function ‘QString LegacyFormatEngine::buildId3TagAlbum(const QString&, const QString&)’ without object
-  937 |         QString id3tag_album = LegacyFormatEngine::buildId3TagAlbum(kouza, fileNameFormat);
-      |                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/recordingcore.cpp: In member function ‘bool RecordingCore::captureStream_json(QString, QString, QString, QString, QString, QString, QString, bool)’:
-/home/kazuo/cs/CaptureStream2/recordingcore.cpp:1098:74: error: cannot call member function ‘QString LegacyFormatEngine::extractLevelFromTitle(const QString&, const QString&)’ without object
- 1098 |            QString level = LegacyFormatEngine::extractLevelFromTitle(title, kouza);
-      |                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~
+json
+program_title	"ラジオ英会話 ハートでつかめ!英語の極意 (239)"
+onair_date	"3月26日(木)午前6:45放送"
+closed_at	"2026年4月2日(木)午前7:00配信終了"
+stream_url	"https://vod-stream.nhk.jp/radioondemand/r/PMMJ59J6N2/s/stream_PMMJ59J6N2_7aa9fc578605536b02c82a55b916a19c/index.m3u8"
+aa_contents_id	"[radio]vod;ラジオ英会話 ハートでつかめ!英語の極意 (239);r2,130;2026032674231;2026-03-26T06:45:00+09:00_2026-03-26T07:00:03+09:00"
 
-/home/kazuo/cs/CaptureStream2/recordingcore.cpp:1201:68: error: cannot call member function ‘QString LegacyFormatEngine::buildId3TagAlbum(const QString&, const QString&)’ without object
- 1201 |         QString id3tag_album = LegacyFormatEngine::buildId3TagAlbum(kouza, fileNameFormat);
-      |                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
-make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:323: CMakeFiles/CaptureStream2.dir/recordingcore.cpp.o] エラー 1
-make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
-make: *** [Makefile:91: all] エラー 2
+xml
+<?xml version='1.0' encoding='utf-8'?>
+<musicdata>
+  <music title="ラジオ英会話" hdate="3月23日放送分" kouza="ラジオ英会話" code="4235332" file="25-er-4235-332" dir="r" nendo="2025" pgcode="F0" />
+  <music title="ラジオ英会話" hdate="3月24日放送分" kouza="ラジオ英会話" code="4235333" file="25-er-4235-333" dir="r" nendo="2025" pgcode="F0" />
+  <music title="ラジオ英会話" hdate="3月25日放送分" kouza="ラジオ英会話" code="4235334" file="25-er-4235-334" dir="r" nendo="2025" pgcode="F0" />
+  <music title="ラジオ英会話" hdate="3月26日放送分" kouza="ラジオ英会話" code="4235335" file="25-er-4235-335" dir="r" nendo="2025" pgcode="F0" />
+  <music title="ラジオ英会話" hdate="3月27日放送分" kouza="ラジオ英会話" code="4235336" file="25-er-4235-336" dir="r" nendo="2025" pgcode="F0" />
+</musicdata>
+
+
+放送日　「MM月DD日放送分」
+放送日(1~31)
+2桁の放送日(01~31)
+放送月(1~12)
+2桁の放送月(01~12)
+4桁の放送年（年度ではなく暦年）
+2桁の放送年（年度ではなく暦年）
+年度
 
 
 QString extractLevelFromTitle(const QString &rawTitle, const QString &rawKouza)
