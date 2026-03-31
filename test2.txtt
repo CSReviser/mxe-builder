@@ -1,3 +1,39 @@
+QString extractLevelFromTitle(const QString &rawTitle, const QString &rawKouza)
+{
+    QString title = rawTitle;
+    title.replace(QChar(0x3000), QChar(' '));
+    title = title.simplified();
+
+    QString kouza = rawKouza;
+    kouza.replace(QChar(0x3000), QChar(' '));
+    kouza = kouza.simplified();
+
+    // ★ 二重登録対策：rawKouza に base word が含まれていたら抽出しない
+    for (const QString &base : levelWordsBase()) {
+        if (kouza.contains(base, Qt::CaseInsensitive)) {
+            return QString();  // ← 追加しない
+        }
+    }
+
+    if (!title.startsWith(kouza))
+        return QString();
+
+    int pos = kouza.length();
+    while (pos < title.length() && title[pos].isSpace())
+        ++pos;
+
+    for (const QString &withHen : levelWordsWithHen()) {
+        if (title.mid(pos).startsWith(withHen, Qt::CaseInsensitive)) {
+            return withHen;
+        }
+    }
+
+    return QString();
+}
+
+
+
+
 QMenuBar {
     background-color: #333333; /* 好きな背景色 */
     color: #ffffff;           /* 好きな文字色 */
