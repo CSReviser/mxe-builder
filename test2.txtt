@@ -1,3 +1,21 @@
+[  5%] Building CXX object CMakeFiles/CaptureStream2.dir/recordingcore.cpp.o
+/home/kazuo/cs/CaptureStream2/recordingcore.cpp: In member function ‘bool RecordingCore::captureStream(QString, QString, QString, QString, QString, QString, QString, bool)’:
+/home/kazuo/cs/CaptureStream2/recordingcore.cpp:937:68: error: cannot call member function ‘QString LegacyFormatEngine::buildId3TagAlbum(const QString&, const QString&)’ without object
+  937 |         QString id3tag_album = LegacyFormatEngine::buildId3TagAlbum(kouza, fileNameFormat);
+      |                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/recordingcore.cpp: In member function ‘bool RecordingCore::captureStream_json(QString, QString, QString, QString, QString, QString, QString, bool)’:
+/home/kazuo/cs/CaptureStream2/recordingcore.cpp:1098:74: error: cannot call member function ‘QString LegacyFormatEngine::extractLevelFromTitle(const QString&, const QString&)’ without object
+ 1098 |            QString level = LegacyFormatEngine::extractLevelFromTitle(title, kouza);
+      |                            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~
+
+/home/kazuo/cs/CaptureStream2/recordingcore.cpp:1201:68: error: cannot call member function ‘QString LegacyFormatEngine::buildId3TagAlbum(const QString&, const QString&)’ without object
+ 1201 |         QString id3tag_album = LegacyFormatEngine::buildId3TagAlbum(kouza, fileNameFormat);
+      |                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:323: CMakeFiles/CaptureStream2.dir/recordingcore.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
+
+
 QString extractLevelFromTitle(const QString &rawTitle, const QString &rawKouza)
 {
     QString title = rawTitle;
