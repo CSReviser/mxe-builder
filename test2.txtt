@@ -1,3 +1,18 @@
+[ 67%] Building CXX object CMakeFiles/CaptureStream2.dir/ffmpegcapabilities.cpp.o
+/home/kazuo/cs/CaptureStream2/ffmpegcapabilities.cpp:139:9: error: no declaration matches ‘QString FfmpegCapabilities::detectFfmpegFolder()’
+  139 | QString FfmpegCapabilities::detectFfmpegFolder()
+      |         ^~~~~~~~~~~~~~~~~~
+/home/kazuo/cs/CaptureStream2/ffmpegcapabilities.cpp:139:9: note: no functions named ‘QString FfmpegCapabilities::detectFfmpegFolder()’
+In file included from /home/kazuo/cs/CaptureStream2/ffmpegcapabilities.cpp:24:
+/home/kazuo/cs/CaptureStream2/ffmpegcapabilities.h:28:8: note: ‘struct FfmpegCapabilities’ defined here
+   28 | struct FfmpegCapabilities {
+      |        ^~~~~~~~~~~~~~~~~~
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:407: CMakeFiles/CaptureStream2.dir/ffmpegcapabilities.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
+
+
+
 json
 program_title	"ラジオ英会話 ハートでつかめ!英語の極意 (239)"
 onair_date	"3月26日(木)午前6:45放送"
