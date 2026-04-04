@@ -1,4 +1,24 @@
 
+QApplication a(argc, argv);
+
+// 1. Settings読み込み
+Settings::instance().load();
+
+// 2. スタイル適用（最重要ポイント）
+#ifdef Q_OS_MAC
+if (Settings::instance().useFusionStyle()) {
+    a.setStyle("Fusion");
+}
+#endif
+
+// 3. フォント設定
+QFont font = QFontDatabase::systemFont(QFontDatabase::GeneralFont);
+a.setFont(font);
+
+// 4. MainWindow生成
+MainWindow w(Settings::instance());
+
+
 /* カスタマイズダイアログ全体の設定 */
 CustomizeDialogClass {
     background-color: #2b2b2b; /* メインウィンドウとは別の色 */
