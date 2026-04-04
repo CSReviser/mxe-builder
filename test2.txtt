@@ -1,4 +1,5 @@
-
+QApplication::setStyle("Fusion");
+QApplication::setPalette(QApplication::style()->standardPalette());
 QApplication a(argc, argv);
 
 // 1. Settings読み込み
