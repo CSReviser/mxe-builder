@@ -1,3 +1,6 @@
+QString key = input.trimmed();
+
+
 CaptureStream2  -nogui -e "mp3-128k-S"
 >>> Entering CLI Mode <<<
 --- MATCH TEST ---
