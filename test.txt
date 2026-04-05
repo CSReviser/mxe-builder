@@ -1,3 +1,33 @@
+/CaptureStream2'  -nogui -e "mp3-40k-S"
+>>> Entering CLI Mode <<<
+--- [DEBUG] CommandLineParser Results ---
+Program IDs: QList()
+Flag detected: "nogui"
+--- [DEBUG] RuntimeConfig State Check (via OPTION_TABLE) ---
+"Flag   [-nogui] (nogui): ON"
+"Option [-t] (customized_title1): (Not Set)"
+"Option [-f] (customized_file_name1): (Not Set)"
+"Option [-o] (save_folder): (Not Set)"
+"Option [-e] (audio_extension): (Not Set)"
+"Flag   [-z] (last_week): OFF"
+"Flag   [-b] (both_weeks): OFF"
+"Flag   [-s] (koza_separation_on): OFF"
+"Flag   [-s0] (koza_separation_off): OFF"
+"Flag   [-s1] (koza_separation_on): OFF"
+"Flag   [-m] (MESSAGE_ON): OFF"
+"Flag   [-a0] (thumbnail_off): OFF"
+"Flag   [-a1] (thumbnail_on): OFF"
+"Flag   [-a] (thumbnail_on): OFF"
+"Flag   [-h] (HELP): OFF"
+"Flag   [-help] (HELP): OFF"
+core.start()
+QObject: Cannot create children for a parent that is in a different thread.
+(Parent is QNetworkAccessManager(0x7ffe71a2f5e8), parent's thread is QThread(0x62166a28a480), current thread is RecordingCore(0x7ffe71a2f4a0)
+core.wait()
+
+
+
+
 /* メニューバー（画面上部またはウィンドウ上部のバー） */
 QMenuBar {
     background-color: gainsboro;
