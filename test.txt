@@ -1,3 +1,68 @@
+CaptureStream2'  -nogui -e "mp3-40k-S"
+>>> Entering CLI Mode <<<
+--- MATCH TEST ---
+TABLE: [ "-t" ]
+TABLE: [ "-o" ]
+TABLE: [ "-nogui" ]
+TABLE: [ "-z" ]
+TABLE: [ "-e" ]
+TABLE: [ "-a1" ]
+TABLE: [ "-s1" ]
+TABLE: [ "-h" ]
+TABLE: [ "-a0" ]
+TABLE: [ "-s0" ]
+TABLE: [ "-help" ]
+TABLE: [ "-f" ]
+TABLE: [ "-a" ]
+TABLE: [ "-b" ]
+TABLE: [ "-s" ]
+TABLE: [ "-m" ]
+INPUT: [ "-nogui" ]
+--- MATCH TEST ---
+TABLE: [ "-t" ]
+TABLE: [ "-o" ]
+TABLE: [ "-nogui" ]
+TABLE: [ "-z" ]
+TABLE: [ "-e" ]
+TABLE: [ "-a1" ]
+TABLE: [ "-s1" ]
+TABLE: [ "-h" ]
+TABLE: [ "-a0" ]
+TABLE: [ "-s0" ]
+TABLE: [ "-help" ]
+TABLE: [ "-f" ]
+TABLE: [ "-a" ]
+TABLE: [ "-b" ]
+TABLE: [ "-s" ]
+TABLE: [ "-m" ]
+INPUT: [ "-e" ]
+--- [DEBUG] CommandLineParser Results ---
+Program IDs: QList()
+Flag detected: "nogui"
+--- [DEBUG] RuntimeConfig State Check (via OPTION_TABLE) ---
+"Flag   [-nogui] (nogui): ON"
+"Option [-t] (customized_title1): (Not Set)"
+"Option [-f] (customized_file_name1): (Not Set)"
+"Option [-o] (save_folder): (Not Set)"
+"Option [-e] (audio_extension): (Not Set)"
+"Flag   [-z] (last_week): OFF"
+"Flag   [-b] (both_weeks): OFF"
+"Flag   [-s] (koza_separation_on): OFF"
+"Flag   [-s0] (koza_separation_off): OFF"
+"Flag   [-s1] (koza_separation_on): OFF"
+"Flag   [-m] (MESSAGE_ON): OFF"
+"Flag   [-a0] (thumbnail_off): OFF"
+"Flag   [-a1] (thumbnail_on): OFF"
+"Flag   [-a] (thumbnail_on): OFF"
+"Flag   [-h] (HELP): OFF"
+"Flag   [-help] (HELP): OFF"
+core.start()
+QObject: Cannot create children for a parent that is in a different thread.
+(Parent is QNetworkAccessManager(0x7ffeb7b7d628), parent's thread is QThread(0x589ce448f480), current thread is RecordingCore(0x7ffeb7b7d4e0)
+core.wait()
+
+
+
 for (int i = 1; i < argc; ++i) {
     QString arg = QString::fromLocal8Bit(argv[i]);
 
