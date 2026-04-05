@@ -1,3 +1,10 @@
+QString currentVal = opts.optionValues.value(internalKey);
+
+qDebug() << "--- VALUE CHECK ---";
+for (auto it = opts.optionValues.begin(); it != opts.optionValues.end(); ++it) {
+    qDebug() << it.key() << "=" << it.value();
+}
+
 CaptureStream2'  -nogui -e "mp3-40k-S"
 >>> Entering CLI Mode <<<
 --- MATCH TEST ---
