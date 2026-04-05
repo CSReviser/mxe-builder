@@ -1,3 +1,12 @@
+struct CliOptions {
+    QVector<QString> programIds;
+    QHash<QString, QString> valueOptions;
+    QSet<QString> enabledFlags;
+    bool nogui = false;
+};
+
+
+
 CaptureStream2  -nogui -e "mp3-128k-S" -a
 >>> Entering CLI Mode <<<
 --- MATCH TEST ---
