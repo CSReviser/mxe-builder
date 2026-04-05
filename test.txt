@@ -1,3 +1,16 @@
+for (int i = 1; i < argc; ++i) {
+    QString arg = QString::fromLocal8Bit(argv[i]);
+
+    // ★ ここに入れる ★
+    qDebug() << "--- MATCH TEST ---";
+    for (auto it = optionMap().begin(); it != optionMap().end(); ++it) {
+        qDebug() << "TABLE:" << "[" << it.key() << "]";
+    }
+    qDebug() << "INPUT:" << "[" << arg << "]";
+
+    const Constants::CliOption* opt = optionMap().value(arg, nullptr);
+
+
 /CaptureStream2'  -nogui -e "mp3-40k-S"
 >>> Entering CLI Mode <<<
 --- [DEBUG] CommandLineParser Results ---
