@@ -1,3 +1,120 @@
+CaptureStream2  -nogui -e "mp3-128k-S" -a
+>>> Entering CLI Mode <<<
+--- MATCH TEST ---
+TABLE: [ "-s1" ]
+TABLE: [ "-f" ]
+TABLE: [ "-z" ]
+TABLE: [ "-o" ]
+TABLE: [ "-s" ]
+TABLE: [ "-help" ]
+TABLE: [ "-m" ]
+TABLE: [ "-t" ]
+TABLE: [ "-h" ]
+TABLE: [ "-e" ]
+TABLE: [ "-b" ]
+TABLE: [ "-a" ]
+TABLE: [ "-nogui" ]
+TABLE: [ "-a0" ]
+TABLE: [ "-s0" ]
+TABLE: [ "-a1" ]
+INPUT: [ "-nogui" ]
+--- MATCH TEST ---
+TABLE: [ "-s1" ]
+TABLE: [ "-f" ]
+TABLE: [ "-z" ]
+TABLE: [ "-o" ]
+TABLE: [ "-s" ]
+TABLE: [ "-help" ]
+TABLE: [ "-m" ]
+TABLE: [ "-t" ]
+TABLE: [ "-h" ]
+TABLE: [ "-e" ]
+TABLE: [ "-b" ]
+TABLE: [ "-a" ]
+TABLE: [ "-nogui" ]
+TABLE: [ "-a0" ]
+TABLE: [ "-s0" ]
+TABLE: [ "-a1" ]
+INPUT: [ "-e" ]
+--- MATCH TEST ---
+TABLE: [ "-s1" ]
+TABLE: [ "-f" ]
+TABLE: [ "-z" ]
+TABLE: [ "-o" ]
+TABLE: [ "-s" ]
+TABLE: [ "-help" ]
+TABLE: [ "-m" ]
+TABLE: [ "-t" ]
+TABLE: [ "-h" ]
+TABLE: [ "-e" ]
+TABLE: [ "-b" ]
+TABLE: [ "-a" ]
+TABLE: [ "-nogui" ]
+TABLE: [ "-a0" ]
+TABLE: [ "-s0" ]
+TABLE: [ "-a1" ]
+INPUT: [ "-a" ]
+--- [DEBUG] CommandLineParser Results ---
+Program IDs: QList()
+Flag detected: "thumbnail_on"
+Flag detected: "nogui"
+--- [DEBUG] RuntimeConfig State Check (via OPTION_TABLE) ---
+--- VALUE CHECK ---
+"audio_extension" = "mp3-128k-S"
+"Flag   [-nogui] (nogui): ON"
+--- VALUE CHECK ---
+"audio_extension" = "mp3-128k-S"
+"Option [-t] (customized_title1): (Not Set)"
+--- VALUE CHECK ---
+"audio_extension" = "mp3-128k-S"
+"Option [-f] (customized_file_name1): (Not Set)"
+--- VALUE CHECK ---
+"audio_extension" = "mp3-128k-S"
+"Option [-o] (save_folder): (Not Set)"
+--- VALUE CHECK ---
+"audio_extension" = "mp3-128k-S"
+"Option [-e] (audio_extension): mp3-128k-S"
+--- VALUE CHECK ---
+"audio_extension" = "mp3-128k-S"
+"Flag   [-z] (last_week): OFF"
+--- VALUE CHECK ---
+"audio_extension" = "mp3-128k-S"
+"Flag   [-b] (both_weeks): OFF"
+--- VALUE CHECK ---
+"audio_extension" = "mp3-128k-S"
+"Flag   [-s] (koza_separation_on): OFF"
+--- VALUE CHECK ---
+"audio_extension" = "mp3-128k-S"
+"Flag   [-s0] (koza_separation_off): OFF"
+--- VALUE CHECK ---
+"audio_extension" = "mp3-128k-S"
+"Flag   [-s1] (koza_separation_on): OFF"
+--- VALUE CHECK ---
+"audio_extension" = "mp3-128k-S"
+"Flag   [-m] (MESSAGE_ON): OFF"
+--- VALUE CHECK ---
+"audio_extension" = "mp3-128k-S"
+"Flag   [-a0] (thumbnail_off): OFF"
+--- VALUE CHECK ---
+"audio_extension" = "mp3-128k-S"
+"Flag   [-a1] (thumbnail_on): OFF"
+--- VALUE CHECK ---
+"audio_extension" = "mp3-128k-S"
+"Flag   [-a] (thumbnail_on): OFF"
+--- VALUE CHECK ---
+"audio_extension" = "mp3-128k-S"
+"Flag   [-h] (HELP): OFF"
+--- VALUE CHECK ---
+"audio_extension" = "mp3-128k-S"
+"Flag   [-help] (HELP): OFF"
+core.start()
+QObject: Cannot create children for a parent that is in a different thread.
+(Parent is QNetworkAccessManager(0x7fff76bd66f8), parent's thread is QThread(0x5e4ee15a4480), current thread is RecordingCore(0x7fff76bd65b0)
+core.wait()
+
+
+
+
 QString currentVal = opts.optionValues.value(internalKey);
 
 qDebug() << "--- VALUE CHECK ---";
