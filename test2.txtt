@@ -1,3 +1,67 @@
+bool CLIController::validateAudioExtension(CliOptions& opts) const
+{
+    static const QString KEY = QString::fromUtf8(Constants::KEY_AudioExtension);
+
+    if (!opts.valueOptions.contains(KEY)) {
+        return true; // -e 未指定なら何もしない
+    }
+
+    QString userExt = opts.valueOptions.value(KEY).trimmed();
+    if (userExt.isEmpty()) {
+        qWarning() << "Empty audio extension for -e option.";
+        opts.valueOptions.remove(KEY);
+        return false;
+    }
+
+    // 大文字小文字を無視して比較
+    QString lowerUser = userExt.toLower();
+
+    QString matched;
+    for (int i = 0; i < AUDIO_EXT_COUNT; ++i) {
+        QString tableExt = QString::fromUtf8(AUDIO_EXT_LIST[i]);
+        if (tableExt.compare(lowerUser, Qt::CaseInsensitive) == 0) {
+            matched = tableExt; // 正規値
+            break;
+        }
+    }
+
+    if (matched.isEmpty()) {
+        qWarning() << "Unknown audio extension:" << userExt
+                   << " → -e オプションは無効化されます。";
+        opts.valueOptions.remove(KEY);
+        return false;
+    }
+
+    // 正規化された値に置き換え
+    opts.valueOptions[KEY] = matched;
+    return true;
+}
+
+bool CLIController::validateOptions(CliOptions& opts) const
+{
+    // 1. 値オプションの空チェック
+    for (auto it = opts.valueOptions.constBegin(); it != opts.valueOptions.constEnd(); ++it) {
+        if (it.value().isEmpty()) {
+            qWarning() << "Empty value for option key:" << it.key();
+            return false;
+        }
+    }
+
+    // 2. -e の検証（大文字小文字無視・正規化・不一致なら削除）
+    validateAudioExtension(opts);
+
+    // 3. 番組IDの妥当性
+    if (!validateProgramIds(opts)) {
+        return false;
+    }
+
+    return true;
+}
+
+
+
+
+
 if (opts.valueOptions.contains("-e")) {
     QString value = opts.valueOptions.value("-e");
 
