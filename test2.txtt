@@ -1,3 +1,15 @@
+if (opts.valueOptions.contains("-e")) {
+    QString value = opts.valueOptions.value("-e");
+
+    auto normalized = CliUtil::normalizeAudioExtension(value);
+
+    if (normalized) {
+        req.audioExtension = *normalized;
+    } else {
+        // 未指定扱い（何もしない）
+    }
+}
+
 [  8%] Building CXX object CMakeFiles/CaptureStream2.dir/clicontroller.cpp.o
 /home/kazuo/cs/CaptureStream2/clicontroller.cpp: In member function ‘int CLIController::run()’:
 /home/kazuo/cs/CaptureStream2/clicontroller.cpp:111:56: error: ‘value’ was not declared in this scope
