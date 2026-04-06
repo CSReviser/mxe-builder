@@ -1,3 +1,47 @@
+bool CLIController::validateAudioExtension(CliOptions& opts, const Settings& settings)
+{
+    const QString KEY = QString::fromUtf8(Constants::KEY_AudioExtension);
+
+    // -e 未指定 → Settings の値を使う
+    if (!opts.valueOptions.contains(KEY)) {
+        opts.valueOptions[KEY] = settings.audioExtension;
+        return true;
+    }
+
+    QString userExt = opts.valueOptions.value(KEY).trimmed();
+    if (userExt.isEmpty()) {
+        qWarning() << "Empty audio extension for -e option.";
+        opts.valueOptions[KEY] = settings.audioExtension;
+        return false;
+    }
+
+    QString lowerUser = userExt.toLower();
+    QString matched;
+
+    for (int i = 0; i < Constants::AUDIO_EXT_COUNT; ++i) {
+        QString tableExt = QString::fromUtf8(Constants::AUDIO_EXT_LIST[i]);
+        if (tableExt.compare(lowerUser, Qt::CaseInsensitive) == 0) {
+            matched = tableExt;
+            break;
+        }
+    }
+
+    if (matched.isEmpty()) {
+        qWarning() << "Unknown audio extension:" << userExt
+                   << " → Settings の値を使用します。";
+
+        // ★ 不正 → Settings の値で上書き
+        opts.valueOptions[KEY] = settings.audioExtension;
+        return false;
+    }
+
+    // ★ 正しい → 正規値で上書き
+    opts.valueOptions[KEY] = matched;
+    return true;
+}
+
+
+
 [  8%] Building CXX object CMakeFiles/CaptureStream2.dir/clicontroller.cpp.o
 /home/kazuo/cs/CaptureStream2/clicontroller.cpp: In member function ‘bool CLIController::validateOptions(const CliOptions&)’:
 /home/kazuo/cs/CaptureStream2/clicontroller.cpp:225:32: error: binding reference of type ‘CliOptions&’ to ‘const CliOptions’ discards qualifiers
