@@ -1,3 +1,31 @@
+QComboBox {
+    /* これを追加するとMac独自のポップアップ形式ではなくなり、QSSが効くようになります */
+    combobox-popup: 0;
+    
+    background-color: white;
+    color: black;
+}
+
+/* リスト全体の基本色 */
+#popup_ext QAbstractItemView {
+    background-color: darkslategray;
+    color: white;
+}
+
+/* 選択（ハイライト）された時の色を明示 */
+#popup_ext QAbstractItemView:item:selected {
+    background-color: #4A90E2; /* 選択中の青色など */
+    color: white;
+}
+
+/* マウスが乗っている時（hover）も指定するとより確実 */
+#popup_ext QAbstractItemView:item:hover {
+    background-color: #4A90E2;
+    color: white;
+}
+
+
+
 [  5%] Building CXX object CMakeFiles/CaptureStream2.dir/clicontroller.cpp.o
 /home/kazuo/cs/CaptureStream2/clicontroller.cpp: In member function ‘bool CLIController::validateAudioExtension(CliOptions&)’:
 /home/kazuo/cs/CaptureStream2/clicontroller.cpp:313:34: error: ‘settings’ was not declared in this scope; did you mean ‘Settings’?
