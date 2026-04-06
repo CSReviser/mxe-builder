@@ -1,3 +1,34 @@
+/* QComboBox 本体 */
+QComboBox {
+    background-color: transparent;   /* または希望の色 */
+    color: #ffffff;                  /* 文字色（ダークモード想定） */
+    border: 1px solid #555555;
+    padding: 4px;
+}
+
+/* ポップアップメニュー全体（これが重要！） */
+QComboBox QAbstractItemView {
+    background-color: transparent;     /* または親の背景に合わせたい色 */
+    color: #ffffff;                    /* 通常の項目文字色 */
+    border: 1px solid #666666;
+    selection-background-color: #3a3a3a;   /* 選択時の背景（ダークモード向け） */
+    selection-color: #ffffff;              /* 選択時の文字色 */
+}
+
+/* 項目ごとのスタイル（必要に応じて） */
+QComboBox QAbstractItemView::item {
+    padding: 6px 8px;
+    background-color: transparent;
+}
+
+/* 選択中の項目（ホバー含む） */
+QComboBox QAbstractItemView::item:selected,
+QComboBox QAbstractItemView::item:hover {
+    background-color: #505050;   /* 好みの濃いグレーなどに調整 */
+    color: #ffffff;
+}
+
+
 QComboBox {
     /* これを追加するとMac独自のポップアップ形式ではなくなり、QSSが効くようになります */
     combobox-popup: 0;
