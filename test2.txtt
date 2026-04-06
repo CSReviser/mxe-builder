@@ -1,12 +1,5 @@
-[  5%] Building CXX object CMakeFiles/CaptureStream2.dir/clicontroller.cpp.o
-/home/kazuo/cs/CaptureStream2/clicontroller.cpp: In member function ‘bool CLIController::validateOptions(const CliOptions&) const’:
-/home/kazuo/cs/CaptureStream2/clicontroller.cpp:225:31: error: passing ‘const CLIController’ as ‘this’ argument discards qualifiers [-fpermissive]
-  225 |         validateAudioExtension(opts);
-      |         ~~~~~~~~~~~~~~~~~~~~~~^~~~~~
-In file included from /home/kazuo/cs/CaptureStream2/clicontroller.cpp:24:
-/home/kazuo/cs/CaptureStream2/clicontroller.h:44:10: note:   in call to ‘bool CLIController::validateAudioExtension(CliOptions&)’
-   44 |     bool validateAudioExtension(CliOptions& opts);
-      |          ^~~~~~~~~~~~~~~~~~~~~~
+[  8%] Building CXX object CMakeFiles/CaptureStream2.dir/clicontroller.cpp.o
+/home/kazuo/cs/CaptureStream2/clicontroller.cpp: In member function ‘bool CLIController::validateOptions(const CliOptions&)’:
 /home/kazuo/cs/CaptureStream2/clicontroller.cpp:225:32: error: binding reference of type ‘CliOptions&’ to ‘const CliOptions’ discards qualifiers
   225 |         validateAudioExtension(opts);
       |                                ^~~~
@@ -14,20 +7,10 @@ In file included from /home/kazuo/cs/CaptureStream2/clicontroller.cpp:24:
 /home/kazuo/cs/CaptureStream2/clicontroller.h:44:45: note:   initializing argument 1 of ‘bool CLIController::validateAudioExtension(CliOptions&)’
    44 |     bool validateAudioExtension(CliOptions& opts);
       |                                 ~~~~~~~~~~~~^~~~
-/home/kazuo/cs/CaptureStream2/clicontroller.cpp: At global scope:
-/home/kazuo/cs/CaptureStream2/clicontroller.cpp:302:6: error: no declaration matches ‘bool CLIController::validateAudioExtension(CliOptions&) const’
-  302 | bool CLIController::validateAudioExtension(CliOptions& opts) const
-      |      ^~~~~~~~~~~~~
-In file included from /home/kazuo/cs/CaptureStream2/clicontroller.cpp:24:
-/home/kazuo/cs/CaptureStream2/clicontroller.h:44:10: note: candidate is: ‘bool CLIController::validateAudioExtension(CliOptions&)’
-   44 |     bool validateAudioExtension(CliOptions& opts);
-      |          ^~~~~~~~~~~~~~~~~~~~~~
-/home/kazuo/cs/CaptureStream2/clicontroller.h:29:7: note: ‘class CLIController’ defined here
-   29 | class CLIController {
-      |       ^~~~~~~~~~~~~
 make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:295: CMakeFiles/CaptureStream2.dir/clicontroller.cpp.o] エラー 1
 make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
 make: *** [Makefile:91: all] エラー 2
+
 
 
 
