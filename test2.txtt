@@ -1,3 +1,32 @@
+QString Settings::iniFilePath()
+{
+#ifdef Q_OS_LINUX
+    // AppImage の場合、applicationDirPath() は squashfs を指すため使えない
+    // 実行ファイルの実体パスを /proc/self/exe から取得する
+    char exePath[PATH_MAX] = {0};
+    ssize_t len = readlink("/proc/self/exe", exePath, sizeof(exePath) - 1);
+
+    QString dir;
+    if (len > 0) {
+        QString realExe = QString::fromLocal8Bit(exePath);
+        QFileInfo fi(realExe);
+        dir = fi.absolutePath();  // AppImage の外側の実行ファイルパス
+    } else {
+        // fallback（通常の Linux 実行時）
+        dir = QCoreApplication::applicationDirPath();
+    }
+
+    return dir + QDir::separator() + Constants::IniFileName;
+
+#else
+    // macOS / Windows は従来通り
+    QString dir = QCoreApplication::applicationDirPath();
+    return dir + QDir::separator() + Constants::IniFileName;
+#endif
+}
+
+
+
 /* QComboBox 本体 */
 QComboBox {
     background-color: transparent;   /* または希望の色 */
