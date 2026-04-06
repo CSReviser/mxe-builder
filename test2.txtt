@@ -1,3 +1,59 @@
+#include <QString>
+#include <QHash>
+#include <optional>
+
+namespace CliUtil {
+
+static const QHash<QString, QString>& audioExtMap()
+{
+    static const QHash<QString, QString> map = []{
+        QHash<QString, QString> m;
+        const int count = sizeof(AUDIO_EXT_LIST) / sizeof(AUDIO_EXT_LIST[0]);
+        for (int i = 0; i < count; ++i) {
+            QString ext = QString::fromUtf8(AUDIO_EXT_LIST[i]);
+            m.insert(ext.toLower(), ext);
+        }
+        return m;
+    }();
+    return map;
+}
+
+// 無効値はエラーにしない → 未指定扱い（nullopt）
+std::optional<QString> normalizeAudioExtension(const QString& input)
+{
+    QString key = input.trimmed().toLower();
+
+    if (key.isEmpty()) {
+        return std::nullopt; // 未指定
+    }
+
+    const auto& map = audioExtMap();
+
+    auto it = map.find(key);
+    if (it != map.end()) {
+        return it.value(); // 正規化済み値
+    }
+
+    // ★ 無効値 → 未指定扱い（エラーにしない）
+    return std::nullopt;
+}
+
+} // namespace
+
+
+auto normalized = CliUtil::normalizeAudioExtension(value);
+
+if (normalized) {
+    req.audioExtension = *normalized;
+} else {
+    // ★ 何もしない → -e 未指定と同じ扱い
+}
+
+
+
+
+
+
 QApplication::setStyle("Fusion");
 QApplication::setPalette(QApplication::style()->standardPalette());
 QApplication a(argc, argv);
