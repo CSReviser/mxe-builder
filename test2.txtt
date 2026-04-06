@@ -50,7 +50,9 @@ if (normalized) {
 }
 
 
-
+if (!normalized && !value.trimmed().isEmpty()) {
+    qWarning() << "Invalid audio extension ignored:" << value;
+}
 
 
 
