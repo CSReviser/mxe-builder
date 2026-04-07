@@ -1,3 +1,18 @@
+Trying simple merge with origin
+Simple merge did not work, trying automatic merge.
+Auto-merging .github/workflows/c-cpp.yml
+ERROR: content conflict in .github/workflows/c-cpp.yml
+Auto-merging mainwindow.cpp
+ERROR: content conflict in mainwindow.cpp
+Auto-merging utility.cpp
+ERROR: content conflict in utility.cpp
+fatal: merge program failed
+Automated merge did not work.
+Should not be doing an octopus.
+Merge with strategy octopus failed.
+
+
+
 QString Settings::iniFilePath()
 {
 #if defined(Q_OS_WIN)
