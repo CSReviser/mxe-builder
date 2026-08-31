@@ -1,3 +1,49 @@
+// --- ここから放送時間順ソート処理 ---
+const int count = kouzaList.size();
+if (count > 1 && contentsIdList.size() == count) {
+    struct TempItem {
+        QString file, kouza, title, hdate, year, cid;
+    };
+    QList<TempItem> tempPacks;
+    tempPacks.reserve(count);
+
+    for (int i = 0; i < count; ++i) {
+        tempPacks.append({
+            fileList.value(i),
+            kouzaList.value(i),
+            file_titleList.value(i),
+            hdateList.value(i),
+            yearList.value(i),
+            contentsIdList.value(i)
+        });
+    }
+
+    // 放送開始時刻でソート
+    std::sort(tempPacks.begin(), tempPacks.end(), [](const TempItem &a, const TempItem &b) {
+        auto getTimePart = [](const QString &id) {
+            return id.section(u';', -1).section(u'_', 0, 0);
+        };
+        return getTimePart(a.cid) < getTimePart(b.cid);
+    });
+
+    // 各リストをクリアして詰め直す + hdate を更新
+    fileList.clear();
+    kouzaList.clear();
+    file_titleList.clear();
+    hdateList.clear();
+    yearList.clear();
+
+    for (const auto &item : tempPacks) {
+        fileList       << item.file;
+        kouzaList      << item.kouza;
+        file_titleList << item.title;
+        // ★ ここで cid の日時を使って hdate の月日を更新
+        hdateList      << updateHdateFromCid(item.hdate, item.cid /*, 5 */);  // 第3引数でカットオフ変更可
+        yearList       << item.year;
+    }
+}
+// --- ソート処理ここまで ---
+
 
     for (const auto &item : tempPacks) {
         fileList       << item.file;
