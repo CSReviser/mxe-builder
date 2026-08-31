@@ -1,3 +1,20 @@
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/kazuo/cs/CaptureStream2
+[  2%] Automatic MOC and UIC for target CaptureStream2
+[  2%] Built target CaptureStream2_autogen
+Consolidate compiler generated dependencies of target CaptureStream2
+[  5%] Building CXX object CMakeFiles/CaptureStream2.dir/recordingcore.cpp.o
+[  8%] Linking CXX executable CaptureStream2
+/usr/bin/ld: CMakeFiles/CaptureStream2.dir/recordingcore.cpp.o: in function `RecordingCore::getJsonData(QString const&)':
+recordingcore.cpp:(.text._ZN13RecordingCore11getJsonDataERK7QString+0x8bb): undefined reference to `RecordingCore::updateHdateFromCid(QString const&, QString const&, int)'
+collect2: error: ld returned 1 exit status
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:761: CaptureStream2] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
+
+
+
 // --- ここから放送時間順ソート処理 ---
 const int count = kouzaList.size();
 if (count > 1 && contentsIdList.size() == count) {
