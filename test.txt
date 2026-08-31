@@ -1,3 +1,44 @@
+#include <QRegularExpression>
+#include <QDateTime>
+
+// ヘルパー関数（クラス外 or 静的メンバでOK）
+static QString updateHdateFromCid(const QString& originalHdate, const QString& cid, int cutoffHour = 5)
+{
+    // cid 末尾の開始日時を取り出す
+    // 例: "...;2024-08-02T06:45:00+09:00_2024-08-02T07:00:03+09:00"
+    const QString timePart = cid.section(u';', -1).section(u'_', 0, 0);
+    QDateTime dt = QDateTime::fromString(timePart, Qt::ISODate);
+    if (!dt.isValid()) {
+        return originalHdate;   // パース失敗時は元のまま
+    }
+
+    // 放送編成上の日付に変換（午前5時未満は前日扱い）
+    QDate broadcastDate = dt.date();
+    if (dt.time().hour() < cutoffHour) {
+        broadcastDate = broadcastDate.addDays(-1);
+    }
+
+    // 曜日（Qt: 1=月 ... 7=日）
+    static const char* wd[] = { "", "月", "火", "水", "木", "金", "土", "日" };
+    const QString weekday = QString::fromUtf8(wd[broadcastDate.dayOfWeek()]);
+
+    // 新しい月日部分
+    const QString newDatePart = QStringLiteral("%1月%2日(%3)")
+                                    .arg(broadcastDate.month())
+                                    .arg(broadcastDate.day())
+                                    .arg(weekday);
+
+    // 元の hdate の先頭「○月○日(曜)」だけを置換
+    static const QRegularExpression re(QStringLiteral(R"(^\d+月\d+日\([日月火水木金土]\))"));
+    QString result = originalHdate;
+    result.replace(re, newDatePart);
+    return result;
+}
+
+
+
+
+
 QString key = input.trimmed();
 
 
