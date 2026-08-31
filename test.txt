@@ -1,3 +1,8 @@
+    QStringList nidnight = { "V34XVV71R2_01", "V34XVV71R2_02", "V34XVV71R2_03", "V34XVV71R2_04", "V34XVV71R2_04", "V34XVV71R2_06", "V34XVV71R2_07"};
+
+    QString url = urlInput;
+
+
 class RecordingCore {
     // ...
 private:
