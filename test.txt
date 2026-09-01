@@ -1,11 +1,13 @@
+録音
+
 #include <QInputDialog>
 #include <QLineEdit>
 
 bool ok = false;
 QString text = QInputDialog::getText(
     this,                       // parent
-    tr("テキスト入力"),          // タイトル
-    tr("入力してください:"),     // ラベル
+    tr("番組ID入力"),          // タイトル
+    tr("録音する番組IDを入力してください:"),     // ラベル
     QLineEdit::Normal,          // 通常入力
     QString(),                  // 初期値なし
     &ok
