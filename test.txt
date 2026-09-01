@@ -1,14 +1,19 @@
- git push
-To https://github.com/CSReviser/CaptureStream2
- ! [rejected]        feature -> feature (non-fast-forward)
-error: failed to push some refs to 'https://github.com/CSReviser/CaptureStream2'
-hint: Updates were rejected because the tip of your current branch is behind
-hint: its remote counterpart. Integrate the remote changes (e.g.
-hint: 'git pull ...') before pushing again.
-hint: See the 'Note about fast-forwards' in 'git push --help' for details.
-kazuo@kazuo-OptiPlex-3050:~/cs/CaptureStream2$ 
+#include <QInputDialog>
+#include <QLineEdit>
 
+bool ok = false;
+QString text = QInputDialog::getText(
+    this,                       // parent
+    tr("テキスト入力"),          // タイトル
+    tr("入力してください:"),     // ラベル
+    QLineEdit::Normal,          // 通常入力
+    QString(),                  // 初期値なし
+    &ok
+);
 
+if (ok && !text.isEmpty()) {
+    // text を使う
+}
 
 QStringList nidnight = { "V34XVV71R2_01", "V34XVV71R2_02", "V34XVV71R2_03", "V34XVV71R2_04", "V34XVV71R2_04", "V34XVV71R2_06", "V34XVV71R2_07"};
 
