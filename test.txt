@@ -1,3 +1,11 @@
+QProcess process;
+process.start("CaptureStream2", QStringList() << "-nogui" << text);
+process.waitForFinished(-1);  // 無期限待機
+
+if (process.exitCode() != 0) {
+    // エラー処理
+}
+
 録音
 
 #include <QInputDialog>
