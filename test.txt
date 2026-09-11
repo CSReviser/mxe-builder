@@ -1,3 +1,77 @@
+public:
+    // 既存の applySettings はそのまま維持
+    void applySettings(const Settings& s);
+
+    // 【新規追加】一時的に特定の番組ID(1つまたは複数)のみ有効化した設定を適用する
+    void applySettingsWithOverrideIds(const Settings& s, const QStringList& overrideIds);
+
+
+void RuntimeConfig::applySettingsWithOverrideIds(const Settings& s, const QStringList& overrideIds)
+{
+    // 1. まず標準の設定をそのまま一度呼び出して全体をロード
+    applySettings(s);
+
+    // 2. 引数で渡されたIDリストを QSet 化（検索を高速化）
+    const QSet<QString> targetSet(overrideIds.begin(), overrideIds.end());
+
+    // 3. m_programs 内の全項目の checked を「指定IDに含まれているか」で上書き
+    for (auto& entry : m_programs) {
+        entry.checked = (!entry.id.isEmpty() && targetSet.contains(entry.id));
+    }
+
+    // 4. 旧配列 (english, optional, spec) も使っている場合は同様に上書き
+    auto updateLegacy = [&](auto* array, int count) {
+        for (int i = 0; i < count; ++i) {
+            array[i].checked = (!array[i].id.isEmpty() && targetSet.contains(array[i].id));
+        }
+    };
+
+    updateLegacy(english, Constants::EnglishCount);
+    updateLegacy(optional, Constants::OptionalCount);
+    updateLegacy(spec, Constants::SpecCount);
+}
+
+
+void MainWindow::program_id() 
+{
+    bool ok = false;
+    QString text = QInputDialog::getText(
+        this,
+        tr("番組ID入力"),
+        tr("録音する番組IDを入力してください:"),
+        QLineEdit::Normal,
+        QString(),
+        &ok
+    );
+    
+    if (ok && !text.isEmpty()) {
+        auto &repo = ProgramRepository::instance();
+        if (repo.name_map.contains(text))
+            text = repo.name_map[text];
+            
+        QString resolved = ProgramResolver::resolveUnique(text);
+        if (!resolved.isEmpty())
+            text = resolved;
+
+        // 1. 一時的な RuntimeConfig の構築
+        // （既存の元設定 s を取得して、入力された番組IDだけをチェックONにする）
+        Settings currentSettings = m_settingsManager.load(); // 既存設定を取得
+        RuntimeConfig tempConfig;
+        tempConfig.applySettingsWithOverrideIds(currentSettings, QStringList() << text);
+
+        // 2. プロセス起動ではなく、現在のGUIプロセス内で直接ダウンローダー/録音エンジンを実行
+        // (例: メインウィンドウの既存の録音処理メソッドを呼び出す)
+        bool success = executeDownloadProcess(tempConfig);
+
+        // 3. 完了後の処理
+        if (success) {
+            customizeFolderOpen();
+        }
+    }
+}
+
+
+
 QProcess process;
 process.start("CaptureStream2", QStringList() << "-nogui" << text);
 process.waitForFinished(-1);  // 無期限待機
