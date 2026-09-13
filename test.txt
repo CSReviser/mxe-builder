@@ -1,3 +1,8 @@
+QString text = "singleId123";
+
+QStringList rawIds = text.split(QRegularExpression("[,\\s]+"), Qt::SkipEmptyParts);
+// → ["singleId123"]   // 要素は1つだけ
+
 #include <QStringList>
 
 class ProgramResolver
