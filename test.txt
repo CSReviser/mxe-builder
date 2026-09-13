@@ -1,3 +1,70 @@
+#include <QStringList>
+
+class ProgramResolver
+{
+public:
+    // 既存のメンバ関数
+    static QString resolveUnique(const QString& input);
+
+    // 追加する静的メンバ関数
+    static QStringList resolveUniqueList(const QStringList& inputList);
+};
+
+QStringList ProgramResolver::resolveUniqueList(const QStringList& inputList)
+{
+    QStringList resolvedList;
+    resolvedList.reserve(inputList.size());
+
+    for (const QString& input : inputList) {
+        QString resolvedId = resolveUnique(input);
+        if (!resolvedId.isEmpty()) {
+            resolvedList.append(resolvedId);
+        }
+    }
+
+    return resolvedList;
+}
+
+QStringList rawIds = { "ID001", "ID002", "INVALID_ID" };
+QStringList validIds = ProgramResolver::resolveUniqueList(rawIds);
+
+#include <QStringList>
+
+class ProgramResolver
+{
+public:
+    // 既存のメンバ関数
+    QString resolveUnique(const QString& input);
+
+    // 追加するメンバ関数
+    QStringList resolveUniqueList(const QStringList& inputList);
+};
+
+QStringList ProgramResolver::resolveUniqueList(const QStringList& inputList)
+{
+    QStringList resolvedList;
+    resolvedList.reserve(inputList.size());
+
+    for (const QString& input : inputList) {
+        QString resolvedId = resolveUnique(input);
+        if (!resolvedId.isEmpty()) {
+            resolvedList.append(resolvedId);
+        }
+    }
+
+    return resolvedList;
+}
+
+ProgramResolver resolver;
+QStringList rawIds = { "ID001", "ID002", "INVALID_ID" };
+QStringList validIds = resolver.resolveUniqueList(rawIds);
+
+
+
+
+
+
+
 public:
     // 既存の applySettings はそのまま維持
     void applySettings(const Settings& s);
