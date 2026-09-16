@@ -1,3 +1,123 @@
+#ifndef FILENAMEUTILITY_H
+#define FILENAMEUTILITY_H
+
+#include <QString>
+
+namespace FileNameUtility
+{
+    QString sanitizeFileName(const QString &fileName);
+}
+
+#endif // FILENAMEUTILITY_H
+
+#include "FileNameUtility.h"
+
+namespace
+{
+    QChar fullWidthReplacement(const QChar c)
+    {
+        switch (c.unicode()) {
+        case '"':  return QChar(0xFF02); // ＂
+        case '*':  return QChar(0xFF0A); // ＊
+        case '/':  return QChar(0xFF0F); // ／
+        case ':':  return QChar(0xFF1A); // ：
+        case '<':  return QChar(0xFF1C); // ＜
+        case '>':  return QChar(0xFF1E); // ＞
+        case '?':  return QChar(0xFF1F); // ？
+        case '\\': return QChar(0xFF3C); // ＼
+        case '|':  return QChar(0xFF5C); // ｜
+        default:   return QChar();
+        }
+    }
+
+    bool isReservedDeviceName(const QString &name)
+    {
+        const QString upperName = name.toUpper();
+
+        if (upperName == QStringLiteral("CON") ||
+            upperName == QStringLiteral("PRN") ||
+            upperName == QStringLiteral("AUX") ||
+            upperName == QStringLiteral("NUL")) {
+            return true;
+        }
+
+        if (upperName.size() == 4) {
+            const QString prefix = upperName.left(3);
+            const QChar number = upperName.at(3);
+
+            if ((prefix == QStringLiteral("COM") ||
+                 prefix == QStringLiteral("LPT")) &&
+                number >= QLatin1Char('1') &&
+                number <= QLatin1Char('9')) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+
+namespace FileNameUtility
+{
+
+QString sanitizeFileName(const QString &fileName)
+{
+    // アプリケーションとしてUnicodeの正準形をNFCに統一する。
+    QString result =
+        fileName.normalized(QString::NormalizationForm_C);
+
+    QString sanitized;
+    sanitized.reserve(result.size());
+
+    for (const QChar c : result) {
+        // U+0000 ～ U+001F はファイル名に使用しない。
+        if (c.unicode() <= 0x1F) {
+            continue;
+        }
+
+        // Windowsで使用できない文字は全角文字へ置換する。
+        const QChar replacement = fullWidthReplacement(c);
+
+        if (!replacement.isNull()) {
+            sanitized.append(replacement);
+        } else {
+            sanitized.append(c);
+        }
+    }
+
+    result = sanitized;
+
+    // Windowsではファイル名の末尾に
+    // ASCIIスペースまたは '.' を置けないため除去する。
+    while (!result.isEmpty() &&
+           (result.endsWith(QLatin1Char(' ')) ||
+            result.endsWith(QLatin1Char('.')))) {
+        result.chop(1);
+    }
+
+    // 空文字列になった場合のフォールバック。
+    if (result.isEmpty()) {
+        return QStringLiteral("_");
+    }
+
+    // Windowsの予約デバイス名を回避する。
+    // この関数への入力は「拡張子なし」のファイル名なので、
+    // 拡張子を考慮する必要はない。
+    if (isReservedDeviceName(result)) {
+        result.prepend(QLatin1Char('_'));
+    }
+
+    return result;
+}
+
+} // namespace FileNameUtility
+
+
+
+
+
+
+
 QString text = "singleId123";
 
 QStringList rawIds = text.split(QRegularExpression("[,\\s]+"), Qt::SkipEmptyParts);
