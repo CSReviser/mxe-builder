@@ -1,3 +1,103 @@
+bool RecordingCore::isFfmpegAvailable(QString& path)
+{
+    const QString ffmpegFolder = runtime.ffmpegFolder();
+
+    if (!ffmpegFolder.isEmpty()) {
+#ifdef Q_OS_WIN
+        path = QDir(ffmpegFolder).filePath("ffmpeg.exe");
+#else
+        path = QDir(ffmpegFolder).filePath("ffmpeg");
+#endif
+
+        if (!QFileInfo(path).exists()) {
+            emit errorOccurred(
+                path + QStringLiteral("が見つかりません。")
+            );
+            return false;
+        }
+
+        if (!QFileInfo(path).isExecutable()) {
+            emit errorOccurred(
+                path + QStringLiteral("は実行可能ではありません。")
+            );
+            return false;
+        }
+
+        return true;
+    }
+
+    FfmpegCapabilities capabilities;
+
+    path = capabilities.findExecutable(runtime.saveFolder());
+
+    if (path.isEmpty()) {
+        emit errorOccurred(
+            QStringLiteral("ffmpegが見つかりません。")
+        );
+        return false;
+    }
+
+    return true;
+}
+
+class FfmpegCapabilities
+{
+public:
+    QString findExecutable(const QString& saveFolder) const;
+
+    bool supportsHttpSeekable(const QString& path) const;
+};
+
+QString FfmpegCapabilities::findExecutable(
+    const QString& saveFolder) const
+{
+#ifdef Q_OS_WIN
+    const QString exeName = QStringLiteral("ffmpeg.exe");
+#else
+    const QString exeName = QStringLiteral("ffmpeg");
+#endif
+
+    QStringList baseDirs;
+
+#ifdef Q_OS_MACOS
+    baseDirs.append(saveFolder);
+    baseDirs.append(Utility::appConfigLocationPath());
+    baseDirs.append(Utility::ConfigLocationPath());
+    baseDirs.append(QStringLiteral("/Applications/"));
+    baseDirs.append(QStringLiteral("/usr/local/bin/"));
+    baseDirs.append(QStringLiteral("/opt/homebrew/bin/"));
+    baseDirs.append(Utility::applicationBundlePath());
+
+#elif defined(Q_OS_WIN)
+    baseDirs.append(Utility::applicationBundlePath());
+    baseDirs.append(saveFolder);
+    baseDirs.append(QStringLiteral("C:\\Program Files\\ffmpeg\\bin\\"));
+    baseDirs.append(QStringLiteral("C:\\ffmpeg\\bin\\"));
+
+#elif defined(Q_OS_LINUX)
+    baseDirs.append(Utility::applicationBundlePath());
+    baseDirs.append(saveFolder);
+    baseDirs.append(QStringLiteral("/usr/bin/"));
+#endif
+
+    for (const QString& dir : baseDirs) {
+        const QString candidate = QDir(dir).filePath(exeName);
+        const QFileInfo fileInfo(candidate);
+
+        if (fileInfo.exists() && fileInfo.isExecutable())
+            return candidate;
+    }
+
+    return {};
+}
+
+
+
+
+
+
+
+
 #ifndef FILENAMEUTILITY_H
 #define FILENAMEUTILITY_H
 
