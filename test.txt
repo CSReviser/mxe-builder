@@ -1,11 +1,3 @@
-[  5%] Building CXX object CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o
-/home/kazuo/cs/CaptureStream2/mainwindow.cpp: In member function ‘void MainWindow::ffmpegFolderDialog()’:
-/home/kazuo/cs/CaptureStream2/mainwindow.cpp:480:57: error: cannot call member function ‘QString FfmpegCapabilities::findExecutable(const QString&)’ without object
-  480 |         QString dir = FfmpegCapabilities::findExecutable(s.saveFolder);
-      |                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~
-make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:183: CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o] エラー 1
-make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
-make: *** [Makefile:91: all] エラー 2
 
 
 bool RecordingCore::isFfmpegAvailable(QString& path)
