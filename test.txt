@@ -1,4 +1,31 @@
+baseDirs.append(saveFolder);
+baseDirs.append(Utility::appConfigLocationPath());
+baseDirs.append(Utility::ConfigLocationPath());
+baseDirs.append(QStringLiteral("/Applications/"));
+baseDirs.append(QStringLiteral("/usr/local/bin/"));
+baseDirs.append(QStringLiteral("/opt/homebrew/bin/"));
+baseDirs.append(QStringLiteral("/opt/local/bin/"));
+baseDirs.append(Utility::applicationBundlePath());
 
+baseDirs.append(Utility::applicationBundlePath());
+baseDirs.append(saveFolder);
+baseDirs.append(QStringLiteral("C:\\Program Files\\ffmpeg\\bin\\"));
+baseDirs.append(QStringLiteral("C:\\Program Files (x86)\\ffmpeg\\bin\\"));
+baseDirs.append(QStringLiteral("C:\\ffmpeg\\bin\\"));
+
+
+baseDirs.append(Utility::applicationBundlePath());
+baseDirs.append(saveFolder);
+baseDirs.append(QStringLiteral("/usr/bin/"));
+baseDirs.append(QStringLiteral("/usr/local/bin/"));
+baseDirs.append(QStringLiteral("/home/linuxbrew/.linuxbrew/bin/"));
+
+
+
+
+const QString path = QStandardPaths::findExecutable(exeName);
+if (!path.isEmpty())
+    return path;
 
 bool RecordingCore::isFfmpegAvailable(QString& path)
 {
