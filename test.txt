@@ -1,3 +1,16 @@
+      - name: Configure pkg-config
+        run: |
+          PC_DIRS="$(find /usr -type f \
+            \( -name 'libmp3lame.pc' -o -name 'fdk-aac.pc' \) \
+            -printf '%h\n' 2>/dev/null | sort -u | paste -sd ':' -)"
+
+          if [ -n "$PC_DIRS" ]; then
+            echo "PKG_CONFIG_PATH=$PC_DIRS${PKG_CONFIG_PATH:+:$PKG_CONFIG_PATH}" >> "$GITHUB_ENV"
+          fi
+
+          echo "PKG_CONFIG_PATH=$PC_DIRS"
+
+
 === packages ===
 ii  libmp3lame-dev:amd64                    3.101~svn6525+dfsg-2                       amd64        MP3 encoding library (development)
 ii  libmp3lame0:amd64                       3.101~svn6525+dfsg-2                       amd64        MP3 encoding library
