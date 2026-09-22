@@ -1,31 +1,14 @@
-Setting up cmake-data (3.22.1-1ubuntu1.22.04.2) ...
-Setting up libmp3lame0:amd64 (3.100-3build2) ...
-Setting up libmp3lame-dev:amd64 (3.100-3build2) ...
-Setting up libfdk-aac-dev:amd64 (2.0.2-1) ...
-Setting up cmake (3.22.1-1ubuntu1.22.04.2) ...
-Processing triggers for man-db (2.10.2-1) ...
-Not building database; man-db/auto-update is not 'true'.
-Processing triggers for libc-bin (2.35-0ubuntu3.15) ...
+2026-09-22 12:57:01 (12.8 MB/s) - ‘ffmpeg-9.0.2.tar.gz’ saved [18129779/18129779]
 
-Running kernel seems to be up-to-date.
+ERROR: libmp3lame >= 3.98.3 not found
 
-No services need to be restarted.
+If you think configure made a mistake, make sure you are using the latest
+version from Git.  If the latest version fails, report the problem to the
+ffmpeg-user@ffmpeg.org mailing list or IRC #ffmpeg on irc.libera.chat.
+Include the log file "ffbuild/config.log" produced by configure as this will help
+solve the problem.
+Error: Process completed with exit code 1.
 
-No containers need to be restarted.
-
-No user sessions are running outdated binaries.
-
-No VM guests are running outdated hypervisor (qemu) binaries on this host.
-
-Usage:   
-  /usr/bin/python3 -m pip install [options] <requirement specifier> [package-index-options] ...
-  /usr/bin/python3 -m pip install [options] -r <requirements file> [package-index-options] ...
-  /usr/bin/python3 -m pip install [options] [-e] <vcs project url> ...
-  /usr/bin/python3 -m pip install [options] [-e] <local project path> ...
-  /usr/bin/python3 -m pip install [options] <archive url/path> ...
-
-no such option: --break-system-packages
-Error: Process completed with exit code 2.
 
 
 
