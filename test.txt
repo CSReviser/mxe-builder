@@ -1,4 +1,15 @@
-      - name: Check LAME
+=== packages ===
+ii  libmp3lame-dev:amd64                    3.101~svn6525+dfsg-2                       amd64        MP3 encoding library (development)
+ii  libmp3lame0:amd64                       3.101~svn6525+dfsg-2                       amd64        MP3 encoding library
+=== pkg-config ===
+Package libmp3lame was not found in the pkg-config search path.
+Perhaps you should add the directory containing `libmp3lame.pc'
+to the PKG_CONFIG_PATH environment variable
+Package 'libmp3lame' not found
+Error: Process completed with exit code 1.
+
+
+- name: Check LAME
         run: |
           dpkg -l | grep -E 'libmp3lame|lame'
           pkg-config --modversion libmp3lame
