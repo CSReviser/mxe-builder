@@ -1,3 +1,43 @@
+      - name: Check LAME
+        run: |
+          dpkg -l | grep -E 'libmp3lame|lame'
+          pkg-config --modversion libmp3lame
+          pkg-config --cflags libmp3lame
+          pkg-config --libs libmp3lame
+          pkg-config --static --libs libmp3lame
+
+
+          ./configure \
+            --prefix="$HOME/ffmpeg-static" \
+            --pkg-config-flags="--static" \
+            --enable-gpl \
+            --enable-nonfree \
+            --enable-libmp3lame \
+            --enable-libfdk-aac \
+            --enable-encoder=png,jpeg \
+            --enable-openssl \
+            --enable-protocol=https \
+            --enable-protocol=hls \
+            --disable-shared \
+            --enable-static \
+            --disable-debug \
+            --disable-doc
+
+
+      - name: Check LAME
+        run: |
+          echo "=== packages ==="
+          dpkg -l | grep -E 'libmp3lame|lame' || true
+
+          echo "=== pkg-config ==="
+          pkg-config --modversion libmp3lame
+          pkg-config --cflags libmp3lame
+          pkg-config --libs libmp3lame
+          pkg-config --static --libs libmp3lame
+
+
+
+
 2026-09-22 12:57:01 (12.8 MB/s) - ‘ffmpeg-9.0.2.tar.gz’ saved [18129779/18129779]
 
 ERROR: libmp3lame >= 3.98.3 not found
