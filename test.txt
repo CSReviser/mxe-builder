@@ -1,3 +1,34 @@
+
+#include <QCoreApplication>
+#include <QDir>
+#include <QString>
+
+QString rawPath = QCoreApplication::applicationDirPath() + "/../../..";
+QString outerAppDir = QDir::cleanPath(rawPath);
+
+#include <QCoreApplication>
+#include <QDir>
+#include <QString>
+
+// .app バンドルの外側フォルダを取得
+QString outerAppDir = QDir(QCoreApplication::applicationDirPath()).filePath("../../../");
+
+#include <QCoreApplication>
+#include <QFileInfo>
+#include <QDir>
+#include <QString>
+
+QDir execDir(QCoreApplication::applicationDirPath());
+
+// 1つのQDirオブジェクトでcdUp()を連続で実行する
+execDir.cdUp(); // MacOS -> Contents
+execDir.cdUp(); // Contents -> AppName.app
+execDir.cdUp(); // AppName.app -> 外側フォルダ
+
+QString outerAppDir = execDir.absolutePath();
+
+
+
 baseDirs.append(saveFolder);
 baseDirs.append(Utility::appConfigLocationPath());
 baseDirs.append(Utility::ConfigLocationPath());
