@@ -1,4 +1,26 @@
 
+
+- name: Build static mpg123
+  run: |
+    wget https://www.mpg123.de/download/mpg123-1.33.3.tar.bz2
+    tar -xjf mpg123-1.33.3.tar.bz2
+    cd mpg123-1.33.3
+
+    ./configure \
+      --prefix="$HOME/mpg123-static" \
+      --disable-shared \
+      --enable-static \
+      --disable-debug \
+      --disable-lfs-alias \
+      --with-default-audio=no
+
+    make -j$(nproc)
+    make install
+
+    echo "=== mpg123 static library ==="
+    ls -l "$HOME/mpg123-static/lib/"
+
+
 === libmp3lame configure failure ===
 1:# ./configure --prefix=/home/runner/ffmpeg-static --pkg-config-flags=--static --extra-cflags=-I/usr/include --extra-ldflags='-static -L/usr/lib/x86_64-linux-gnu' --enable-gpl --enable-nonfree --enable-libmp3lame --enable-libfdk-aac --enable-encoder='png,jpeg' --enable-openssl --enable-protocol=https --enable-protocol=hls --disable-shared --enable-static --disable-debug --disable-doc
 2-ACCEPT_EULA='Y'
