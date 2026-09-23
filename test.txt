@@ -1,3 +1,30 @@
+
+=== mpg123 packages ===
+libmpg123-dev:
+  Installed: 1.33.3-2
+  Candidate: 1.33.3-2
+  Version table:
+ *** 1.33.3-2 500
+        500 mirror+file:/etc/apt/apt-mirrors.txt resolute/main amd64v3 Packages
+        100 /var/lib/dpkg/status
+libmpg123-0:
+  Installed: (none)
+  Candidate: (none)
+  Version table:
+=== mpg123 files ===
+/usr/lib/x86_64-linux-gnu/libmpg123.so
+=== all mpg123 static libraries ===
+/usr/lib/x86_64-linux-gnu/libmpg123.so.0.49.4
+/usr/lib/x86_64-linux-gnu/libmpg123.so
+/usr/lib/x86_64-linux-gnu/libmpg123.so.0
+/usr/bin/x86_64-linux-gnu-ld.bfd: cannot find -lmpg123: No such file or directory
+/usr/bin/x86_64-linux-gnu-ld.bfd: have you installed the static version of the mpg123 library ?
+collect2: error: ld returned 1 exit status
+Error: Process completed with exit code 1.
+
+
+
+
 echo "=== mpg123 packages ==="
 apt-cache policy libmpg123-dev libmpg123-0
 
