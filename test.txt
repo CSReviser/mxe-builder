@@ -1,3 +1,14 @@
+echo "=== mpg123 packages ==="
+apt-cache policy libmpg123-dev libmpg123-0
+
+echo "=== mpg123 files ==="
+dpkg -L libmpg123-dev | grep -E 'libmpg123\.(a|so)'
+
+echo "=== all mpg123 static libraries ==="
+find /usr/lib -name 'libmpg123.a' -o -name 'libmpg123.so*'
+
+dpkg -L libmpg123-dev | grep -E 'libmpg123\.(a|so)'
+
 /usr/bin/x86_64-linux-gnu-ld.bfd: cannot find -lmpg123: No such file or directory
 /usr/bin/x86_64-linux-gnu-ld.bfd: have you installed the static version of the mpg123 library ?
 collect2: error: ld returned 1 exit status
