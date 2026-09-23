@@ -1,130 +1,70 @@
 
-2026-09-23 07:00:29 (12.2 MB/s) - ‘ffmpeg-9.0.2.tar.gz’ saved [18129779/18129779]
-
-ERROR: libmp3lame >= 3.98.3 not found
-
-If you think configure made a mistake, make sure you are using the latest
-version from Git.  If the latest version fails, report the problem to the
-ffmpeg-user@ffmpeg.org mailing list or IRC #ffmpeg on irc.libera.chat.
-Include the log file "ffbuild/config.log" produced by configure as this will help
-solve the problem.
+=== libmp3lame configure failure ===
+1:# ./configure --prefix=/home/runner/ffmpeg-static --pkg-config-flags=--static --extra-cflags=-I/usr/include --extra-ldflags='-static -L/usr/lib/x86_64-linux-gnu' --enable-gpl --enable-nonfree --enable-libmp3lame --enable-libfdk-aac --enable-encoder='png,jpeg' --enable-openssl --enable-protocol=https --enable-protocol=hls --disable-shared --enable-static --disable-debug --disable-doc
+2-ACCEPT_EULA='Y'
+3-ACTIONS_ORCHESTRATION_ID='ba990543-91aa-4010-9db9-9de5d70c9a5f.build._26_04'
+4-ACTIONS_RUNNER_ACTION_ARCHIVE_CACHE='/opt/actionarchivecache'
+5-ACTIONS_RUNNER_RETURN_JOB_RESULT_FOR_HOSTED='1'
+6-AGENT_TOOLSDIRECTORY='/opt/hostedtoolcache'
+7-ALL_COMPONENTS='
+8-    
+9-    aac_adtstoasc_bsf
+10-ahx_to_mp2_bsf
+11-apv_metadata_bsf
+12-av1_frame_merge_bsf
+13-av1_frame_split_bsf
+14-av1_metadata_bsf
+15-chomp_bsf
+16-dump_extradata_bsf
+17-dca_core_bsf
+18-dovi_rpu_bsf
+19-dovi_split_bsf
+20-dts2pts_bsf
+21-dv_error_marker_bsf
+22-eac3_core_bsf
+23-eia608_to_smpte436m_bsf
+24-evc_frame_merge_bsf
+25-extract_extradata_bsf
+26-filter_units_bsf
+27-h264_metadata_bsf
+28-h264_mp4toannexb_bsf
+29-h264_redundant_pps_bsf
+30-hapqa_extract_bsf
+31-hevc_metadata_bsf
+--
+845-pcm_mulaw_at_encoder
+846-libaom_av1_encoder
+847-libcodec2_encoder
+848-libfdk_aac_encoder
+849-libgsm_encoder
+850-libgsm_ms_encoder
+851-libilbc_encoder
+852-libjxl_anim_encoder
+19715-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x179): undefined reference to `mpg123_open_feed'
+19716-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x194): undefined reference to `mpg123_delete'
+19717:/usr/bin/x86_64-linux-gnu-ld.bfd: /usr/lib/x86_64-linux-gnu/libmp3lame.a(mpglib_interface.o): in function `hip_decode_exit':
+19718-(.text+0x1cc): undefined reference to `mpg123_delete'
+19719:/usr/bin/x86_64-linux-gnu-ld.bfd: /usr/lib/x86_64-linux-gnu/libmp3lame.a(mpglib_interface.o): in function `hip_finish_pinfo':
+19720-(.text+0x3e7): undefined reference to `mpg123_info2'
+19721:/usr/bin/x86_64-linux-gnu-ld.bfd: /usr/lib/x86_64-linux-gnu/libmp3lame.a(mpglib_interface.o): in function `hip123_decode1':
+19722-(.text+0x501): undefined reference to `mpg123_feed'
+19723-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x52b): undefined reference to `mpg123_getformat'
+19724-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x595): undefined reference to `mpg123_decode_frame'
+19725-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x663): undefined reference to `mpg123_info2'
+19726-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x695): undefined reference to `mpg123_spf'
+19727-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x6cb): undefined reference to `mpg123_getstate2'
+19728-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x703): undefined reference to `mpg123_getstate2'
+19729-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x745): undefined reference to `mpg123_format_none'
+19730-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x758): undefined reference to `mpg123_format2'
+19731-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x763): undefined reference to `mpg123_decoder'
+19732-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x7d3): undefined reference to `mpg123_getformat'
+19733-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x7e8): undefined reference to `mpg123_decode_frame'
+19734:/usr/bin/x86_64-linux-gnu-ld.bfd: /usr/lib/x86_64-linux-gnu/libmp3lame.a(mpglib_interface.o): in function `hip_set_pinfo':
+19735-(.text+0x208): undefined reference to `mpg123_set_moreinfo'
+19736-collect2: error: ld returned 1 exit status
+19737:ERROR: libmp3lame >= 3.98.3 not found
 Error: Process completed with exit code 1.
 
-
-
-    ./configure \
-      --prefix="$HOME/ffmpeg-static" \
-      --pkg-config-flags="--static" \
-      --extra-cflags="-I/usr/include" \
-      --extra-ldflags="-static -L/usr/lib/$MULTIARCH" \
-      --enable-gpl \
-      --enable-nonfree \
-      --enable-libmp3lame \
-      --enable-libfdk-aac \
-      --enable-encoder=png,jpeg \
-      --enable-openssl \
-      --enable-protocol=https \
-      --enable-protocol=hls \
-      --disable-shared \
-      --enable-static \
-      --disable-debug \
-      --disable-doc \
-      || {
-        echo "=== libmp3lame configure failure ==="
-        grep -n -A30 -B10 "libmp3lame" ffbuild/config.log || true
-        exit 1
-      }
-
-
-
-=== mpg123 packages ===
-libmpg123-dev:
-  Installed: 1.33.3-2
-  Candidate: 1.33.3-2
-  Version table:
- *** 1.33.3-2 500
-        500 mirror+file:/etc/apt/apt-mirrors.txt resolute/main amd64v3 Packages
-        100 /var/lib/dpkg/status
-libmpg123-0:
-  Installed: (none)
-  Candidate: (none)
-  Version table:
-=== mpg123 files ===
-/usr/lib/x86_64-linux-gnu/libmpg123.so
-=== all mpg123 static libraries ===
-/usr/lib/x86_64-linux-gnu/libmpg123.so.0.49.4
-/usr/lib/x86_64-linux-gnu/libmpg123.so
-/usr/lib/x86_64-linux-gnu/libmpg123.so.0
-/usr/bin/x86_64-linux-gnu-ld.bfd: cannot find -lmpg123: No such file or directory
-/usr/bin/x86_64-linux-gnu-ld.bfd: have you installed the static version of the mpg123 library ?
-collect2: error: ld returned 1 exit status
-Error: Process completed with exit code 1.
-
-
-
-
-echo "=== mpg123 packages ==="
-apt-cache policy libmpg123-dev libmpg123-0
-
-echo "=== mpg123 files ==="
-dpkg -L libmpg123-dev | grep -E 'libmpg123\.(a|so)'
-
-echo "=== all mpg123 static libraries ==="
-find /usr/lib -name 'libmpg123.a' -o -name 'libmpg123.so*'
-
-dpkg -L libmpg123-dev | grep -E 'libmpg123\.(a|so)'
-
-/usr/bin/x86_64-linux-gnu-ld.bfd: cannot find -lmpg123: No such file or directory
-/usr/bin/x86_64-linux-gnu-ld.bfd: have you installed the static version of the mpg123 library ?
-collect2: error: ld returned 1 exit status
-Error: Process completed with exit code 1.
-
-
-MULTIARCH="$(dpkg-architecture -qDEB_HOST_MULTIARCH)"
-
-cat > /tmp/test-lame.c <<'EOF'
-#include <lame/lame.h>
-
-int main(void)
-{
-    lame_global_flags *gfp = lame_init();
-    if (!gfp)
-        return 1;
-
-    lame_set_VBR_quality(gfp, 4.0f);
-    lame_close(gfp);
-
-    return 0;
-}
-EOF
-
-gcc \
-  -I/usr/include \
-  -static \
-  -L"/usr/lib/$MULTIARCH" \
-  /tmp/test-lame.c \
-  -lmp3lame \
-  -lmpg123 \
-  -lm \
-  -o /tmp/test-lame
-
-file /tmp/test-lame
-/tmp/test-lame
-
-
-2026-09-23 06:38:18 (10.6 MB/s) - ‘ffmpeg-9.0.2.tar.gz’ saved [18129779/18129779]
-
-ERROR: libmp3lame >= 3.98.3 not found
-
-If you think configure made a mistake, make sure you are using the latest
-version from Git.  If the latest version fails, report the problem to the
-ffmpeg-user@ffmpeg.org mailing list or IRC #ffmpeg on irc.libera.chat.
-Include the log file "ffbuild/config.log" produced by configure as this will help
-solve the problem.
-Error: Process completed with exit code 1.
-
-
-grep -n -A20 -B10 "libmp3lame" ffmpeg-9.0.2/ffbuild/config.log
 
 MULTIARCH="$(dpkg-architecture -qDEB_HOST_MULTIARCH)"
 
