@@ -18,6 +18,30 @@
 
 
 
+=== package files ===
+/.
+/usr
+/usr/include
+/usr/include/lame
+/usr/include/lame/lame.h
+/usr/lib
+/usr/lib/x86_64-linux-gnu
+/usr/lib/x86_64-linux-gnu/libmp3lame.a
+/usr/lib/x86_64-linux-gnu/pkgconfig
+/usr/lib/x86_64-linux-gnu/pkgconfig/lame.pc
+/usr/share
+/usr/share/doc
+/usr/share/doc/libmp3lame-dev
+/usr/share/doc/libmp3lame-dev/copyright
+/usr/lib/x86_64-linux-gnu/libmp3lame.so
+/usr/share/doc/libmp3lame-dev/changelog.Debian.gz
+=== headers ===
+/usr/include/lame/lame.h
+=== libraries ===
+/usr/lib/x86_64-linux-gnu/libmp3lame.so.0.0.0
+/usr/lib/x86_64-linux-gnu/libmp3lame.a
+=== architecture ===
+x86_64-linux-gnu
 
 
 
