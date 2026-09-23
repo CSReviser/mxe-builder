@@ -1,4 +1,17 @@
 
+      - name: Fix LAME pkg-config
+        run: |
+          MULTIARCH="$(dpkg-architecture -qDEB_HOST_MULTIARCH)"
+          PKGCONFIG_DIR="/usr/lib/$MULTIARCH/pkgconfig"
+
+          if [ -f "$PKGCONFIG_DIR/lame.pc" ] &&
+             [ ! -f "$PKGCONFIG_DIR/libmp3lame.pc" ]; then
+            sudo ln -s lame.pc "$PKGCONFIG_DIR/libmp3lame.pc"
+          fi
+
+          pkg-config --modversion libmp3lame
+
+
 
       - name: Fix LAME pkg-config
         run: |
