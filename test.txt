@@ -1,4 +1,47 @@
 
+MULTIARCH=x86_64-linux-gnu
+LAME header:
+-rw-r--r-- 1 root root 50395 Feb  4  2026 /usr/include/lame/lame.h
+LAME library:
+-rw-r--r-- 1 root root 415900 Feb  4  2026 /usr/lib/x86_64-linux-gnu/libmp3lame.a
+=== direct link test ===
+/usr/bin/x86_64-linux-gnu-ld.bfd: /usr/lib/x86_64-linux-gnu/libmp3lame.a(mpglib_interface.o): in function `hip_decode_init':
+(.text+0x9c): undefined reference to `mpg123_init'
+/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0xa5): undefined reference to `mpg123_new'
+/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0xd1): undefined reference to `mpg123_param2'
+/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0xd9): undefined reference to `mpg123_open_feed'
+/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0xf4): undefined reference to `mpg123_delete'
+/usr/bin/x86_64-linux-gnu-ld.bfd: /usr/lib/x86_64-linux-gnu/libmp3lame.a(mpglib_interface.o): in function `hip_decode_init_gapless':
+(.text+0x13c): undefined reference to `mpg123_init'
+/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x145): undefined reference to `mpg123_new'
+/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x171): undefined reference to `mpg123_param2'
+/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x179): undefined reference to `mpg123_open_feed'
+/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x194): undefined reference to `mpg123_delete'
+/usr/bin/x86_64-linux-gnu-ld.bfd: /usr/lib/x86_64-linux-gnu/libmp3lame.a(mpglib_interface.o): in function `hip_decode_exit':
+(.text+0x1cc): undefined reference to `mpg123_delete'
+/usr/bin/x86_64-linux-gnu-ld.bfd: /usr/lib/x86_64-linux-gnu/libmp3lame.a(mpglib_interface.o): in function `hip_finish_pinfo':
+(.text+0x3e7): undefined reference to `mpg123_info2'
+/usr/bin/x86_64-linux-gnu-ld.bfd: /usr/lib/x86_64-linux-gnu/libmp3lame.a(mpglib_interface.o): in function `hip123_decode1':
+(.text+0x501): undefined reference to `mpg123_feed'
+/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x52b): undefined reference to `mpg123_getformat'
+/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x595): undefined reference to `mpg123_decode_frame'
+/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x663): undefined reference to `mpg123_info2'
+/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x695): undefined reference to `mpg123_spf'
+/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x6cb): undefined reference to `mpg123_getstate2'
+/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x703): undefined reference to `mpg123_getstate2'
+/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x745): undefined reference to `mpg123_format_none'
+/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x758): undefined reference to `mpg123_format2'
+/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x763): undefined reference to `mpg123_decoder'
+/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x7d3): undefined reference to `mpg123_getformat'
+/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x7e8): undefined reference to `mpg123_decode_frame'
+/usr/bin/x86_64-linux-gnu-ld.bfd: /usr/lib/x86_64-linux-gnu/libmp3lame.a(mpglib_interface.o): in function `hip_set_pinfo':
+(.text+0x208): undefined reference to `mpg123_set_moreinfo'
+collect2: error: ld returned 1 exit status
+Error: Process completed with exit code 1.
+
+
+
+
       - name: Check LAME
         run: |
           MULTIARCH="$(dpkg-architecture -qDEB_HOST_MULTIARCH)"
