@@ -1,4 +1,7 @@
 
+
+grep -n -A20 -B10 "libmp3lame" ffmpeg-9.0.2/ffbuild/config.log
+
 MULTIARCH="$(dpkg-architecture -qDEB_HOST_MULTIARCH)"
 
 ./configure \
