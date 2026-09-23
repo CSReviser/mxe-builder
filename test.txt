@@ -1,3 +1,27 @@
+      - name: Check LAME files
+        run: |
+          echo "=== package files ==="
+          dpkg -L libmp3lame-dev
+
+          echo "=== headers ==="
+          find /usr/include -type f \
+            \( -name 'lame.h' -o -name '*lame*.h' \) \
+            -print
+
+          echo "=== libraries ==="
+          find /usr/lib -type f \
+            \( -name 'libmp3lame.a' -o -name 'libmp3lame.so*' \) \
+            -print
+
+          echo "=== architecture ==="
+          dpkg-architecture -qDEB_HOST_MULTIARCH
+
+
+
+
+
+
+
       - name: Configure pkg-config
         run: |
           PC_FILE="$(dpkg -L libmp3lame-dev | grep '/libmp3lame\.pc$' | head -n 1)"
