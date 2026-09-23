@@ -1,4 +1,29 @@
 
+    ./configure \
+      --prefix="$HOME/ffmpeg-static" \
+      --pkg-config-flags="--static" \
+      --extra-cflags="-I/usr/include" \
+      --extra-ldflags="-static -L/usr/lib/$MULTIARCH" \
+      --enable-gpl \
+      --enable-nonfree \
+      --enable-libmp3lame \
+      --enable-libfdk-aac \
+      --enable-encoder=png,jpeg \
+      --enable-openssl \
+      --enable-protocol=https \
+      --enable-protocol=hls \
+      --disable-shared \
+      --enable-static \
+      --disable-debug \
+      --disable-doc \
+      || {
+        echo "=== libmp3lame configure failure ==="
+        grep -n -A30 -B10 "libmp3lame" ffbuild/config.log || true
+        exit 1
+      }
+
+
+
 === mpg123 packages ===
 libmpg123-dev:
   Installed: 1.33.3-2
