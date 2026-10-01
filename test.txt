@@ -1,247 +1,36 @@
 
 
-- name: Build static mpg123
-  run: |
-    wget https://www.mpg123.de/download/mpg123-1.33.3.tar.bz2
-    tar -xjf mpg123-1.33.3.tar.bz2
-    cd mpg123-1.33.3
+77.80 c++  -o util/hb-raster util/hb-raster.p/hb-raster.cc.o -Wl,--as-needed -Wl,--no-undefined -Wl,-O1 -Wl,--start-group src/libharfbuzz.a src/libharfbuzz-raster.a /usr/lib/aarch64-linux-gnu/libfreetype.so /usr/lib/aarch64-linux-gnu/libcairo.so /usr/lib/aarch64-linux-gnu/libglib-2.0.so -pthread -lm /usr/local/lib/libpng16.a -Wl,--end-group
+77.80 /usr/bin/ld: /usr/lib/aarch64-linux-gnu/libfreetype.so: undefined reference to symbol 'inflateEnd'
+77.80 /usr/bin/ld: /lib/aarch64-linux-gnu/libz.so.1: error adding symbols: DSO missing from command line
+77.80 collect2: error: ld returned 1 exit status
+77.82 [152/167] Compiling C++ object util/hb-ft-raster.p/hb-ft-raster.cc.o
+77.89 [153/167] Compiling C++ object util/hb-info.p/meson-generated_.._.._src_hb-gobject-enums.cc.o
+77.90 [154/167] Compiling C++ object util/hb-raster-all.p/hb-raster-all.cc.o
+78.41 [155/167] Compiling C++ object util/hb-subset.p/hb-subset.cc.o
+78.43 [156/167] Compiling C++ object util/hb-info.p/hb-info.cc.o
+78.43 ninja: build stopped: subcommand failed.
+------
+Dockerfile.ubuntu-arm:130
+--------------------
+ 129 |     # harfbuzz (static, .pc生成確認)
+ 130 | >>> RUN wget https://github.com/harfbuzz/harfbuzz/releases/download/14.5.0/harfbuzz-14.5.0.tar.xz && \
+ 131 | >>>     tar -xf harfbuzz-14.5.0.tar.xz && cd harfbuzz-14.5.0 && \
+ 132 | >>>     meson setup build \
+ 133 | >>>       --prefix=/usr/local \
+ 134 | >>>       --buildtype=release \
+ 135 | >>>       --libdir=lib \
+ 136 | >>>       -Ddefault_library=static \
+ 137 | >>>       -Dtests=disabled \
+ 138 | >>>       -Ddocs=disabled \
+ 139 | >>>       -Dbenchmark=disabled \
+ 140 | >>>       -Dintrospection=disabled && \
+ 141 | >>>     ninja -C build && \
+ 142 | >>>     ninja -C build install
+ 143 |     
+--------------------
+ERROR: failed to build: failed to solve: process "/bin/sh -c wget https://github.com/harfbuzz/harfbuzz/releases/download/14.5.0/harfbuzz-14.5.0.tar.xz &&     tar -xf harfbuzz-14.5.0.tar.xz && cd harfbuzz-14.5.0 &&     meson setup build       --prefix=/usr/local       --buildtype=release       --libdir=lib       -Ddefault_library=static       -Dtests=disabled       -Ddocs=disabled       -Dbenchmark=disabled       -Dintrospection=disabled &&     ninja -C build &&     ninja -C build install" did not complete successfully: exit code: 1
 
-    ./configure \
-      --prefix="$HOME/mpg123-static" \
-      --disable-shared \
-      --enable-static \
-      --disable-debug \
-      --disable-lfs-alias \
-      --with-default-audio=no
-
-    make -j$(nproc)
-    make install
-
-    echo "=== mpg123 static library ==="
-    ls -l "$HOME/mpg123-static/lib/"
-
-
-=== libmp3lame configure failure ===
-1:# ./configure --prefix=/home/runner/ffmpeg-static --pkg-config-flags=--static --extra-cflags=-I/usr/include --extra-ldflags='-static -L/usr/lib/x86_64-linux-gnu' --enable-gpl --enable-nonfree --enable-libmp3lame --enable-libfdk-aac --enable-encoder='png,jpeg' --enable-openssl --enable-protocol=https --enable-protocol=hls --disable-shared --enable-static --disable-debug --disable-doc
-2-ACCEPT_EULA='Y'
-3-ACTIONS_ORCHESTRATION_ID='ba990543-91aa-4010-9db9-9de5d70c9a5f.build._26_04'
-4-ACTIONS_RUNNER_ACTION_ARCHIVE_CACHE='/opt/actionarchivecache'
-5-ACTIONS_RUNNER_RETURN_JOB_RESULT_FOR_HOSTED='1'
-6-AGENT_TOOLSDIRECTORY='/opt/hostedtoolcache'
-7-ALL_COMPONENTS='
-8-    
-9-    aac_adtstoasc_bsf
-10-ahx_to_mp2_bsf
-11-apv_metadata_bsf
-12-av1_frame_merge_bsf
-13-av1_frame_split_bsf
-14-av1_metadata_bsf
-15-chomp_bsf
-16-dump_extradata_bsf
-17-dca_core_bsf
-18-dovi_rpu_bsf
-19-dovi_split_bsf
-20-dts2pts_bsf
-21-dv_error_marker_bsf
-22-eac3_core_bsf
-23-eia608_to_smpte436m_bsf
-24-evc_frame_merge_bsf
-25-extract_extradata_bsf
-26-filter_units_bsf
-27-h264_metadata_bsf
-28-h264_mp4toannexb_bsf
-29-h264_redundant_pps_bsf
-30-hapqa_extract_bsf
-31-hevc_metadata_bsf
---
-845-pcm_mulaw_at_encoder
-846-libaom_av1_encoder
-847-libcodec2_encoder
-848-libfdk_aac_encoder
-849-libgsm_encoder
-850-libgsm_ms_encoder
-851-libilbc_encoder
-852-libjxl_anim_encoder
-19715-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x179): undefined reference to `mpg123_open_feed'
-19716-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x194): undefined reference to `mpg123_delete'
-19717:/usr/bin/x86_64-linux-gnu-ld.bfd: /usr/lib/x86_64-linux-gnu/libmp3lame.a(mpglib_interface.o): in function `hip_decode_exit':
-19718-(.text+0x1cc): undefined reference to `mpg123_delete'
-19719:/usr/bin/x86_64-linux-gnu-ld.bfd: /usr/lib/x86_64-linux-gnu/libmp3lame.a(mpglib_interface.o): in function `hip_finish_pinfo':
-19720-(.text+0x3e7): undefined reference to `mpg123_info2'
-19721:/usr/bin/x86_64-linux-gnu-ld.bfd: /usr/lib/x86_64-linux-gnu/libmp3lame.a(mpglib_interface.o): in function `hip123_decode1':
-19722-(.text+0x501): undefined reference to `mpg123_feed'
-19723-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x52b): undefined reference to `mpg123_getformat'
-19724-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x595): undefined reference to `mpg123_decode_frame'
-19725-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x663): undefined reference to `mpg123_info2'
-19726-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x695): undefined reference to `mpg123_spf'
-19727-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x6cb): undefined reference to `mpg123_getstate2'
-19728-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x703): undefined reference to `mpg123_getstate2'
-19729-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x745): undefined reference to `mpg123_format_none'
-19730-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x758): undefined reference to `mpg123_format2'
-19731-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x763): undefined reference to `mpg123_decoder'
-19732-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x7d3): undefined reference to `mpg123_getformat'
-19733-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x7e8): undefined reference to `mpg123_decode_frame'
-19734:/usr/bin/x86_64-linux-gnu-ld.bfd: /usr/lib/x86_64-linux-gnu/libmp3lame.a(mpglib_interface.o): in function `hip_set_pinfo':
-19735-(.text+0x208): undefined reference to `mpg123_set_moreinfo'
-19736-collect2: error: ld returned 1 exit status
-19737:ERROR: libmp3lame >= 3.98.3 not found
-Error: Process completed with exit code 1.
-
-
-MULTIARCH="$(dpkg-architecture -qDEB_HOST_MULTIARCH)"
-
-./configure \
-  --prefix="$HOME/ffmpeg-static" \
-  --pkg-config-flags="--static" \
-  --extra-cflags="-I/usr/include" \
-  --extra-ldflags="-static -L/usr/lib/$MULTIARCH" \
-  --enable-gpl \
-  --enable-nonfree \
-  --enable-libmp3lame \
-  --enable-libfdk-aac \
-  --enable-encoder=png,jpeg \
-  --enable-openssl \
-  --enable-protocol=https \
-  --enable-protocol=hls \
-  --disable-shared \
-  --enable-static \
-  --disable-debug \
-  --disable-doc
-
-      - name: Install dependencies
-        run: |
-          sudo apt update
-          sudo apt install -y \
-            autoconf automake build-essential cmake libtool git \
-            pkg-config texinfo nasm yasm \
-            libssl-dev libmp3lame-dev libmpg123-dev \
-            zlib1g-dev libfdk-aac-dev
-
-      - name: Check LAME
-        run: |
-          MULTIARCH="$(dpkg-architecture -qDEB_HOST_MULTIARCH)"
-
-          cat > /tmp/test-lame.c <<'EOF'
-          #include <lame/lame.h>
-
-          int main(void)
-          {
-              lame_global_flags *gfp = lame_init();
-              if (!gfp)
-                  return 1;
-
-              lame_set_VBR_quality(gfp, 4.0f);
-              lame_close(gfp);
-
-              return 0;
-          }
-          EOF
-
-          gcc \
-            -I/usr/include \
-            -static \
-            -L"/usr/lib/$MULTIARCH" \
-            /tmp/test-lame.c \
-            -lmp3lame \
-            -lmpg123 \
-            -lm \
-            -o /tmp/test-lame
-
-          file /tmp/test-lame
-          /tmp/test-lame
-
-MULTIARCH=x86_64-linux-gnu
-LAME header:
--rw-r--r-- 1 root root 50395 Feb  4  2026 /usr/include/lame/lame.h
-LAME library:
--rw-r--r-- 1 root root 415900 Feb  4  2026 /usr/lib/x86_64-linux-gnu/libmp3lame.a
-=== direct link test ===
-/usr/bin/x86_64-linux-gnu-ld.bfd: /usr/lib/x86_64-linux-gnu/libmp3lame.a(mpglib_interface.o): in function `hip_decode_init':
-(.text+0x9c): undefined reference to `mpg123_init'
-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0xa5): undefined reference to `mpg123_new'
-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0xd1): undefined reference to `mpg123_param2'
-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0xd9): undefined reference to `mpg123_open_feed'
-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0xf4): undefined reference to `mpg123_delete'
-/usr/bin/x86_64-linux-gnu-ld.bfd: /usr/lib/x86_64-linux-gnu/libmp3lame.a(mpglib_interface.o): in function `hip_decode_init_gapless':
-(.text+0x13c): undefined reference to `mpg123_init'
-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x145): undefined reference to `mpg123_new'
-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x171): undefined reference to `mpg123_param2'
-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x179): undefined reference to `mpg123_open_feed'
-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x194): undefined reference to `mpg123_delete'
-/usr/bin/x86_64-linux-gnu-ld.bfd: /usr/lib/x86_64-linux-gnu/libmp3lame.a(mpglib_interface.o): in function `hip_decode_exit':
-(.text+0x1cc): undefined reference to `mpg123_delete'
-/usr/bin/x86_64-linux-gnu-ld.bfd: /usr/lib/x86_64-linux-gnu/libmp3lame.a(mpglib_interface.o): in function `hip_finish_pinfo':
-(.text+0x3e7): undefined reference to `mpg123_info2'
-/usr/bin/x86_64-linux-gnu-ld.bfd: /usr/lib/x86_64-linux-gnu/libmp3lame.a(mpglib_interface.o): in function `hip123_decode1':
-(.text+0x501): undefined reference to `mpg123_feed'
-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x52b): undefined reference to `mpg123_getformat'
-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x595): undefined reference to `mpg123_decode_frame'
-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x663): undefined reference to `mpg123_info2'
-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x695): undefined reference to `mpg123_spf'
-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x6cb): undefined reference to `mpg123_getstate2'
-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x703): undefined reference to `mpg123_getstate2'
-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x745): undefined reference to `mpg123_format_none'
-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x758): undefined reference to `mpg123_format2'
-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x763): undefined reference to `mpg123_decoder'
-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x7d3): undefined reference to `mpg123_getformat'
-/usr/bin/x86_64-linux-gnu-ld.bfd: (.text+0x7e8): undefined reference to `mpg123_decode_frame'
-/usr/bin/x86_64-linux-gnu-ld.bfd: /usr/lib/x86_64-linux-gnu/libmp3lame.a(mpglib_interface.o): in function `hip_set_pinfo':
-(.text+0x208): undefined reference to `mpg123_set_moreinfo'
-collect2: error: ld returned 1 exit status
-Error: Process completed with exit code 1.
-
-
-
-
-      - name: Check LAME
-        run: |
-          MULTIARCH="$(dpkg-architecture -qDEB_HOST_MULTIARCH)"
-
-          echo "MULTIARCH=$MULTIARCH"
-          echo "LAME header:"
-          ls -l /usr/include/lame/lame.h
-
-          echo "LAME library:"
-          ls -l "/usr/lib/$MULTIARCH/libmp3lame.a"
-
-          echo "=== direct link test ==="
-
-          cat > /tmp/test-lame.c <<'EOF'
-          #include <lame/lame.h>
-
-          int main(void)
-          {
-              lame_global_flags *gfp = lame_init();
-              if (!gfp)
-                  return 1;
-
-              lame_set_VBR_quality(gfp, 4.0f);
-              lame_close(gfp);
-
-              return 0;
-          }
-          EOF
-
-          gcc \
-            -I/usr/include \
-            -static \
-            -L"/usr/lib/$MULTIARCH" \
-            /tmp/test-lame.c \
-            -lmp3lame \
-            -lm \
-            -o /tmp/test-lame
-
-          file /tmp/test-lame
-          /tmp/test-lame
-
- 2026-09-23 05:31:54 (9.04 MB/s) - ‘ffmpeg-9.0.2.tar.gz’ saved [18129779/18129779]
-ERROR: libmp3lame >= 3.98.3 not found
-If you think configure made a mistake, make sure you are using the latest
-version from Git.  If the latest version fails, report the problem to the
-ffmpeg-user@ffmpeg.org mailing list or IRC #ffmpeg on irc.libera.chat.
-Include the log file "ffbuild/config.log" produced by configure as this will help
-solve the problem.
-Error: Process completed with exit code 1
 
 
 
