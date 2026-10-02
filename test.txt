@@ -1,4 +1,20 @@
 
+
+00f0:fixme:file:GetTempPath2W (260, 00007FFFFE2FF630) semi-stub
+00f0:fixme:win:RegisterPowerSettingNotification (0000000000010062,{02731015-4510-4526-99e6-e5a17ebd1aea},0): stub
+00f0:fixme:setupapi:SetupDiOpenDeviceInterfaceW flags 0x1 not implemented
+00f0:fixme:dwrite:dwritefactory_CreateMonitorRenderingParams (0000000000000001): monitor setting ignored
+012c:fixme:process:GetProcessGroupAffinity (FFFFFFFFFFFFFFFF,00007B1EBD84C3EE,00007B1EBD84C420): stub
+00f0:fixme:ntdll:NtQuerySystemInformation info_class SYSTEM_PERFORMANCE_INFORMATION
+00f0:fixme:msg:ChangeWindowMessageFilter c039 00000001
+00f0:fixme:dwmapi:DwmExtendFrameIntoClientArea (0000000000020076, 00007FFFFE2FF160) stub
+00f0:fixme:win:IsTouchWindow hwnd 0000000000020076, flags 00007FFFFE2FF1B4 stub!
+00f0:fixme:dwmapi:DwmExtendFrameIntoClientArea (0000000000030076, 00007FFFFE2FF4D0) stub
+00f0:fixme:win:IsTouchWindow hwnd 0000000000030076, flags 00007FFFFE2FF524 stub!
+00f0:fixme:process:GetProcessGroupAffinity (FFFFFFFFFFFFFFFF,00007FFFFE2FE2BE,00007FFFFE2FE2F0): stub
+
+
+
 00f0:fixme:file:GetTempPath2W (260, 00007FFFFE2FF630) semi-stub
 00f0:fixme:win:RegisterPowerSettingNotification (0000000000010062,{02731015-4510-4526-99e6-e5a17ebd1aea},0): stub
 00f0:fixme:setupapi:SetupDiOpenDeviceInterfaceW flags 0x1 not implemented
