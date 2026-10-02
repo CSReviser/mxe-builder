@@ -1,5 +1,27 @@
 
 
+x86_64-w64-mingw32-addr2line \
+  -e build/WinCaptureStream2/CaptureStream2.exe \
+  -f -C \
+  0x14077150e
+
+x86_64-w64-mingw32-addr2line \
+  -e build/WinCaptureStream2/CaptureStream2.exe \
+  -f -C \
+  0x140771513
+
+
+grep -R "QScreen" -n \
+  --include='*.cpp' \
+  --include='*.h' \
+  .
+
+
+grep -R "\.name()" -n \
+  --include='*.cpp' \
+  --include='*.h' \
+  .
+
 
 
   grep -B5 -A5 'QScreen::name'
