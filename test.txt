@@ -1,5 +1,15 @@
 
 
+x86_64-w64-mingw32-addr2line -e capturestream2.exe -f -C 0x167f2c0
+
+
+x86_64-w64-mingw32-addr2line -e capturestream2.exe -f -C 0x771513
+x86_64-w64-mingw32-addr2line -e capturestream2.exe -f -C 0x645934
+x86_64-w64-mingw32-addr2line -e capturestream2.exe -f -C 0x10dd
+x86_64-w64-mingw32-addr2line -e capturestream2.exe -f -C 0x1436
+
+
+
 
 Unhandled exception: page fault on read access to 0x0000000000000008 in 64-bit code (0x0000014167f2c0).
 Register dump:
