@@ -8,6 +8,23 @@ x86_64-w64-mingw32-addr2line \
   0x1400010dd \
   0x140001436
 
+??
+qrect.cpp:?
+??
+mocs_compilation.c:?
+??
+qtentrypoint_win.c:?
+__tmainCRTStartup
+/opt/mxe/tmp-gcc-x86_64-w64-mingw32.static/gcc-11.5.0.build_.crt/../gcc-11.5.0.build_/mingw-w64-v14.0.0/mingw-w64-crt/crt/crtexe.c:261
+WinMainCRTStartup
+/opt/mxe/tmp-gcc-x86_64-w64-mingw32.static/gcc-11.5.0.build_.crt/../gcc-11.5.0.build_/mingw-w64-v14.0.0/mingw-w64-crt/crt/crtexe.c:100
+
+
+
+
+
+
+
 
 x86_64-w64-mingw32-objdump \
   -d \
