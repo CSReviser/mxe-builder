@@ -1,4 +1,13 @@
 
+x86_64-w64-mingw32-addr2line \
+  -e build/WinCaptureStream2/CaptureStream2.exe \
+  -f -C \
+  0x14167f2c0 \
+  0x140771513 \
+  0x140645934 \
+  0x1400010dd \
+  0x140001436
+
 
 x86_64-w64-mingw32-objdump \
   -d \
