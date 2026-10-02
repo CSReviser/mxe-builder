@@ -1,5 +1,209 @@
 
 
+
+
+  grep -B5 -A5 'QScreen::name'
+   1407714f9:	48 8b 4c 24 70       	mov    0x70(%rsp),%rcx
+   1407714fe:	80 79 30 00          	cmpb   $0x0,0x30(%rcx)
+   140771502:	0f 85 e8 05 00 00    	jne    140771af0 <qMain(int, char**)+0x880>
+   140771508:	48 89 f2             	mov    %rsi,%rdx
+   14077150b:	4c 89 e1             	mov    %r12,%rcx
+   14077150e:	e8 9d dd f0 00       	call   14167f2b0 <QScreen::name() const>
+   140771513:	48 8b 94 24 98 00 00 	mov    0x98(%rsp),%rdx
+   14077151a:	00 
+   14077151b:	4c 8b 84 24 a0 00 00 	mov    0xa0(%rsp),%r8
+   140771522:	00 
+   140771523:	4c 89 e9             	mov    %r13,%rcx
+--
+   140b253ce:	48 89 c2             	mov    %rax,%rdx
+   140b253d1:	48 8d 84 24 c0 00 00 	lea    0xc0(%rsp),%rax
+   140b253d8:	00 
+   140b253d9:	48 89 c1             	mov    %rax,%rcx
+   140b253dc:	48 89 44 24 30       	mov    %rax,0x30(%rsp)
+   140b253e1:	e8 ca 9e b5 00       	call   14167f2b0 <QScreen::name() const>
+   140b253e6:	48 8b 94 24 c8 00 00 	mov    0xc8(%rsp),%rdx
+   140b253ed:	00 
+   140b253ee:	4c 8b 84 24 d0 00 00 	mov    0xd0(%rsp),%r8
+   140b253f5:	00 
+   140b253f6:	4c 89 f1             	mov    %r14,%rcx
+--
+   140b684f8:	48 8b 4c 24 58       	mov    0x58(%rsp),%rcx
+   140b684fd:	48 89 f2             	mov    %rsi,%rdx
+   140b68500:	e8 bb bd f8 ff       	call   140af42c0 <QScreenPrivate::UpdateEmitter::UpdateEmitter(QScreen*)>
+   140b68505:	48 89 f2             	mov    %rsi,%rdx
+   140b68508:	4c 89 e1             	mov    %r12,%rcx
+   140b6850b:	e8 a0 6d b1 00       	call   14167f2b0 <QScreen::name() const>
+   140b68510:	48 8b 84 24 e0 00 00 	mov    0xe0(%rsp),%rax
+   140b68517:	00 
+   140b68518:	48 89 44 24 40       	mov    %rax,0x40(%rsp)
+   140b6851d:	48 85 c0             	test   %rax,%rax
+   140b68520:	0f 85 b0 00 00 00    	jne    140b685d6 <QHighDpiScaling::setScreenFactor(QScreen*, double)+0x1a6>
+--
+   140b6bcd3:	4c 39 ee             	cmp    %r13,%rsi
+   140b6bcd6:	74 96                	je     140b6bc6e <QHighDpiScaling::updateHighDpiScaling()+0x20e>
+   140b6bcd8:	4d 8b 7d 00          	mov    0x0(%r13),%r15
+   140b6bcdc:	48 89 f9             	mov    %rdi,%rcx
+   140b6bcdf:	4c 89 fa             	mov    %r15,%rdx
+   140b6bce2:	e8 c9 35 b1 00       	call   14167f2b0 <QScreen::name() const>
+   140b6bce7:	48 8b 4b 08          	mov    0x8(%rbx),%rcx
+   140b6bceb:	48 8b 53 10          	mov    0x10(%rbx),%rdx
+   140b6bcef:	4c 8b 84 24 b8 00 00 	mov    0xb8(%rsp),%r8
+   140b6bcf6:	00 
+   140b6bcf7:	48 8b 84 24 b0 00 00 	mov    0xb0(%rsp),%rax
+--
+   14167f2ac:	90                   	nop
+   14167f2ad:	90                   	nop
+   14167f2ae:	90                   	nop
+   14167f2af:	90                   	nop
+
+000000014167f2b0 <QScreen::name() const>:
+   14167f2b0:	f3 0f 1e fa          	endbr64 
+   14167f2b4:	53                   	push   %rbx
+   14167f2b5:	48 83 ec 40          	sub    $0x40,%rsp
+   14167f2b9:	48 8b 1d f0 d1 50 00 	mov    0x50d1f0(%rip),%rbx        # 141b8c4b0 <.refptr.__stack_chk_guard>
+   14167f2c0:	48 8b 52 08          	mov    0x8(%rdx),%rdx
+--
+   14167f2d3:	31 c9                	xor    %ecx,%ecx
+   14167f2d5:	48 8b 0a             	mov    (%rdx),%rcx
+   14167f2d8:	4c 8b 81 90 00 00 00 	mov    0x90(%rcx),%r8
+   14167f2df:	48 8d 0d 2a dd e2 ff 	lea    -0x1d22d6(%rip),%rcx        # 1414ad010 <QPlatformScreen::name() const>
+   14167f2e6:	49 39 c8             	cmp    %rcx,%r8
+   14167f2e9:	75 25                	jne    14167f310 <QScreen::name() const+0x60>
+   14167f2eb:	48 c7 40 10 00 00 00 	movq   $0x0,0x10(%rax)
+   14167f2f2:	00 
+   14167f2f3:	66 0f ef c0          	pxor   %xmm0,%xmm0
+   14167f2f7:	0f 11 00             	movups %xmm0,(%rax)
+   14167f2fa:	48 8b 54 24 38       	mov    0x38(%rsp),%rdx
+   14167f2ff:	48 2b 13             	sub    (%rbx),%rdx
+   14167f302:	75 1e                	jne    14167f322 <QScreen::name() const+0x72>
+   14167f304:	48 83 c4 40          	add    $0x40,%rsp
+   14167f308:	5b                   	pop    %rbx
+   14167f309:	c3                   	ret    
+   14167f30a:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)
+   14167f310:	48 89 44 24 28       	mov    %rax,0x28(%rsp)
+   14167f315:	48 89 c1             	mov    %rax,%rcx
+   14167f318:	41 ff d0             	call   *%r8
+   14167f31b:	48 8b 44 24 28       	mov    0x28(%rsp),%rax
+   14167f320:	eb d8                	jmp    14167f2fa <QScreen::name() const+0x4a>
+   14167f322:	e8 e9 0f fd fe       	call   140650310 <__stack_chk_fail>
+   14167f327:	90                   	nop
+   14167f328:	90                   	nop
+   14167f329:	90                   	nop
+   14167f32a:	90                   	nop
+--
+   14186075d:	48 8b 0b             	mov    (%rbx),%rcx
+   141860760:	80 79 30 00          	cmpb   $0x0,0x30(%rcx)
+   141860764:	0f 85 dc 02 00 00    	jne    141860a46 <operator<<(QDebug, QOpenGLContext const*)+0x586>
+   14186076a:	48 89 fa             	mov    %rdi,%rdx
+   14186076d:	4c 89 e1             	mov    %r12,%rcx
+   141860770:	e8 3b eb e1 ff       	call   14167f2b0 <QScreen::name() const>
+   141860775:	48 8b 54 24 68       	mov    0x68(%rsp),%rdx
+   14186077a:	4c 8b 44 24 70       	mov    0x70(%rsp),%r8
+   14186077f:	48 89 d9             	mov    %rbx,%rcx
+   141860782:	48 85 d2             	test   %rdx,%rdx
+   141860785:	48 0f 44 15 c3 a1 32 	cmove  0x32a1c3(%rip),%rdx        # 141b8a950 <.refptr._ZN7QString6_emptyE>
+--
+   14186b1aa:	48 89 d9             	mov    %rbx,%rcx
+   14186b1ad:	e8 9e 9c 92 ff       	call   141194e50 <QDebug::operator<<(char const*)>
+   14186b1b2:	4c 89 fa             	mov    %r15,%rdx
+   14186b1b5:	4c 89 e1             	mov    %r12,%rcx
+   14186b1b8:	48 89 c6             	mov    %rax,%rsi
+   14186b1bb:	e8 f0 40 e1 ff       	call   14167f2b0 <QScreen::name() const>
+   14186b1c0:	48 8b 94 24 d8 00 00 	mov    0xd8(%rsp),%rdx
+   14186b1c7:	00 
+   14186b1c8:	4c 8b 84 24 e0 00 00 	mov    0xe0(%rsp),%r8
+   14186b1cf:	00 
+   14186b1d0:	48 89 f1             	mov    %rsi,%rcx
+
+
+ grep -B5 -A5 '14167f2b0'
+   1407714f9:	48 8b 4c 24 70       	mov    0x70(%rsp),%rcx
+   1407714fe:	80 79 30 00          	cmpb   $0x0,0x30(%rcx)
+   140771502:	0f 85 e8 05 00 00    	jne    140771af0 <_Z5qMainiPPc+0x880>
+   140771508:	48 89 f2             	mov    %rsi,%rdx
+   14077150b:	4c 89 e1             	mov    %r12,%rcx
+   14077150e:	e8 9d dd f0 00       	call   14167f2b0 <_ZNK7QScreen4nameEv>
+   140771513:	48 8b 94 24 98 00 00 	mov    0x98(%rsp),%rdx
+   14077151a:	00 
+   14077151b:	4c 8b 84 24 a0 00 00 	mov    0xa0(%rsp),%r8
+   140771522:	00 
+   140771523:	4c 89 e9             	mov    %r13,%rcx
+--
+   140b253ce:	48 89 c2             	mov    %rax,%rdx
+   140b253d1:	48 8d 84 24 c0 00 00 	lea    0xc0(%rsp),%rax
+   140b253d8:	00 
+   140b253d9:	48 89 c1             	mov    %rax,%rcx
+   140b253dc:	48 89 44 24 30       	mov    %rax,0x30(%rsp)
+   140b253e1:	e8 ca 9e b5 00       	call   14167f2b0 <_ZNK7QScreen4nameEv>
+   140b253e6:	48 8b 94 24 c8 00 00 	mov    0xc8(%rsp),%rdx
+   140b253ed:	00 
+   140b253ee:	4c 8b 84 24 d0 00 00 	mov    0xd0(%rsp),%r8
+   140b253f5:	00 
+   140b253f6:	4c 89 f1             	mov    %r14,%rcx
+--
+   140b684f8:	48 8b 4c 24 58       	mov    0x58(%rsp),%rcx
+   140b684fd:	48 89 f2             	mov    %rsi,%rdx
+   140b68500:	e8 bb bd f8 ff       	call   140af42c0 <_ZN14QScreenPrivate13UpdateEmitterC1EP7QScreen>
+   140b68505:	48 89 f2             	mov    %rsi,%rdx
+   140b68508:	4c 89 e1             	mov    %r12,%rcx
+   140b6850b:	e8 a0 6d b1 00       	call   14167f2b0 <_ZNK7QScreen4nameEv>
+   140b68510:	48 8b 84 24 e0 00 00 	mov    0xe0(%rsp),%rax
+   140b68517:	00 
+   140b68518:	48 89 44 24 40       	mov    %rax,0x40(%rsp)
+   140b6851d:	48 85 c0             	test   %rax,%rax
+   140b68520:	0f 85 b0 00 00 00    	jne    140b685d6 <_ZN15QHighDpiScaling15setScreenFactorEP7QScreend+0x1a6>
+--
+   140b6bcd3:	4c 39 ee             	cmp    %r13,%rsi
+   140b6bcd6:	74 96                	je     140b6bc6e <_ZN15QHighDpiScaling20updateHighDpiScalingEv+0x20e>
+   140b6bcd8:	4d 8b 7d 00          	mov    0x0(%r13),%r15
+   140b6bcdc:	48 89 f9             	mov    %rdi,%rcx
+   140b6bcdf:	4c 89 fa             	mov    %r15,%rdx
+   140b6bce2:	e8 c9 35 b1 00       	call   14167f2b0 <_ZNK7QScreen4nameEv>
+   140b6bce7:	48 8b 4b 08          	mov    0x8(%rbx),%rcx
+   140b6bceb:	48 8b 53 10          	mov    0x10(%rbx),%rdx
+   140b6bcef:	4c 8b 84 24 b8 00 00 	mov    0xb8(%rsp),%r8
+   140b6bcf6:	00 
+   140b6bcf7:	48 8b 84 24 b0 00 00 	mov    0xb0(%rsp),%rax
+--
+   14167f2ac:	90                   	nop
+   14167f2ad:	90                   	nop
+   14167f2ae:	90                   	nop
+   14167f2af:	90                   	nop
+
+000000014167f2b0 <_ZNK7QScreen4nameEv>:
+   14167f2b0:	f3 0f 1e fa          	endbr64 
+   14167f2b4:	53                   	push   %rbx
+   14167f2b5:	48 83 ec 40          	sub    $0x40,%rsp
+   14167f2b9:	48 8b 1d f0 d1 50 00 	mov    0x50d1f0(%rip),%rbx        # 141b8c4b0 <.refptr.__stack_chk_guard>
+   14167f2c0:	48 8b 52 08          	mov    0x8(%rdx),%rdx
+   14167f2c4:	48 8b 52 78          	mov    0x78(%rdx),%rdx
+--
+   14186075d:	48 8b 0b             	mov    (%rbx),%rcx
+   141860760:	80 79 30 00          	cmpb   $0x0,0x30(%rcx)
+   141860764:	0f 85 dc 02 00 00    	jne    141860a46 <_Zls6QDebugPK14QOpenGLContext+0x586>
+   14186076a:	48 89 fa             	mov    %rdi,%rdx
+   14186076d:	4c 89 e1             	mov    %r12,%rcx
+   141860770:	e8 3b eb e1 ff       	call   14167f2b0 <_ZNK7QScreen4nameEv>
+   141860775:	48 8b 54 24 68       	mov    0x68(%rsp),%rdx
+   14186077a:	4c 8b 44 24 70       	mov    0x70(%rsp),%r8
+   14186077f:	48 89 d9             	mov    %rbx,%rcx
+   141860782:	48 85 d2             	test   %rdx,%rdx
+   141860785:	48 0f 44 15 c3 a1 32 	cmove  0x32a1c3(%rip),%rdx        # 141b8a950 <.refptr._ZN7QString6_emptyE>
+--
+   14186b1aa:	48 89 d9             	mov    %rbx,%rcx
+   14186b1ad:	e8 9e 9c 92 ff       	call   141194e50 <_ZN6QDebuglsEPKc>
+   14186b1b2:	4c 89 fa             	mov    %r15,%rdx
+   14186b1b5:	4c 89 e1             	mov    %r12,%rcx
+   14186b1b8:	48 89 c6             	mov    %rax,%rsi
+   14186b1bb:	e8 f0 40 e1 ff       	call   14167f2b0 <_ZNK7QScreen4nameEv>
+   14186b1c0:	48 8b 94 24 d8 00 00 	mov    0xd8(%rsp),%rdx
+   14186b1c7:	00 
+   14186b1c8:	4c 8b 84 24 e0 00 00 	mov    0xe0(%rsp),%r8
+   14186b1cf:	00 
+   14186b1d0:	48 89 f1             	mov    %rsi,%rcx
+
+
+
 x86_64-w64-mingw32-objdump -d -C \
   build/WinCaptureStream2/CaptureStream2.exe |
   grep -B5 -A5 'QScreen::name'
