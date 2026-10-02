@@ -1,5 +1,21 @@
 
 
+x86_64-w64-mingw32-objdump \
+  -d \
+  --start-address=0x14167f280 \
+  --stop-address=0x14167f320 \
+  build/WinCaptureStream2/CaptureStream2.exe
+
+
+x86_64-w64-mingw32-nm \
+  -C \
+  build/WinCaptureStream2/CaptureStream2.exe |
+  grep -i 'QRect'
+
+
+
+
+
 x86_64-w64-mingw32-addr2line \
   -e ./CaptureStream2.exe \
   -f -C \
