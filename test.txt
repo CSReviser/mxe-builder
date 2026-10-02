@@ -1,3 +1,99 @@
+
+=== GCC ===
+x86_64-w64-mingw32.static-gcc (GCC) 11.5.0
+Copyright (C) 2021 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+=== G++ ===
+x86_64-w64-mingw32.static-g++ (GCC) 11.5.0
+Copyright (C) 2021 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+=== CMake ===
+cmake version 3.22.1
+
+CMake suite maintained and supported by Kitware (kitware.com/cmake).
+=== Qt ===
+Detected locale "C" with character encoding "ANSI_X3.4-1968", which is not UTF-8.
+Qt depends on a UTF-8 locale, and has switched to "C.UTF-8" instead.
+If this causes problems, reconfigure your locale. See the locale(1) manual
+for more information.
+QMake version 3.1
+Using Qt version 6.12.0 in /opt/mxe/usr/x86_64-w64-mingw32.static/qt6/lib
+
+
+build/WinCaptureStream2/CaptureStream2.exe: PE32+ executable (GUI) x86-64, for MS Windows
+
+build/WinCaptureStream2/CaptureStream2.exe:     file format pei-x86-64
+architecture: i386:x86-64, flags 0x0000013b:
+HAS_RELOC, EXEC_P, HAS_DEBUG, HAS_SYMS, HAS_LOCALS, D_PAGED
+start address 0x0000000140001420
+
+  0 .text         018faed0  0000000140001000  0000000140001000  00000600  2**4
+ 12 .debug_aranges 00002b70  00000001423b1000  00000001423b1000  023a5800  2**0
+ 13 .debug_info   00299b7f  00000001423b4000  00000001423b4000  023a8400  2**0
+ 14 .debug_abbrev 00023307  000000014264e000  000000014264e000  02642000  2**0
+ 15 .debug_line   000cb0a8  0000000142672000  0000000142672000  02665400  2**0
+ 16 .debug_frame  00037e40  000000014273e000  000000014273e000  02730600  2**0
+ 17 .debug_str    0000a0be  0000000142776000  0000000142776000  02768600  2**0
+ 18 .debug_line_str 00015221  0000000142781000  0000000142781000  02772800  2**0
+ 19 .debug_loclists 00117fe0  0000000142797000  0000000142797000  02787c00  2**0
+ 20 .debug_rnglists 00011823  00000001428af000  00000001428af000  0289fc00  2**0
+
+
+
+=== GCC ===
+x86_64-w64-mingw32.static-gcc (GCC) 11.5.0
+Copyright (C) 2021 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+=== G++ ===
+x86_64-w64-mingw32.static-g++ (GCC) 11.5.0
+Copyright (C) 2021 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+=== CMake ===
+cmake version 3.22.1
+
+CMake suite maintained and supported by Kitware (kitware.com/cmake).
+=== Qt ===
+Detected locale "C" with character encoding "ANSI_X3.4-1968", which is not UTF-8.
+Qt depends on a UTF-8 locale, and has switched to "C.UTF-8" instead.
+If this causes problems, reconfigure your locale. See the locale(1) manual
+for more information.
+QMake version 3.1
+Using Qt version 6.11.2 in /opt/mxe/usr/x86_64-w64-mingw32.static/qt6/lib
+
+build/WinCaptureStream2/CaptureStream2.exe: PE32+ executable (GUI) x86-64, for MS Windows
+
+build/WinCaptureStream2/CaptureStream2.exe:     file format pei-x86-64
+architecture: i386:x86-64, flags 0x0000013b:
+HAS_RELOC, EXEC_P, HAS_DEBUG, HAS_SYMS, HAS_LOCALS, D_PAGED
+start address 0x0000000140001420
+
+  0 .text         018c8ba0  0000000140001000  0000000140001000  00000600  2**4
+ 12 .debug_aranges 00002b70  0000000142376000  0000000142376000  0236b200  2**0
+ 13 .debug_info   00299b7f  0000000142379000  0000000142379000  0236de00  2**0
+ 14 .debug_abbrev 00023307  0000000142613000  0000000142613000  02607a00  2**0
+ 15 .debug_line   000cb0a8  0000000142637000  0000000142637000  0262ae00  2**0
+ 16 .debug_frame  00037e40  0000000142703000  0000000142703000  026f6000  2**0
+ 17 .debug_str    0000a0be  000000014273b000  000000014273b000  0272e000  2**0
+ 18 .debug_line_str 00015221  0000000142746000  0000000142746000  02738200  2**0
+ 19 .debug_loclists 00117fe0  000000014275c000  000000014275c000  0274d600  2**0
+ 20 .debug_rnglists 00011823  0000000142874000  0000000142874000  02865600  2**0
+
+
+
+
+
+
+
+
+
 ??
 ??:0
 ??
