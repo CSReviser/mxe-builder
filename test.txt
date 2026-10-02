@@ -1,4 +1,15 @@
-  0x14077150e
+
+00f0:fixme:file:GetTempPath2W (260, 00007FFFFE2FF630) semi-stub
+00f0:fixme:win:RegisterPowerSettingNotification (0000000000010062,{02731015-4510-4526-99e6-e5a17ebd1aea},0): stub
+00f0:fixme:setupapi:SetupDiOpenDeviceInterfaceW flags 0x1 not implemented
+wine: Call from 00006FFFFF37D887 to unimplemented function mscms.dll.WcsCreateIccProfile, aborting
+00f0:err:seh:user_callback_handler ignoring exception 80000100
+00f0:fixme:dwrite:dwritefactory_CreateMonitorRenderingParams (0000000000000001): monitor setting ignored
+0134:fixme:process:GetProcessGroupAffinity (FFFFFFFFFFFFFFFF,000078B5DAA4C3DE,000078B5DAA4C410): stub
+00f0:err:seh:NtRaiseException Unhandled exception code c0000602 flags 1 addr 0x1407719f5
+
+
+0x14077150e
 mocs_compilation.c:?
 
 
