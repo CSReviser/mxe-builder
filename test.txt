@@ -1,5 +1,10 @@
 
 
+WINEDLLOVERRIDES="mscms=n" wine yourapp.exe
+
+WINEDLLOVERRIDES="mscms=b" wine yourapp.exe
+
+
 x86_64-w64-mingw32-nm -C ./CaptureStream2.exe | grep -i WcsCreateIccProfile
 000000014002a318 T WcsCreateIccProfile
 0000000142368b78 I __imp_WcsCreateIccProfile
