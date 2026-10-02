@@ -1,4 +1,10 @@
 
+
+x86_64-w64-mingw32-nm -C \
+  build/WinCaptureStream2/CaptureStream2.exe |
+  grep 'QScreen::name'
+
+
 x86_64-w64-mingw32-addr2line \
   -e build/WinCaptureStream2/CaptureStream2.exe \
   -f -C \
