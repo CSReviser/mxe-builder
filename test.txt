@@ -1,5 +1,49 @@
 
 
+strings ./CaptureStream2.exe | grep -i WcsCreateIccProfile
+6.12
+WcsCreateIccProfile
+__imp_WcsCreateIccProfile
+WcsCreateIccProfile
+6.11
+
+x86_64-w64-mingw32-objdump -p ./CaptureStream2.exe | grep -i -B5 -A20 'mscms.dll'
+6.12
+	236b952	 1641  lstrcmpW
+	236b95e	 1653  lstrlenW
+
+ 0236612c	02366f10 00000000 00000000 0236dfe8 02368b60
+
+	DLL Name: mscms.dll
+	vma:  Hint/Ord Member-Name Bound-To
+	236b96a	    4  CloseColorProfile
+	236b97e	   60  GetColorProfileFromHandle
+	236b99a	   92  OpenColorProfileW
+	236b9ae	  112  WcsCreateIccProfile
+
+ 02366140	02366f38 00000000 00000000 0236e288 02368b88
+
+	DLL Name: msvcrt.dll
+	vma:  Hint/Ord Member-Name Bound-To
+	236b9c4	   22  iswctype
+	236b9d0	   27  _assert
+	236b9da	  137  ___lc_codepage_func
+	236b9f0	  140  ___mb_cur_max_func
+	236ba06	  143  __argc
+	236ba10	  144  __argv
+	236ba1a	  155  __getmainargs
+	236ba2a	  156  __initenv
+	236ba36	  157  __iob_func
+	236ba44	  163  __set_app_type
+6.11
+
+x86_64-w64-mingw32-objdump -p ./CaptureStream2.exe | grep -i 'WcsCreateIccProfile'
+6.12
+	236b9ae	  112  WcsCreateIccProfile
+6.11
+
+
+
 strings CaptureStream2-6.11.exe | grep -i WcsCreateIccProfile
 
 x86_64-w64-mingw32-objdump -p CaptureStream2-6.11.exe | grep -i -B5 -A20 'mscms.dll'
