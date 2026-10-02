@@ -1,8 +1,77 @@
 
 
 x86_64-w64-mingw32-nm -C ./CaptureStream2.exe | grep -i WcsCreateIccProfile
+000000014002a318 T WcsCreateIccProfile
+0000000142368b78 I __imp_WcsCreateIccProfile
 
 x86_64-w64-mingw32-objdump -d -C ./CaptureStream2.exe | grep -i -B10 -A20 'WcsCreateIccProfile'
+000000014002a308 <GetDpiForMonitor>:
+   14002a308:	ff 25 92 ef 33 02    	jmp    *0x233ef92(%rip)        # 1423692a0 <__imp_GetDpiForMonitor>
+   14002a30e:	90                   	nop
+   14002a30f:	90                   	nop
+
+000000014002a310 <Direct3DCreate9>:
+   14002a310:	ff 25 f2 de 33 02    	jmp    *0x233def2(%rip)        # 142368208 <__imp_Direct3DCreate9>
+   14002a316:	90                   	nop
+   14002a317:	90                   	nop
+
+000000014002a318 <WcsCreateIccProfile>:
+   14002a318:	ff 25 5a e8 33 02    	jmp    *0x233e85a(%rip)        # 142368b78 <__imp_WcsCreateIccProfile>
+   14002a31e:	90                   	nop
+   14002a31f:	90                   	nop
+
+000000014002a320 <OpenColorProfileW>:
+   14002a320:	ff 25 4a e8 33 02    	jmp    *0x233e84a(%rip)        # 142368b70 <__imp_OpenColorProfileW>
+   14002a326:	90                   	nop
+   14002a327:	90                   	nop
+
+000000014002a328 <GetColorProfileFromHandle>:
+   14002a328:	ff 25 3a e8 33 02    	jmp    *0x233e83a(%rip)        # 142368b68 <__imp_GetColorProfileFromHandle>
+   14002a32e:	90                   	nop
+   14002a32f:	90                   	nop
+
+000000014002a330 <CloseColorProfile>:
+   14002a330:	ff 25 2a e8 33 02    	jmp    *0x233e82a(%rip)        # 142368b60 <__imp_CloseColorProfile>
+   14002a336:	90                   	nop
+   14002a337:	90                   	nop
+
+000000014002a338 <BCryptSetProperty>:
+   14002a338:	ff 25 da dd 33 02    	jmp    *0x233ddda(%rip)        # 142368118 <__imp_BCryptSetProperty>
+--
+   1406c06a0:	4c 89 e9             	mov    %r13,%rcx
+   1406c06a3:	01 c0                	add    %eax,%eax
+   1406c06a5:	41 b8 01 00 00 00    	mov    $0x1,%r8d
+   1406c06ab:	89 84 24 e0 00 00 00 	mov    %eax,0xe0(%rsp)
+   1406c06b2:	e8 69 9c 96 ff       	call   14002a320 <OpenColorProfileW>
+   1406c06b7:	48 89 c6             	mov    %rax,%rsi
+   1406c06ba:	48 85 c0             	test   %rax,%rax
+   1406c06bd:	0f 84 c0 05 00 00    	je     1406c0c83 <monitorEnumCallback(HMONITOR__*, HDC__*, tagRECT*, long long)+0xdf3>
+   1406c06c3:	ba 00 00 01 00       	mov    $0x10000,%edx
+   1406c06c8:	48 89 c1             	mov    %rax,%rcx
+   1406c06cb:	e8 48 9c 96 ff       	call   14002a318 <WcsCreateIccProfile>
+   1406c06d0:	49 89 c5             	mov    %rax,%r13
+   1406c06d3:	48 85 c0             	test   %rax,%rax
+   1406c06d6:	0f 84 49 1a 00 00    	je     1406c2125 <monitorEnumCallback(HMONITOR__*, HDC__*, tagRECT*, long long)+0x2295>
+   1406c06dc:	48 89 f1             	mov    %rsi,%rcx
+   1406c06df:	e8 4c 9c 96 ff       	call   14002a330 <CloseColorProfile>
+   1406c06e4:	4d 89 f8             	mov    %r15,%r8
+   1406c06e7:	31 d2                	xor    %edx,%edx
+   1406c06e9:	4c 89 e9             	mov    %r13,%rcx
+   1406c06ec:	c7 84 24 a0 00 00 00 	movl   $0x0,0xa0(%rsp)
+   1406c06f3:	00 00 00 00 
+   1406c06f7:	e8 2c 9c 96 ff       	call   14002a328 <GetColorProfileFromHandle>
+   1406c06fc:	8b 94 24 a0 00 00 00 	mov    0xa0(%rsp),%edx
+   1406c0703:	48 8b 4c 24 40       	mov    0x40(%rsp),%rcx
+   1406c0708:	45 31 c0             	xor    %r8d,%r8d
+   1406c070b:	e8 20 51 1b 00       	call   140875830 <QByteArray::QByteArray(long long, Qt::Initialization)>
+   1406c0710:	48 8b 84 24 00 02 00 	mov    0x200(%rsp),%rax
+   1406c0717:	00 
+   1406c0718:	48 85 c0             	test   %rax,%rax
+   1406c071b:	74 07                	je     1406c0724 <monitorEnumCallback(HMONITOR__*, HDC__*, tagRECT*, long long)+0x894>
+   1406c071d:	8b 00                	mov    (%rax),%eax
+
+
+
 
 strings ./CaptureStream2.exe | grep -i WcsCreateIccProfile
 6.12
