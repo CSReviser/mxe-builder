@@ -1,5 +1,9 @@
 
 
+x86_64-w64-mingw32-nm -C ./CaptureStream2.exe | grep -i WcsCreateIccProfile
+
+x86_64-w64-mingw32-objdump -d -C ./CaptureStream2.exe | grep -i -B10 -A20 'WcsCreateIccProfile'
+
 strings ./CaptureStream2.exe | grep -i WcsCreateIccProfile
 6.12
 WcsCreateIccProfile
