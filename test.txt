@@ -1,5 +1,14 @@
 
 
+x86_64-w64-mingw32-objdump -d -C \
+  build/WinCaptureStream2/CaptureStream2.exe |
+  grep -B5 -A5 'QScreen::name'
+
+
+x86_64-w64-mingw32-objdump -d \
+  build/WinCaptureStream2/CaptureStream2.exe |
+  grep -B5 -A5 '14167f2b0'
+
 x86_64-w64-mingw32-nm -C \
   build/WinCaptureStream2/CaptureStream2.exe |
   grep 'QScreen::name'
