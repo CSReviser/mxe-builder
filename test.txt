@@ -8,7 +8,26 @@
 ??:0
 ??
 ??:0
+      - name: Inspect build environment
+        run: |
+          echo "=== GCC ==="
+          /opt/mxe/usr/bin/x86_64-w64-mingw32.static-gcc --version
 
+          echo "=== G++ ==="
+          /opt/mxe/usr/bin/x86_64-w64-mingw32.static-g++ --version
+
+          echo "=== CMake ==="
+          cmake --version
+
+          echo "=== Qt ==="
+          /opt/mxe/usr/x86_64-w64-mingw32.static/qt6/bin/qmake --version
+
+      - name: Inspect executable
+        run: |
+          file build/CaptureStream2.exe
+          objdump -f build/CaptureStream2.exe
+          objdump --section-headers build/CaptureStream2.exe | grep -E 'debug|text'
+          objdump -x build/CaptureStream2.exe > build/CaptureStream2-objdump.txt
 
 x86_64-w64-mingw32-addr2line -e capturestream2.exe -f -C 0x167f2c0
 
