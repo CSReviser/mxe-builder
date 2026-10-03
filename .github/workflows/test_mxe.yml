@@ -56,11 +56,10 @@ jobs:
         run: |
           git clone https://github.com/qt/qtbase.git
           ls
-          grep -n -A120 -B20 \
-            'static QColorSpace resolveColorSpace' \
+          gsed -n '347,457p' \
             qtbase/src/plugins/platforms/windows/qwindowsscreen.cpp
           git rev-parse HEAD
-          find src/qt/qt6 -maxdepth 1 -type f -name 'qt6-qtbase*' -print
+          find qtbase/src -maxdepth 1 -type f -name 'qt6-qtbase*' -print
           sed -n '1,240p' src/qt/qt6/qt6-qtbase-1-fixes.patc
 
       - name: Configure and build Qt statically (make version)
