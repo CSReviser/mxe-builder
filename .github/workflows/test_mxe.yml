@@ -54,15 +54,11 @@ jobs:
           
       - name: Download Qt 6.9 source
         run: |
-          git clone https://github.com/mxe/mxe.git
-          ls
-          cd mxe
-          cd src
-          cd plugins
+          git clone https://github.com/qt/qtbase.git
           ls
           grep -n -A120 -B20 \
             'static QColorSpace resolveColorSpace' \
-            ./src/plugins/platforms/windows/qwindowsscreen.cpp
+            qtbase/src/plugins/platforms/windows/qwindowsscreen.cpp
           git rev-parse HEAD
           find src/qt/qt6 -maxdepth 1 -type f -name 'qt6-qtbase*' -print
           sed -n '1,240p' src/qt/qt6/qt6-qtbase-1-fixes.patc
