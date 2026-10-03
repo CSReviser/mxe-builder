@@ -1,4 +1,24 @@
 
+
+0224:fixme:file:GetTempPath2W (260, 00007FFFFE2FF630) semi-stub
+0224:fixme:win:RegisterPowerSettingNotification (0000000000020072,{02731015-4510-4526-99e6-e5a17ebd1aea},0): stub
+0224:fixme:setupapi:SetupDiOpenDeviceInterfaceW flags 0x1 not implemented
+0224:fixme:dwrite:dwritefactory_CreateMonitorRenderingParams (0000000000000001): monitor setting ignored
+0240:fixme:process:GetProcessGroupAffinity (FFFFFFFFFFFFFFFF,00007B8D3446C3EE,00007B8D3446C420): stub
+0224:fixme:ntdll:NtQuerySystemInformation info_class SYSTEM_PERFORMANCE_INFORMATION
+0224:fixme:msg:ChangeWindowMessageFilter c039 00000001
+0224:fixme:dwmapi:DwmExtendFrameIntoClientArea (000000000003006C, 00007FFFFE2FF160) stub
+0224:fixme:win:IsTouchWindow hwnd 000000000003006C, flags 00007FFFFE2FF1B4 stub!
+0224:fixme:dwmapi:DwmExtendFrameIntoClientArea (000000000004006C, 00007FFFFE2FF4D0) stub
+0224:fixme:win:IsTouchWindow hwnd 000000000004006C, flags 00007FFFFE2FF524 stub!
+0224:fixme:process:GetProcessGroupAffinity (FFFFFFFFFFFFFFFF,00007FFFFE2FE2BE,00007FFFFE2FE2F0): stub
+0224:fixme:dwmapi:DwmExtendFrameIntoClientArea (000000000003007C, 00007FFFFE2FB2C0) stub
+0224:fixme:win:IsTouchWindow hwnd 000000000003007C, flags 00007FFFFE2FB314 stub!
+0224:fixme:dwmapi:DwmExtendFrameIntoClientArea (00000000000500B0, 00007FFFFE2FB160) stub
+0224:fixme:win:IsTouchWindow hwnd 00000000000500B0, flags 00007FFFFE2FB1B4 stub!
+0224:fixme:win:UnregisterPowerSettingNotification (00000000DEADBEEF): stub
+
+
 #12 1209.4 
 #12 1209.4 Failed to build package qt6-qtbase for target x86_64-pc-linux-gnu!
 #12 1209.4 ------------------------------------------------------------
