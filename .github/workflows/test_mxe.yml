@@ -60,7 +60,7 @@ jobs:
           ls
           grep -n -A120 -B20 \
             'static QColorSpace resolveColorSpace' \
-            src/plugins/platforms/windows/qwindowsscreen.cpp
+            ./src/plugins/platforms/windows/qwindowsscreen.cpp
           git rev-parse HEAD
           find src/qt/qt6 -maxdepth 1 -type f -name 'qt6-qtbase*' -print
           sed -n '1,240p' src/qt/qt6/qt6-qtbase-1-fixes.patc
