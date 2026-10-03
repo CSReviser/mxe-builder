@@ -1,5 +1,106 @@
 
 
+
+
+  grep -n -A120 -B20 \
+    'static QColorSpace resolveColorSpace' \
+    qtbase/src/plugins/platforms/windows/qwindowsscreen.cpp
+qtbase
+327-
+328-        if (!edid.parse(edidData)) {
+329-            qCDebug(lcQpaScreen) << "Invalid EDID blob for" << data.deviceName;
+330-            continue;
+331-        }
+332-
+333-        // We skip edid.identifier because it is unreliable, and a better option
+334-        // is already available through DisplayConfigGetDeviceInfo (see below).
+335-        names << QString::fromWCharArray(deviceName.monitorFriendlyDeviceName);
+336-        manufacturers << edid.manufacturer;
+337-        models << edid.model;
+338-        serialNumbers << edid.serialNumber;
+339-    }
+340-
+341-    data.name = names.join(u"|"_s);
+342-    data.manufacturer = manufacturers.join(u"|"_s);
+343-    data.model = models.join(u"|"_s);
+344-    data.serialNumber = serialNumbers.join(u"|"_s);
+345-}
+346-
+347:static QColorSpace resolveColorSpace(HMONITOR hMonitor,
+348-    const MONITORINFOEX &info,
+349-    const std::vector<DISPLAYCONFIG_PATH_INFO> &pathGroup)
+350-{
+351-    qCDebug(lcQpaScreen) << "Resolving color space for" << QString::fromWCharArray(info.szDevice);
+352-
+353-    LPWSTR profileName = [&]() -> LPWSTR {
+404-        }
+405-    } else {
+406-        // No profile is associated with the screen, or Advanced Color is active,
+407-        // in which case any calls to the color profile management APIs to get the
+408-        // profile for a display will return "no profile", regardless of what
+409-        // profiles are actually installed.
+410-
+411-#ifdef QT_USE_WINRT_DISPLAY_INTEROP
+412-        // Try to to resolve what color space the Windows compositor (DWM) is
+413-        // working in, and reflect that as the screen's preferred color space.
+414-
+415-        // https://learn.microsoft.com/nb-no/windows/win32/api/windows.graphics.display.interop
+416-        if (static bool haveInterop = QOperatingSystemVersion::current() >= QOperatingSystemVersion::Windows11_22H2; haveInterop) {
+417-            using namespace winrt::Windows::Foundation;
+418-            using namespace winrt::Windows::Graphics::Display;
+419-
+420-            try {
+421-                DisplayInformation displayInfo = nullptr;
+422-                auto factory = winrt::get_activation_factory<DisplayInformation, IDisplayInformationStaticsInterop>();
+423-                if (SUCCEEDED(factory->GetForMonitor(hMonitor, winrt::guid_of<DisplayInformation>(), winrt::put_abi(displayInfo)))) {
+424-                    qCDebug(lcQpaScreen) << "Checking Advanced Color preferences";
+425-                    AdvancedColorInfo advancedColorInfo = displayInfo.GetAdvancedColorInfo();
+fatal: not a git repository (or any of the parent directories): .git
+426-                    switch (advancedColorInfo.CurrentAdvancedColorKind()) {
+427-                    case AdvancedColorKind::StandardDynamicRange:
+428-                        // The display only supports standard dynamic range. In this case, it is safe to assume
+429-                        // that OS composition is being done using an RGB:8 surface encoded as sRGB gamma.
+430-                        return QColorSpace::SRgb;
+431-                    case AdvancedColorKind::WideColorGamut:
+432-                        // The display supports Wide Color Gamut. In this case, it is safe to assume that OS
+433-                        // composition is being done using an RGB:FP16 surface encoded as scRGB gamma.
+434-                        return QColorSpace::SRgbLinear;
+435-                    case AdvancedColorKind::HighDynamicRange:
+436-                        // The display supports high dynamic range. In this case, it is safe to assume that OS
+437-                        // composition is being done using an RGB:FP16 surface encoded as scRGB gamma.
+438-                        return QColorSpace::SRgbLinear;
+439-                    }
+440-                }
+441-            } catch (const std::exception &ex) {
+442-                qCWarning(lcQpaScreen) << "Failed to query for advanced color info" << ex.what();
+443-            }
+444-        }
+445-#else
+446-        Q_UNUSED(hMonitor);
+447-#endif
+448-
+449-        // If we can't figure out the Advanced Color color-space above, we fall back to sRGB
+450-        qCDebug(lcQpaScreen) << "No color profile or advanced color preference. Falling back to sRGB";
+451-        return QColorSpace::SRgb;
+452-    }
+453-
+454-    // We hit an error condition that didn't result in falling back to sRGB,
+455-    // so we conservatively report that we don't know the color space.
+456-    return QColorSpace();
+457-}
+458-
+459-static bool monitorData(HMONITOR hMonitor, QWindowsScreenData *data)
+460-{
+461-    MONITORINFOEX info;
+462-    memset(&info, 0, sizeof(MONITORINFOEX));
+463-    info.cbSize = sizeof(MONITORINFOEX);
+464-    if (GetMonitorInfo(hMonitor, &info) == FALSE)
+465-        return false;
+466-
+467-    data->hMonitor = hMonitor;
+
+
+
 grep -n -A120 -B20 \
   'static QColorSpace resolveColorSpace' \
   src/plugins/platforms/windows/qwindowsscreen.cpp
