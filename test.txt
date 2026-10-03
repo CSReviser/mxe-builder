@@ -1,5 +1,26 @@
 
 
+env:
+  QT_VERSION: 6.12.0   # ワークフロー全体で定義してもOK
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    # ジョブ単位で定義する場合はここに env: QT_VERSION: 6.12.0 でも可
+    outputs:
+      qt_version: ${{ env.QT_VERSION }}
+    steps:
+      - run: echo "QT_VERSION=${{ env.QT_VERSION }}"  # ジョブには最低1ステップ必要
+
+  win_build:
+    needs: setup
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/csreviser/qt6-mxe-static-path:${{ needs.setup.outputs.qt_version }}
+    steps:
+      # ...
+
+
 0224:fixme:file:GetTempPath2W (260, 00007FFFFE2FF630) semi-stub
 0224:fixme:win:RegisterPowerSettingNotification (0000000000020072,{02731015-4510-4526-99e6-e5a17ebd1aea},0): stub
 0224:fixme:setupapi:SetupDiOpenDeviceInterfaceW flags 0x1 not implemented
