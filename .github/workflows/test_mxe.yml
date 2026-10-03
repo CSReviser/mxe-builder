@@ -55,6 +55,9 @@ jobs:
       - name: Download Qt 6.9 source
         run: |
           git clone https://github.com/mxe/mxe.git
+          ls
+          cd mxe
+          ls
           grep -n -A120 -B20 \
             'static QColorSpace resolveColorSpace' \
             src/plugins/platforms/windows/qwindowsscreen.cpp
