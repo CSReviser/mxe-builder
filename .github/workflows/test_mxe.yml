@@ -1,0 +1,280 @@
+name: Build Qt 6.9 Static and Upload to Release
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential \
+            libgl1-mesa-dev \
+            libxcb-icccm4-dev \
+            libxcb-xinput-dev \
+            ninja-build \
+            python3 \
+            perl \
+            cmake \
+            curl \
+            git \
+            wget \
+            libglib2.0-dev \
+            libdbus-1-dev \
+            libfontconfig1-dev \
+            libfreetype-dev \
+            libgtk-3-dev \
+            libx11-dev \
+            libx11-xcb-dev \
+            libxcb-shm0-dev \
+            libxrender-dev \
+            libxcb-cursor-dev \
+            libxcb-xinput-dev \
+            libxcb-shm0-dev \
+            libx11-dev libx11-xcb-dev libxcb1-dev libxcb-util-dev \
+            libxcb-icccm4-dev libxcb-image0-dev libxcb-keysyms1-dev libxcb-randr0-dev \
+            libxcb-render-util0-dev libxcb-shape0-dev libxcb-shm0-dev libxcb-sync-dev \
+            libxcb-xfixes0-dev libxcb-xinerama0-dev libxcb-xkb-dev libxrender-dev \
+            libxkbcommon-dev libxkbcommon-x11-dev \
+            libxrender-dev \
+            libxext-dev libxfixes-dev libxrandr-dev libxcomposite-dev \
+            libxcursor-dev libxdamage-dev libxtst-dev libglu1-mesa-dev \
+            libxcb-util0-dev libgbm-dev libxcb-dri3-dev libxcb-present-dev libxcb-glx0-dev \
+            libssl-dev libxcb-render0-dev libsm-dev \
+            libwayland-dev \
+            libxcb-ewmh-dev \
+            libwayland-egl-backend-dev
+          
+      - name: Download Qt 6.9 source
+        run: |
+          git clone https://github.com/mxe/mxe.git
+          grep -n -A120 -B20 \
+            'static QColorSpace resolveColorSpace' \
+            src/plugins/platforms/windows/qwindowsscreen.cpp
+          git rev-parse HEAD
+          find src/qt/qt6 -maxdepth 1 -type f -name 'qt6-qtbase*' -print
+          sed -n '1,240p' src/qt/qt6/qt6-qtbase-1-fixes.patc
+
+      - name: Configure and build Qt statically (make version)
+        run: |
+          mkdir qt-build
+          cd  qt-build
+          cmake -GNinja ../qt-everywhere-src-6.9.0 \
+            -DCMAKE_INSTALL_PREFIX=../qt-build/qt6-static-install \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DQT_FEATURE_xcb=ON \
+            -DQT_FEATURE_opengl=ON \
+            -DFEATURE_dbus=ON \
+            -DFEATURE_icu=ON \
+            -DFEATURE_cxx20=ON \
+            -DQT_BUILD_EXAMPLES=OFF \
+            -DQT_BUILD_TESTS=OFF \
+            -DBUILD_SHARED_LIBS=OFF \
+            -DBUILD_WITH_PCH=OFF \
+            -DQT_QMAKE_TARGET_MKSPEC=linux-g++ \
+            -DCMAKE_PREFIX_PATH=/usr/lib/x86_64-linux-gnu/cmake \
+            -DBUILD_qtbase=ON \
+            -DBUILD_qtwebengine=OFF \
+            -DBUILD_qtdeclarative=OFF \
+            -DBUILD_qttools=OFF \
+            -DBUILD_qtimageformats=OFF \
+            -DBUILD_qtshadertools=OFF \
+            -DBUILD_qtmultimedia=OFF \
+            -DBUILD_qtquick3dphysics=OFF \
+            -DBUILD_qttranslations=OFF \
+            -DBUILD_qtquicktimeline=OFF \
+            -DBUILD_qtquick3d=OFF \
+            -DBUILD_qtgraphs=OFF \
+            -DBUILD_qtlottie=OFF \
+            -DBUILD_qtmqtt=OFF \
+            -DBUILD_qtopcua=OFF \
+            -DBUILD_qt5compat=OFF \
+            -DBUILD_qtserialport=OFF \
+            -DBUILD_qtcoap=OFF \
+            -DBUILD_qtpositioning=OFF \
+            -DBUILD_qtscxml=OFF \
+            -DBUILD_qtcharts=OFF \
+            -DBUILD_qt3d=OFF \
+            -DBUILD_qtquickeffectmaker=OFF \
+            -DBUILD_qtremoteobjects=OFF \
+            -DBUILD_qtscxml=OFF \
+            -DBUILD_qtsensors=OFF \
+            -DBUILD_qtserialbus=OFF \
+            -DBUILD_qtwayland=OFF \
+            -DBUILD_qtvirtualkeyboard=OFF \
+            -DBUILD_qtsvg=OFF \
+            -DBUILD_qtspeech=OFF \
+            -DBUILD_SHARED_LIBS=OFF \
+            -DFEATURE_png=ON \
+            -DFEATURE_jpeg=ON \
+            -DFEATURE_freetype=ON \
+            -DFEATURE_harfbuzz=ON \
+            -DQT_FEATURE_opengl=ON \
+            -DQT_FEATURE_gui=ON \
+            -DQT_FEATURE_xlib=ON \
+            -DQT_FEATURE_xcb=ON \
+            -DQT_FEATURE_xcb_xlib=ON \
+            -DQT_BUILD_QPA_PLUGINS=ON \
+            -DFEATURE_dbus=ON \
+            -DFEATURE_icu=ON \
+            -DQT_FEATURE_system_zlib=OFF \
+            -DQT_FEATURE_system_png=OFF \
+            -DQT_FEATURE_system_jpeg=OFF \
+            -DQT_FEATURE_system_freetype=OFF \
+            -DQT_FEATURE_system_harfbuzz=OFF \
+            -DBUILD_qtsvg=OFF \
+            -DBUILD_qtlocation=OFF \
+            -DBUILD_qtconnectivity=OFF \
+            -DBUILD_qtdoc=OFF \
+            -DBUILD_qt5compat=OFF \
+            -DBUILD_qt3d=OFF \
+            -DBUILD_qtcharts=OFF \
+            -DBUILD_qtcoap=OFF \
+            -DBUILD_qtconnectivity=OFF \
+            -DBUILD_qtdatavis3d=OFF \
+            -DBUILD_qtdoc=OFF \
+            -DBUILD_qtgraphs=OFF \
+            -DBUILD_qtimageformats=OFF \
+            -DBUILD_qtlottie=OFF \
+            -DBUILD_qtlocation=OFF \
+            -DBUILD_qtmqtt=OFF \
+            -DBUILD_qtmultimedia=OFF \
+            -DBUILD_qtnetworkauth=OFF \
+            -DBUILD_qtopcua=OFF \
+            -DBUILD_qtpositioning=OFF \
+            -DBUILD_qtquick3d=OFF \
+            -DBUILD_qtquicktimeline=OFF \
+            -DBUILD_qtscxml=OFF \
+            -DBUILD_qtsensors=OFF \
+            -DBUILD_qtserialbus=OFF \
+            -DBUILD_qtserialport=OFF \
+            -DBUILD_qtspeech=OFF \
+            -DBUILD_qttools=OFF \
+            -DBUILD_qttranslations=OFF \
+            -DBUILD_qtvirtualkeyboard=OFF \
+            -DBUILD_qtwayland=OFF \
+            -DBUILD_qtwebchannel=OFF \
+            -DBUILD_qtwebengine=OFF \
+            -DBUILD_qtwebsockets=OFF \
+            -DBUILD_qtwebview=OFF \
+            -DQT_BUILD_EXAMPLES=OFF \
+            -DQT_BUILD_TESTS=OFF
+
+
+          cmake --build . --parallel
+          cmake --install .
+
+#          ../qt-everywhere-src-6.9.0/configure \
+#            -top-level \
+#            -prefix ../qt-build/qt6-static-install \
+#            -static -static-runtime -release \
+#            -opensource -confirm-license \
+#           -nomake examples -nomake tests \
+#            -skip qt3d -skip qtactiveqt -skip qtcharts -skip qtconnectivity \
+#            -skip qtdatavis3d -skip qtdoc -skip qtgamepad -skip qtgraphicaleffects \
+#            -skip qtimageformats -skip qtlocation -skip qtmacextras -skip qtnetworkauth \
+#            -skip qtquickcontrols2 -skip qtremoteobjects -skip qtscxml \
+#            -skip qtsensors -skip qtserialbus -skip qtserialport -skip qtspeech \
+#            -skip qtsvg -skip qttools -skip qttranslations -skip qtvirtualkeyboard \
+#            -skip qtwayland -skip qtwebchannel -skip qtwebengine -skip qtwebsockets \
+#            -skip qtwebview -skip qtwinextras -skip qtlottie -skip qtmultimedia \
+#            -skip qtshadertools -skip qtpositioning -skip qtquicktimeline \
+#            -skip qtgraphs \
+#            -skip qtquick3d \
+#            -skip qtquick3dphysics \
+#            -skip qttools \
+#            -skip qtquickeffectmaker \
+#            -no-pch \
+#            -qt-harfbuzz \
+#            -qt-freetype \
+#            -qt-libpng \
+#            -qt-zlib \
+#            -qt-libjpeg \
+#            -qt-pcre \
+#            -icu \
+#            -qt-doubleconversion \
+#            -dbus \
+#            -platform linux-g++ \
+#            -feature-xcb \
+#            -c++std c++20 
+
+      - name: Copy XcbQpaPrivate CMake files into install prefix
+        run: |
+          # ビルドツリー中から Config/Targets ファイルを探して...
+          find qtbase-build -type f -name "Qt6XcbQpaPrivate*.cmake" | while read file; do
+            # 相対パス部分を取り出し
+            rel=${file#qtbase-build/}
+            # コピー先ディレクトリ
+            dest="qtbase-static-install/lib/cmake/$(dirname "$rel")"
+            mkdir -p "$dest"
+            cp "$file" "$dest/"
+          done
+
+      - name: Verify XcbQpaPrivate CMake module exists
+        run: |
+          if [ ! -f qtbase-static-install/lib/cmake/Qt6XcbQpaPrivate/Qt6XcbQpaPrivateConfig.cmake ]; then
+            echo "❌ Qt6XcbQpaPrivateConfig.cmake not copied!"
+            exit 1
+          fi
+          if [ ! -f qtbase-static-install/lib/cmake/Qt6XcbQpaPrivate/Qt6XcbQpaPrivateTargets.cmake ]; then
+            echo "❌ Qt6XcbQpaPrivateTargets.cmake not copied!"
+            exit 1
+          fi
+          echo "✅ Qt6XcbQpaPrivate CMake modules in place"
+
+      - name: Check for libqxcb.a presence
+        run: |
+          if [ ! -f qtbase-static-install/plugins/platforms/libqxcb.a ]; then
+            echo "Error: libqxcb.a not found in plugins/platforms"
+            find qtbase-static-install -name "libqxcb.a"
+            exit 1
+          fi
+          echo "Success: libqxcb.a found."
+          echo "Located libqxcb.a:"
+          find qtbase-static-install -name "libqxcb.a"
+
+      - name: Check Qt6GuiConfig.cmake exists
+        run: |
+          CONFIG_PATH="qtbase-static-install/lib/cmake/Qt6Gui/Qt6GuiConfig.cmake"
+          if [ -f "$CONFIG_PATH" ]; then
+            echo "✅ Found: $CONFIG_PATH"
+          else
+            echo "❌ Not found: $CONFIG_PATH"
+            exit 1
+          fi
+
+      - name: Check if Qt6::XcbQpaPrivate is defined in Qt6GuiTargets.cmake
+        run: |
+          TARGETS_PATH="qtbase-static-install/lib/cmake/Qt6Gui/Qt6GuiTargets.cmake"
+          if [ ! -f "$TARGETS_PATH" ]; then
+            echo "❌ Qt6GuiTargets.cmake not found at $TARGETS_PATH"
+            exit 1
+          fi
+
+          if grep -q "Qt6::XcbQpaPrivate" "$TARGETS_PATH"; then
+            echo "✅ Qt6::XcbQpaPrivate is defined in $TARGETS_PATH"
+          else
+            echo "❌ Qt6::XcbQpaPrivate is NOT defined in $TARGETS_PATH"
+            exit 1
+          fi
+
+      - name: Package Qt
+        run: |
+          cd qt-build
+          tar -czf qt6.9.0-linux-static.tar.gz qt6-static-install
+
+      - name: Upload to GitHub Releases
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: qt6.9.0-static-linux
+          name: Qt 6.9.0 Static Linux
+          files: qt-build/qt6.9.0-linux-static.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
