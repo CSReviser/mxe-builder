@@ -57,6 +57,8 @@ jobs:
           git clone https://github.com/mxe/mxe.git
           ls
           cd mxe
+          cd src
+          cd plugins
           ls
           grep -n -A120 -B20 \
             'static QColorSpace resolveColorSpace' \
