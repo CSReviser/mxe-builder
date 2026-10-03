@@ -1,4 +1,4 @@
-name: Build Qt 6.9 Static and Upload to Release
+name: test mxe Build Qt 6.9 Static and Upload to Release
 
 on:
   workflow_dispatch:
