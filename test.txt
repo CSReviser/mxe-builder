@@ -1,4 +1,16 @@
 
+#12 1209.4 
+#12 1209.4 Failed to build package qt6-qtbase for target x86_64-pc-linux-gnu!
+#12 1209.4 ------------------------------------------------------------
+#12 1209.5 patching file src/plugins/platforms/windows/qwindowsscreen.cpp
+#12 1209.5 patch unexpectedly ends in middle of line
+#12 1209.5 patch: **** malformed patch at line 118:  
+#12 1209.5 make[1]: *** [Makefile:906: build-only-qt6-qtbase_x86_64-pc-linux-gnu] Error 2
+#12 1209.5 make[1]: Leaving directory '/opt/mxe'
+#12 1209.5 real	0m15.900s
+#12 1209.5 user	0m7.283s
+#12 1209.5 sys	0m2.579s
+#12 1209.5 ------------------------------------------------------------
 
 
 qtbase
