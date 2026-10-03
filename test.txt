@@ -1,5 +1,8 @@
 
 
+sed -n '347,457p' \
+  qtbase/src/plugins/platforms/windows/qwindowsscreen.cpp
+
 
 
   grep -n -A120 -B20 \
