@@ -1,5 +1,12 @@
 
 
+/home/kazuo/cs/CaptureStream2/nhkcalendar.cpp: In static member function ‘static QString NHKCalendar::updateHdateByProgram(const QString&, const QString&, const QString&)’:
+/home/kazuo/cs/CaptureStream2/nhkcalendar.cpp:185:30: error: cannot call member function ‘bool RuntimeConfig::flag(const QString&) const’ without object
+  185 |     if ( !RuntimeConfig::flag( QString::fromUtf8( Constants::KEY_AUTO_CORRECT_HDATE )) )
+      |           ~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:491: CMakeFiles/CaptureStream2.dir/nhkcalendar.cpp.o] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
 
 
 // 既存の関数はそのまま維持
