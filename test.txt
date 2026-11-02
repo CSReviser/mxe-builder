@@ -1,4 +1,98 @@
 
+QString resolveIniPath()
+{
+    const QString appDir  = QCoreApplication::applicationDirPath();
+    const QString iniName = "CaptureStream2.ini";
+    const QString portableIni = QDir(appDir).filePath(iniName);
+
+    // exe横に実際に書き込めるなら従来どおり（既存ini有無を問わない）
+    if (isDirWritable(appDir))
+        return portableIni;
+
+    // 書き込み不可 → フォールバック
+    const QString cfgDir =
+        QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation);
+    QDir().mkpath(cfgDir);
+    const QString fallbackIni = QDir(cfgDir).filePath(iniName);
+
+    // 初回のみ、exe横の既存iniを引き継ぐ（読み取りは可能なため）
+    if (QFileInfo::exists(portableIni) && !QFileInfo::exists(fallbackIni))
+        QFile::copy(portableIni, fallbackIni);
+
+    return fallbackIni;
+}
+
+#include <QCoreApplication>
+#include <QDir>
+#include <QFile>
+#include <QFileInfo>
+#include <QSettings>
+#include <QStandardPaths>
+
+// フォルダに実際にファイルを作成・削除できるかテストする
+static bool isDirWritable(const QString &dirPath)
+{
+    const QString testFile = QDir(dirPath).filePath(".write_test.tmp");
+    QFile probe(testFile);
+    if (!probe.open(QIODevice::WriteOnly))
+        return false;
+    probe.close();
+    probe.remove();
+    return true;
+}
+
+// Program Files などの特殊フォルダ内にあるか判定する補助関数
+static bool isInProtectedDir(const QString &dirPath)
+{
+    const QString pf1 = QStandardPaths::writableLocation(QStandardPaths::ApplicationsLocation); // 参考用など
+    // 一般的な保護パスのプレフィックスをチェック
+    // QDir::toNativeSeparators を使うとパス区切り文字を統一できます
+    QString nativePath = QDir::toNativeSeparators(dirPath).toLower();
+    if (nativePath.contains("program files") || nativePath.contains("windows")) {
+        return true;
+    }
+    return false;
+}
+
+QString resolveIniPath()
+{
+    const QString appDir  = QCoreApplication::applicationDirPath();
+    const QString iniName = "CaptureStream2.ini";
+    const QString portableIni = QDir(appDir).filePath(iniName);
+
+    // 1. すでにexe横にiniが存在する場合
+    if (QFileInfo::exists(portableIni)) {
+        // 書き込み可能ならそのまま使う
+        if (QFileInfo(portableIni).isWritable() && !isInProtectedDir(appDir)) {
+            return portableIni;
+        }
+        // 書き込み不可（Program Files等）であっても、既存設定を読むために採用する
+        // ※ ただし、将来の書き込みのためにAppDataへ移行する処理を挟むと完璧です
+        return portableIni;
+    }
+
+    // 2. 新規作成の場合：exe横に書き込めるかチェック
+    // （保護フォルダ内でない かつ 実際に書き込みテストが成功する場合のみポータブル）
+    if (!isInProtectedDir(appDir) && isDirWritable(appDir)) {
+        return portableIni;
+    }
+
+    // 3. フォールバック (%APPDATA%など)
+    const QString cfgDir = QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation);
+    QDir().mkpath(cfgDir);
+    const QString fallbackIni = QDir(cfgDir).filePath(iniName);
+
+    // ★もし「exe横には書き込めないが、古いポータブルiniがたまたま存在していた場合」の救済措置
+    // （既存の portableIni があって、かつ fallbackIni がまだ無いならコピーしてあげる）
+    if (QFileInfo::exists(portableIni) && !QFileInfo::exists(fallbackIni)) {
+        QFile::copy(portableIni, fallbackIni);
+    }
+
+    return fallbackIni;
+}
+
+// 使用例
+// QSettings settings(resolveIniPath(), QSettings::IniFormat);
 
 /home/kazuo/cs/CaptureStream2/programrepository.cpp: In lambda function:
 /home/kazuo/cs/CaptureStream2/programrepository.cpp:55:52: warning: implicit capture of ‘this’ via ‘[=]’ is deprecated in C++20 [-Wdeprecated]
