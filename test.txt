@@ -1,4 +1,146 @@
 
+
+QMessageBox msgBox(this);
+msgBox.setIcon(QMessageBox::Information);
+msgBox.setWindowTitle(tr("保存先フォルダの指定"));
+msgBox.setText(
+    tr("語学講座の録音ファイルを保存するフォルダを指定してください。\n\n"
+       "録音ファイルを保存するため、書き込み可能なフォルダを指定する必要があります。")
+);
+msgBox.setStandardButtons(QMessageBox::Ok);
+msgBox.setDefaultButton(QMessageBox::Ok);
+
+if (msgBox.exec() == QMessageBox::Ok) {
+    const QString dir = QFileDialog::getExistingDirectory(
+        this,
+        tr("録音ファイルの保存先フォルダを選択"),
+        QDir::homePath(),
+        QFileDialog::ShowDirsOnly
+    );
+
+    if (!dir.isEmpty()) {
+        // 書き込み可能かどうかを確認
+        if (Utility::isDirWritable(dir)) {
+            // 保存先として設定
+        } else {
+            QMessageBox::warning(
+                this,
+                tr("保存先フォルダ"),
+                tr("指定されたフォルダには書き込みできません。\n"
+                   "書き込み可能なフォルダを指定してください。")
+            );
+        }
+    }
+}
+
+
+while (true) {
+    const QString dir = QFileDialog::getExistingDirectory(
+        this,
+        tr("録音ファイルの保存先フォルダを選択"),
+        QDir::homePath(),
+        QFileDialog::ShowDirsOnly
+    );
+
+    if (dir.isEmpty())
+        break;
+
+    if (Utility::isDirWritable(dir)) {
+        // 保存先として設定
+        break;
+    }
+
+    QMessageBox::warning(
+        this,
+        tr("保存先フォルダ"),
+        tr("指定されたフォルダには書き込みできません。\n"
+           "別のフォルダを指定してください。")
+    );
+}
+
+
+#ifndef UTILITY_H
+#define UTILITY_H
+
+#include <QString>
+
+namespace Utility {
+
+bool isDirWritable(const QString &dirPath);
+
+bool isSystemReservedDir(const QString &dirPath);
+
+bool isValidSaveDir(const QString &dirPath);
+
+}
+
+#endif // UTILITY_H
+
+#include "utility.h"
+
+#include <QFile>
+#include <QDir>
+#include <QFileInfo>
+#include <QUuid>
+
+// OS別のヘッダーなど
+
+namespace Utility {
+
+// isDirWritable()
+// isSystemReservedDir()
+// isValidSaveDir()
+
+#include <QFileInfo>
+#include <QDir>
+#include <QStringList>
+
+#ifdef Q_OS_WIN
+#include <QProcessEnvironment>
+#endif
+
+namespace {
+
+QString normalizedPath(const QString &path)
+{
+    QFileInfo info(path);
+
+    // シンボリックリンクも可能な範囲で解決する
+    QString result = info.canonicalFilePath();
+
+    if (result.isEmpty())
+        result = info.absoluteFilePath();
+
+    return QDir::cleanPath(QDir::fromNativeSeparators(result));
+}
+
+bool isSameOrSubDirectory(const QString &path,
+                          const QString &reserved)
+{
+#ifdef Q_OS_WIN
+    const QString target = normalizedPath(path).toCaseFolded();
+    const QString base = normalizedPath(reserved).toCaseFolded();
+#else
+    const QString target = normalizedPath(path);
+    const QString base = normalizedPath(reserved);
+#endif
+
+    if (target == base)
+        return true;
+
+    const QString prefix =
+        base.endsWith('/') ? base : base + '/';
+
+    return target.startsWith(prefix);
+}
+
+} // namespace
+
+
+}
+
+
+
 QString resolveIniPath()
 {
     const QString appDir  = QCoreApplication::applicationDirPath();
