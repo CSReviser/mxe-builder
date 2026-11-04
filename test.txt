@@ -1,5 +1,32 @@
 
 
+#include <QFile>
+#include <QDir>
+#include <QUuid>
+#include <QFileInfo>
+
+bool isDirWritable(const QString &dirPath)
+{
+    const QFileInfo info(dirPath);
+
+    if (!info.exists() || !info.isDir())
+        return false;
+
+    const QString fileName =
+        QStringLiteral(".cs2_write_test_%1.tmp")
+            .arg(QUuid::createUuid().toString(QUuid::WithoutBraces));
+
+    QFile probe(QDir(dirPath).filePath(fileName));
+
+    if (!probe.open(QIODevice::WriteOnly | QIODevice::NewOnly))
+        return false;
+
+    probe.close();
+
+    return probe.remove();
+}
+
+
 QMessageBox msgBox(this);
 msgBox.setIcon(QMessageBox::Information);
 msgBox.setWindowTitle(tr("保存先フォルダの指定"));
