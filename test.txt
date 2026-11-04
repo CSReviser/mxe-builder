@@ -1,5 +1,33 @@
 
 
+namespace Utility {
+    bool isDirWritable(const QString &dirPath);
+}
+
+#include "utility.h"
+
+#include <QDir>
+#include <QFile>
+
+namespace Utility {
+
+bool isDirWritable(const QString &dirPath)
+{
+    const QString testFile =
+        QDir(dirPath).filePath(".write_test.tmp");
+
+    QFile probe(testFile);
+
+    if (!probe.open(QIODevice::WriteOnly))
+        return false;
+
+    probe.close();
+
+    return probe.remove();
+}
+
+} // namespace Utility
+
 [100%] Linking CXX executable CaptureStream2
 /usr/bin/ld: CMakeFiles/CaptureStream2.dir/mainwindow.cpp.o: in function `MainWindow::customizeSaveFolder()':
 mainwindow.cpp:(.text._ZN10MainWindow19customizeSaveFolderEv+0x1d6): undefined reference to `Utility::isDirWritable(QString const&)'
