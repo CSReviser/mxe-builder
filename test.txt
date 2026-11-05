@@ -1,4 +1,9 @@
 
+
+<< QDir(QDir(QCoreApplication::applicationDirPath())
+           .filePath("../../../"))
+       .filePath(STYLE_SHEET)
+
 #include <QApplication>
 #include <QDir>
 
