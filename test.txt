@@ -1,4 +1,38 @@
 
+QString Utility::applicationBundleResourcePath()
+{
+#ifdef Q_OS_MACOS
+    return QDir(QCoreApplication::applicationDirPath())
+        .filePath("../Resources");
+#else
+    return QCoreApplication::applicationDirPath();
+#endif
+}
+
+
+#elif defined(Q_OS_MACOS)
+
+candidates
+    << QDir(Utility::applicationBundleResourcePath())
+           .filePath(STYLE_SHEET)
+    << QDir(Utility::appConfigLocationPath())
+           .filePath(STYLE_SHEET)
+    << QDir(s.saveFolder).filePath(STYLE_SHEET)
+    << QDir(Utility::ConfigLocationPath())
+           .filePath(STYLE_SHEET);
+
+
+set_source_files_properties(
+    stylesheet-mac.qss
+    PROPERTIES
+    MACOSX_PACKAGE_LOCATION Resources
+)
+
+target_sources(CaptureStream2 PRIVATE
+    stylesheet-mac.qss
+)
+
+
 
 << QDir(QDir(QCoreApplication::applicationDirPath())
            .filePath("../../../"))
