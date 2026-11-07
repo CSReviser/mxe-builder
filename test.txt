@@ -17,6 +17,117 @@ QString Settings::iniFilePath()
     return QDir(configDir).filePath(Constants::IniFileName);
 }
 
+private:
+    QString m_iniFilePath;
+
+    void initializeIniFilePath();
+
+public:
+    QString iniFilePath() const;
+
+
+
+#include <QStandardPaths>
+#include <QFile>
+#include <QDir>
+#include <QFileInfo>
+#include <QCoreApplication>
+
+void Settings::initializeIniFilePath()
+{
+    if (!m_iniFilePath.isEmpty())
+        return;
+
+    QString appDir;
+
+#if defined(Q_OS_LINUX)
+    // AppImage の場合は AppImage 本体の配置場所
+    const QString appImagePath = qgetenv("APPIMAGE");
+
+    if (!appImagePath.isEmpty()) {
+        appDir = QFileInfo(appImagePath).absolutePath();
+    } else {
+        appDir = QCoreApplication::applicationDirPath();
+    }
+#else
+    appDir = QCoreApplication::applicationDirPath();
+#endif
+
+    // まずアプリケーション配置先を確認
+    if (Utility::isDirWritable(appDir)) {
+        m_iniFilePath =
+            QDir(appDir).filePath(Constants::IniFileName);
+        return;
+    }
+
+    // 書き込み不可なら OS 標準の設定フォルダ
+    QString configDir =
+        QStandardPaths::writableLocation(
+            QStandardPaths::ConfigLocation);
+
+    // フォルダが存在しない場合は作成
+    if (!QDir().mkpath(configDir)) {
+        qWarning() << "Cannot create config directory:"
+                   << configDir;
+        return;
+    }
+
+    if (Utility::isDirWritable(configDir)) {
+        m_iniFilePath =
+            QDir(configDir).filePath(Constants::IniFileName);
+        return;
+    }
+
+    qWarning() << "Cannot find writable settings directory";
+}
+
+QString Settings::iniFilePath() const
+{
+    return m_iniFilePath;
+}
+
+QApplication app(argc, argv);
+
+// ini 保存先を起動時に一度だけ決定
+Settings::instance().initializeIniFilePath();
+
+// 設定読み込み
+Settings::instance().load();
+
+public:
+    void initializeIniFilePath();
+    QString iniFilePath() const;
+
+
+QSettings ini(iniFilePath(), QSettings::IniFormat);
+
+void Settings::loadMainWindow()
+{
+    QSettings ini(iniFilePath(), QSettings::IniFormat);
+
+    ini.beginGroup(Constants::SETTING_GROUP_MainWindow);
+    mainWindowGeometry = ini.value("geometry").toByteArray();
+    ini.endGroup();
+}
+
+bool Settings::initializeIniFilePath()
+{
+    if (!m_iniFilePath.isEmpty())
+        return true;
+
+    // 保存先判定処理
+
+    // 正常に決定できた場合
+    return !m_iniFilePath.isEmpty();
+}
+
+if (!initializeIniFilePath()) {
+    qCritical() << "Cannot initialize settings file path";
+    return;
+}
+
+
+
 
 QString Utility::applicationBundleResourcePath()
 {
