@@ -1,4 +1,23 @@
 
+
+QString Settings::iniFilePath()
+{
+    QString appDir = QCoreApplication::applicationDirPath();
+    QString appIniPath = QDir(appDir).filePath(Constants::IniFileName);
+
+    // 実行ファイルと同じフォルダに書き込み可能ならポータブル仕様
+    if (Utility::isDirWritable(appDir)) {
+        return appIniPath;
+    }
+
+    // 書き込み不可の場合は OS 標準の設定フォルダを使用
+    QString configDir =
+        QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
+
+    return QDir(configDir).filePath(Constants::IniFileName);
+}
+
+
 QString Utility::applicationBundleResourcePath()
 {
 #ifdef Q_OS_MACOS
