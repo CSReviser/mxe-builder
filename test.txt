@@ -1,4 +1,15 @@
 
+QString Utility::normalizedPath(const QString &path)
+{
+    if (path.trimmed().isEmpty())
+        return {};
+
+    return QDir(
+        QDir::fromNativeSeparators(path.trimmed())
+    ).absolutePath();
+}
+
+
 [ 18%] Building CXX object CMakeFiles/CaptureStream2.dir/utility.cpp.o
 /home/kazuo/cs/CaptureStream2/utility.cpp: In function ‘QString Utility::normalizedPath(const QString&)’:
 /home/kazuo/cs/CaptureStream2/utility.cpp:552:14: error: ‘class QString’ has no member named ‘absolutePath’
