@@ -1,5 +1,81 @@
 
 
+#ifdef Q_OS_MACOS
+static bool isAppTranslocated();
+#endif
+
+
+#ifdef Q_OS_MACOS
+
+#include <QCoreApplication>
+#include <QFileInfo>
+
+bool Utility::isAppTranslocated()
+{
+    const QString appPath =
+        QCoreApplication::applicationFilePath();
+
+    return appPath.contains(
+        QStringLiteral("/AppTranslocation/"),
+        Qt::CaseInsensitive);
+}
+
+#endif
+
+
+bool translocationNoticeShown = false;
+
+#ifdef Q_OS_MACOS
+
+if (Utility::isAppTranslocated()
+    && !s.translocationNoticeShown) {
+
+    QMessageBox::information(
+        nullptr,
+        QStringLiteral("アプリケーションの配置について"),
+        QStringLiteral(
+            "CaptureStream2はmacOSのApp Translocationによって"
+            "一時的な場所から起動されています。\n\n"
+            "正常に動作させるため、CaptureStream2.appを"
+            "「アプリケーション」フォルダなど、"
+            "任意の保存場所に移動してから起動してください。\n\n"
+            "移動後、もう一度起動してください。"));
+
+    s.translocationNoticeShown = true;
+    Settings::instance().save();
+}
+
+#endif
+
+QApplication app(argc, argv);
+
+#ifdef Q_OS_MACOS
+Settings::instance().initializeIniFilePath();
+Settings::instance().load();
+
+auto &s = Settings::instance();
+
+if (Utility::isAppTranslocated()
+    && !s.translocationNoticeShown) {
+
+    QMessageBox::information(
+        nullptr,
+        QStringLiteral("起動場所の確認"),
+        QStringLiteral(
+            "CaptureStream2は一時的な場所から起動されています。\n\n"
+            "CaptureStream2.appを「アプリケーション」フォルダなどに"
+            "移動してから、再度起動することをおすすめします。"));
+
+    s.translocationNoticeShown = true;
+    s.save();
+}
+#endif
+
+// 通常の起動処理
+
+
+
+
 // settings.h
 
 class Settings
