@@ -1,5 +1,51 @@
 
 
+// settings.h
+
+class Settings
+{
+public:
+    static Settings& instance();
+
+    void initializeIniFilePath();
+
+    QString iniFilePath() const;
+
+    bool isPortableMode() const
+    {
+        return m_isPortableMode;
+    }
+
+private:
+    QString m_iniFilePath;
+    bool m_isPortableMode = false;
+};
+
+void Settings::initializeIniFilePath()
+{
+    const QString appPath = Utility::applicationBundlePath();
+
+    // アプリケーション側に保存できるか判定
+    const bool portable =
+        Utility::isValidSaveDir(appPath) &&
+        !Utility::isSystemReservedDir(appPath);
+
+    if (portable) {
+        m_iniFilePath = QDir(appPath).filePath(
+            Utility::applicationBaseName() + ".ini");
+    } else {
+        // OS標準の設定フォルダを使用
+        m_iniFilePath = /* OS標準のINI保存先 */;
+    }
+
+    m_isPortableMode = portable;
+}
+
+if (!Settings::instance().isPortableMode()) {
+    // ...
+}
+
+
 void MainWindow::setApplicationStyleSheet()
 {
     auto &s = Settings::instance();
