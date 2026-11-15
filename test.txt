@@ -1,5 +1,97 @@
 
 
+QString Utility::defaultIconPath()
+{
+    const QString baseName =
+        Utility::applicationBaseName();
+
+#ifdef Q_OS_WIN
+    const QString extension = ".ico";
+#elif defined(Q_OS_MACOS)
+    const QString extension = ".icns";
+#else
+    const QString extension = ".png";
+#endif
+
+#ifdef Q_OS_MACOS
+    return QDir(Utility::applicationBundleResourcePath())
+        .filePath(baseName + extension);
+#else
+    return QDir(QCoreApplication::applicationDirPath())
+        .filePath(baseName + extension);
+#endif
+}
+
+void Utility::setApplicationIcon(
+    const QString& customIconPath)
+{
+    QString iconPath;
+
+    // ユーザー指定アイコンを優先
+    if (!customIconPath.isEmpty() &&
+        QFileInfo::exists(customIconPath)) {
+        iconPath = customIconPath;
+    }
+
+    // 実行ファイル名に連動したアイコン
+    if (iconPath.isEmpty()) {
+        const QString path = defaultIconPath();
+
+        if (QFileInfo::exists(path)) {
+            iconPath = path;
+        }
+    }
+
+    if (iconPath.isEmpty())
+        return;
+
+    QIcon icon(iconPath);
+
+    if (icon.isNull())
+        return;
+
+    QApplication::setWindowIcon(icon);
+}
+
+const QString iconPath =
+    Settings::instance().customIconPath();
+
+Utility::setApplicationIcon(iconPath);
+
+mainWindow->setWindowIcon(
+    QApplication::windowIcon());
+
+QString filePath = QFileDialog::getOpenFileName(
+    this,
+    tr("アイコンファイルを選択"),
+    QDir::homePath(),
+    tr("アイコンファイル (*.ico *.icns *.png *.jpg *.jpeg);;"
+       "すべてのファイル (*)"));
+
+if (!filePath.isEmpty()) {
+    QIcon icon(filePath);
+
+    if (icon.isNull()) {
+        QMessageBox::warning(
+            this,
+            tr("アイコン"),
+            tr("このファイルはアイコンとして使用できません。"));
+        return;
+    }
+
+    Settings::instance().setCustomIconPath(filePath);
+
+    QApplication::setWindowIcon(icon);
+    setWindowIcon(icon);
+}
+
+
+
+
+
+
+
+
 #ifdef Q_OS_MACOS
 static bool isAppTranslocated();
 #endif
