@@ -1,5 +1,114 @@
 
 
+#pragma once
+
+namespace Constants {
+
+// ===== GUI テーマ定義 =====
+struct ThemeDefinition {
+    const char* id;
+    const char* name;
+};
+
+// ===== GUI テーマ一覧 =====
+extern const ThemeDefinition Themes[];
+extern const int ThemeCount;
+
+// ===== GUI Appearance デフォルト設定 =====
+struct AppearanceDefaults {
+    const char* theme;
+    const char* iconTheme;
+    bool useExternalStyleSheet;
+    bool useExternalIcons;
+};
+
+extern const AppearanceDefaults DEFAULT_Appearance;
+
+// ===== GUI Appearance 設定キー =====
+extern const char* const SETTING_GROUP_Appearance;
+extern const char* const KEY_Theme;
+extern const char* const KEY_IconTheme;
+extern const char* const KEY_UseExternalStyleSheet;
+extern const char* const KEY_UseExternalIcons;
+
+} // namespace Constants
+
+#include "constants_gui.h"
+
+namespace Constants {
+
+// ===== GUI テーマ一覧 =====
+const ThemeDefinition Themes[] = {
+    { "original", "Original" },
+    { "blue",    "Blue" },
+    { "brown",   "Brown" },
+    { "green",   "Green" },
+    { "indigo",  "Indigo" },
+    { "purple",  "Purple" },
+    { "red",      "Red" },
+    { "yellow",   "Yellow" }
+};
+
+const int ThemeCount =
+    sizeof(Themes) / sizeof(Themes[0]);
+
+// ===== GUI Appearance デフォルト設定 =====
+const AppearanceDefaults DEFAULT_Appearance = {
+    "original",
+    "auto",
+    true,
+    true
+};
+
+// ===== GUI Appearance 設定キー =====
+const char* const SETTING_GROUP_Appearance = "Appearance";
+
+const char* const KEY_Theme                 = "theme";
+const char* const KEY_IconTheme            = "iconTheme";
+const char* const KEY_UseExternalStyleSheet = "useExternalStyleSheet";
+const char* const KEY_UseExternalIcons      = "useExternalIcons";
+
+} // namespace Constants
+
+#include "constants_gui.h"
+
+settings.beginGroup(Constants::SETTING_GROUP_Appearance);
+
+const auto& defaults = Constants::DEFAULT_Appearance;
+
+m_theme = settings.value(
+    Constants::KEY_Theme,
+    defaults.theme
+).toString();
+
+m_iconTheme = settings.value(
+    Constants::KEY_IconTheme,
+    defaults.iconTheme
+).toString();
+
+m_useExternalStyleSheet = settings.value(
+    Constants::KEY_UseExternalStyleSheet,
+    defaults.useExternalStyleSheet
+).toBool();
+
+m_useExternalIcons = settings.value(
+    Constants::KEY_UseExternalIcons,
+    defaults.useExternalIcons
+).toBool();
+
+settings.endGroup();
+
+const AppearanceDefaults DEFAULT_Appearance = {
+    "original",
+    "auto",
+    false,
+    true
+};
+
+
+
+
+
 // ===== テーマ設定 =====
 const char* const SETTING_GROUP_Appearance = "Appearance";
 const char* const KEY_Theme                = "theme";
