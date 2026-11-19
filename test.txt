@@ -67,7 +67,7 @@
         <file alias="yellow/icon.png">icons/yellow/icon.png</file>
         
         <!-- original -->
-        <file alias="origina/icon.png">icons/origina/icon.png</file>
+        <file alias="original/icon.png">icons/original/icon.png</file>
     </qresource>
 
 </RCC>
