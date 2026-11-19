@@ -1,4 +1,49 @@
 
+
+<RCC>
+    <!-- 内蔵スタイルシート -->
+    <qresource prefix="/styles">
+        <!-- Light -->
+        <file alias="light/windows.qss">styles/light/windows.qss</file>
+        <file alias="light/mac.qss">styles/light/mac.qss</file>
+        <file alias="light/linux.qss">styles/light/linux.qss</file>
+
+        <!-- Dark -->
+        <file alias="dark/windows.qss">styles/dark/windows.qss</file>
+        <file alias="dark/mac.qss">styles/dark/mac.qss</file>
+        <file alias="dark/linux.qss">styles/dark/linux.qss</file>
+
+        <!-- Blue -->
+        <file alias="blue/windows.qss">styles/blue/windows.qss</file>
+        <file alias="blue/mac.qss">styles/blue/mac.qss</file>
+        <file alias="blue/linux.qss">styles/blue/linux.qss</file>
+    </qresource>
+
+    <!-- 内蔵アイコン -->
+    <qresource prefix="/icons">
+        <!-- Light -->
+        <file alias="light/record.png">icons/light/record.png</file>
+        <file alias="light/stop.png">icons/light/stop.png</file>
+        <file alias="light/settings.png">icons/light/settings.png</file>
+        <file alias="light/refresh.png">icons/light/refresh.png</file>
+
+        <!-- Dark -->
+        <file alias="dark/record.png">icons/dark/record.png</file>
+        <file alias="dark/stop.png">icons/dark/stop.png</file>
+        <file alias="dark/settings.png">icons/dark/settings.png</file>
+        <file alias="dark/refresh.png">icons/dark/refresh.png</file>
+
+        <!-- Blue -->
+        <file alias="blue/record.png">icons/blue/record.png</file>
+        <file alias="blue/stop.png">icons/blue/stop.png</file>
+        <file alias="blue/settings.png">icons/blue/settings.png</file>
+        <file alias="blue/refresh.png">icons/blue/refresh.png</file>
+    </qresource>
+
+</RCC>
+
+
+
 if(NOT DEFINED CMAKE_OSX_DEPLOYMENT_TARGET)
   set(CMAKE_OSX_DEPLOYMENT_TARGET "11.0" CACHE STRING "Minimum macOS version")
 endif()
