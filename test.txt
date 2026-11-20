@@ -1,3 +1,26 @@
+/usr/bin/ld: CMakeFiles/CaptureStream2.dir/settings.cpp.o: in function `Settings::Settings()':
+settings.cpp:(.text._ZN8SettingsC2Ev+0x1d3): undefined reference to `Constants::DEFAULT_Appearance'
+/usr/bin/ld: settings.cpp:(.text._ZN8SettingsC2Ev+0x222): undefined reference to `Constants::DEFAULT_Appearance'
+/usr/bin/ld: settings.cpp:(.text._ZN8SettingsC2Ev+0x237): undefined reference to `Constants::DEFAULT_Appearance'
+/usr/bin/ld: CMakeFiles/CaptureStream2.dir/settings.cpp.o: in function `Settings::load()':
+settings.cpp:(.text._ZN8Settings4loadEv+0xd61): undefined reference to `Constants::SETTING_GROUP_Appearance'
+/usr/bin/ld: settings.cpp:(.text._ZN8Settings4loadEv+0xd8d): undefined reference to `Constants::DEFAULT_Appearance'
+/usr/bin/ld: settings.cpp:(.text._ZN8Settings4loadEv+0xdad): undefined reference to `Constants::KEY_Theme'
+/usr/bin/ld: settings.cpp:(.text._ZN8Settings4loadEv+0xe37): undefined reference to `Constants::DEFAULT_Appearance'
+/usr/bin/ld: settings.cpp:(.text._ZN8Settings4loadEv+0xe57): undefined reference to `Constants::KEY_UseExternalStyleSheet'
+/usr/bin/ld: settings.cpp:(.text._ZN8Settings4loadEv+0xebf): undefined reference to `Constants::DEFAULT_Appearance'
+/usr/bin/ld: settings.cpp:(.text._ZN8Settings4loadEv+0xedf): undefined reference to `Constants::KEY_UseExternalIcons'
+/usr/bin/ld: CMakeFiles/CaptureStream2.dir/settings.cpp.o: in function `Settings::save()':
+settings.cpp:(.text._ZN8Settings4saveEv+0xb8c): undefined reference to `Constants::SETTING_GROUP_Appearance'
+/usr/bin/ld: settings.cpp:(.text._ZN8Settings4saveEv+0xbd9): undefined reference to `Constants::KEY_Theme'
+/usr/bin/ld: settings.cpp:(.text._ZN8Settings4saveEv+0xc35): undefined reference to `Constants::KEY_UseExternalStyleSheet'
+/usr/bin/ld: settings.cpp:(.text._ZN8Settings4saveEv+0xc91): undefined reference to `Constants::KEY_UseExternalIcons'
+/usr/bin/ld: CMakeFiles/CaptureStream2.dir/settings.cpp.o: in function `Settings::setTheme(QString const&)':
+settings.cpp:(.text._ZN8Settings8setThemeERK7QString+0x56): undefined reference to `Constants::DEFAULT_Appearance'
+collect2: error: ld returned 1 exit status
+make[2]: *** [CMakeFiles/CaptureStream2.dir/build.make:831: CaptureStream2] エラー 1
+make[1]: *** [CMakeFiles/Makefile2:84: CMakeFiles/CaptureStream2.dir/all] エラー 2
+make: *** [Makefile:91: all] エラー 2
 
 // ===== Appearance =====
 
