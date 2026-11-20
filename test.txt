@@ -1,4 +1,128 @@
 
+
+#pragma once
+
+#include <QDialog>
+
+namespace Ui {
+class Appearancedialog;
+}
+
+class Settings;
+
+class Appearancedialog : public QDialog
+{
+    Q_OBJECT
+
+public:
+    explicit Appearancedialog(Settings &ini,
+                             QWidget *parent = nullptr);
+    ~Appearancedialog();
+
+public slots:
+    void accept() override;
+
+private:
+    Ui::Appearancedialog *ui;
+
+    Settings &settings;
+
+    // ===== UI 初期化 =====
+    void initializeThemeList();
+
+    // ===== 設定読み込み =====
+    void loadAppearanceSettings();
+
+    // ===== 設定反映 =====
+    void applyAppearanceSettings();
+};
+
+
+
+#include "appearancedialog.h"
+#include "ui_appearancedialog.h"
+
+#include "settings.h"
+#include "constants.h"
+
+Appearancedialog::Appearancedialog(Settings &ini, QWidget *parent)
+    : QDialog(parent)
+    , ui(new Ui::Appearancedialog)
+    , settings(ini)
+{
+    ui->setupUi(this);
+
+    initializeThemeList();
+    loadAppearanceSettings();
+}
+
+Appearancedialog::~Appearancedialog()
+{
+    delete ui;
+}
+
+// ===== テーマ一覧 =====
+void Appearancedialog::initializeThemeList()
+{
+    ui->comboBoxTheme->clear();
+
+    for (int i = 0; i < Constants::ThemeCount; ++i) {
+        const auto &theme = Constants::Themes[i];
+
+        ui->comboBoxTheme->addItem(
+            QString::fromUtf8(theme.name),
+            QString::fromUtf8(theme.id)
+        );
+    }
+}
+
+// ===== 設定読み込み =====
+void Appearancedialog::loadAppearanceSettings()
+{
+    const int index = ui->comboBoxTheme->findData(
+        settings.theme()
+    );
+
+    if (index >= 0)
+        ui->comboBoxTheme->setCurrentIndex(index);
+
+    ui->checkBoxExternalStyleSheet->setChecked(
+        settings.useExternalStyleSheet()
+    );
+
+    ui->checkBoxExternalIcons->setChecked(
+        settings.useExternalIcons()
+    );
+}
+
+// ===== 設定反映 =====
+void Appearancedialog::applyAppearanceSettings()
+{
+    settings.setTheme(
+        ui->comboBoxTheme->currentData().toString()
+    );
+
+    settings.setUseExternalStyleSheet(
+        ui->checkBoxExternalStyleSheet->isChecked()
+    );
+
+    settings.setUseExternalIcons(
+        ui->checkBoxExternalIcons->isChecked()
+    );
+}
+
+// ===== OK =====
+void Appearancedialog::accept()
+{
+    applyAppearanceSettings();
+
+    QDialog::accept();
+}
+
+
+
+
+
 appearancedialog.h
 
 #pragma once
