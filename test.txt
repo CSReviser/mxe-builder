@@ -1,3 +1,303 @@
+
+appearancedialog.h
+
+#pragma once
+
+#include <QDialog>
+
+namespace Ui {
+class AppearanceDialog;
+}
+
+class AppearanceDialog : public QDialog
+{
+    Q_OBJECT
+
+public:
+    explicit AppearanceDialog(QWidget *parent = nullptr);
+    ~AppearanceDialog();
+
+signals:
+    // 外観設定変更後、MainWindow に適用を通知
+    void appearanceChanged();
+
+private slots:
+    void accept();
+
+private:
+    Ui::AppearanceDialog *ui;
+
+    void initializeThemeList();
+    void loadSettings();
+    void applySettings();
+};
+
+
+
+
+appearancedialog.cpp
+
+#include "appearancedialog.h"
+#include "ui_appearancedialog.h"
+
+#include "settings.h"
+#include "constants.h"
+
+#include <QComboBox>
+
+AppearanceDialog::AppearanceDialog(QWidget *parent)
+    : QDialog(parent)
+    , ui(new Ui::AppearanceDialog)
+{
+    ui->setupUi(this);
+
+    setWindowTitle(tr("外観設定"));
+
+    initializeThemeList();
+    loadSettings();
+
+    connect(ui->buttonBox,
+            &QDialogButtonBox::accepted,
+            this,
+            &AppearanceDialog::accept);
+
+    connect(ui->buttonBox,
+            &QDialogButtonBox::rejected,
+            this,
+            &AppearanceDialog::reject);
+}
+
+AppearanceDialog::~AppearanceDialog()
+{
+    delete ui;
+}
+
+// ===== テーマ一覧 =====
+void AppearanceDialog::initializeThemeList()
+{
+    ui->comboBoxTheme->clear();
+
+    for (int i = 0; i < Constants::ThemeCount; ++i) {
+        const auto &theme = Constants::Themes[i];
+
+        ui->comboBoxTheme->addItem(
+            QString::fromUtf8(theme.name),
+            QString::fromUtf8(theme.id)
+        );
+    }
+}
+
+// ===== 設定読み込み =====
+void AppearanceDialog::loadSettings()
+{
+    const auto &settings = Settings::instance();
+
+    const int index = ui->comboBoxTheme->findData(
+        settings.theme()
+    );
+
+    if (index >= 0) {
+        ui->comboBoxTheme->setCurrentIndex(index);
+    }
+
+    ui->checkBoxExternalStyleSheet->setChecked(
+        settings.useExternalStyleSheet()
+    );
+
+    ui->checkBoxExternalIcons->setChecked(
+        settings.useExternalIcons()
+    );
+}
+
+// ===== 設定反映 =====
+void AppearanceDialog::applySettings()
+{
+    auto &settings = Settings::instance();
+
+    settings.setTheme(
+        ui->comboBoxTheme->currentData().toString()
+    );
+
+    settings.setUseExternalStyleSheet(
+        ui->checkBoxExternalStyleSheet->isChecked()
+    );
+
+    settings.setUseExternalIcons(
+        ui->checkBoxExternalIcons->isChecked()
+    );
+}
+
+// ===== OK =====
+void AppearanceDialog::accept()
+{
+    applySettings();
+
+    Settings::instance().save();
+
+    emit appearanceChanged();
+
+    QDialog::accept();
+}
+
+
+
+
+
+
+appearancedialog.ui 
+
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AppearanceDialog</class>
+ <widget class="QDialog" name="AppearanceDialog">
+  <property name="windowTitle">
+   <string>外観設定</string>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>360</width>
+    <height>240</height>
+   </size>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>12</number>
+   </property>
+   <property name="leftMargin">
+    <number>12</number>
+   </property>
+   <property name="topMargin">
+    <number>12</number>
+   </property>
+   <property name="rightMargin">
+    <number>12</number>
+   </property>
+   <property name="bottomMargin">
+    <number>12</number>
+   </property>
+
+   <item>
+    <layout class="QFormLayout" name="formLayoutTheme">
+     <item row="0" column="0">
+      <widget class="QLabel" name="labelTheme">
+       <property name="text">
+        <string>テーマ：</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QComboBox" name="comboBoxTheme"/>
+     </item>
+    </layout>
+   </item>
+
+   <item>
+    <widget class="QGroupBox" name="groupBoxStyleSheet">
+     <property name="title">
+      <string>スタイルシート</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayoutStyleSheet">
+      <item>
+       <widget class="QCheckBox" name="checkBoxExternalStyleSheet">
+        <property name="text">
+         <string>外部スタイルシートを使用する</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="labelStyleSheetInfo">
+        <property name="text">
+         <string>外部 QSS ファイルが存在する場合に使用します。</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+
+   <item>
+    <widget class="QGroupBox" name="groupBoxIcons">
+     <property name="title">
+      <string>アイコン</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayoutIcons">
+      <item>
+       <widget class="QCheckBox" name="checkBoxExternalIcons">
+        <property name="text">
+         <string>外部アイコンを使用する</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="labelIconsInfo">
+        <property name="text">
+         <string>外部アイコンが存在する場合に使用します。</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Orientation::Vertical</enum>
+     </property>
+     <property name="sizeHint">
+      <size>
+       <width>20</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Orientation::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok</set>
+     </property>
+    </widget>
+   </item>
+
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
+
+
+#include "appearancedialog.h"
+
+void MainWindow::showAppearanceDialog()
+{
+    AppearanceDialog dialog(this);
+
+    connect(&dialog,
+            &AppearanceDialog::appearanceChanged,
+            this,
+            &MainWindow::applyApplicationAppearance);
+
+    dialog.exec();
+}
+
+
+
+
+
+
+
+
 /usr/bin/ld: CMakeFiles/CaptureStream2.dir/settings.cpp.o: in function `Settings::Settings()':
 settings.cpp:(.text._ZN8SettingsC2Ev+0x1d3): undefined reference to `Constants::DEFAULT_Appearance'
 /usr/bin/ld: settings.cpp:(.text._ZN8SettingsC2Ev+0x222): undefined reference to `Constants::DEFAULT_Appearance'
