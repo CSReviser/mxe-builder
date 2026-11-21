@@ -1,4 +1,132 @@
 
+// ===== Appearance =====
+void applyApplicationAppearance();
+void setApplicationStyleSheet();
+void setApplicationIcon();
+
+#include "settings.h"
+
+void MainWindow::applyApplicationAppearance()
+{
+    setApplicationStyleSheet();
+    setApplicationIcon();
+}
+
+
+QString Utility::loadBuiltInStyleSheet(const QString &theme)
+{
+    QString path;
+
+#ifdef Q_OS_WIN
+    path = QStringLiteral(
+        ":/styles/%1/stylesheet-win.qss").arg(theme);
+#elif defined(Q_OS_MACOS)
+    path = QStringLiteral(
+        ":/styles/%1/stylesheet-mac.qss").arg(theme);
+#else
+    path = QStringLiteral(
+        ":/styles/%1/stylesheet-ubu.qss").arg(theme);
+#endif
+
+    QFile file(path);
+
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        return QString();
+
+    return QString::fromUtf8(file.readAll());
+}
+
+
+void MainWindow::setApplicationStyleSheet()
+{
+    auto &settings = Settings::instance();
+
+    QString styleSheet;
+
+    // ===== 外部 QSS =====
+    if (settings.useExternalStyleSheet()) {
+        // 既存の外部 QSS 検索処理を使用
+        // 実行ファイル名に対応した QSS
+        // OS 固定名の QSS
+    }
+
+    // ===== 内蔵 QSS =====
+    if (styleSheet.isEmpty()) {
+        styleSheet = Utility::loadBuiltInStyleSheet(
+            settings.theme()
+        );
+    }
+
+    // ===== 適用 =====
+    if (!styleSheet.isEmpty()) {
+        qApp->setStyleSheet(styleSheet);
+    }
+}
+
+QIcon Utility::loadBuiltInIcon(const QString &theme)
+{
+    const QString path =
+        QStringLiteral(":/icons/%1/icon.png").arg(theme);
+
+    QIcon icon(path);
+
+    if (icon.isNull())
+        return QIcon();
+
+    return icon;
+}
+
+void MainWindow::setApplicationIcon()
+{
+    auto &settings = Settings::instance();
+
+    QIcon icon;
+
+    // ===== 外部アイコン =====
+    if (settings.useExternalIcons()) {
+        // 既存の外部アイコン検索処理
+        // icon が取得できた場合は使用
+    }
+
+    // ===== 内蔵アイコン =====
+    if (icon.isNull()) {
+        icon = Utility::loadBuiltInIcon(
+            settings.theme()
+        );
+    }
+
+    if (!icon.isNull()) {
+        setWindowIcon(icon);
+        qApp->setWindowIcon(icon);
+    }
+}
+
+
+void MainWindow::showAppearanceDialog()
+{
+    AppearanceDialog dialog(Settings::instance(), this);
+
+    if (dialog.exec() == QDialog::Accepted) {
+        applyApplicationAppearance();
+        Settings::instance().save();
+    }
+}
+
+
+
+MainWindow::MainWindow(QWidget *parent)
+    : QMainWindow(parent)
+    , ui(new Ui::MainWindow)
+{
+    ui->setupUi(this);
+
+    // 外観適用
+    applyApplicationAppearance();
+
+    // その他の初期化
+}
+
+
 
 #pragma once
 
