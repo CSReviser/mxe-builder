@@ -1,4 +1,114 @@
 
+
+void MainWindow::setApplicationStyleSheet()
+{
+    auto &settings = Settings::instance();
+
+    const QString theme = settings.theme();
+
+    QString styleSheet;
+
+    // ===== 外部スタイルシート =====
+    if (settings.useExternalStyleSheet()) {
+
+        const QString baseName =
+            Utility::applicationBaseName();
+
+        // 検索するファイル名
+        QStringList fileNames;
+
+        fileNames
+            << baseName + ".qss"
+            << STYLE_SHEET
+            << "stylesheet.png";
+
+        const QStringList directories =
+            Utility::applicationResourceDirectories();
+
+        QStringList candidates;
+
+        // ファイル名の優先順位を優先して検索
+        for (const QString &fileName : fileNames) {
+            for (const QString &directory : directories) {
+                candidates
+                    << QDir(directory).filePath(fileName);
+            }
+        }
+
+        // 既存の外部 QSS 検索
+        styleSheet =
+            Utility::loadFirstExistingTextFile(candidates);
+    }
+
+    // ===== 内蔵テーマ =====
+    if (styleSheet.isEmpty()) {
+        styleSheet =
+            Utility::loadBuiltInStyleSheet(theme);
+    }
+
+    // ===== 内蔵 Original を最終フォールバック =====
+    if (styleSheet.isEmpty() &&
+        theme != Constants::DEFAULT_Appearance.theme) {
+
+        styleSheet =
+            Utility::loadBuiltInStyleSheet(
+                Constants::DEFAULT_Appearance.theme);
+    }
+
+    // ===== 適用 =====
+    qApp->setStyleSheet(styleSheet);
+}
+
+
+void MainWindow::setApplicationStyleSheet()
+{
+    auto &settings = Settings::instance();
+
+    QString styleSheet;
+
+    // 外部スタイルシートを使用する場合
+    if (settings.useExternalStyleSheet()) {
+
+        const QString baseName =
+            Utility::applicationBaseName();
+
+        QStringList fileNames;
+
+        fileNames
+            << baseName + ".qss"
+            << STYLE_SHEET
+            << "stylesheet.png";
+
+        const QStringList directories =
+            Utility::applicationResourceDirectories();
+
+        QStringList candidates;
+
+        // 従来の外部スタイルシート検索処理
+        for (const QString &fileName : fileNames) {
+            for (const QString &directory : directories) {
+                candidates
+                    << QDir(directory).filePath(fileName);
+            }
+        }
+
+        // Qt resource (従来仕様)
+        candidates << QStringLiteral(":/") + STYLE_SHEET;
+
+        styleSheet =
+            Utility::loadFirstExistingTextFile(candidates);
+    }
+    else {
+        // 内部スタイルシートを固定で使用
+        styleSheet =
+            Utility::loadBuiltInStyleSheet(settings.theme());
+    }
+
+    qApp->setStyleSheet(styleSheet);
+}
+
+
+
 // ===== Appearance =====
 void applyApplicationAppearance();
 void setApplicationStyleSheet();
