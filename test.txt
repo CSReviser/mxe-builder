@@ -1,5 +1,23 @@
 
 
+// mainwindow.cpp
+#include <QStatusBar>
+#include <QLabel>
+
+MainWindow::MainWindow(AppSettings *settings, QWidget *parent)
+    : QMainWindow(parent)
+    , m_settings(settings)
+{
+    // ...
+
+    auto *modeLabel = new QLabel(this);
+    modeLabel->setText(m_settings->isPortable() ? tr("ポータブルモード")
+                                                : tr("標準モード"));
+    modeLabel->setToolTip(m_settings->iniPath());  // iniの場所も確認できる
+    statusBar()->addPermanentWidget(modeLabel);
+}
+
+
 const QString iconPath =
     Utility::findFirstExistingFile(candidates);
 
