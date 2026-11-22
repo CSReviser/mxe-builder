@@ -1,5 +1,13 @@
 
 
+const QString iconPath =
+    Utility::findFirstExistingFile(candidates);
+
+if (!iconPath.isEmpty()) {
+    icon = QIcon(iconPath);
+}
+
+
 void MainWindow::setApplicationStyleSheet()
 {
     auto &settings = Settings::instance();
