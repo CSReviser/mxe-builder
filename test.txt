@@ -1,4 +1,41 @@
 
+void MainWindow::setApplicationModeLabel()
+{
+    if (!Settings::instance().isPortableMode()) {
+        return;
+    }
+
+    auto *modeLabel = new QLabel(tr("ポータブルモード"), this);
+
+    modeLabel->setStyleSheet(
+        "QLabel { color: #d97706; font-weight: bold; }");
+
+    statusBar()->addPermanentWidget(modeLabel);
+}
+
+
+void MainWindow::setApplicationModeLabel()
+{
+    auto *modeLabel = new QLabel(
+        Settings::instance().isPortableMode()
+            ? tr("ポータブルモード")
+            : tr("標準モード"),
+        this);
+
+    statusBar()->addPermanentWidget(modeLabel);
+}
+
+
+void MainWindow::setApplicationModeLabel()
+{
+    if (!Settings::instance().isPortableMode()) {
+        return;
+    }
+
+    auto *modeLabel = new QLabel(tr("ポータブルモード"), this);
+
+    statusBar()->addPermanentWidget(modeLabel);
+}
 
 // mainwindow.cpp
 #include <QStatusBar>
