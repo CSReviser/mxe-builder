@@ -1,4 +1,46 @@
 
+
+auto *sb = statusBar();
+
+auto *modeLabel = new QLabel(
+    Settings::instance().isPortableMode()
+        ? tr("ポータブルモード")
+        : tr("標準モード"),
+    this);
+
+sb->addPermanentWidget(modeLabel);
+
+qDebug() << "StatusBar:" << sb;
+qDebug() << "StatusBar geometry:" << sb->geometry();
+qDebug() << "StatusBar height:" << sb->height();
+qDebug() << "Label geometry:" << modeLabel->geometry();
+qDebug() << "Label sizeHint:" << modeLabel->sizeHint();
+qDebug() << "Label parent:" << modeLabel->parent();
+qDebug() << "StatusBar children:" << sb->children();
+
+
+
+auto *modeLabel = new QLabel(
+    Settings::instance().isPortableMode()
+        ? tr("ポータブルモード")
+        : tr("標準モード"),
+    this);
+
+statusBar()->addWidget(modeLabel);
+
+
+auto *modeLabel = new QLabel(this);
+
+modeLabel->setText(
+    Settings::instance().isPortableMode()
+        ? tr("ポータブルモード")
+        : tr("標準モード"));
+
+statusBar()->addPermanentWidget(modeLabel);
+
+
+
+
 void MainWindow::setApplicationModeLabel()
 {
     if (!Settings::instance().isPortableMode()) {
