@@ -1,4 +1,98 @@
 
+void MainWindow::setApplicationModeLabel()
+{
+    const bool portableMode =
+        Settings::instance().isPortableMode();
+
+    QString modeText;
+
+#ifdef Q_OS_MACOS
+    // macOS：ポータブルモード時のみ表示
+    if (portableMode) {
+        modeText = tr("ポータブルモード");
+    }
+#else
+    // Windows / Linux：インストールモード時のみ表示
+    if (!portableMode) {
+        modeText = tr("インストールモード");
+    }
+#endif
+
+    // 通常モードは表示しない
+    if (modeText.isEmpty()) {
+        return;
+    }
+
+    auto *modeLabel = new QLabel(modeText, this);
+    modeLabel->setObjectName("applicationModeLabel");
+
+    statusBar()->addPermanentWidget(modeLabel);
+}
+
+
+auto *modeLabel = new QLabel(modeText, this);
+
+#ifdef Q_OS_MACOS
+modeLabel->setObjectName("portableModeLabel");
+#else
+modeLabel->setObjectName("installModeLabel");
+#endif
+
+statusBar()->addPermanentWidget(modeLabel);
+
+
+
+/* ポータブルモード */
+QStatusBar QLabel#portableModeLabel {
+    color: #d97706;
+    font-weight: bold;
+}
+
+/* インストールモード */
+QStatusBar QLabel#installModeLabel {
+    color: #2563eb;
+    font-weight: bold;
+}
+
+
+
+
+void MainWindow::setApplicationModeLabel()
+{
+    const bool portableMode =
+        Settings::instance().isPortableMode();
+
+    QString modeText;
+    QString objectName;
+
+#ifdef Q_OS_MACOS
+    if (portableMode) {
+        modeText = tr("ポータブルモード");
+        objectName = "portableModeLabel";
+    }
+#else
+    if (!portableMode) {
+        modeText = tr("インストールモード");
+        objectName = "installModeLabel";
+    }
+#endif
+
+    if (modeText.isEmpty()) {
+        return;
+    }
+
+    auto *modeLabel = new QLabel(modeText, this);
+    modeLabel->setObjectName(objectName);
+
+    statusBar()->addPermanentWidget(modeLabel);
+}
+
+
+modeLabel->setToolTip(
+    tr("設定ファイルをアプリケーションと同じ場所に保存するモード"));
+
+
+
 
 auto *modeLabel = new QLabel(
     Settings::instance().isPortableMode()
