@@ -1,4 +1,184 @@
 
+
+# 共通ソース
+set(SOURCES
+    main.cpp
+    utility.cpp
+    settings.cpp
+    # その他共通ソース
+)
+
+# macOS専用ソース
+if(APPLE)
+    list(APPEND SOURCES
+        iconutil.mm
+    )
+endif()
+
+
+project(CaptureStream2 LANGUAGES CXX)
+
+if(APPLE)
+    enable_language(OBJCXX)
+endif()
+
+
+
+cmake_minimum_required(VERSION 3.21)
+
+project(CaptureStream2 LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+find_package(Qt6 REQUIRED COMPONENTS
+    Gui
+    Network
+    Widgets
+    Xml
+)
+
+# 共通ソース
+set(SOURCES
+    main.cpp
+    utility.cpp
+    settings.cpp
+    mainwindow.cpp
+)
+
+# 共通ヘッダー
+set(HEADERS
+    utility.h
+    settings.h
+    mainwindow.h
+)
+
+# macOS専用
+if(APPLE)
+
+    enable_language(OBJCXX)
+
+    list(APPEND SOURCES
+        iconutil.mm
+    )
+
+    list(APPEND HEADERS
+        iconutil.h
+    )
+
+endif()
+
+add_executable(CaptureStream2
+    ${SOURCES}
+    ${HEADERS}
+)
+
+target_link_libraries(CaptureStream2 PRIVATE
+    Qt6::Gui
+    Qt6::Network
+    Qt6::Widgets
+    Qt6::Xml
+)
+
+# macOS専用フレームワーク
+if(APPLE)
+
+    find_library(APPKIT_FRAMEWORK AppKit REQUIRED)
+
+    target_link_libraries(CaptureStream2 PRIVATE
+        ${APPKIT_FRAMEWORK}
+    )
+
+endif()
+
+if(APPLE)
+    set_source_files_properties(iconutil.mm
+        PROPERTIES
+        COMPILE_FLAGS "-fobjc-arc"
+    )
+endif()
+
+
+#ifdef Q_OS_MACOS
+#include "iconutil.h"
+#endif
+
+iconutil.h
+#pragma once
+
+#include <QString>
+
+#ifdef Q_OS_MACOS
+
+bool setFinderIcon(const QString &targetPath,
+                  const QString &iconPath);
+
+bool removeFinderIcon(const QString &targetPath);
+
+#endif
+
+
+
+iconutil.mm
+
+#import <AppKit/AppKit.h>
+
+#include "iconutil.h"
+
+#include <QFileInfo>
+
+bool setFinderIcon(const QString &targetPath,
+                  const QString &iconPath)
+{
+    @autoreleasepool {
+
+        const QFileInfo targetInfo(targetPath);
+        const QFileInfo iconInfo(iconPath);
+
+        if (!targetInfo.exists() ||
+            !targetInfo.isWritable() ||
+            !iconInfo.exists() ||
+            !iconInfo.isFile()) {
+            return false;
+        }
+
+        NSImage *image =
+            [[NSImage alloc]
+                initWithContentsOfFile:iconPath.toNSString()];
+
+        if (!image) {
+            return false;
+        }
+
+        return [[NSWorkspace sharedWorkspace]
+            setIcon:image
+            forFile:targetPath.toNSString()
+            options:0];
+    }
+}
+
+bool removeFinderIcon(const QString &targetPath)
+{
+    @autoreleasepool {
+
+        const QFileInfo targetInfo(targetPath);
+
+        if (!targetInfo.exists() ||
+            !targetInfo.isWritable()) {
+            return false;
+        }
+
+        // nullptr を指定してカスタムアイコンを解除
+        return [[NSWorkspace sharedWorkspace]
+            setIcon:nil
+            forFile:targetPath.toNSString()
+            options:0];
+    }
+}
+
+
+
+
 void MainWindow::setApplicationModeLabel()
 {
     const bool portableMode =
