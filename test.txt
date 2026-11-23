@@ -1,4 +1,15 @@
 
+
+if(APPLE)
+    qt_import_plugins(MyApp
+        INCLUDE_BY_TYPE imageformats Qt6::QICNSPlugin)
+elseif(WIN32)
+    qt_import_plugins(MyApp
+        INCLUDE_BY_TYPE imageformats Qt6::QICOPlugin)
+endif()
+
+
+
 if(APPLE)
     get_target_property(_qicns Qt6::QICNSPlugin LOCATION)
     add_custom_command(TARGET MyApp POST_BUILD
