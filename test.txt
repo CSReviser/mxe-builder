@@ -1,5 +1,13 @@
 
 
+qDebug() << "fileNames:" << fileNames;
+qDebug() << "directories:" << directories;
+qDebug() << "candidates:" << candidates;
+qDebug() << "iconPath:" << iconPath;
+
+
+
+
 # 共通ソース
 set(SOURCES
     main.cpp
