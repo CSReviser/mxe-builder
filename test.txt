@@ -1,9 +1,16 @@
 
 libqgif.dylib
+libqicns.dylib
 libqico.dylib
 libqjpeg.dylib
+libqmacheif.dylib
+libqmacjp2.dylib
 libqsvg.dylib
-Error: Process completed with exit code 1.
+libqtga.dylib
+libqtiff.dylib
+libqwbmp.dylib
+libqwebp.dylib
+
 
 
 
