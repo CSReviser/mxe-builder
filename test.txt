@@ -1,4 +1,22 @@
 
+if(APPLE)
+    set(QICNS_PLUGIN "${QT6_INSTALL_PREFIX}/${QT6_INSTALL_PLUGINS}/imageformats/libqicns.dylib")
+    if(EXISTS "${QICNS_PLUGIN}")
+        add_custom_command(TARGET MyApp POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E make_directory
+                "$<TARGET_BUNDLE_CONTENT_DIR:MyApp>/PlugIns/imageformats"
+            COMMAND ${CMAKE_COMMAND} -E copy "${QICNS_PLUGIN}"
+                "$<TARGET_BUNDLE_CONTENT_DIR:MyApp>/PlugIns/imageformats/"
+            COMMENT "Copy qicns plugin")
+    endif()
+endif()
+
+
+ls /Users/runner/work/cs2-builder/Qt/6.12.0/macos/plugins/imageformats/
+ls /Users/runner/work/cs2-builder/Qt/6.12.0/macos/lib/cmake | grep -i icns
+
+
+
 -- Found WrapAtomic: TRUE
 CMake Error at /Users/runner/work/cs2-builder/Qt/6.12.0/macos/lib/cmake/Qt6Core/Qt6CoreMacros.cmake:1194 (set_property):
   set_property could not find TARGET MyApp.  Perhaps it has not yet been
