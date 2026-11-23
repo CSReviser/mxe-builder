@@ -1,4 +1,13 @@
 
+libqgif.dylib
+libqico.dylib
+libqjpeg.dylib
+libqsvg.dylib
+Error: Process completed with exit code 1.
+
+
+
+
 if(APPLE)
     set(QICNS_PLUGIN "${QT6_INSTALL_PREFIX}/${QT6_INSTALL_PLUGINS}/imageformats/libqicns.dylib")
     if(EXISTS "${QICNS_PLUGIN}")
