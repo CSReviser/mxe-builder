@@ -1,5 +1,22 @@
 
 
+auto *modeLabel = new QLabel(
+    Settings::instance().isPortableMode()
+        ? tr("ポータブルモード")
+        : tr("標準モード"),
+    this);
+
+modeLabel->setObjectName("portableModeLabel");
+
+modeLabel->setStyleSheet(
+    "QLabel {"
+    " background-color: magenta;"
+    " color: white;"
+    "}");
+
+statusBar()->addPermanentWidget(modeLabel);
+
+
 StatusBar: QStatusBar(0x5940c6702c40, name="statusBar")
 StatusBar geometry: QRect(0,0 100x30)
 StatusBar height: 30
