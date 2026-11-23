@@ -1,4 +1,44 @@
 
+-- Found WrapAtomic: TRUE
+CMake Error at /Users/runner/work/cs2-builder/Qt/6.12.0/macos/lib/cmake/Qt6Core/Qt6CoreMacros.cmake:1194 (set_property):
+  set_property could not find TARGET MyApp.  Perhaps it has not yet been
+  created.
+Call Stack (most recent call first):
+  /Users/runner/work/cs2-builder/Qt/6.12.0/macos/lib/cmake/Qt6Core/Qt6CoreMacros.cmake:1219 (qt6_import_plugins)
+  CMakeLists.txt:102 (qt_import_plugins)
+
+
+CMake Error at /Users/runner/work/cs2-builder/Qt/6.12.0/macos/lib/cmake/Qt6Core/Qt6CoreMacros.cmake:1195 (set_property):
+  set_property could not find TARGET MyApp.  Perhaps it has not yet been
+  created.
+Call Stack (most recent call first):
+  /Users/runner/work/cs2-builder/Qt/6.12.0/macos/lib/cmake/Qt6Core/Qt6CoreMacros.cmake:1219 (qt6_import_plugins)
+  CMakeLists.txt:102 (qt_import_plugins)
+
+
+Warning: plug-in Qt6::QICNSPlugin is not known to the current Qt installation.
+CMake Warning (policy) at CMakeLists.txt:113 (add_custom_command):
+  COMMENT requires exactly one argument, but multiple values or COMMENT
+  keywords have been given.
+
+  Policy CMP0175 is not set: add_custom_command() rejects invalid arguments.
+  Run "cmake --help-policy CMP0175" for policy details.  Use the cmake_policy
+  command to set the policy and suppress this warning.
+This warning is for project developers.  Use -Wno-author or -Wno-policy to
+suppress it.
+
+CMake Warning (policy) at CMakeLists.txt:113 (add_custom_command):
+  COMMENT requires exactly one argument, but multiple values or COMMENT
+  keywords have been given.
+
+  Policy CMP0175 is not set: add_custom_command() rejects invalid arguments.
+  Run "cmake --help-policy CMP0175" for policy details.  Use the cmake_policy
+  command to set the policy and suppress this warning.
+This warning is for project developers.  Use -Wno-author or -Wno-policy to
+suppress it.
+
+-- Configuring incomplete, errors occurred!
+Error: Process completed with exit code 1.
 
 if(APPLE)
     qt_import_plugins(MyApp
