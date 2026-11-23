@@ -1,4 +1,14 @@
 
+qt.qpa.fonts: Populating font family aliases took 135 ms. Replace uses of missing font family "Serif" with one that exists to avoid this cost. 
+StatusBar: QStatusBar(0xb38402100, name="statusBar")
+StatusBar geometry: QRect(0,0 100x30)
+StatusBar height: 30
+Label geometry: QRect(54,3 45x25)
+Label sizeHint: QSize(96, 14)
+Label parent: QStatusBar(0xb38402100, name = "statusBar")
+StatusBar children: QList(QSizeGrip(0xb39949d40), QLabel(0xb386a4f60), QHBoxLayout(0xb39cbdb00), QLabel(0xb39a7e580))
+
+
 libqgif.dylib
 libqicns.dylib
 libqico.dylib
