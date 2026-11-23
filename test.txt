@@ -1,4 +1,19 @@
 
+if(APPLE)
+    get_target_property(_qicns Qt6::QICNSPlugin LOCATION)
+    add_custom_command(TARGET MyApp POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E make_directory
+            $<TARGET_BUNDLE_CONTENT_DIR:MyApp>/PlugIns/imageformats
+        COMMAND ${CMAKE_COMMAND} -E copy ${_qicns}
+            $<TARGET_BUNDLE_CONTENT_DIR:MyApp>/PlugIns/imageformats/
+    )
+elseif(WIN32)
+    # 既存のWindows用の記述（.rcやico）
+endif()
+
+
+
+
 
 auto *sb = statusBar();
 
